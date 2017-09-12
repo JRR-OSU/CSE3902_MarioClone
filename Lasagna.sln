@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26730.10
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lasagna", "Lasagna\Lasagna.csproj", "{40B0217D-3030-4C08-93D9-F8CEF20EE01C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{40B0217D-3030-4C08-93D9-F8CEF20EE01C}.Debug|x86.ActiveCfg = Debug|x86
+		{40B0217D-3030-4C08-93D9-F8CEF20EE01C}.Debug|x86.Build.0 = Debug|x86
+		{40B0217D-3030-4C08-93D9-F8CEF20EE01C}.Release|x86.ActiveCfg = Release|x86
+		{40B0217D-3030-4C08-93D9-F8CEF20EE01C}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4DA2C157-C8C4-405C-A2F4-38189ADD09B7}
+	EndGlobalSection
+EndGlobal
