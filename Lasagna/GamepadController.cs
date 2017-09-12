@@ -3,7 +3,8 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Sprint0
 {
-    public class GamepadController : IController
+    ///DEPRECATED: Currently not supported
+    /*public class GamepadController : IController
     {
         //Used for determining if key was just pressed this frame
         private GamePadState oldGamepadState;
@@ -51,5 +52,5 @@ namespace Sprint0
         {
             MarioEvents.SelectMoveAndAnimation();
         }
-    }
+    }*/
 }

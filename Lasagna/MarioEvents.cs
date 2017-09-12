@@ -1,43 +1,94 @@
 ﻿namespace Sprint0
 {
-    public delegate void QuitEventHandler();
-    public delegate void SelectNoMoveAndNoAnimationEventHandler();
-    public delegate void SelectNoMoveAndAnimationEventHandler();
-    public delegate void SelectMoveAndNoAnimationEventHandler();
-    public delegate void SelectMoveAndAnimationEventHandler();
+    public delegate void InputEventHandler();
 
     //Class which contains all events for the project in one easy to locate place.
     public static class MarioEvents
     {
-        public static event QuitEventHandler OnQuit;
-        public static event SelectNoMoveAndNoAnimationEventHandler OnSelectNoMoveAndNoAnimation;
-        public static event SelectNoMoveAndAnimationEventHandler OnSelectNoMoveAndAnimation;
-        public static event SelectMoveAndNoAnimationEventHandler OnSelectMoveAndNoAnimation;
-        public static event SelectMoveAndAnimationEventHandler OnSelectMoveAndAnimation;
+        public static event InputEventHandler OnQuit;
+        public static event InputEventHandler OnReset;
+        public static event InputEventHandler OnMoveLeft;
+        public static event InputEventHandler OnMoveRight;
+        public static event InputEventHandler OnJump;
+        public static event InputEventHandler OnCrouch;
+        public static event InputEventHandler OnFire;
+        
+        public static event InputEventHandler OnMarioDamage;
+        public static event InputEventHandler OnMarioDie;
+        public static event InputEventHandler OnGetMushroom;
+        public static event InputEventHandler OnGetFireFlower;
+        public static event InputEventHandler OnUseQuestionBlock;
+        public static event InputEventHandler OnDestroyBrickBlock;
+        public static event InputEventHandler OnUseHiddenBlock;
 
         public static void Quit()
         {
             OnQuit();
         }
 
-        public static void SelectNoMoveAndNoAnimation()
+        public static void Reset()
         {
-            OnSelectNoMoveAndNoAnimation();
+            OnReset();
         }
 
-        public static void SelectNoMoveAndAnimation()
+        public static void MoveLeft()
         {
-            OnSelectNoMoveAndAnimation();
+            OnMoveLeft();
         }
 
-        public static void SelectMoveAndNoAnimation()
+        public static void MoveRight()
         {
-            OnSelectMoveAndNoAnimation();
+            OnMoveRight();
         }
 
-        public static void SelectMoveAndAnimation()
+        public static void Jump()
         {
-            OnSelectMoveAndAnimation();
+            OnJump();
+        }
+
+        public static void Crouch()
+        {
+            OnCrouch();
+        }
+
+        public static void Fire()
+        {
+            OnFire();
+        }
+
+        public static void MarioDamage()
+        {
+            OnMarioDamage();
+        }
+
+        public static void MarioDie()
+        {
+            OnMarioDie();
+        }
+
+        public static void GetMushroom()
+        {
+            OnGetMushroom();
+        }
+
+        public static void GetFireFlower()
+        {
+            OnGetFireFlower();
+        }
+
+        public static void UseQuestionBlock()
+        {
+            OnUseQuestionBlock();
+        }
+
+        public static void DestroyBrickBlock()
+        {
+            OnDestroyBrickBlock();
+        }
+
+        public static void UseHiddenBlock()
+        {
+            OnUseHiddenBlock();
         }
     }
 }

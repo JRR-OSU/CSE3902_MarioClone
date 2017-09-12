@@ -6,9 +6,18 @@ namespace Sprint0
     {
         void Update();
         void Quit();
-        void SelectOneFrameFixedPosition();
-        void SelectAnimatedFixedPosition();
-        void SelectOneFrameMoving();
-        void SelectAnimatedMoving();
+        void Reset();
+        void MoveLeft();
+        void MoveRight();
+        void Jump();
+        void Crouch();
+        void Fire();
+        void MarioDamage();
+        void MarioDie();
+        void GetMushroom();
+        void GetFireFlower();
+        void UseQuestionBlock();
+        void DestroyBrickBlock();
+        void UseHiddenBlock();
     }
 }

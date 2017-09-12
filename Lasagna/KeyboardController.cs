@@ -1,10 +1,39 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using System.Collections.Generic;
 
 namespace Sprint0
 {
     public class KeyboardController : IController
     {
+        public KeyboardController()
+        {
+            //Setup all key events we accept
+            keyEvents = new Dictionary<Keys, InputEventHandler>
+            {
+                { Keys.Q, Quit },
+                { Keys.R, Reset },
+                { Keys.Up, Jump },
+                { Keys.W, Jump },
+                { Keys.Down, Crouch },
+                { Keys.S, Crouch },
+                { Keys.Left, MoveLeft },
+                { Keys.A, MoveLeft },
+                { Keys.Right, MoveRight },
+                { Keys.D, MoveRight },
+
+                { Keys.Y, MarioDamage },
+                { Keys.O, MarioDie },
+                { Keys.U, GetMushroom },
+                { Keys.I, GetFireFlower },
+                { Keys.Z, UseQuestionBlock },
+                { Keys.X, DestroyBrickBlock },
+                { Keys.C, UseHiddenBlock },
+            };
+        }
+
+        //Keys and what event they trigger
+        private Dictionary<Keys, InputEventHandler> keyEvents;
         //Used for determining if key was just pressed this frame
         private KeyboardState oldKeyboardState;
 
@@ -12,17 +41,12 @@ namespace Sprint0
         {
             KeyboardState newKeyboardState = Keyboard.GetState();
 
-            //Check each key if it was pressed this frame, execute command if it was.
-            if (oldKeyboardState.IsKeyUp(Keys.Q) && newKeyboardState.IsKeyDown(Keys.Q))
-                Quit();
-            if (oldKeyboardState.IsKeyUp(Keys.W) && newKeyboardState.IsKeyDown(Keys.W))
-                SelectOneFrameFixedPosition();
-            if (oldKeyboardState.IsKeyUp(Keys.E) && newKeyboardState.IsKeyDown(Keys.E))
-                SelectAnimatedFixedPosition();
-            if (oldKeyboardState.IsKeyUp(Keys.R) && newKeyboardState.IsKeyDown(Keys.R))
-                SelectOneFrameMoving();
-            if (oldKeyboardState.IsKeyUp(Keys.T) && newKeyboardState.IsKeyDown(Keys.T))
-                SelectAnimatedMoving();
+            //Iterate over all keys, if they are pressed down this frame raise event.
+            foreach (KeyValuePair<Keys, InputEventHandler> keyPair in keyEvents)
+            {
+                if (keyPair.Value != null && oldKeyboardState.IsKeyUp(keyPair.Key) && newKeyboardState.IsKeyDown(keyPair.Key))
+                    keyPair.Value();
+            }
 
             oldKeyboardState = newKeyboardState;
         }
@@ -32,24 +56,69 @@ namespace Sprint0
             MarioEvents.Quit();
         }
 
-        public void SelectOneFrameFixedPosition()
+        public void Reset()
         {
-            MarioEvents.SelectNoMoveAndNoAnimation();
+            MarioEvents.Reset();
         }
 
-        public void SelectAnimatedFixedPosition()
+        public void MoveLeft()
         {
-            MarioEvents.SelectNoMoveAndAnimation();
+            MarioEvents.MoveLeft();
         }
 
-        public void SelectOneFrameMoving()
+        public void MoveRight()
         {
-            MarioEvents.SelectMoveAndNoAnimation();
+            MarioEvents.MoveRight();
         }
 
-        public void SelectAnimatedMoving()
+        public void Jump()
         {
-            MarioEvents.SelectMoveAndAnimation();
+            MarioEvents.Jump();
+        }
+
+        public void Crouch()
+        {
+            MarioEvents.Crouch();
+        }
+
+        public void Fire()
+        {
+            MarioEvents.Fire();
+        }
+
+        public void MarioDamage()
+        {
+            MarioEvents.MarioDamage();
+        }
+
+        public void MarioDie()
+        {
+            MarioEvents.MarioDie();
+        }
+
+        public void GetMushroom()
+        {
+            MarioEvents.GetMushroom();
+        }
+
+        public void GetFireFlower()
+        {
+            MarioEvents.GetFireFlower();
+        }
+
+        public void UseQuestionBlock()
+        {
+            MarioEvents.UseQuestionBlock();
+        }
+
+        public void DestroyBrickBlock()
+        {
+            MarioEvents.DestroyBrickBlock();
+        }
+
+        public void UseHiddenBlock()
+        {
+            MarioEvents.UseHiddenBlock();
         }
     }
 }

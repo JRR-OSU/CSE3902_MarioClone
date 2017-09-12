@@ -11,7 +11,6 @@ namespace Sprint0
         private GameTime gameTime;
         private int screenWidth, screenHeight;
         private KeyboardController keyControl;
-        private GamepadController gamepadControl;
         private NoMoveAndNoAnimationSprite noMoveAndNoAnimSprite;
         private NoMoveAndAnimationSprite noMoveAndAnimSprite;
         private MoveAndNoAnimationSprite moveAndNoAnimSprite;
@@ -31,7 +30,6 @@ namespace Sprint0
 
             gameTime = new GameTime();
             keyControl = new KeyboardController();
-            gamepadControl = new GamepadController();
             noMoveAndNoAnimSprite = new NoMoveAndNoAnimationSprite();
             noMoveAndAnimSprite = new NoMoveAndAnimationSprite();
             moveAndNoAnimSprite = new MoveAndNoAnimationSprite();
@@ -39,10 +37,6 @@ namespace Sprint0
 
             //Subscribe to events
             MarioEvents.OnQuit += OnQuit;
-            MarioEvents.OnSelectNoMoveAndNoAnimation += OnSelectNoMoveAndNoAnimation;
-            MarioEvents.OnSelectNoMoveAndAnimation += OnSelectNoMoveAndAnimation;
-            MarioEvents.OnSelectMoveAndNoAnimation += OnSelectMoveAndNoAnimation;
-            MarioEvents.OnSelectMoveAndAnimation += OnSelectMoveAndAnimation;
             
             //Set our current sprite initially to stationary sprite
             currentSprite = noMoveAndNoAnimSprite;
@@ -62,7 +56,6 @@ namespace Sprint0
 
         protected override void Update(GameTime gameTime)
         {
-            gamepadControl.Update();
             keyControl.Update();
             currentSprite.Update(gameTime, screenWidth, screenHeight);
 
