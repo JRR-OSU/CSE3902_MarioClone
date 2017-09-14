@@ -41,17 +41,15 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="AnimatedSprite.cs" />
+    <Compile Include="NonAnimatedSprite.cs" />
     <Compile Include="GamepadController.cs" />
-    <Compile Include="IController.cs" />
-    <Compile Include="ISprite.cs" />
+    <Compile Include="Interfaces\IController.cs" />
+    <Compile Include="Interfaces\ISprite.cs" />
     <Compile Include="KeyboardController.cs" />
     <Compile Include="MarioEnums.cs" />
     <Compile Include="MarioEvents.cs" />
     <Compile Include="MarioGame.cs" />
-    <Compile Include="MoveAndAnimationSprite.cs" />
-    <Compile Include="MoveAndNoAnimationSprite.cs" />
-    <Compile Include="NoMoveAndAnimationSprite.cs" />
-    <Compile Include="NoMoveAndNoAnimationSprite.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

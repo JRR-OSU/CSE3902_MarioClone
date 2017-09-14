@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
-namespace Sprint0
+namespace Lasagna
 {
     ///DEPRECATED: Currently not supported
     /*public class GamepadController : IController

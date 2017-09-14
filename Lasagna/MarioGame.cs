@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using System.Diagnostics;
 
-namespace Sprint0
+namespace Lasagna
 {
     public class MarioGame : Game
     {
@@ -11,11 +11,11 @@ namespace Sprint0
         private GameTime gameTime;
         private int screenWidth, screenHeight;
         private KeyboardController keyControl;
-        private NoMoveAndNoAnimationSprite noMoveAndNoAnimSprite;
+       /* private NoMoveAndNoAnimationSprite noMoveAndNoAnimSprite;
         private NoMoveAndAnimationSprite noMoveAndAnimSprite;
         private MoveAndNoAnimationSprite moveAndNoAnimSprite;
-        private MoveAndAnimationSprite moveAndAnimSprite;
-        private ISprite currentSprite;
+        private MoveAndAnimationSprite moveAndAnimSprite;*/
+        //private ISprite currentSprite;
 
         public MarioGame()
         {
@@ -30,7 +30,7 @@ namespace Sprint0
 
             gameTime = new GameTime();
             keyControl = new KeyboardController();
-            noMoveAndNoAnimSprite = new NoMoveAndNoAnimationSprite();
+           /* noMoveAndNoAnimSprite = new NoMoveAndNoAnimationSprite();
             noMoveAndAnimSprite = new NoMoveAndAnimationSprite();
             moveAndNoAnimSprite = new MoveAndNoAnimationSprite();
             moveAndAnimSprite = new MoveAndAnimationSprite();
@@ -39,7 +39,7 @@ namespace Sprint0
             MarioEvents.OnQuit += OnQuit;
             
             //Set our current sprite initially to stationary sprite
-            currentSprite = noMoveAndNoAnimSprite;
+            currentSprite = noMoveAndNoAnimSprite;*/
 
             base.Initialize();
         }
@@ -48,16 +48,16 @@ namespace Sprint0
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            noMoveAndNoAnimSprite.LoadContent(this);
+           /* noMoveAndNoAnimSprite.LoadContent(this);
             noMoveAndAnimSprite.LoadContent(this);
             moveAndNoAnimSprite.LoadContent(this);
-            moveAndAnimSprite.LoadContent(this);
+            moveAndAnimSprite.LoadContent(this);*/
         }
 
         protected override void Update(GameTime gameTime)
         {
             keyControl.Update();
-            currentSprite.Update(gameTime, screenWidth, screenHeight);
+            //currentSprite.Update(gameTime, screenWidth, screenHeight);
 
             base.Update(gameTime);
         }
@@ -66,7 +66,7 @@ namespace Sprint0
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            currentSprite.Draw(spriteBatch, screenWidth, screenHeight);
+            //currentSprite.Draw(spriteBatch, screenWidth, screenHeight);
 
             base.Draw(gameTime);
         }
@@ -99,9 +99,9 @@ namespace Sprint0
 
         private void ChangeCurrentSprite(SpriteType newSpriteType)
         {
-            ISprite oldSprite = currentSprite;
+            //ISprite oldSprite = currentSprite;
 
-            switch (newSpriteType)
+           /* switch (newSpriteType)
             {
                 case SpriteType.NoMoveAndNoAnimation:
                     currentSprite = noMoveAndNoAnimSprite;
@@ -126,7 +126,7 @@ namespace Sprint0
 
             //If sprite was changed, reset current sprite. This resets position and animation
             if (oldSprite != currentSprite)
-                currentSprite.ResetSprite(screenWidth, screenHeight);
+                currentSprite.ResetSprite(screenWidth, screenHeight);*/
         }
     }
 }
