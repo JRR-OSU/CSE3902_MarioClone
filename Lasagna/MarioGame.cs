@@ -11,11 +11,12 @@ namespace Lasagna
         private GameTime gameTime;
         private int screenWidth, screenHeight;
         private KeyboardController keyControl;
-       /* private NoMoveAndNoAnimationSprite noMoveAndNoAnimSprite;
-        private NoMoveAndAnimationSprite noMoveAndAnimSprite;
-        private MoveAndNoAnimationSprite moveAndNoAnimSprite;
-        private MoveAndAnimationSprite moveAndAnimSprite;*/
-        //private ISprite currentSprite;
+
+        ///TODO: TEMP CODE TO DEMONSTRATE SPRITES
+        ISprite marioStanding;
+        ISprite marioRunning;
+        ISprite currentSprite;
+
 
         public MarioGame()
         {
@@ -30,16 +31,10 @@ namespace Lasagna
 
             gameTime = new GameTime();
             keyControl = new KeyboardController();
-           /* noMoveAndNoAnimSprite = new NoMoveAndNoAnimationSprite();
-            noMoveAndAnimSprite = new NoMoveAndAnimationSprite();
-            moveAndNoAnimSprite = new MoveAndNoAnimationSprite();
-            moveAndAnimSprite = new MoveAndAnimationSprite();
 
             //Subscribe to events
             MarioEvents.OnQuit += OnQuit;
-            
-            //Set our current sprite initially to stationary sprite
-            currentSprite = noMoveAndNoAnimSprite;*/
+            MarioEvents.OnMoveRight += OnMoveRight;
 
             base.Initialize();
         }
@@ -47,17 +42,21 @@ namespace Lasagna
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            SpriteFactory.Instance.LoadAllContent(Content);
 
-           /* noMoveAndNoAnimSprite.LoadContent(this);
-            noMoveAndAnimSprite.LoadContent(this);
-            moveAndNoAnimSprite.LoadContent(this);
-            moveAndAnimSprite.LoadContent(this);*/
+            ///TODO: TEMP CODE TO DEMONSTRATE SPRITES
+            marioStanding = SpriteFactory.Instance.CreateSprite_MarioStanding();
+            marioRunning = SpriteFactory.Instance.CreateSprite_MarioRunning();
+
+            currentSprite = marioStanding;
         }
 
         protected override void Update(GameTime gameTime)
         {
             keyControl.Update();
-            //currentSprite.Update(gameTime, screenWidth, screenHeight);
+
+            ///TODO: TEMP CODE TO DEMONSTRATE SPRITES
+            currentSprite.Update(gameTime, screenWidth / 2, screenHeight / 2);
 
             base.Update(gameTime);
         }
@@ -66,7 +65,8 @@ namespace Lasagna
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            //currentSprite.Draw(spriteBatch, screenWidth, screenHeight);
+            ///TODO: TEMP CODE TO DEMONSTRATE SPRITES
+            currentSprite.Draw(spriteBatch);
 
             base.Draw(gameTime);
         }
@@ -77,56 +77,13 @@ namespace Lasagna
             Exit();
         }
 
-        private void OnSelectNoMoveAndNoAnimation()
+        ///TODO: TEMP CODE TO DEMONSTRATE SPRITES
+        private void OnMoveRight ()
         {
-            ChangeCurrentSprite(SpriteType.NoMoveAndNoAnimation);
-        }
-
-        private void OnSelectNoMoveAndAnimation()
-        {
-            ChangeCurrentSprite(SpriteType.NoMoveAndAnimation);
-        }
-
-        private void OnSelectMoveAndNoAnimation()
-        {
-            ChangeCurrentSprite(SpriteType.MoveAndNoAnimation);
-        }
-
-        private void OnSelectMoveAndAnimation()
-        {
-            ChangeCurrentSprite(SpriteType.MoveAndAnimation);
-        }
-
-        private void ChangeCurrentSprite(SpriteType newSpriteType)
-        {
-            //ISprite oldSprite = currentSprite;
-
-           /* switch (newSpriteType)
-            {
-                case SpriteType.NoMoveAndNoAnimation:
-                    currentSprite = noMoveAndNoAnimSprite;
-                    break;
-
-                case SpriteType.NoMoveAndAnimation:
-                    currentSprite = noMoveAndAnimSprite;
-                    break;
-
-                case SpriteType.MoveAndNoAnimation:
-                    currentSprite = moveAndNoAnimSprite;
-                    break;
-
-                case SpriteType.MoveAndAnimation:
-                    currentSprite = moveAndAnimSprite;
-                    break;
-
-                default:
-                    Debug.WriteLine("Invalid sprite type passed to ChangeCurrentSprite.");
-                    break;
-            }
-
-            //If sprite was changed, reset current sprite. This resets position and animation
-            if (oldSprite != currentSprite)
-                currentSprite.ResetSprite(screenWidth, screenHeight);*/
+            if (currentSprite == marioRunning)
+                currentSprite = marioStanding;
+            else
+                currentSprite = marioRunning;
         }
     }
 }
