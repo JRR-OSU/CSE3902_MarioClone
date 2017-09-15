@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Lasagna
 {
-    class ItemSpriteFactory
+    public class ItemSpriteFactory
     {
         private Texture2D lifeMushroomSheet;
         private Texture2D coinSheet;
@@ -31,6 +31,31 @@ namespace Lasagna
             fireFlowerSheet = content.Load<Texture2D>("ItemSprites/FireFlower");
             mushroomSheet = content.Load<Texture2D>("ItemSprites/PowerupMushroom");
             starSheet = content.Load<Texture2D>("ItemSprites/PowerupStar");
+        }
+
+        public NonAnimatedSprite CreateSprite_1UpMushroom()
+        {
+            return new NonAnimatedSprite(lifeMushroomSheet, 16, 16);
+        }
+
+        public AnimatedSprite CreateSprite_Coin()
+        {
+            return new AnimatedSprite(coinSheet, 4, 1, 16, 16, 24);
+        }
+
+        public AnimatedSprite CreateSprite_FireFlower()
+        {
+            return new AnimatedSprite(fireFlowerSheet, 4, 1, 16, 16, 24);
+        }
+
+        public NonAnimatedSprite CreateSprite_PowerupMushroom()
+        {
+            return new NonAnimatedSprite(mushroomSheet, 16, 16);
+        }
+
+        public AnimatedSprite CreateSprite_Star()
+        {
+            return new AnimatedSprite(starSheet, 4, 1, 14, 16, 24);
         }
     }
 }
