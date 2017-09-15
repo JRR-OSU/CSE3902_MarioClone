@@ -27,8 +27,8 @@ namespace Lasagna
 
         public void LoadAllContent(ContentManager content)
         {
-            TEMP_marioStanding = content.Load<Texture2D>("MarioStanding");
-            TEMP_marioRunning = content.Load<Texture2D>("MarioRunningRight");
+            TEMP_marioStanding = content.Load<Texture2D>("MarioSprites/Mario_Big_IdleLeft");
+            TEMP_marioRunning = content.Load<Texture2D>("MarioSprites/Mario_Fire_RunRight");
         }
 
         public NonAnimatedSprite CreateSprite_MarioStanding()
