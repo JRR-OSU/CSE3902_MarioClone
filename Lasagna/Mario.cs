@@ -10,12 +10,45 @@ namespace Lasagna
     {
         private MarioStateMachine stateMachine;
 
+        public Mario()
+        {
+            stateMachine = new MarioStateMachine();
+        }
 
+        public void ChangeDirection()
+        {
+            stateMachine.ChangeDirection();
+        }
+
+        public void Grow()
+        {
+            stateMachine.Grow();
+        }
+
+        public void Fire()
+        {
+            stateMachine.Fire();
+        }
+
+        public void Shrink()
+        {
+            stateMachine.Shrink();
+        }
+
+        public void Star()
+        {
+            stateMachine.Star();
+        }
+
+        public void Die()
+        {
+            stateMachine.KillMario();
+        }
         public class MarioStateMachine
         {
             private bool facingLeft = true;
 
-            private enum MarioStates { Small, Big, Fire };
+            private enum MarioStates { Small, Big, Fire, Star, Dead };
             private enum MarioMovement { StillLeft, StillRight, WalkingLeft, WalkingRight, JumpingLeft, JumpingRight };
             private MarioStates marioState = MarioStates.Small;
             private MarioMovement marioMovement = MarioMovement.StillRight;
@@ -60,22 +93,46 @@ namespace Lasagna
 
             }
 
-            public void BeStomped()
+            public void Grow()
             {
+                marioState = MarioStates.Big;
+
                 if (marioState != MarioStates.Big) // Note: the if is needed so we only do the transition once
                 {
-                    marioState = MarioStates.Big;
-                    // Compute and construct goomba sprite - requires if-else logic with value of health
+                   
+                    
                 }
+                // Make mario grow and then do some event that changes his sprite 
             }
 
-            public void BeFlipped()
+            public void Fire()
             {
+
+                marioState = MarioStates.Fire;
                 if (marioState != MarioStates.Fire) // Note: the if is needed so we only do the transition once
                 {
-                    marioState = MarioStates.Fire;
-                    // Compute and construct goomba sprite - requires if-else logic with value of health
+                   
+                     
                 }
+                // Make mario grow into fire state and then do some event that changes his sprite 
+            }
+
+            public void Shrink()
+            {
+                marioState = MarioStates.Small;
+
+                // Make mario's sprite shink to the small size
+            }
+
+            public void Star()
+            {
+                marioState = MarioStates.Star;
+            }
+
+
+            public void KillMario()
+            {
+                marioState = MarioStates.Dead;
             }
 
             public void Update()
