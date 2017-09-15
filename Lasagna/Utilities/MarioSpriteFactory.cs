@@ -3,23 +3,19 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Lasagna
 {
-    class SpriteFactory
+    class MarioSpriteFactory
     {
-        //Mario sprite sheets
         private Texture2D TEMP_marioStanding;
         private Texture2D TEMP_marioRunning;
-        //Enemy sprite sheets
-        //Item sprite sheets
-        //Block sprite sheets
 
-        private static SpriteFactory instance;
+        private static MarioSpriteFactory instance;
 
-        public static SpriteFactory Instance
+        public static MarioSpriteFactory Instance
         {
             get
             {
                 if (instance == null)
-                    instance = new SpriteFactory();
+                    instance = new MarioSpriteFactory();
 
                 return instance;
             }

@@ -48,12 +48,15 @@
     <Compile Include="Interfaces\IController.cs" />
     <Compile Include="Interfaces\ISprite.cs" />
     <Compile Include="KeyboardController.cs" />
+    <Compile Include="Utilities\TileSpriteFactory.cs" />
+    <Compile Include="Utilities\MarioSpriteFactory.cs" />
+    <Compile Include="Utilities\ItemSpriteFactory.cs" />
     <Compile Include="Utilities\MarioEnums.cs" />
     <Compile Include="Utilities\MarioEvents.cs" />
     <Compile Include="MarioGame.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Utilities\SpriteFactory.cs" />
+    <Compile Include="Utilities\EnemySpriteFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework">
