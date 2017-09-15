@@ -48,6 +48,7 @@
     <Compile Include="Interfaces\IController.cs" />
     <Compile Include="Interfaces\ISprite.cs" />
     <Compile Include="KeyboardController.cs" />
+    <Compile Include="Utilities\ProjectileSpriteFactory.cs" />
     <Compile Include="Utilities\TileSpriteFactory.cs" />
     <Compile Include="Utilities\MarioSpriteFactory.cs" />
     <Compile Include="Utilities\ItemSpriteFactory.cs" />
