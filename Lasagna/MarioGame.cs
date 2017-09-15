@@ -42,11 +42,11 @@ namespace Lasagna
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            SpriteFactory.Instance.LoadAllContent(Content);
+            MarioSpriteFactory.Instance.LoadAllContent(Content);
 
             ///TODO: TEMP CODE TO DEMONSTRATE SPRITES
-            marioStanding = SpriteFactory.Instance.CreateSprite_MarioStanding();
-            marioRunning = SpriteFactory.Instance.CreateSprite_MarioRunning();
+            marioStanding = MarioSpriteFactory.Instance.CreateSprite_MarioStanding();
+            marioRunning = MarioSpriteFactory.Instance.CreateSprite_MarioRunning();
 
             currentSprite = marioStanding;
         }
