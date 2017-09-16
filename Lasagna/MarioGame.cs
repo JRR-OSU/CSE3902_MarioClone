@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System.Diagnostics;
 
 namespace Lasagna
 {
@@ -9,7 +8,6 @@ namespace Lasagna
         private GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
         private GameTime gameTime;
-        private int screenWidth, screenHeight;
         private KeyboardController keyControl;
 
         ///TODO: TEMP CODE TO DEMONSTRATE SPRITES
@@ -25,9 +23,6 @@ namespace Lasagna
 
         protected override void Initialize()
         {
-            screenWidth = GraphicsDevice.Viewport.Width;
-            screenHeight = GraphicsDevice.Viewport.Height;
-
             gameTime = new GameTime();
             keyControl = new KeyboardController();
 
@@ -59,7 +54,7 @@ namespace Lasagna
             keyControl.Update();
 
             ///TODO: TEMP CODE TO DEMONSTRATE SPRITES
-            currentSprite.Update(gameTime, screenWidth / 2, screenHeight / 2);
+            currentSprite.Update(gameTime, 32, 32);
 
             base.Update(gameTime);
         }
