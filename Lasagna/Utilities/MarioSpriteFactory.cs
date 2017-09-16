@@ -82,7 +82,7 @@ namespace Lasagna
             marioFireRunRightSheet = content.Load<Texture2D>("MarioSprites/Mario_Fire_RunRight");
             marioFireTurnLeftSheet = content.Load<Texture2D>("MarioSprites/Mario_Fire_TurnLeft");
             marioFireTurnRightSheet = content.Load<Texture2D>("MarioSprites/Mario_Fire_TurnRight");
-            marioSmallDieSheet = content.Load<Texture2D>("MarioSprites/Mario_Small_CrouchLeft");
+            marioSmallDieSheet = content.Load<Texture2D>("MarioSprites/Mario_Small_Die");
             marioSmallGrowLeftSheet = content.Load<Texture2D>("MarioSprites/Mario_Small_GrowLeft");
             marioSmallGrowRightSheet = content.Load<Texture2D>("MarioSprites/Mario_Small_GrowRight");
             marioSmallIdleLeftSheet = content.Load<Texture2D>("MarioSprites/Mario_Small_IdleLeft");
