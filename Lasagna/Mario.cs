@@ -49,7 +49,7 @@ namespace Lasagna
             private bool facingLeft = true;
 
             private enum MarioStates { Small, Big, Fire, Star, Dead };
-            private enum MarioMovement { StillLeft, StillRight, WalkingLeft, WalkingRight, JumpingLeft, JumpingRight };
+            private enum MarioMovement { StillLeft, StillRight, WalkingLeft, WalkingRight, RunningLeft, RunningRight, JumpingLeft, JumpingRight };
             private MarioStates marioState = MarioStates.Small;
             private MarioMovement marioMovement = MarioMovement.StillRight;
             // individual state values listed in class

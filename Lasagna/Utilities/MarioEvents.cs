@@ -12,7 +12,7 @@
         public static event InputEventHandler OnJump;
         public static event InputEventHandler OnCrouch;
         public static event InputEventHandler OnFire;
-        
+
         public static event InputEventHandler OnMarioDamage;
         public static event InputEventHandler OnMarioDie;
         public static event InputEventHandler OnGetMushroom;
@@ -23,72 +23,86 @@
 
         public static void Quit()
         {
-            OnQuit();
+            if (OnQuit != null)
+                OnQuit();
         }
 
         public static void Reset()
         {
-            OnReset();
+            if (OnReset != null)
+                OnReset();
         }
 
         public static void MoveLeft()
         {
-            OnMoveLeft();
+            if (OnMoveLeft != null)
+                OnMoveLeft();
         }
 
         public static void MoveRight()
         {
-            OnMoveRight();
+            if (OnMoveRight != null)
+                OnMoveRight();
         }
 
         public static void Jump()
         {
-            OnJump();
+            if (OnJump != null)
+                OnJump();
         }
 
         public static void Crouch()
         {
-            OnCrouch();
+            if (OnCrouch != null)
+                OnCrouch();
         }
 
         public static void Fire()
         {
-            OnFire();
+            if (OnFire != null)
+                OnFire();
         }
 
         public static void MarioDamage()
         {
-            OnMarioDamage();
+            if (OnMarioDamage != null)
+                OnMarioDamage();
         }
 
         public static void MarioDie()
         {
-            OnMarioDie();
+            if (OnMarioDie != null)
+                OnMarioDie();
         }
 
         public static void GetMushroom()
         {
-            OnGetMushroom();
+            if (OnGetMushroom != null)
+                OnGetMushroom();
         }
 
         public static void GetFireFlower()
         {
-            OnGetFireFlower();
+            if (OnGetFireFlower != null)
+                OnGetFireFlower();
         }
 
         public static void UseQuestionBlock()
         {
-            OnUseQuestionBlock();
+            if (OnUseQuestionBlock != null)
+                OnUseQuestionBlock();
         }
 
         public static void DestroyBrickBlock()
         {
-            OnDestroyBrickBlock();
+            if (OnDestroyBrickBlock != null)
+                OnDestroyBrickBlock();
         }
 
         public static void UseHiddenBlock()
         {
-            OnUseHiddenBlock();
+            if (OnUseHiddenBlock != null)
+                OnUseHiddenBlock();
         }
     }
 }

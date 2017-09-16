@@ -28,7 +28,7 @@ namespace Lasagna
             goombaDieSheet = content.Load<Texture2D>("EnemySprites/Goomba_Die");
             goombaWalkSheet = content.Load<Texture2D>("EnemySprites/Goomba_Walk");
             koopaDieSheet = content.Load<Texture2D>("EnemySprites/Koopa_Die");
-            koopaWalkSheet = content.Load<Texture2D>("EnemySprites/Koopaa_Walk");
+            koopaWalkSheet = content.Load<Texture2D>("EnemySprites/Koopa_Walk");
         }
 
         public NonAnimatedSprite CreateSprite_Goomba_Die()
