@@ -17,7 +17,6 @@ namespace Lasagna
         ISprite marioRunning;
         ISprite currentSprite;
 
-
         public MarioGame()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -42,7 +41,11 @@ namespace Lasagna
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            EnemySpriteFactory.Instance.LoadAllContent(Content);
+            ItemSpriteFactory.Instance.LoadAllContent(Content);
             MarioSpriteFactory.Instance.LoadAllContent(Content);
+            ProjectileSpriteFactory.Instance.LoadAllContent(Content);
+            TileSpriteFactory.Instance.LoadAllContent(Content);
 
             ///TODO: TEMP CODE TO DEMONSTRATE SPRITES
             marioStanding = MarioSpriteFactory.Instance.CreateSprite_MarioStanding();
