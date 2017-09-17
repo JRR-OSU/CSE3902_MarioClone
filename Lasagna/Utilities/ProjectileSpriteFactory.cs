@@ -29,12 +29,12 @@ namespace Lasagna
 
         public AnimatedSprite CreateSprite_Fireball_Default()
         {
-            return new AnimatedSprite(fireballDefaultSheet, 4, 1, 8, 8, 24);
+            return new AnimatedSprite(fireballDefaultSheet, 4, 1, 16, 16, 12);
         }
 
         public AnimatedSprite CreateSprite_Fireball_Explode()
         {
-            return new AnimatedSprite(fireballExplodeSheet, 3, 1, 16, 16, 24);
+            return new AnimatedSprite(fireballExplodeSheet, 3, 1, 32, 32, 12);
         }
     }
 }
