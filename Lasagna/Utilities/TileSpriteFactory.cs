@@ -43,47 +43,47 @@ namespace Lasagna
 
         public NonAnimatedSprite CreateSprite_BreakableBrick()
         {
-            return new NonAnimatedSprite(breakableBrickSheet, 16, 16);
+            return new NonAnimatedSprite(breakableBrickSheet, 32, 32);
         }
 
         public NonAnimatedSprite CreateSprite_Floor()
         {
-            return new NonAnimatedSprite(floorSheet, 16, 16);
+            return new NonAnimatedSprite(floorSheet, 32, 32);
         }
 
         public NonAnimatedSprite CreateSprite_ItemBlockUsed()
         {
-            return new NonAnimatedSprite(itemBlockUsedSheet, 16, 16);
+            return new NonAnimatedSprite(itemBlockUsedSheet, 32, 32);
         }
 
         public NonAnimatedSprite CreateSprite_Pipe_Base()
         {
-            return new NonAnimatedSprite(pipeBaseSheet, 32, 16);
+            return new NonAnimatedSprite(pipeBaseSheet, 64, 32);
         }
 
         public NonAnimatedSprite CreateSprite_Pipe_Tip()
         {
-            return new NonAnimatedSprite(pipeTipSheet, 32, 32);
+            return new NonAnimatedSprite(pipeTipSheet, 64, 64);
         }
 
         public AnimatedSprite CreateSprite_QuestionBlock()
         {
-            return new AnimatedSprite(questionBlockSheet, 3, 1, 16, 16, 24);
+            return new AnimatedSprite(questionBlockSheet, 3, 1, 32, 32, 8);
         }
 
         public NonAnimatedSprite CreateSprite_UnbreakableBlock()
         {
-            return new NonAnimatedSprite(unbreakableBlockSheet, 16, 16);
+            return new NonAnimatedSprite(unbreakableBlockSheet, 32, 32);
         }
 
         public NonAnimatedSprite CreateSprite_Flag()
         {
-            return new NonAnimatedSprite(flagSheet, 16, 16);
+            return new NonAnimatedSprite(flagSheet, 32, 32);
         }
 
         public NonAnimatedSprite CreateSprite_FlagPole()
         {
-            return new NonAnimatedSprite(flagPoleSheet, 8, 152);
+            return new NonAnimatedSprite(flagPoleSheet, 16, 304);
         }
     }
 }
