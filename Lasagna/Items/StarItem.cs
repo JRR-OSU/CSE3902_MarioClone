@@ -10,10 +10,15 @@ namespace Lasagna.Items
 {
     class StarItem
     {
-        public void CreateOneStar(GameTime gameTime, SpriteBatch spriteBatch, int X, int Y)
+        ISprite powerupStar = ItemSpriteFactory.Instance.CreateSprite_Star();
+        public void Update(GameTime gameTime, int X, int Y)
         {
-            ISprite powerupStar = ItemSpriteFactory.Instance.CreateSprite_Star();
+
             powerupStar.Update(gameTime, X, Y);
+            
+        }
+        public void Draw(SpriteBatch spriteBatch)
+        {
             powerupStar.Draw(spriteBatch);
         }
     }

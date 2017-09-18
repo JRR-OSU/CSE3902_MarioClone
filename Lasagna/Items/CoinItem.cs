@@ -10,10 +10,15 @@ namespace Lasagna.Items
 {
     class CoinItem
     {
-        public void CreateOneCoin(GameTime gameTime, SpriteBatch spriteBatch, int X, int Y)
+        ISprite rotatedCoin = ItemSpriteFactory.Instance.CreateSprite_Coin();
+        public void Update(GameTime gameTime, int X, int Y)
         {
-            ISprite rotatedCoin = ItemSpriteFactory.Instance.CreateSprite_Coin();
+            
             rotatedCoin.Update(gameTime, X, Y);
+            
+        }
+        public void Draw(SpriteBatch spriteBatch)
+        {
             rotatedCoin.Draw(spriteBatch);
         }
     }

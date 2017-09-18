@@ -10,10 +10,15 @@ namespace Lasagna.Items
 {
     class FireFlowerItem
     {
-        public void CreateOneFlower(GameTime gameTime, SpriteBatch spriteBatch, int X, int Y)
+        ISprite fireFlower = ItemSpriteFactory.Instance.CreateSprite_FireFlower();
+        public void Update(GameTime gameTime, int X, int Y)
         {
-            ISprite fireFlower = ItemSpriteFactory.Instance.CreateSprite_FireFlower();
+            
             fireFlower.Update(gameTime, X, Y);
+            
+        }
+        public void Draw(SpriteBatch spriteBatch)
+        {
             fireFlower.Draw(spriteBatch);
         }
     }

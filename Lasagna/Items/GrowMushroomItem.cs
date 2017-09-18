@@ -10,10 +10,13 @@ namespace Lasagna.Items
 {
     class GrowMushroomItem
     {
-        public void CreateOneGrowmushroom(GameTime gameTime, SpriteBatch spriteBatch, int X, int Y)
+        ISprite upMushroom = ItemSpriteFactory.Instance.CreateSprite_1UpMushroom();
+        public void Update(GameTime gameTime, int X, int Y)
         {
-            ISprite upMushroom = ItemSpriteFactory.Instance.CreateSprite_1UpMushroom();
             upMushroom.Update(gameTime, X, Y);
+        }
+        public void Draw(SpriteBatch spriteBatch)
+        {
             upMushroom.Draw(spriteBatch);
         }
     }

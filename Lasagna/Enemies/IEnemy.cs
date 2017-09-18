@@ -10,6 +10,8 @@ namespace Lasagna
 {
     interface IEnemy
     {
-        void CreateOneWalkingGoomba(GameTime gameTime, SpriteBatch spriteBatch, int X, int Y);
+        void changeState();
+        void Update(GameTime gameTime, int X, int Y);
+        void Draw(SpriteBatch spriteBatch);
     }
 }

@@ -10,10 +10,7 @@ namespace Lasagna.Items
 {
     interface IItem
     {
-        void CreateOneGrowmushroom(GameTime gameTime, SpriteBatch spriteBatch, int X, int Y);
-        void CreateOneCoin(GameTime gameTime, SpriteBatch spriteBatch, int X, int Y);
-        void CreateOneLifemushroom(GameTime gameTime, SpriteBatch spriteBatch, int X, int Y);
-        void CreateOneStar(GameTime gameTime, SpriteBatch spriteBatch, int X, int Y);
-        void CreateOneFlower(GameTime gameTime, SpriteBatch spriteBatch, int X, int Y);
+        void Update(GameTime gameTime, int X, int Y);
+        void Draw(SpriteBatch spriteBatch);
     }
 }

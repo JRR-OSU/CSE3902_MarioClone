@@ -10,11 +10,21 @@ namespace Lasagna.Enemies
 {
     class KoopaEnemy
     {
-        public void CreateOneWalkingKoopa(GameTime gameTime, SpriteBatch spriteBatch, int X, int Y)
+        private ISprite currentSprite;
+        private ISprite koopaWalk = EnemySpriteFactory.Instance.CreateSprite_Koopa_Walk();
+        private ISprite koopaDead = EnemySpriteFactory.Instance.CreateSprite_Koopa_Die();
+
+        public void changeState()
         {
-            ISprite koopa = EnemySpriteFactory.Instance.CreateSprite_Koopa_Walk();
-            koopa.Update(gameTime, X, Y);
-            koopa.Draw(spriteBatch);
+            this.currentSprite = koopaWalk;
+        }
+        public void Update(GameTime gameTime, int X, int Y)
+        {
+            this.currentSprite.Update(gameTime, X, Y);
+        }
+        public void Draw(SpriteBatch spriteBatch)
+        {
+            this.currentSprite.Draw(spriteBatch);
         }
     }
 }
