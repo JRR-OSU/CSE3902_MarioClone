@@ -48,7 +48,7 @@ namespace Lasagna
             //tiles.Add(new InvisibleItemBlockTile(280, 200));
             tiles.Add(new QuestionBlockTile(210, 200));
             tiles.Add(new UnbreakableBlockTile(70, 200));
-            //tiles.Add(new WarpPipeTile(420, 200));
+            tiles.Add(new WarpPipeTile(420, 200));
         }
 
         protected override void Update(GameTime gameTime)
