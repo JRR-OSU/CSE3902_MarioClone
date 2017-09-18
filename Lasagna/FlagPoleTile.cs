@@ -11,25 +11,28 @@ namespace Lasagna
         /// State = 0 : Not moving, State = 1 : Moving down
         /// </summary>
         private int State = 0;
-        public void ChangeState()
+		ISprite flag = TileSpriteFactory.Instance.CreateSprite_Flag();
+		ISprite flagPole = TileSpriteFactory.Instance.CreateSprite_FlagPole();
+
+
+		public void ChangeState()
         {
             this.State = 1;
         }
-        public void Update(GameTime gameTime, SpriteBatch spriteBatch, int spriteXPos, int spriteYPos)
+        public void Update(GameTime gameTime, int spriteXPos, int spriteYPos)
         {
-            ISprite flag = TileSpriteFactory.Instance.CreateSprite_Flag();
-            flag.Update(gameTime, spriteXPos, spriteYPos);
-            flag.Draw(spriteBatch);
+            this.flag.Update(gameTime, spriteXPos, spriteYPos);
             spriteXPos += 32;
 
-            ISprite flagPole = TileSpriteFactory.Instance.CreateSprite_FlagPole();
-            flagPole.Update(gameTime, spriteXPos, spriteYPos);
-            flagPole.Draw(spriteBatch);
+            this.flagPole.Update(gameTime, spriteXPos, spriteYPos);
             if (this.State == 1)
             {
                 //Move flag down
             }
         }
-        
+        public void Draw(SpriteBatch spriteBatch) {
+            this.flag.Draw(spriteBatch);
+            this.flagPole.Draw(spriteBatch);
+        }
     }
 }
