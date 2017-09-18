@@ -26,9 +26,7 @@ namespace Lasagna
         public void Update(GameTime gameTime)
         {
             this.flag.Update(gameTime, spriteXPos, spriteYPos);
-            spriteXPos += 32;
-
-            this.flagPole.Update(gameTime, this.spriteXPos, this.spriteYPos);
+            this.flagPole.Update(gameTime, this.spriteXPos, this.spriteYPos + 32);
             if (this.State == 1)
             {
                 //Move flag down

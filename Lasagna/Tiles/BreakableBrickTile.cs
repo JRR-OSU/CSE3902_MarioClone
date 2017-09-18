@@ -12,8 +12,8 @@ namespace Lasagna
         private int spriteXPos;
         private int spriteYPos;
 		private ISprite Unbreaked = TileSpriteFactory.Instance.CreateSprite_BreakableBrick();
-        private ISprite Breaking; //Reserved
-		private ISprite Broke;
+        private ISprite Breaking; //Reserved for breaking tile sprite.
+		private ISprite Broke; //Maybe it is not needed, needed to be fixed later.
 		private ISprite currentState;
 
         public BreakableBrickTile(int spriteXPos, int spriteYPos)
@@ -38,12 +38,18 @@ namespace Lasagna
             else if (this.State == 2) {
                 this.currentState = this.Broke;
             }
-			this.currentState.Update(gameTime, this.spriteXPos, this.spriteYPos);
+            if (this.State == 0 || this.State == 1)
+            {
+                this.currentState.Update(gameTime, this.spriteXPos, this.spriteYPos);
+            }
 		}
 
 		public void Draw(SpriteBatch spriteBatch)
 		{
-			this.currentState.Draw(spriteBatch);
+            if (this.State == 0 || this.State == 1)
+            {
+                this.currentState.Draw(spriteBatch);
+            }
 		}
     }
 }
