@@ -38,6 +38,5 @@ namespace Lasagna
         public void Draw(SpriteBatch spriteBatch) {
             this.currentState.Draw(spriteBatch);
         }
-        public void SpawnItem(GameTime gameTime, SpriteBatch spriteBatch, int spriteXPos, int spriteYPos) { }
     }
 }

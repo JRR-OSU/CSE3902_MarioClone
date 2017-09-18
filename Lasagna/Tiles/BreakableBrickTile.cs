@@ -45,7 +45,5 @@ namespace Lasagna
 		{
 			this.currentState.Draw(spriteBatch);
 		}
-
-        public void SpawnItem(GameTime gameTime, SpriteBatch spriteBatch, int spriteXPos, int spriteYPos) { }
     }
 }
