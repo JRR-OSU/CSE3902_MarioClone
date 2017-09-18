@@ -42,9 +42,18 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AnimatedSprite.cs" />
+    <Compile Include="InvisibleItemBlockTile.cs" />
+    <Compile Include="BreakableBrickTile.cs" />
+    <Compile Include="FloorBlockTile.cs" />
+    <Compile Include="FlagPoleTile.cs" />
+    <Compile Include="WarpPipeTile.cs" />
+    <Compile Include="UnbreakableBlockTile.cs" />
+    <Compile Include="QuestionBlockTile.cs" />
     <Compile Include="Enemies\KoopaEnemy.cs" />
     <Compile Include="Enemies\GoombaEnemy.cs" />
     <Compile Include="Enemies\IEnemy.cs" />
+    <Compile Include="Interfaces\IProjectile.cs" />
+    <Compile Include="Interfaces\ITile.cs" />
     <Compile Include="Items\GrowMushroomItem.cs" />
     <Compile Include="Items\LifeMushroomItem.cs" />
     <Compile Include="Items\FireFlowerItem.cs" />
