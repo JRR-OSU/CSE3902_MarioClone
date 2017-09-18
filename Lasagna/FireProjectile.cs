@@ -9,14 +9,21 @@ namespace Lasagna
         /// State = 0 : Not exploded, State = 1 : Exploded
         /// </summary>
         private int State = 0;
+        private int spriteXPos;
+        private int spriteYPos;
         private ISprite fireballDefault = ProjectileSpriteFactory.Instance.CreateSprite_Fireball_Default();
         private ISprite fireballExplode = ProjectileSpriteFactory.Instance.CreateSprite_Fireball_Explode();
         private ISprite currentState;
+        public FireProjectile(int spriteXPos, int spriteYPos)
+        {
+            this.spriteXPos = spriteXPos;
+            this.spriteYPos = spriteYPos;
+        }
         public void ChangeState()
         {
             this.State = 1;
         }
-        public void Update(GameTime gameTime, int spriteXPos, int spriteYPos)
+        public void Update(GameTime gameTime)
         {
             if (this.State == 0)
             {
@@ -26,7 +33,7 @@ namespace Lasagna
             {
                 this.currentState = this.fireballExplode;
             }
-            this.currentState.Update(gameTime, spriteXPos, spriteYPos);
+            this.currentState.Update(gameTime, this.spriteXPos, this.spriteYPos);
 
 		}
         public void Draw(SpriteBatch spriteBatch) {

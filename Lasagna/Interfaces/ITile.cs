@@ -6,7 +6,7 @@ namespace Lasagna
     interface ITile
     {
         void ChangeState();
-        void Update(GameTime gameTime, int spriteXPos, int spriteYPos);
+        void Update(GameTime gameTime);
         void Draw(SpriteBatch spriteBatch);
     }
 }

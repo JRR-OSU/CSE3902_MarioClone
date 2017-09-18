@@ -6,7 +6,7 @@ namespace Lasagna
     interface IProjectile
     {
         void ChangeState();
-        void Update(GameTime gameTime, int spriteXPos, int spriteYPos);
+        void Update(GameTime gameTime);
         void Draw(SpriteBatch spriteBatch);
     }
 }
