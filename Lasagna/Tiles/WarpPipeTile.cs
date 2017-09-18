@@ -13,7 +13,6 @@ namespace Lasagna
         private int height = 0;
         private int spriteXPos;
         private int spriteYPos;
-        private ISprite pipeBase = TileSpriteFactory.Instance.CreateSprite_Pipe_Base();
         private ISprite pipeTip = TileSpriteFactory.Instance.CreateSprite_Pipe_Tip();
         private ISprite[] pipeBases;
         public WarpPipeTile(int spriteXPos, int spriteYPos, int height)
@@ -24,7 +23,7 @@ namespace Lasagna
             pipeBases = new ISprite[height];
             for (int i = 0; i < this.height; i ++)
             {
-                pipeBases[i] = pipeBase;
+                pipeBases[i] = TileSpriteFactory.Instance.CreateSprite_Pipe_Base();
             }
         }
         public void ChangeState()
@@ -34,7 +33,7 @@ namespace Lasagna
         public void Update(GameTime gameTime)
         {
             int tempYPos = this.spriteYPos;
-            for (int i = 1; i < this.height; i++)
+            for (int i = 0; i < this.height; i++)
             {
                 this.pipeBases[i].Update(gameTime, this.spriteXPos, tempYPos);
                 tempYPos -= 32;
@@ -46,7 +45,7 @@ namespace Lasagna
             }
         }
         public void Draw(SpriteBatch spriteBatch) {
-            for (int i = 1; i < this.height; i++)
+            for (int i = 0; i < this.height; i++)
             {
                 this.pipeBases[i].Draw(spriteBatch);
             }
