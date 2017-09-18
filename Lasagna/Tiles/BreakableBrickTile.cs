@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
-using System.Diagnostics;
 using Lasagna.Interfaces;
 
 namespace Lasagna
@@ -16,10 +15,12 @@ namespace Lasagna
         private ISprite Breaking; //Reserved
 		private ISprite Broke;
 		private ISprite currentState;
+
         public void ChangeState()
         {
             this.State ++;
         }
+
         public void Update(GameTime gameTime, int spriteXPos, int spriteYPos)
         {
             if (this.State == 0) {
@@ -33,10 +34,12 @@ namespace Lasagna
             }
 			this.currentState.Update(gameTime, spriteXPos, spriteYPos);
 		}
+
 		public void Draw(SpriteBatch spriteBatch)
 		{
 			this.currentState.Draw(spriteBatch);
 		}
+
         public void SpawnItem(GameTime gameTime, SpriteBatch spriteBatch, int spriteXPos, int spriteYPos) { }
     }
 }
