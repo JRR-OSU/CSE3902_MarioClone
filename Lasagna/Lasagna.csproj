@@ -42,6 +42,15 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AnimatedSprite.cs" />
+    <Compile Include="Enemies\KoopaEnemy.cs" />
+    <Compile Include="Enemies\GoombaEnemy.cs" />
+    <Compile Include="Enemies\IEnemy.cs" />
+    <Compile Include="Items\GrowMushroomItem.cs" />
+    <Compile Include="Items\LifeMushroomItem.cs" />
+    <Compile Include="Items\FireFlowerItem.cs" />
+    <Compile Include="Items\StarItem.cs" />
+    <Compile Include="Items\CoinItem.cs" />
+    <Compile Include="Items\IItem.cs" />
     <Compile Include="Mario.cs" />
     <Compile Include="NonAnimatedSprite.cs" />
     <Compile Include="GamepadController.cs" />
@@ -73,6 +82,7 @@
     <MonoGameContentReference Include="Content\Content.mgcb" />
     <None Include="app.manifest" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
