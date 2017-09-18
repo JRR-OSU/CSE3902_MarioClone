@@ -32,13 +32,13 @@ namespace Lasagna
         }
         public void Update(GameTime gameTime)
         {
-            int tempYPos = this.spriteYPos;
+            this.pipeTip.Update(gameTime, this.spriteXPos, this.spriteYPos);
+            int tempYPos = this.spriteYPos + 64;
             for (int i = 0; i < this.height; i++)
             {
                 this.pipeBases[i].Update(gameTime, this.spriteXPos, tempYPos);
-                tempYPos -= 32;
+                tempYPos += 32;
             }
-            this.pipeTip.Update(gameTime, this.spriteXPos, tempYPos);
             if (this.State == 0)
             {
                 //Spawn flower at the tip
