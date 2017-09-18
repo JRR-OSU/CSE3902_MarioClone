@@ -12,7 +12,7 @@ namespace Lasagna
             this.spriteXPos = spriteXPos;
             this.spriteYPos = spriteYPos;
         }
-        private ISprite currentState = TileSpriteFactory.Instance.CreateSprite_ItemBlockUsed();
+        private ISprite currentState = TileSpriteFactory.Instance.CreateSprite_UnbreakableBlock();
         public void ChangeState()
         {
             return;

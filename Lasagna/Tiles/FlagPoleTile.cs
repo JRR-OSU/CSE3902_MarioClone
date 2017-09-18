@@ -25,16 +25,16 @@ namespace Lasagna
         }
         public void Update(GameTime gameTime)
         {
-            this.flag.Update(gameTime, spriteXPos, spriteYPos);
-            this.flagPole.Update(gameTime, this.spriteXPos, this.spriteYPos + 32);
+            this.flagPole.Update(gameTime, this.spriteXPos, this.spriteYPos);
+            this.flag.Update(gameTime, spriteXPos - 24, spriteYPos + 16);
             if (this.State == 1)
             {
                 //Move flag down
             }
         }
         public void Draw(SpriteBatch spriteBatch) {
-            this.flag.Draw(spriteBatch);
             this.flagPole.Draw(spriteBatch);
+            this.flag.Draw(spriteBatch);
         }
     }
 }

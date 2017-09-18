@@ -43,12 +43,12 @@ namespace Lasagna
 
             ///TODO: This is temporary for Sprint2
             tiles.Add(new BreakableBrickTile(280, 200));
-            //tiles.Add(new FlagPoleTile(670, 200));
+            tiles.Add(new FlagPoleTile(670, 80));
             tiles.Add(new FloorBlockTile(350, 200));
-            //tiles.Add(new InvisibleItemBlockTile(280, 200));
+            tiles.Add(new InvisibleItemBlockTile(280, 200));
             tiles.Add(new QuestionBlockTile(210, 200));
             tiles.Add(new UnbreakableBlockTile(70, 200));
-            tiles.Add(new WarpPipeTile(420, 200));
+            tiles.Add(new WarpPipeTile(420, 200, 3));
         }
 
         protected override void Update(GameTime gameTime)
