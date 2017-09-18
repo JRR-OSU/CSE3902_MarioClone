@@ -1,6 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-
-namespace Lasagna
+﻿namespace Lasagna
 {
     public interface IController
     {
