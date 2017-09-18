@@ -7,15 +7,17 @@ namespace Lasagna
 {
     class UnbreakableBrickTile : ITile
     {
+        private ISprite currentState = TileSpriteFactory.Instance.CreateSprite_ItemBlockUsed();
         public void ChangeState()
         {
             return;
         }
-        public void Update(GameTime gameTime, SpriteBatch spriteBatch, int spriteXPos, int spriteYPos)
+        public void Update(GameTime gameTime, int spriteXPos, int spriteYPos)
         {
-            ISprite unbreakableBrick = TileSpriteFactory.Instance.CreateSprite_ItemBlockUsed();
-            unbreakableBrick.Update(gameTime, spriteXPos, spriteYPos);
-            unbreakableBrick.Draw(spriteBatch);
+            this.currentState.Update(gameTime, spriteXPos, spriteYPos);
+        }
+        public void Draw(SpriteBatch spriteBatch) {
+            this.currentState.Draw(spriteBatch);
         }
     }
 }
