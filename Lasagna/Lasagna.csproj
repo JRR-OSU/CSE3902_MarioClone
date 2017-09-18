@@ -42,12 +42,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AnimatedSprite.cs" />
-    <Compile Include="MissleProjectile.cs" />
+    <Compile Include="Projectiles\MissleProjectile.cs" />
     <Compile Include="Tiles\InvisibleItemBlockTile.cs" />
     <Compile Include="Tiles\BreakableBrickTile.cs" />
     <Compile Include="Tiles\FloorBlockTile.cs" />
     <Compile Include="Tiles\FlagPoleTile.cs" />
-    <Compile Include="FireProjectile.cs" />
+    <Compile Include="Projectiles\FireProjectile.cs" />
     <Compile Include="Tiles\WarpPipeTile.cs" />
     <Compile Include="Tiles\UnbreakableBlockTile.cs" />
     <Compile Include="Tiles\QuestionBlockTile.cs" />
