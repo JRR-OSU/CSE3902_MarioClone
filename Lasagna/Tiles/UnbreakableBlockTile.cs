@@ -3,11 +3,11 @@ using Microsoft.Xna.Framework;
 
 namespace Lasagna
 {
-    class UnbreakableBrickTile : ITile
+    class UnbreakableBlockTile : ITile
     {
         private int spriteXPos;
         private int spriteYPos;
-        public UnbreakableBrickTile(int spriteXPos, int spriteYPos)
+        public UnbreakableBlockTile(int spriteXPos, int spriteYPos)
         {
             this.spriteXPos = spriteXPos;
             this.spriteYPos = spriteYPos;

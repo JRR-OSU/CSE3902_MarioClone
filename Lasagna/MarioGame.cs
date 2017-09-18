@@ -40,19 +40,28 @@ namespace Lasagna
             MarioSpriteFactory.Instance.LoadAllContent(Content);
             ProjectileSpriteFactory.Instance.LoadAllContent(Content);
             TileSpriteFactory.Instance.LoadAllContent(Content);
+
+            ///TODO: This is temporary for Sprint2
+            tiles.Add(new BreakableBrickTile(280, 200));
+            //tiles.Add(new FlagPoleTile(670, 200));
+            tiles.Add(new FloorBlockTile(350, 200));
+            //tiles.Add(new InvisibleItemBlockTile(280, 200));
+            tiles.Add(new QuestionBlockTile(210, 200));
+            tiles.Add(new UnbreakableBlockTile(70, 200));
+            //tiles.Add(new WarpPipeTile(420, 200));
         }
 
         protected override void Update(GameTime gameTime)
         {
             keyControl.Update();
 
-            /*foreach (ITile t in tiles)
-                t.Update(gameTime);
-            foreach (IEnemy t in enemies)
-                t.Update(gameTime);
-            foreach (IItem t in items)
+            foreach (ITile t in tiles)
                 t.Update(gameTime);
             foreach (IProjectile t in projectiles)
+                t.Update(gameTime);
+            /*foreach (IEnemy t in enemies)
+                t.Update(gameTime);
+            foreach (IItem t in items)
                 t.Update(gameTime);*/
 
             base.Update(gameTime);
