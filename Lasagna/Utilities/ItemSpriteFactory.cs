@@ -35,27 +35,27 @@ namespace Lasagna
 
         public NonAnimatedSprite CreateSprite_1UpMushroom()
         {
-            return new NonAnimatedSprite(lifeMushroomSheet, 16, 16);
+            return new NonAnimatedSprite(lifeMushroomSheet, 32, 32);
         }
 
         public AnimatedSprite CreateSprite_Coin()
         {
-            return new AnimatedSprite(coinSheet, 4, 1, 16, 16, 24);
+            return new AnimatedSprite(coinSheet, 4, 1, 32, 32, 8);
         }
 
         public AnimatedSprite CreateSprite_FireFlower()
         {
-            return new AnimatedSprite(fireFlowerSheet, 4, 1, 16, 16, 24);
+            return new AnimatedSprite(fireFlowerSheet, 4, 1, 32, 32, 8);
         }
 
         public NonAnimatedSprite CreateSprite_PowerupMushroom()
         {
-            return new NonAnimatedSprite(mushroomSheet, 16, 16);
+            return new NonAnimatedSprite(mushroomSheet, 32, 32);
         }
 
         public AnimatedSprite CreateSprite_Star()
         {
-            return new AnimatedSprite(starSheet, 4, 1, 14, 16, 24);
+            return new AnimatedSprite(starSheet, 4, 1, 28, 32, 8);
         }
     }
 }

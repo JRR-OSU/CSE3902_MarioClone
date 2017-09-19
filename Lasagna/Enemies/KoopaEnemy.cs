@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Lasagna
 {
-    class KoopaEnemy
+    class KoopaEnemy : IEnemy
     {
         private ISprite currentSprite;
         private ISprite koopaWalk = EnemySpriteFactory.Instance.CreateSprite_Koopa_Walk();

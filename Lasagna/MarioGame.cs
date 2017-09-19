@@ -44,20 +44,21 @@ namespace Lasagna
 
             ///TODO: This is temporary for Sprint2
             tiles.Add(new BreakableBrickTile(280, 200));
-            tiles.Add(new FlagPoleTile(670, 80));
+            tiles.Add(new FlagPoleTile(560, 80));
             tiles.Add(new FloorBlockTile(350, 200));
             tiles.Add(new InvisibleItemBlockTile(140, 200));
             tiles.Add(new QuestionBlockTile(210, 200));
             tiles.Add(new UnbreakableBlockTile(70, 200));
             tiles.Add(new WarpPipeTile(420, 200, 3));
 
-            items.Add(new CoinItem(16, 16));
-            items.Add(new FireFlowerItem(50, 16));
-            items.Add(new GrowMushroomItem(90, 16));
-            items.Add(new LifeMushroomItem(140, 16));
-            items.Add(new StarItem(190, 16));
+            items.Add(new CoinItem(140, 100));
+            items.Add(new FireFlowerItem(70, 100));
+            items.Add(new GrowMushroomItem(210, 100));
+            items.Add(new LifeMushroomItem(280, 100));
+            items.Add(new StarItem(350, 100));
 
-            enemies.Add(new GoombaEnemy(16, 40));
+            enemies.Add(new GoombaEnemy(420, 132));
+            enemies.Add(new KoopaEnemy(490, 132));
 
             players.Add(new Mario(200, 300));
         }
