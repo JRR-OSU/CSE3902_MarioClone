@@ -18,6 +18,8 @@ namespace Lasagna
         {
             this.spriteXPos = spriteXPos;
             this.spriteYPos = spriteYPos;
+            MarioEvents.OnUseHiddenBlock += ChangeToVisible;
+            MarioEvents.OnReset += ChangeToInvisible;
         }
         public void ChangeState()
         {

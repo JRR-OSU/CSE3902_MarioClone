@@ -33,21 +33,21 @@ namespace Lasagna
 
         public NonAnimatedSprite CreateSprite_Goomba_Die()
         {
-            return new NonAnimatedSprite(goombaDieSheet, 16, 8);
+            return new NonAnimatedSprite(goombaDieSheet, 32, 16);
         }
 
         public AnimatedSprite CreateSprite_Goomba_Walk()
         {
-            return new AnimatedSprite(goombaWalkSheet, 2, 1, 16, 16, 24);
+            return new AnimatedSprite(goombaWalkSheet, 2, 1, 32, 32, 8);
         }
         public AnimatedSprite CreateSprite_Koopa_Die()
         {
-            return new AnimatedSprite(koopaDieSheet, 2, 1, 16, 15, 24);
+            return new AnimatedSprite(koopaDieSheet, 2, 1, 32, 30, 8);
         }
 
         public AnimatedSprite CreateSprite_Koopa_Walk()
         {
-            return new AnimatedSprite(koopaWalkSheet, 2, 1, 16, 24, 24);
+            return new AnimatedSprite(koopaWalkSheet, 2, 1, 32, 48, 8);
         }
     }
 }

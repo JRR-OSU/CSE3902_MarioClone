@@ -109,157 +109,157 @@ namespace Lasagna
         
         public NonAnimatedSprite CreateSprite_MarioBig_CrouchLeft()
         {
-            return new NonAnimatedSprite(marioBigCrouchLeftSheet, 16, 22);
+            return new NonAnimatedSprite(marioBigCrouchLeftSheet, 32, 44);
         }
 
         public NonAnimatedSprite CreateSprite_MarioBig_CrouchRight()
         {
-            return new NonAnimatedSprite(marioBigCrouchRightSheet, 16, 22);
+            return new NonAnimatedSprite(marioBigCrouchRightSheet, 32, 44);
         }
 
         public NonAnimatedSprite CreateSprite_MarioBig_IdleLeft()
         {
-            return new NonAnimatedSprite(marioBigIdleLeftSheet, 16, 32);
+            return new NonAnimatedSprite(marioBigIdleLeftSheet, 32, 64);
         }
 
         public NonAnimatedSprite CreateSprite_MarioBig_IdleRight()
         {
-            return new NonAnimatedSprite(marioBigIdleRightSheet, 16, 32);
+            return new NonAnimatedSprite(marioBigIdleRightSheet, 32, 64);
         }
 
         public NonAnimatedSprite CreateSprite_MarioBig_JumpLeft()
         {
-            return new NonAnimatedSprite(marioBigJumpLeftSheet, 16, 32);
+            return new NonAnimatedSprite(marioBigJumpLeftSheet, 32, 64);
         }
 
         public NonAnimatedSprite CreateSprite_MarioBig_JumpRight()
         {
-            return new NonAnimatedSprite(marioBigJumpRightSheet, 16, 32);
+            return new NonAnimatedSprite(marioBigJumpRightSheet, 32, 64);
         }
 
         public AnimatedSprite CreateSprite_MarioBig_RunLeft()
         {
-            return new AnimatedSprite(marioBigRunLeftSheet, 3, 1, 16, 32, 24);
+            return new AnimatedSprite(marioBigRunLeftSheet, 3, 1, 32, 64, 24);
         }
 
         public AnimatedSprite CreateSprite_MarioBig_RunRight()
         {
-            return new AnimatedSprite(marioBigRunRightSheet, 3, 1, 16, 32, 24);
+            return new AnimatedSprite(marioBigRunRightSheet, 3, 1, 32, 64, 24);
         }
 
         public NonAnimatedSprite CreateSprite_MarioBig_TurnLeft()
         {
-            return new NonAnimatedSprite(marioBigTurnLeftSheet, 16, 32);
+            return new NonAnimatedSprite(marioBigTurnLeftSheet, 32, 64);
         }
 
         public NonAnimatedSprite CreateSprite_MarioBig_TurnRight()
         {
-            return new NonAnimatedSprite(marioBigTurnRightSheet, 16, 32);
+            return new NonAnimatedSprite(marioBigTurnRightSheet, 32, 64);
         }
 
         public NonAnimatedSprite CreateSprite_MarioFire_CrouchLeft()
         {
-            return new NonAnimatedSprite(marioFireCrouchLeftSheet, 16, 22);
+            return new NonAnimatedSprite(marioFireCrouchLeftSheet, 32, 44);
         }
 
         public NonAnimatedSprite CreateSprite_MarioFire_CrouchRight()
         {
-            return new NonAnimatedSprite(marioFireCrouchRightSheet, 16, 22);
+            return new NonAnimatedSprite(marioFireCrouchRightSheet, 32, 44);
         }
 
         public NonAnimatedSprite CreateSprite_MarioFire_IdleLeft()
         {
-            return new NonAnimatedSprite(marioFireIdleLeftSheet, 16, 32);
+            return new NonAnimatedSprite(marioFireIdleLeftSheet, 32, 64);
         }
 
         public NonAnimatedSprite CreateSprite_MarioFire_IdleRight()
         {
-            return new NonAnimatedSprite(marioFireIdleRightSheet, 16, 32);
+            return new NonAnimatedSprite(marioFireIdleRightSheet, 32, 64);
         }
 
         public NonAnimatedSprite CreateSprite_MarioFire_JumpLeft()
         {
-            return new NonAnimatedSprite(marioFireJumpLeftSheet, 16, 32);
+            return new NonAnimatedSprite(marioFireJumpLeftSheet, 32, 64);
         }
 
         public NonAnimatedSprite CreateSprite_MarioFire_JumpRight()
         {
-            return new NonAnimatedSprite(marioFireJumpRightSheet, 16, 32);
+            return new NonAnimatedSprite(marioFireJumpRightSheet, 32, 64);
         }
 
         public AnimatedSprite CreateSprite_MarioFire_RunLeft()
         {
-            return new AnimatedSprite(marioFireRunLeftSheet, 3, 1, 16, 32, 24);
+            return new AnimatedSprite(marioFireRunLeftSheet, 3, 1, 32, 64, 24);
         }
 
         public AnimatedSprite CreateSprite_MarioFire_RunRight()
         {
-            return new AnimatedSprite(marioFireRunRightSheet, 3, 1, 16, 32, 24);
+            return new AnimatedSprite(marioFireRunRightSheet, 3, 1, 32, 64, 24);
         }
 
         public NonAnimatedSprite CreateSprite_MarioFire_TurnLeft()
         {
-            return new NonAnimatedSprite(marioFireTurnLeftSheet, 16, 32);
+            return new NonAnimatedSprite(marioFireTurnLeftSheet, 32, 64);
         }
 
         public NonAnimatedSprite CreateSprite_MarioFire_TurnRight()
         {
-            return new NonAnimatedSprite(marioFireTurnRightSheet, 16, 32);
+            return new NonAnimatedSprite(marioFireTurnRightSheet, 32, 64);
         }
 
         public NonAnimatedSprite CreateSprite_MarioSmall_Die()
         {
-            return new NonAnimatedSprite(marioSmallDieSheet, 16, 22);
+            return new NonAnimatedSprite(marioSmallDieSheet, 28, 28);
         }
 
         public NonAnimatedSprite CreateSprite_MarioSmall_GrowLeft()
         {
-            return new NonAnimatedSprite(marioSmallGrowLeftSheet, 16, 22);
+            return new NonAnimatedSprite(marioSmallGrowLeftSheet, 32, 48);
         }
 
         public NonAnimatedSprite CreateSprite_MarioSmall_GrowRight()
         {
-            return new NonAnimatedSprite(marioSmallGrowRightSheet, 16, 22);
+            return new NonAnimatedSprite(marioSmallGrowRightSheet, 32, 48);
         }
 
         public NonAnimatedSprite CreateSprite_MarioSmall_IdleLeft()
         {
-            return new NonAnimatedSprite(marioSmallIdleLeftSheet, 16, 32);
+            return new NonAnimatedSprite(marioSmallIdleLeftSheet, 24, 32);
         }
 
         public NonAnimatedSprite CreateSprite_MarioSmall_IdleRight()
         {
-            return new NonAnimatedSprite(marioSmallIdleRightSheet, 16, 32);
+            return new NonAnimatedSprite(marioSmallIdleRightSheet, 24, 32);
         }
 
         public NonAnimatedSprite CreateSprite_MarioSmall_JumpLeft()
         {
-            return new NonAnimatedSprite(marioSmallJumpLeftSheet, 16, 32);
+            return new NonAnimatedSprite(marioSmallJumpLeftSheet, 24, 32);
         }
 
         public NonAnimatedSprite CreateSprite_MarioSmall_JumpRight()
         {
-            return new NonAnimatedSprite(marioSmallJumpRightSheet, 16, 32);
+            return new NonAnimatedSprite(marioSmallJumpRightSheet, 24, 32);
         }
 
         public AnimatedSprite CreateSprite_MarioSmall_RunLeft()
         {
-            return new AnimatedSprite(marioSmallRunLeftSheet, 3, 1, 16, 32, 24);
+            return new AnimatedSprite(marioSmallRunLeftSheet, 3, 1, 30, 32, 24);
         }
 
         public AnimatedSprite CreateSprite_MarioSmall_RunRight()
         {
-            return new AnimatedSprite(marioSmallRunRightSheet, 3, 1, 16, 32, 24);
+            return new AnimatedSprite(marioSmallRunRightSheet, 3, 1, 30, 32, 24);
         }
 
         public NonAnimatedSprite CreateSprite_MarioSmall_TurnLeft()
         {
-            return new NonAnimatedSprite(marioSmallTurnLeftSheet, 16, 32);
+            return new NonAnimatedSprite(marioSmallTurnLeftSheet, 24, 32);
         }
 
         public NonAnimatedSprite CreateSprite_MarioSmall_TurnRight()
         {
-            return new NonAnimatedSprite(marioSmallTurnRightSheet, 16, 32);
+            return new NonAnimatedSprite(marioSmallTurnRightSheet, 24, 32);
         }
     }
 }

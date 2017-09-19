@@ -18,6 +18,8 @@ namespace Lasagna
         {
             this.spriteXPos = spriteXPos;
             this.spriteYPos = spriteYPos;
+            MarioEvents.OnUseQuestionBlock += ChangeToUsed;
+            MarioEvents.OnReset += ChangeToDefault;
         }
         public void ChangeState()
         {

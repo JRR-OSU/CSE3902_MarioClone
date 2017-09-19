@@ -20,6 +20,8 @@ namespace Lasagna
         {
             this.spriteXPos = spriteXPos;
             this.spriteYPos = spriteYPos;
+            MarioEvents.OnDestroyBrickBlock += ChangeToInvisible;
+            MarioEvents.OnReset += ChangeToDefault;
         }
 
         public void ChangeState()

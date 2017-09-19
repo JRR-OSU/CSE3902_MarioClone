@@ -14,7 +14,7 @@ namespace Lasagna
         private List<IEnemy> enemies = new List<IEnemy>();
         private List<IItem> items = new List<IItem>();
         private List<IProjectile> projectiles = new List<IProjectile>();
-        private IPlayer Mario;
+        private List<IPlayer> players = new List<IPlayer>();
 
         public MarioGame()
         {
@@ -46,7 +46,7 @@ namespace Lasagna
             tiles.Add(new BreakableBrickTile(280, 200));
             tiles.Add(new FlagPoleTile(670, 80));
             tiles.Add(new FloorBlockTile(350, 200));
-            tiles.Add(new InvisibleItemBlockTile(280, 200));
+            tiles.Add(new InvisibleItemBlockTile(140, 200));
             tiles.Add(new QuestionBlockTile(210, 200));
             tiles.Add(new UnbreakableBlockTile(70, 200));
             tiles.Add(new WarpPipeTile(420, 200, 3));
@@ -59,8 +59,7 @@ namespace Lasagna
 
             enemies.Add(new GoombaEnemy(16, 40));
 
-
-            Mario = new Mario(200,300);
+            players.Add(new Mario(200, 300));
         }
 
         protected override void Update(GameTime gameTime)
@@ -75,14 +74,16 @@ namespace Lasagna
                 t.Update(gameTime);
             foreach (IItem t in items)
                 t.Update(gameTime);
-            Mario.Update(gameTime);
-                base.Update(gameTime);
+            foreach (IPlayer p in players)
+                p.Update(gameTime);
+            
+            base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-            
+
             foreach (ITile t in tiles)
                 t.Draw(spriteBatch);
             foreach (IEnemy t in enemies)
@@ -91,8 +92,9 @@ namespace Lasagna
                 t.Draw(spriteBatch);
             foreach (IProjectile t in projectiles)
                 t.Draw(spriteBatch);
-
-            Mario.Draw(spriteBatch);
+            foreach (IPlayer p in players)
+                p.Draw(spriteBatch);
+            
             base.Draw(gameTime);
         }
 
