@@ -14,7 +14,6 @@ namespace Lasagna
     {
         private MarioStateMachine stateMachine;
 
-
         private int spriteXPos;
         private int spriteYPos;
 
@@ -37,18 +36,23 @@ namespace Lasagna
 
             MarioEvents.OnMarioDie +=Die;
 
+            MarioEvents.OnReset += Reset;
+
             spriteXPos = x;
             spriteYPos = y;
  
         }
 
-        // Later
+        private void Reset()
+        {
+            stateMachine.Reset();
+        }
+
         public void MarioFireProjectile()
         {
             stateMachine.MarioFireProjectile();
         }
 
-        // Later
         public void GetFireflower()
         {
             stateMachine.GetFireflower();
@@ -113,189 +117,264 @@ namespace Lasagna
 
         public class MarioStateMachine
         {
-            private bool facingLeft = true;
-
             private enum MarioState { Small, Big, Fire, Star, Dead };
             private enum MarioMovement { Crouched, StillLeft, StillRight, WalkingLeft, WalkingRight, RunningLeft, RunningRight, JumpingLeft, JumpingRight };
-            private MarioState currentState = MarioState.Small;
+            private MarioState marioState = MarioState.Small;
             private MarioMovement marioMovement = MarioMovement.StillRight;
 
             private ISprite currentSprite = MarioSpriteFactory.Instance.CreateSprite_MarioSmall_IdleRight();
-
-
-
-            // individual state values listed in class
-
-            // potential values
-
-            // States:
-            // jumping, direction, deadMario, fireMario, star
-            // 
-
-
-
-
-            // Logic to be implemented later
-            public void ChangeDirection()
-            {
-                if (marioMovement == MarioMovement.WalkingLeft)
-                {
-                    marioMovement = MarioMovement.WalkingRight;
-                }
-                else if (marioMovement == MarioMovement.WalkingRight)
-                {
-                    marioMovement = MarioMovement.WalkingLeft;
-                }
-
-
-                if (marioMovement == MarioMovement.JumpingLeft)
-                {
-                    marioMovement = MarioMovement.JumpingRight;
-                }
-                else if (marioMovement == MarioMovement.JumpingRight)
-                {
-                    marioMovement = MarioMovement.JumpingLeft;
-                }
-
-                if (marioMovement == MarioMovement.StillLeft)
-                {
-                    marioMovement = MarioMovement.StillRight;
-                }
-                else if (marioMovement == MarioMovement.StillRight)
-                {
-                    marioMovement = MarioMovement.StillLeft;
-                }
-                
-            }
-
-
-
 
             /// <summary>
             /// TODO: HANDLE SPRITE CHANGES VIA CHANGE SPRITE METHOD
             /// </summary>
             public void Grow()
             {
-                currentState = MarioState.Big;
+                marioState = MarioState.Big;
                 currentSprite = MarioSpriteFactory.Instance.CreateSprite_MarioBig_IdleRight();
             }
 
-
-            // Perhaps make this a toggle method?
             public void Fire()
             {
-
-                currentState = MarioState.Fire;
+                marioState = MarioState.Fire;
                 currentSprite = MarioSpriteFactory.Instance.CreateSprite_MarioFire_IdleRight();
-
             }
-
 
             public void MarioFireProjectile()
             {
-
+              
             }
-
-        // TRANSITIONAL STATE TO FIRE ?
+        
             public void GetFireflower()
             {
-                
+                // Perhaps used for a transitional state
             }
                 
             public void MoveLeft()
             {
-                if (currentState == MarioState.Dead)
+                if (marioState == MarioState.Dead)
                     return;
-                marioMovement = MarioMovement.WalkingLeft;
-           
-                    currentSprite = MarioSpriteFactory.Instance.CreateSprite_MarioSmall_RunLeft();
-                
-               
+                if (marioState == MarioState.Big)
+                {
+
+                    if (marioMovement == MarioMovement.WalkingLeft)
+                    {
+
+                        currentSprite = MarioSpriteFactory.Instance.CreateSprite_MarioBig_IdleLeft();
+                        marioMovement = MarioMovement.StillLeft;
+                    }
+                    else
+                    {
+                        marioMovement = MarioMovement.WalkingLeft;
+
+                        currentSprite = MarioSpriteFactory.Instance.CreateSprite_MarioBig_RunLeft();
+                    }
+                }
+                else if (marioState == MarioState.Fire)
+                {
+
+                    if (marioMovement == MarioMovement.WalkingLeft)
+                    {
+
+                        currentSprite = MarioSpriteFactory.Instance.CreateSprite_MarioFire_IdleLeft();
+                        marioMovement = MarioMovement.StillLeft;
+                    }
+                    else
+                    {
+                        marioMovement = MarioMovement.WalkingLeft;
+
+                        currentSprite = MarioSpriteFactory.Instance.CreateSprite_MarioFire_RunLeft();
+                    }
+                }
+                else if (marioState == MarioState.Small)
+                {
+
+                    if (marioMovement == MarioMovement.WalkingLeft)
+                    {
+
+                        currentSprite = MarioSpriteFactory.Instance.CreateSprite_MarioSmall_IdleLeft();
+                        marioMovement = MarioMovement.StillLeft;
+                    }
+                    else
+                    {
+                        marioMovement = MarioMovement.WalkingLeft;
+
+                        currentSprite = MarioSpriteFactory.Instance.CreateSprite_MarioSmall_RunLeft();
+                    }
+                }
+
             }
 
             public void MoveRight()
             {
-                if (currentState == MarioState.Dead)
+                if (marioState == MarioState.Dead)
                     return;
+                if (marioState == MarioState.Big)
+                {
 
-                marioMovement = MarioMovement.WalkingRight;
-             
-                    currentSprite = MarioSpriteFactory.Instance.CreateSprite_MarioSmall_RunRight();
-               
+                    if (marioMovement == MarioMovement.WalkingLeft)
+                    {
+
+                        currentSprite = MarioSpriteFactory.Instance.CreateSprite_MarioBig_IdleRight();
+                        marioMovement = MarioMovement.StillRight;
+                    }
+                    else
+                    {
+                        marioMovement = MarioMovement.WalkingRight;
+
+                        currentSprite = MarioSpriteFactory.Instance.CreateSprite_MarioBig_RunRight();
+                    }
+                }
+                else if (marioState == MarioState.Fire)
+                {
+
+                    if (marioMovement == MarioMovement.WalkingRight)
+                    {
+
+                        currentSprite = MarioSpriteFactory.Instance.CreateSprite_MarioFire_IdleRight();
+                        marioMovement = MarioMovement.StillRight;
+                    }
+                    else
+                    {
+                        marioMovement = MarioMovement.WalkingRight;
+
+                        currentSprite = MarioSpriteFactory.Instance.CreateSprite_MarioFire_RunRight();
+                    }
+                }
+                else if (marioState == MarioState.Small)
+                {
+
+                    if (marioMovement == MarioMovement.WalkingRight)
+                    {
+
+                        currentSprite = MarioSpriteFactory.Instance.CreateSprite_MarioSmall_IdleRight();
+                        marioMovement = MarioMovement.StillRight;
+                    }
+                    else
+                    {
+                        marioMovement = MarioMovement.WalkingRight;
+
+                        currentSprite = MarioSpriteFactory.Instance.CreateSprite_MarioSmall_RunRight();
+                    }
+                }
+
             }
-
 
             public void Crouch()
             {
-                if (currentState == MarioState.Dead)
+                if (marioState == MarioState.Dead)
                     return;
-
-                    if (marioMovement == MarioMovement.JumpingLeft || marioMovement == MarioMovement.JumpingRight){
+                if (marioMovement == MarioMovement.JumpingRight)
+                {
+                    marioMovement = MarioMovement.StillRight;
+                    if (marioState == MarioState.Big)
+                    {
                         currentSprite = MarioSpriteFactory.Instance.CreateSprite_MarioBig_IdleRight();
-                        marioMovement = MarioMovement.StillRight;
-                        return;
                     }
-                marioMovement = MarioMovement.Crouched;
-                if (marioMovement == MarioMovement.JumpingLeft || marioMovement == MarioMovement.JumpingRight)
-                    currentSprite = MarioSpriteFactory.Instance.CreateSprite_MarioBig_IdleRight();
-                currentSprite = MarioSpriteFactory.Instance.CreateSprite_MarioBig_CrouchRight();
+                    else if (marioState == MarioState.Fire)
+                    {
+                        currentSprite = MarioSpriteFactory.Instance.CreateSprite_MarioFire_IdleRight();
+                    }
+                    else if (marioState == MarioState.Small)
+                    {
+                        currentSprite = MarioSpriteFactory.Instance.CreateSprite_MarioSmall_IdleRight();
+                    }
+                }
+                else
+                {
+                        marioMovement = MarioMovement.Crouched;                     
+                        if (marioState == MarioState.Fire)
+                        {
+                            currentSprite = MarioSpriteFactory.Instance.CreateSprite_MarioFire_CrouchRight();
+                        }
+                        else
+                        {
+                            currentSprite = MarioSpriteFactory.Instance.CreateSprite_MarioBig_CrouchRight();
+                        }
+                    return; 
+                }
 
-             
             }
-
 
             public void Jump()
             {
-                if(currentState == MarioState.Dead)
+                if(marioState == MarioState.Dead)
                     return;
 
-                if(marioMovement == MarioMovement.Crouched)
+                if (marioMovement == MarioMovement.WalkingLeft)
                 {
-                    currentSprite = MarioSpriteFactory.Instance.CreateSprite_MarioBig_IdleRight();
-                    marioMovement = MarioMovement.StillRight;
+                    marioMovement = MarioMovement.JumpingLeft;
+                    if (marioState == MarioState.Big)
+                    {
+                        currentSprite = MarioSpriteFactory.Instance.CreateSprite_MarioBig_JumpLeft();
+                    }
+                    else if (marioState == MarioState.Fire)
+                    {
+                        currentSprite = MarioSpriteFactory.Instance.CreateSprite_MarioFire_JumpLeft();
+                    }
+                    else if (marioState == MarioState.Small)
+                    {
+                        currentSprite = MarioSpriteFactory.Instance.CreateSprite_MarioSmall_JumpLeft();
+                    }
                     return;
                 }
 
+                if (marioMovement != MarioMovement.Crouched)
+                {
+                    marioMovement = MarioMovement.JumpingRight;
+                    if (marioState == MarioState.Big)
+                    {
+                        currentSprite = MarioSpriteFactory.Instance.CreateSprite_MarioBig_JumpRight();
+                    }
+                    else if(marioState == MarioState.Fire)
+                    {
+                        currentSprite = MarioSpriteFactory.Instance.CreateSprite_MarioFire_JumpRight();
+                    }
+                    else if(marioState == MarioState.Small)
+                    {
+                        currentSprite = MarioSpriteFactory.Instance.CreateSprite_MarioSmall_JumpRight();
+                    }
+
+                }
+                else
+                {
+                    marioMovement = MarioMovement.StillRight;
+                    if (marioState == MarioState.Big)
+                    {
+                        currentSprite = MarioSpriteFactory.Instance.CreateSprite_MarioBig_IdleRight();
+                    }
+                    else if (marioState == MarioState.Fire)
+                    {
+                        currentSprite = MarioSpriteFactory.Instance.CreateSprite_MarioFire_IdleRight();
+                    }
+                    else if (marioState == MarioState.Small)
+                    {
+                        currentSprite = MarioSpriteFactory.Instance.CreateSprite_MarioSmall_IdleRight();
+                    }
+                }
 
 
-                if (marioMovement != MarioMovement.JumpingLeft || marioMovement != MarioMovement.JumpingRight)
-                    currentSprite = MarioSpriteFactory.Instance.CreateSprite_MarioBig_JumpRight();
-
-                marioMovement = MarioMovement.JumpingRight;
             }
-
-
 
             public void Shrink()
             {
-                currentState = MarioState.Small;
+                marioState = MarioState.Small;
                 currentSprite = MarioSpriteFactory.Instance.CreateSprite_MarioSmall_IdleRight();
-                // Make mario's sprite shink to the small size
             }
 
             public void Star()
             {
-                currentState = MarioState.Star;
-                // Create star sprite instance
+                marioState = MarioState.Star;
             }
-
 
             public void KillMario()
             {
                 currentSprite = MarioSpriteFactory.Instance.CreateSprite_MarioSmall_Die();
-                currentState = MarioState.Dead;
-                
-                
+                marioState = MarioState.Dead;
             }
 
             public void Update(GameTime gameTime, int spriteXPos, int spriteYPos)
             {
                 currentSprite.Update(gameTime, spriteXPos, spriteYPos);
-                // if-else logic based on the current values of facingLeft and health to determine how to move
-
-                // if mario is dead, can't run left or right
-                
-               
             }
 
             public void Draw(SpriteBatch spriteBatch)
@@ -303,6 +382,12 @@ namespace Lasagna
                 currentSprite.Draw(spriteBatch);
             }
 
+            public void Reset()
+            {
+                currentSprite = MarioSpriteFactory.Instance.CreateSprite_MarioSmall_IdleRight();
+                marioState = MarioState.Small;
+                marioMovement = MarioMovement.StillRight;
+        }
         }
     }
 }
