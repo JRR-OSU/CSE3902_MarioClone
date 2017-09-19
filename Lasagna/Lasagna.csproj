@@ -42,6 +42,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AnimatedSprite.cs" />
+    <Compile Include="Interfaces\Interface1.cs" />
     <Compile Include="Projectiles\MissleProjectile.cs" />
     <Compile Include="Tiles\InvisibleItemBlockTile.cs" />
     <Compile Include="Tiles\BreakableBrickTile.cs" />
@@ -62,7 +63,7 @@
     <Compile Include="Items\StarItem.cs" />
     <Compile Include="Items\CoinItem.cs" />
     <Compile Include="Interfaces\IItem.cs" />
-    <Compile Include="Mario.cs" />
+    <Compile Include="Player\Mario.cs" />
     <Compile Include="NonAnimatedSprite.cs" />
     <Compile Include="GamepadController.cs" />
     <Compile Include="Interfaces\IController.cs" />
