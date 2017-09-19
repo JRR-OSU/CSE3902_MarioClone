@@ -1,0 +1,8 @@
+﻿Timothy Williams
+09/19/2017
+Sprint2
+IPlayer.cs
+Jon Reed
+1 minute
+
+Readability is great, function names make what they do clearly apparent.

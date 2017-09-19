@@ -88,6 +88,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Code Reviews\IPlayer_ReadabilityReviewtxt.txt" />
     <Content Include="Icon.ico" />
   </ItemGroup>
   <ItemGroup>
