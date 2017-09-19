@@ -8,14 +8,25 @@ namespace Lasagna
         private ISprite currentSprite;
         private ISprite koopaWalk = EnemySpriteFactory.Instance.CreateSprite_Koopa_Walk();
         private ISprite koopaDead = EnemySpriteFactory.Instance.CreateSprite_Koopa_Die();
-
-        public void changeState()
-        {
-            this.currentSprite = koopaWalk;
+        private int posX;
+        private int posY;
+        private bool liveState = true;
+        public void KoopaEnemy(int posX, int posY){
+            this.posX = posX;
+            this.posY = posY;
         }
-        public void Update(GameTime gameTime, int X, int Y)
+        public void changeLiveState(){
+            this.liveState = !this.liveState;
+        }
+        public void Update(GameTime gameTime)
         {
-            this.currentSprite.Update(gameTime, X, Y);
+            if(this.liveState == true){
+                this.currentSprite = this.koopaWalk;
+            }
+            else{
+                this.currentSprite = this.koopaDead;
+            }
+            this.currentSprite.Update(gameTime);
         }
         public void Draw(SpriteBatch spriteBatch)
         {
