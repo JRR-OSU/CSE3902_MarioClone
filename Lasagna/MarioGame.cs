@@ -51,6 +51,15 @@ namespace Lasagna
             tiles.Add(new UnbreakableBlockTile(70, 200));
             tiles.Add(new WarpPipeTile(420, 200, 3));
 
+            items.Add(new CoinItem(16, 16));
+            items.Add(new FireFlowerItem(50, 16));
+            items.Add(new GrowMushroomItem(90, 16));
+            items.Add(new LifeMushroomItem(140, 16));
+            items.Add(new StarItem(190, 16));
+
+            enemies.Add(new GoombaEnemy(16, 40));
+
+
             Mario = new Mario(200,300);
         }
 
@@ -62,10 +71,10 @@ namespace Lasagna
                 t.Update(gameTime);
             foreach (IProjectile t in projectiles)
                 t.Update(gameTime);
-            /*foreach (IEnemy t in enemies)
+            foreach (IEnemy t in enemies)
                 t.Update(gameTime);
             foreach (IItem t in items)
-                t.Update(gameTime);*/
+                t.Update(gameTime);
             Mario.Update(gameTime);
                 base.Update(gameTime);
         }

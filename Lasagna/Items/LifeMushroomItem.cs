@@ -3,13 +3,20 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Lasagna
 {
-    class LifeMushroomItem
+    class LifeMushroomItem : IItem
     {
-        ISprite powerUpMushroom = ItemSpriteFactory.Instance.CreateSprite_PowerupMushroom();
-        public void Update(GameTime gameTime, int X, int Y)
+        private ISprite powerUpMushroom = ItemSpriteFactory.Instance.CreateSprite_PowerupMushroom();
+        private int posX;
+        private int posY;
+        public LifeMushroomItem(int posX, int posY)
+        {
+            this.posX = posX;
+            this.posY = posY;
+        }
+        public void Update(GameTime gameTime)
         {
             
-            powerUpMushroom.Update(gameTime, X, Y);
+            powerUpMushroom.Update(gameTime, this.posX, this.posY);
             
         }
         public void Draw(SpriteBatch spriteBatch)

@@ -11,7 +11,7 @@ namespace Lasagna
         private int posX;
         private int posY;
         private bool liveState = true;
-        public void KoopaEnemy(int posX, int posY){
+        public KoopaEnemy(int posX, int posY){
             this.posX = posX;
             this.posY = posY;
         }
@@ -26,7 +26,7 @@ namespace Lasagna
             else{
                 this.currentSprite = this.koopaDead;
             }
-            this.currentSprite.Update(gameTime);
+            this.currentSprite.Update(gameTime, this.posX, this.posY);
         }
         public void Draw(SpriteBatch spriteBatch)
         {

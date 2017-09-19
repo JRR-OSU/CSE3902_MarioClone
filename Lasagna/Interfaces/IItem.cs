@@ -5,7 +5,7 @@ namespace Lasagna
 {
     interface IItem
     {
-        void Update(GameTime gameTime, int X, int Y);
+        void Update(GameTime gameTime);
         void Draw(SpriteBatch spriteBatch);
     }
 }

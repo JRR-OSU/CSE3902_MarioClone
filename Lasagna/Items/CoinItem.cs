@@ -3,18 +3,25 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Lasagna
 {
-    class CoinItem
+    class CoinItem : IItem
     {
-        ISprite rotatedCoin = ItemSpriteFactory.Instance.CreateSprite_Coin();
-        public void Update(GameTime gameTime, int X, int Y)
+        private ISprite rotatedCoin = ItemSpriteFactory.Instance.CreateSprite_Coin();
+        private int posX;
+        private int posY;
+        public CoinItem(int posX, int posY)
+        {
+            this.posX = posX;
+            this.posY = posY;
+        }
+        public void Update(GameTime gameTime)
         {
             
-            rotatedCoin.Update(gameTime, X, Y);
+            this.rotatedCoin.Update(gameTime, this.posX, this.posY);
             
         }
         public void Draw(SpriteBatch spriteBatch)
         {
-            rotatedCoin.Draw(spriteBatch);
+            this.rotatedCoin.Draw(spriteBatch);
         }
     }
 }
