@@ -5,18 +5,31 @@ namespace Lasagna
 {
     class GoombaEnemy : IEnemy
     {
-        ISprite currentSprite;
-        ISprite goombaWalk = EnemySpriteFactory.Instance.CreateSprite_Goomba_Walk();
-        ISprite goombaDead = EnemySpriteFactory.Instance.CreateSprite_Goomba_Die();
-        public void changeState(){
-            currentSprite = goombaWalk;
+        private ISprite currentSprite;
+        private ISprite goombaWalk = EnemySpriteFactory.Instance.CreateSprite_Goomba_Walk();
+        private ISprite goombaDead = EnemySpriteFactory.Instance.CreateSprite_Goomba_Die();
+        private int posX;
+        private int posY;
+        private bool liveState = true;
+        public void GoombaEnemy(int posX, int posY){
+            this.posX = posX;
+            this.posY = posY;
         }
-        public void Update(GameTime gameTime, int X, int Y)
+        public void changeLiveState(){
+            this.liveState = !this.liveState;
+        }
+        public void Update(GameTime gameTime)
         {
-            currentSprite.Update(gameTime, X, Y);
+            if(this.liveState == true){
+                this.currentSprite = this.goombaWalk;
+            }
+            else{
+                this.currentSprite = this.goombaDead;
+            }
+            this.currentSprite.Update(gameTime);
         }
         public void Draw(SpriteBatch spriteBatch){
-            currentSprite.Draw(spriteBatch);
+            this.currentSprite.Draw(spriteBatch);
         }
     }
 }
