@@ -5,8 +5,8 @@ namespace Lasagna
 {
     interface IEnemy
     {
-        void changeState();
-        void Update(GameTime gameTime, int X, int Y);
+        void changeLiveState();
+        void Update(GameTime gameTime);
         void Draw(SpriteBatch spriteBatch);
     }
 }
