@@ -118,10 +118,10 @@ namespace Lasagna
         public class MarioStateMachine
         {
             private enum MarioState { Small, Big, Fire, Star, Dead };
-            private enum MarioMovement { Crouched, StillLeft, StillRight, WalkingLeft, WalkingRight, RunningLeft, RunningRight, JumpingLeft, JumpingRight };
+            private enum MarioMovement { CrouchedRight, CrouchedLeft, StillLeft, StillRight, WalkingLeft, WalkingRight, RunningLeft, RunningRight, JumpingLeft, JumpingRight };
             private MarioState marioState = MarioState.Small;
             private MarioMovement marioMovement = MarioMovement.StillRight;
-
+            private bool canJump = true;
             private ISprite currentSprite = MarioSpriteFactory.Instance.CreateSprite_MarioSmall_IdleRight();
 
             /// <summary>
@@ -211,7 +211,7 @@ namespace Lasagna
                 if (marioState == MarioState.Big)
                 {
 
-                    if (marioMovement == MarioMovement.WalkingLeft)
+                    if (marioMovement == MarioMovement.WalkingRight)
                     {
 
                         currentSprite = MarioSpriteFactory.Instance.CreateSprite_MarioBig_IdleRight();
@@ -263,36 +263,93 @@ namespace Lasagna
             {
                 if (marioState == MarioState.Dead)
                     return;
-                if (marioMovement == MarioMovement.JumpingRight)
+               
+                if (marioMovement == MarioMovement.JumpingRight || marioMovement == MarioMovement.JumpingLeft)
                 {
-                    marioMovement = MarioMovement.StillRight;
+                  
                     if (marioState == MarioState.Big)
                     {
-                        currentSprite = MarioSpriteFactory.Instance.CreateSprite_MarioBig_IdleRight();
+                        if (marioMovement == MarioMovement.JumpingRight)
+                        {
+                            currentSprite = MarioSpriteFactory.Instance.CreateSprite_MarioBig_IdleRight();
+                            marioMovement = MarioMovement.StillRight;
+                            canJump = true;
+                        }
+                        else if (marioMovement == MarioMovement.JumpingLeft)
+                        {
+                            currentSprite = MarioSpriteFactory.Instance.CreateSprite_MarioBig_IdleLeft();
+                            marioMovement = MarioMovement.StillLeft;
+                        }
                     }
                     else if (marioState == MarioState.Fire)
                     {
-                        currentSprite = MarioSpriteFactory.Instance.CreateSprite_MarioFire_IdleRight();
+                        if (marioMovement == MarioMovement.JumpingRight)
+                        {
+                            currentSprite = MarioSpriteFactory.Instance.CreateSprite_MarioFire_IdleRight();
+                            marioMovement = MarioMovement.StillRight;
+                        }
+                        else if (marioMovement == MarioMovement.JumpingLeft)
+                        {
+                            currentSprite = MarioSpriteFactory.Instance.CreateSprite_MarioFire_IdleLeft();
+                            marioMovement = MarioMovement.StillLeft;
+                        }
                     }
                     else if (marioState == MarioState.Small)
                     {
-                        currentSprite = MarioSpriteFactory.Instance.CreateSprite_MarioSmall_IdleRight();
+                        if (marioMovement == MarioMovement.JumpingRight)
+                        {
+                            currentSprite = MarioSpriteFactory.Instance.CreateSprite_MarioSmall_IdleRight();
+                            marioMovement = MarioMovement.StillRight;
+                        }
+                        else if (marioMovement == MarioMovement.JumpingLeft)
+                        {
+                            currentSprite = MarioSpriteFactory.Instance.CreateSprite_MarioSmall_IdleLeft();
+                            marioMovement = MarioMovement.StillLeft;
+                        }
                     }
+                    return;
                 }
+
                 else
                 {
-                        marioMovement = MarioMovement.Crouched;                     
-                        if (marioState == MarioState.Fire)
+                    if (marioMovement == MarioMovement.WalkingLeft || marioMovement == MarioMovement.StillLeft)
+                    {
+                        marioMovement = MarioMovement.CrouchedLeft;
+                        if (marioState == MarioState.Big)
                         {
-                            currentSprite = MarioSpriteFactory.Instance.CreateSprite_MarioFire_CrouchRight();
+                            currentSprite = MarioSpriteFactory.Instance.CreateSprite_MarioBig_CrouchLeft();
                         }
-                        else
+                        else if (marioState == MarioState.Fire)
+                        {
+                            currentSprite = MarioSpriteFactory.Instance.CreateSprite_MarioFire_CrouchLeft();
+                     
+                        }
+                        else if (marioState == MarioState.Small)
+                        {
+                            return;
+                        }
+                        return;
+                    }
+
+                    else if (marioMovement == MarioMovement.WalkingRight || marioMovement == MarioMovement.StillRight)
+                    {
+                        marioMovement = MarioMovement.JumpingRight;
+                        if (marioState == MarioState.Big)
                         {
                             currentSprite = MarioSpriteFactory.Instance.CreateSprite_MarioBig_CrouchRight();
                         }
-                    return; 
+                        else if (marioState == MarioState.Fire)
+                        {
+                            currentSprite = MarioSpriteFactory.Instance.CreateSprite_MarioFire_CrouchRight();
+                        }
+                        else if (marioState == MarioState.Small)
+                        {
+                            return;
+                        }
+                        return;
+                    }
                 }
-
+                
             }
 
             public void Jump()
@@ -300,7 +357,10 @@ namespace Lasagna
                 if(marioState == MarioState.Dead)
                     return;
 
-                if (marioMovement == MarioMovement.WalkingLeft)
+                if (marioMovement == MarioMovement.JumpingLeft || marioMovement == MarioMovement.JumpingRight)
+                    return;
+
+                if (marioMovement == MarioMovement.WalkingLeft || marioMovement == MarioMovement.StillLeft)
                 {
                     marioMovement = MarioMovement.JumpingLeft;
                     if (marioState == MarioState.Big)
@@ -318,39 +378,25 @@ namespace Lasagna
                     return;
                 }
 
-                if (marioMovement != MarioMovement.Crouched)
+                else if (marioMovement == MarioMovement.WalkingRight || marioMovement == MarioMovement.StillRight)
                 {
                     marioMovement = MarioMovement.JumpingRight;
                     if (marioState == MarioState.Big)
                     {
                         currentSprite = MarioSpriteFactory.Instance.CreateSprite_MarioBig_JumpRight();
                     }
-                    else if(marioState == MarioState.Fire)
+                    else if (marioState == MarioState.Fire)
                     {
                         currentSprite = MarioSpriteFactory.Instance.CreateSprite_MarioFire_JumpRight();
                     }
-                    else if(marioState == MarioState.Small)
+                    else if (marioState == MarioState.Small)
                     {
                         currentSprite = MarioSpriteFactory.Instance.CreateSprite_MarioSmall_JumpRight();
                     }
+                    return;
+                }
 
-                }
-                else
-                {
-                    marioMovement = MarioMovement.StillRight;
-                    if (marioState == MarioState.Big)
-                    {
-                        currentSprite = MarioSpriteFactory.Instance.CreateSprite_MarioBig_IdleRight();
-                    }
-                    else if (marioState == MarioState.Fire)
-                    {
-                        currentSprite = MarioSpriteFactory.Instance.CreateSprite_MarioFire_IdleRight();
-                    }
-                    else if (marioState == MarioState.Small)
-                    {
-                        currentSprite = MarioSpriteFactory.Instance.CreateSprite_MarioSmall_IdleRight();
-                    }
-                }
+       
 
 
             }
