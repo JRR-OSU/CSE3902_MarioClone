@@ -14,6 +14,7 @@ namespace Lasagna
         private List<IEnemy> enemies = new List<IEnemy>();
         private List<IItem> items = new List<IItem>();
         private List<IProjectile> projectiles = new List<IProjectile>();
+        private IPlayer Mario;
 
         public MarioGame()
         {
@@ -49,6 +50,8 @@ namespace Lasagna
             tiles.Add(new QuestionBlockTile(210, 200));
             tiles.Add(new UnbreakableBlockTile(70, 200));
             tiles.Add(new WarpPipeTile(420, 200, 3));
+
+            Mario = new Mario(200,300);
         }
 
         protected override void Update(GameTime gameTime)
@@ -63,8 +66,8 @@ namespace Lasagna
                 t.Update(gameTime);
             foreach (IItem t in items)
                 t.Update(gameTime);*/
-
-            base.Update(gameTime);
+            Mario.Update(gameTime);
+                base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
@@ -80,6 +83,7 @@ namespace Lasagna
             foreach (IProjectile t in projectiles)
                 t.Draw(spriteBatch);
 
+            Mario.Draw(spriteBatch);
             base.Draw(gameTime);
         }
 

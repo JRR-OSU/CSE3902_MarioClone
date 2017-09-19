@@ -7,19 +7,21 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Graphics;
 
+
 namespace Lasagna
 {
     public class Mario : IPlayer
     {
         private MarioStateMachine stateMachine;
 
-        
 
-        
+        private int spriteXPos;
+        private int spriteYPos;
+
         /// <summary>
         /// These methods will just change state, the state machine will handle sprite changes
         /// </summary>
-        public Mario()
+        public Mario(int x, int y)
         {
             stateMachine = new MarioStateMachine();
            
@@ -34,7 +36,10 @@ namespace Lasagna
             MarioEvents.OnGetFireFlower += FireState;
 
             MarioEvents.OnMarioDie +=Die;
-            
+
+            spriteXPos = x;
+            spriteYPos = y;
+ 
         }
 
         // Later
@@ -98,12 +103,12 @@ namespace Lasagna
 
         public void Update(GameTime gameTime)
         {
-            throw new NotImplementedException();
+            stateMachine.Update(gameTime, spriteXPos, spriteYPos);
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            throw new NotImplementedException();
+            stateMachine.Draw(spriteBatch);
         }
 
         public class MarioStateMachine
@@ -117,11 +122,6 @@ namespace Lasagna
 
             private ISprite currentSprite = MarioSpriteFactory.Instance.CreateSprite_MarioSmall_IdleRight();
 
-            
-
-
-            // Question for tim: Do I subscribe to each specific event as a field, or can I just pass a reference to the Mario events class and somehow subscribe to all events?
-
 
 
             // individual state values listed in class
@@ -133,39 +133,9 @@ namespace Lasagna
             // 
 
 
-            private void ChangeCurrentSprite(SpriteType newSpriteType)
-            {
-                ISprite oldSprite = currentSprite;
-
-                switch (newSpriteType)
-                {
-                    case SpriteType.NoMoveAndNoAnimation:
-                     //   currentSprite = noMoveAndNoAnimSprite;
-                        break;
-
-                    case SpriteType.NoMoveAndAnimation:
-                      //  currentSprite = noMoveAndAnimSprite;
-                        break;
-
-                    case SpriteType.MoveAndNoAnimation:
-                       // currentSprite = moveAndNoAnimSprite;
-                        break;
-
-                    case SpriteType.MoveAndAnimation:
-                       // currentSprite = moveAndAnimSprite;
-                        break;
-
-                    default:
-                        Debug.WriteLine("Invalid sprite type passed to ChangeCurrentSprite.");
-                        break;
-                }
-
-                //If sprite was changed, reset current sprite. This resets position and animation
-               // if (oldSprite != currentSprite)
-                   // currentSprite.ResetSprite(screenWidth, screenHeight);
-            }
 
 
+            // Logic to be implemented later
             public void ChangeDirection()
             {
                 if (marioMovement == MarioMovement.WalkingLeft)
@@ -216,7 +186,7 @@ namespace Lasagna
             {
 
                 currentState = MarioState.Fire;
-                currentSprite = MarioSpriteFactory.Instance.CreateSprite_MarioBig_IdleRight();
+                currentSprite = MarioSpriteFactory.Instance.CreateSprite_MarioFire_IdleRight();
 
             }
 
@@ -234,23 +204,63 @@ namespace Lasagna
                 
             public void MoveLeft()
             {
+                if (currentState == MarioState.Dead)
+                    return;
                 marioMovement = MarioMovement.WalkingLeft;
+           
+                    currentSprite = MarioSpriteFactory.Instance.CreateSprite_MarioSmall_RunLeft();
+                
+               
             }
 
             public void MoveRight()
             {
+                if (currentState == MarioState.Dead)
+                    return;
+
                 marioMovement = MarioMovement.WalkingRight;
+             
+                    currentSprite = MarioSpriteFactory.Instance.CreateSprite_MarioSmall_RunRight();
+               
             }
 
 
             public void Crouch()
             {
-               marioMovement = MarioMovement.Crouched;
+                if (currentState == MarioState.Dead)
+                    return;
+
+                    if (marioMovement == MarioMovement.JumpingLeft || marioMovement == MarioMovement.JumpingRight){
+                        currentSprite = MarioSpriteFactory.Instance.CreateSprite_MarioBig_IdleRight();
+                        marioMovement = MarioMovement.StillRight;
+                        return;
+                    }
+                marioMovement = MarioMovement.Crouched;
+                if (marioMovement == MarioMovement.JumpingLeft || marioMovement == MarioMovement.JumpingRight)
+                    currentSprite = MarioSpriteFactory.Instance.CreateSprite_MarioBig_IdleRight();
+                currentSprite = MarioSpriteFactory.Instance.CreateSprite_MarioBig_CrouchRight();
+
+             
             }
 
 
             public void Jump()
             {
+                if(currentState == MarioState.Dead)
+                    return;
+
+                if(marioMovement == MarioMovement.Crouched)
+                {
+                    currentSprite = MarioSpriteFactory.Instance.CreateSprite_MarioBig_IdleRight();
+                    marioMovement = MarioMovement.StillRight;
+                    return;
+                }
+
+
+
+                if (marioMovement != MarioMovement.JumpingLeft || marioMovement != MarioMovement.JumpingRight)
+                    currentSprite = MarioSpriteFactory.Instance.CreateSprite_MarioBig_JumpRight();
+
                 marioMovement = MarioMovement.JumpingRight;
             }
 
@@ -272,15 +282,26 @@ namespace Lasagna
 
             public void KillMario()
             {
+                currentSprite = MarioSpriteFactory.Instance.CreateSprite_MarioSmall_Die();
                 currentState = MarioState.Dead;
-                //currentSprite = MarioSpriteFactory.Instance.Crea
+                
+                
             }
 
-            public void Update(GameTime time)
+            public void Update(GameTime gameTime, int spriteXPos, int spriteYPos)
             {
+                currentSprite.Update(gameTime, spriteXPos, spriteYPos);
                 // if-else logic based on the current values of facingLeft and health to determine how to move
+
+                // if mario is dead, can't run left or right
+                
+               
             }
 
+            public void Draw(SpriteBatch spriteBatch)
+            {
+                currentSprite.Draw(spriteBatch);
+            }
 
         }
     }

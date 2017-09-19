@@ -42,7 +42,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AnimatedSprite.cs" />
-    <Compile Include="Interfaces\Interface1.cs" />
+    <Compile Include="Interfaces\IPlayer.cs" />
     <Compile Include="Projectiles\MissleProjectile.cs" />
     <Compile Include="Tiles\InvisibleItemBlockTile.cs" />
     <Compile Include="Tiles\BreakableBrickTile.cs" />
