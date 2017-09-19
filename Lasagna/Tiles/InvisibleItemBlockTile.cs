@@ -12,6 +12,7 @@ namespace Lasagna
         private int spriteXPos;
         private int spriteYPos;
 		private ISprite Visible = TileSpriteFactory.Instance.CreateSprite_ItemBlockUsed();
+        private ISprite Invisible; //Maybe it is not needed, needed to be fixed later.
 		private ISprite currentState;
         public InvisibleItemBlockTile(int spriteXPos, int spriteYPos)
         {
@@ -22,6 +23,16 @@ namespace Lasagna
         {
             this.State = 1;
         }
+		public void ChangeToVisible()
+		{
+			this.State = 1;
+            this.currentState = this.Visible;
+		}
+		public void ChangeToInvisible()
+		{
+			this.State = 0;
+            this.currentState = this.Invisible;
+		}
         public void Update(GameTime gameTime)
         {
             if (this.State == 1) {

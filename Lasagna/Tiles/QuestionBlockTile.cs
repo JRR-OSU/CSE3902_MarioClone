@@ -23,6 +23,15 @@ namespace Lasagna
         {
             this.State = 1;
         }
+        public void ChangeToUsed() {
+            this.State = 1;
+            this.currentState = this.Used;
+        }
+		public void ChangeToDefault()
+		{
+			this.State = 0;
+            this.currentState = this.Unused;
+		}
         public void Update(GameTime gameTime)
         {
             if (this.State == 0)

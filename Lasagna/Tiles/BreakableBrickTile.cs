@@ -26,7 +26,16 @@ namespace Lasagna
         {
             this.State ++;
         }
-
+		public void ChangeToInvisible()
+		{
+			this.State = 2;
+            this.currentState = this.Broke;
+		}
+		public void ChangeToDefault()
+		{
+			this.State = 0;
+            this.currentState = this.Unbreaked;
+		}
         public void Update(GameTime gameTime)
         {
             if (this.State == 0) {
