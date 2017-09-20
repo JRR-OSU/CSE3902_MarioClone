@@ -1,0 +1,12 @@
+Jon Reed
+09/20/2017
+Sprint2
+GoombaEnemy.cs
+Yiwei Zhang
+5 minutes
+
+Fields and methods are appropriately and readably named. 
+
+Logic is simple and very easy to understand within the Update method. 
+
+I would maybe change the liveState to just be slightly more simple, like bool "isAlive". 

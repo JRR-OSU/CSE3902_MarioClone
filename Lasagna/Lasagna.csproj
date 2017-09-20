@@ -88,6 +88,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Code Reviews\GoombaEnemy_QualityReview.txt" />
+    <Content Include="Code Reviews\GoombaEnemy_ReadabilityReview.txt" />
     <Content Include="Code Reviews\Mario_QualityReview.txt" />
     <Content Include="Code Reviews\Mario_ReadabilityReview.txt" />
     <Content Include="Code Reviews\WarpPipeTile_ReadbilityReview.txt" />
