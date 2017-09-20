@@ -1,9 +1,0 @@
-﻿Tim Williams
-09/19/2017
-Sprint2
-IPlayer.cs
-Jon Reed
-
-Interface implements only methods that all players use, no specific methods.
-
-Hypothetically, if we were to add in a new character such as Samus, this interface would be able to support it.

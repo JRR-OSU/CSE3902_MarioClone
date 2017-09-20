@@ -3,4 +3,12 @@
 Sprint2
 Mario.cs
 Jon Reed
+5 minutes
 
+Overall the methods and fields are clearly named. 
+
+The MarioStateMachine being in the same class as Mario is a bit confusing though, 
+I believe that should be split out into its own class.
+
+There are also a large number of if-else statements which make the MarioStateMachine class hard to read, 
+finding a way to use less branching logic would be good.
