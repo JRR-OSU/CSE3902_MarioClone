@@ -333,7 +333,7 @@ namespace Lasagna
 
                     else if (marioMovement == MarioMovement.WalkingRight || marioMovement == MarioMovement.StillRight)
                     {
-                        marioMovement = MarioMovement.JumpingRight;
+                        marioMovement = MarioMovement.CrouchedRight;
                         if (marioState == MarioState.Big)
                         {
                             currentSprite = MarioSpriteFactory.Instance.CreateSprite_MarioBig_CrouchRight();
