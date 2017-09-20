@@ -1,0 +1,13 @@
+﻿Yiwei Zhang
+09/19/2017
+Sprint2
+WarpPipeTile.cs
+Zeyu Li
+20 minutes
+
+There are some comments explaining that each integer number represents what kind of state. Try to initialize final int variables like "final int hasFlower = 1;", so this kind of comments will 
+not be necessary, or the comments will become long and verbose after furture states are added.
+The original state should be NotHaveFlower because whatever you want to have a flower at the tip of the pipe or not, you all need to create a pipe which does not have flower. If you want to
+have a flower, call changeState and spawn a flower at the tip of the pipe.
+
+

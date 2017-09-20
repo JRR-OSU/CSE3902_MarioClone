@@ -90,6 +90,8 @@
   <ItemGroup>
     <Content Include="Code Reviews\Mario_QualityReview.txt" />
     <Content Include="Code Reviews\Mario_ReadabilityReview.txt" />
+    <Content Include="Code Reviews\WarpPipeTile_ReadbilityReview.txt" />
+    <Content Include="Code Reviews\WarpPipeTile_QualityReview.txt" />
     <Content Include="Icon.ico" />
   </ItemGroup>
   <ItemGroup>

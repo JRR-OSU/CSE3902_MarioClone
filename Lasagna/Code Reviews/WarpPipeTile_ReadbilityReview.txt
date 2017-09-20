@@ -1,0 +1,10 @@
+﻿Yiwei Zhang
+09/19/2017
+Sprint2
+WarpPipeTile.cs
+Zeyu Li
+15 minutes
+
+The names of variables and methods are clearly state and consistent with their functionality.
+There are some bare numbers in the class like the 32 in "tempYPos += 32", I think adding comments indicating what these numbers are like "each pipe base is 32 high" can improve
+readbility.
