@@ -1,0 +1,10 @@
+﻿Zeyu Li
+09/20/2017
+Sprint 2
+AnimatedSprite.cs
+Timothy Williams
+5 minutes
+
+It is clear that the code is easy to read and understand. It follows the object-oriented programming principles, 
+codes looks tidy and full functional, comments are useful. The variables are also well defined, easy to understand
+what are they used for. The code illustrated the excellent ability of a programmer.

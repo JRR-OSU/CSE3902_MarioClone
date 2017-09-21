@@ -1,0 +1,14 @@
+﻿Zeyu Li
+09/20/2017
+Sprint 2
+AnimatedSprite.cs
+Timothy Williams
+
+Codes strictly follow the object-oriented programming principles,  there is no extra unuseful part,
+some methods are explained by the comments. Additionally, the author even add the fps parameters for the animated
+sprites, which allows us to change the animation speed of sprites. It is obvious that the codes are in high quality,
+much better than the standard of a normal student. I hope that I can learn from the code he will write in 
+this semester.
+
+To be honest, it is really hard for me to think of an improvement on this part of the code. I was not able to write
+the code like this.
