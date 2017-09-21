@@ -1,36 +1,39 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using System.Collections.Generic;
 
 namespace Lasagna
 {
-    class KoopaEnemy : IEnemy
+    public class KoopaEnemy : MovingEnemy
     {
-        private ISprite currentSprite;
-        private ISprite koopaWalk = EnemySpriteFactory.Instance.CreateSprite_Koopa_Walk();
-        private ISprite koopaDead = EnemySpriteFactory.Instance.CreateSprite_Koopa_Die();
-        private int posX;
-        private int posY;
-        private bool liveState = true;
-        public KoopaEnemy(int posX, int posY){
-            this.posX = posX;
-            this.posY = posY;
-        }
-        public void changeLiveState(){
-            this.liveState = !this.liveState;
-        }
-        public void Update(GameTime gameTime)
+        private Dictionary<EnemyState, ISprite> koopaStates = new Dictionary<EnemyState, ISprite>()
         {
-            if(this.liveState == true){
-                this.currentSprite = this.koopaWalk;
-            }
-            else{
-                this.currentSprite = this.koopaDead;
-            }
-            this.currentSprite.Update(gameTime, this.posX, this.posY);
-        }
-        public void Draw(SpriteBatch spriteBatch)
+            { EnemyState.Idle, EnemySpriteFactory.Instance.CreateSprite_Koopa_Walk() },
+            { EnemyState.Dead, EnemySpriteFactory.Instance.CreateSprite_Koopa_Die() },
+        };
+
+        public KoopaEnemy(int spawnPosX, int spawnPosY)
+            : base(spawnPosX, spawnPosY)
         {
-            this.currentSprite.Draw(spriteBatch);
+            //WalkLeft and WalkRight use same sprite as idle, set that here.
+            if (koopaStates.ContainsKey(EnemyState.Idle))
+            {
+                koopaStates.Add(EnemyState.WalkLeft, koopaStates[EnemyState.Idle]);
+                koopaStates.Add(EnemyState.WalkRight, koopaStates[EnemyState.Idle]);
+            }
+        }
+
+        public override void ChangeState(EnemyState newState)
+        {
+            if (koopaStates != null && koopaStates.ContainsKey(currentState) && koopaStates[currentState] != null)
+            {
+                currentState = newState;
+                currentSprite = koopaStates[currentState];
+            }
+        }
+
+        public override void Damage()
+        {
+            ///TODO: Turn into shell here instead of calling base method
+            base.Damage();
         }
     }
 }

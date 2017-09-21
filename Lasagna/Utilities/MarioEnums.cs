@@ -8,4 +8,12 @@ namespace Lasagna
         MoveAndNoAnimation,
         MoveAndAnimation
     }
+
+    public enum EnemyState
+    {
+        Idle,
+        WalkLeft,
+        WalkRight,
+        Dead
+    }
 }

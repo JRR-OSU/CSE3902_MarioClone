@@ -3,10 +3,11 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Lasagna
 {
-    interface IEnemy
+    public interface IEnemy
     {
-        void changeLiveState();
         void Update(GameTime gameTime);
         void Draw(SpriteBatch spriteBatch);
+        void ChangeState(EnemyState newState);
+        void Damage();
     }
 }

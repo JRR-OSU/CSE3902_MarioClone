@@ -3,9 +3,10 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Lasagna
 {
-    interface IItem
+    public interface IItem
     {
         void Update(GameTime gameTime);
         void Draw(SpriteBatch spriteBatch);
+        void GetItem();
     }
 }

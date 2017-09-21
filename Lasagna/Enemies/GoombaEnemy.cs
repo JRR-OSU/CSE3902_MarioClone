@@ -1,35 +1,33 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework;
+﻿using System.Collections.Generic;
 
 namespace Lasagna
 {
-    class GoombaEnemy : IEnemy
+    public class GoombaEnemy : MovingEnemy
     {
-        private ISprite currentSprite;
-        private ISprite goombaWalk = EnemySpriteFactory.Instance.CreateSprite_Goomba_Walk();
-        private ISprite goombaDead = EnemySpriteFactory.Instance.CreateSprite_Goomba_Die();
-        private int posX;
-        private int posY;
-        private bool liveState = true;
-        public GoombaEnemy(int posX, int posY){
-            this.posX = posX;
-            this.posY = posY;
-        }
-        public void changeLiveState(){
-            this.liveState = !this.liveState;
-        }
-        public void Update(GameTime gameTime)
+        private Dictionary<EnemyState, ISprite> goombaStates = new Dictionary<EnemyState, ISprite>()
         {
-            if(this.liveState == true){
-                this.currentSprite = this.goombaWalk;
+            { EnemyState.Idle, EnemySpriteFactory.Instance.CreateSprite_Goomba_Walk() },
+            { EnemyState.Dead, EnemySpriteFactory.Instance.CreateSprite_Goomba_Die() },
+        };
+
+        public GoombaEnemy(int spawnPosX, int spawnPosY) 
+            : base(spawnPosX, spawnPosY)
+        {
+            //WalkLeft and WalkRight use same sprite as idle, set that here.
+            if (goombaStates.ContainsKey(EnemyState.Idle))
+            {
+                goombaStates.Add(EnemyState.WalkLeft, goombaStates[EnemyState.Idle]);
+                goombaStates.Add(EnemyState.WalkRight, goombaStates[EnemyState.Idle]);
             }
-            else{
-                this.currentSprite = this.goombaDead;
-            }
-            this.currentSprite.Update(gameTime, this.posX, this.posY);
         }
-        public void Draw(SpriteBatch spriteBatch){
-            this.currentSprite.Draw(spriteBatch);
+
+        public override void ChangeState(EnemyState newState)
+        {
+            if (goombaStates != null && goombaStates.ContainsKey(currentState) && goombaStates[currentState] != null)
+            {
+                currentState = newState;
+                currentSprite = goombaStates[currentState];
+            }
         }
     }
 }
