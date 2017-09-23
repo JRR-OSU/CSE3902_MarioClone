@@ -44,7 +44,10 @@
     <Compile Include="AnimatedSprite.cs" />
     <Compile Include="Enemies\MovingEnemy.cs" />
     <Compile Include="Interfaces\IPlayer.cs" />
-    <Compile Include="Projectiles\MissleProjectile.cs" />
+    <Compile Include="Items\BaseItem.cs" />
+    <Compile Include="Projectiles\BaseProjectile.cs" />
+    <Compile Include="Projectiles\MissileProjectile.cs" />
+    <Compile Include="Tiles\BaseTile.cs" />
     <Compile Include="Tiles\InvisibleItemBlockTile.cs" />
     <Compile Include="Tiles\BreakableBrickTile.cs" />
     <Compile Include="Tiles\FloorBlockTile.cs" />

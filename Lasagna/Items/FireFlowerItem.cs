@@ -1,27 +1,11 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-
-namespace Lasagna
+﻿namespace Lasagna
 {
-    class FireFlowerItem :IItem
+    public class FireFlowerItem : BaseItem
     {
-        private ISprite fireFlower = ItemSpriteFactory.Instance.CreateSprite_FireFlower();
-        private int posX;
-        private int posY;
-        public FireFlowerItem(int posX, int posY)
+        public FireFlowerItem(int spawnPosX, int spawnPosY)
+            : base(spawnPosX, spawnPosY)
         {
-            this.posX = posX;
-            this.posY = posY;
-        }
-        public void Update(GameTime gameTime)
-        {
-            
-            fireFlower.Update(gameTime, this.posX, this.posY);
-            
-        }
-        public void Draw(SpriteBatch spriteBatch)
-        {
-            fireFlower.Draw(spriteBatch);
+            itemSprite = ItemSpriteFactory.Instance.CreateSprite_FireFlower();
         }
     }
 }
