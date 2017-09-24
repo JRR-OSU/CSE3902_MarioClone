@@ -3,53 +3,65 @@ using Microsoft.Xna.Framework;
 
 namespace Lasagna
 {
-    class WarpPipeTile : ITile
+    public class WarpPipeTile : ITile
     {
-        /// <summary>
-        /// State = 0 : Has flower, State = 1 : Does not have flower
-        /// Heigit indicates the number of pipe bases, when height = 0, there is only a pipe tip.
-        /// </summary>
-        private int State = 0;
+        private ISprite pipeTipSprite = TileSpriteFactory.Instance.CreateSprite_Pipe_Tip();
+        private ISprite[] pipeBaseSprites;
+        //Number of pipe base segments high this pipe is. 0 means just the pipe tip.
         private int height = 0;
-        private int spriteXPos;
-        private int spriteYPos;
-        private ISprite pipeTip = TileSpriteFactory.Instance.CreateSprite_Pipe_Tip();
-        private ISprite[] pipeBases;
-        public WarpPipeTile(int spriteXPos, int spriteYPos, int height)
+        private int posX;
+        private int posY;
+        private int pipeTipHeight;
+        private int pipeBaseHeight;
+
+        public WarpPipeTile(int spawnPosX, int spawnPosY, int pipeHeight)
         {
-            this.spriteXPos = spriteXPos;
-            this.spriteYPos = spriteYPos;
-            this.height = height;
-            pipeBases = new ISprite[height];
-            for (int i = 0; i < this.height; i ++)
-            {
-                pipeBases[i] = TileSpriteFactory.Instance.CreateSprite_Pipe_Base();
-            }
+            posX = spawnPosX;
+            posY = spawnPosY;
+            height = pipeHeight;
+
+            //Set pipe base sprites
+            pipeBaseSprites = new ISprite[height];
+            for (int i = 0; i < height; i++)
+                pipeBaseSprites[i] = TileSpriteFactory.Instance.CreateSprite_Pipe_Base();
+
+            //Store height of our sprites, if null ref default values
+            if (pipeTipSprite != null)
+                pipeTipHeight = pipeTipSprite.Height;
+            else
+                pipeTipHeight = 64;
+            if (pipeBaseSprites != null && pipeBaseSprites.Length > 0 && pipeBaseSprites[0] != null)
+                pipeBaseHeight = pipeBaseSprites[0].Height;
+            else
+                pipeBaseHeight = 32;
         }
-        public void ChangeState()
-        {
-            this.State = 1;
-        }
+
+        //Empty for now
+        public void ChangeState() { }
+
         public void Update(GameTime gameTime)
         {
-            this.pipeTip.Update(gameTime, this.spriteXPos, this.spriteYPos);
-            int tempYPos = this.spriteYPos + 64;
-            for (int i = 0; i < this.height; i++)
+            if (pipeTipSprite != null)
+                pipeTipSprite.Update(gameTime, posX, posY);
+
+            //Draw each base after
+            int tempPosY = posY + pipeTipHeight;
+            for (int i = 0; i < pipeBaseSprites.Length; i++)
             {
-                this.pipeBases[i].Update(gameTime, this.spriteXPos, tempYPos);
-                tempYPos += 32;
-            }
-            if (this.State == 0)
-            {
-                //Spawn flower at the tip
+                if (pipeBaseSprites[i] != null)
+                {
+                    pipeBaseSprites[i].Update(gameTime, posX, tempPosY);
+                    tempPosY += pipeBaseHeight;
+                }
             }
         }
-        public void Draw(SpriteBatch spriteBatch) {
-            for (int i = 0; i < this.height; i++)
-            {
-                this.pipeBases[i].Draw(spriteBatch);
-            }
-            this.pipeTip.Draw(spriteBatch);
+        public void Draw(SpriteBatch spriteBatch)
+        {
+            if (pipeTipSprite != null)
+                pipeTipSprite.Draw(spriteBatch);
+            for (int i = 0; i < pipeBaseSprites.Length; i++)
+                if (pipeBaseSprites[i] != null)
+                    pipeBaseSprites[i].Draw(spriteBatch);
         }
     }
 }

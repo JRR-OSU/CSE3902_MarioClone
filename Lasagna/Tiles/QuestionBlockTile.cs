@@ -1,53 +1,51 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework;
-
-namespace Lasagna
+﻿namespace Lasagna
 {
-    class QuestionBlockTile : ITile
+    public class QuestionBlockTile : BaseTile
     {
-        /// <summary>
-        /// State = 0 : Not used, State = 1 : Used
-        /// </summary>
-        private int State = 0;
-        private int spriteXPos;
-        private int spriteYPos;
-        private ISprite Unused = TileSpriteFactory.Instance.CreateSprite_QuestionBlock();
-        private ISprite Used = TileSpriteFactory.Instance.CreateSprite_ItemBlockUsed();
-        private ISprite currentState;
-        public QuestionBlockTile(int spriteXPos, int spriteYPos)
+        private enum BlockState
         {
-            this.spriteXPos = spriteXPos;
-            this.spriteYPos = spriteYPos;
+            Idle,
+            Used
+        }
+
+        private BlockState currentState;
+        private ISprite unused = TileSpriteFactory.Instance.CreateSprite_QuestionBlock();
+        private ISprite used = TileSpriteFactory.Instance.CreateSprite_ItemBlockUsed();
+
+        public QuestionBlockTile(int spawnXPos, int spawnYPos)
+            : base(spawnXPos, spawnYPos)
+        {
+            currentSprite = unused;
+            currentState = BlockState.Idle;
             MarioEvents.OnUseQuestionBlock += ChangeToUsed;
             MarioEvents.OnReset += ChangeToDefault;
         }
-        public void ChangeState()
+
+        public override void ChangeState()
         {
-            this.State = 1;
+            //Toggles us between used and unused
+            if (currentState == BlockState.Idle)
+            {
+                currentSprite = used;
+                currentState = BlockState.Used;
+            }
+            else
+            {
+                currentSprite = unused;
+                currentState = BlockState.Idle;
+            }
         }
-        public void ChangeToUsed() {
-            this.State = 1;
-            this.currentState = this.Used;
-        }
-		public void ChangeToDefault()
-		{
-			this.State = 0;
-            this.currentState = this.Unused;
-		}
-        public void Update(GameTime gameTime)
+
+        ///TODO: Temp methods for sprint2
+        private void ChangeToUsed()
         {
-            if (this.State == 0)
-            {
-                this.currentState = this.Unused;
-            }
-            else if (this.State == 1)
-            {
-                this.currentState = this.Used;
-            }
-            this.currentState.Update(gameTime, this.spriteXPos, this.spriteYPos);
+            if (currentState == BlockState.Idle)
+                ChangeState();
         }
-        public void Draw(SpriteBatch spriteBatch) {
-            this.currentState.Draw(spriteBatch);
+        private void ChangeToDefault()
+        {
+            if (currentState == BlockState.Used)
+                ChangeState();
         }
     }
 }

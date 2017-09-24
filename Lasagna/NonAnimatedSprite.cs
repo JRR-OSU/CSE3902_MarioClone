@@ -10,6 +10,21 @@ namespace Lasagna
         protected Rectangle sourceRectangle;
         protected Rectangle destinationRectangle;
 
+        public int Height
+        {
+            get
+            {
+                return (destinationRectangle != null) ? destinationRectangle.Height : 0;
+            }
+        }
+        public int Width
+        {
+            get
+            {
+                return (destinationRectangle != null) ? destinationRectangle.Width : 0;
+            }
+        }
+
         public NonAnimatedSprite(Texture2D spriteSheet, int spriteScreenXSize, int spriteScreenYSize)
         {
             sourceSpriteSheet = spriteSheet;

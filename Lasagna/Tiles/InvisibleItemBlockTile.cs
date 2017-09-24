@@ -3,49 +3,63 @@ using Microsoft.Xna.Framework;
 
 namespace Lasagna
 {
-    class InvisibleItemBlockTile : ITile
+    public class InvisibleItemBlockTile : BaseTile
     {
-        /// <summary>
-        /// State = 0 : Invisible, State = 1 : Visible
-        /// </summary>
-        private int State = 0;
-        private int spriteXPos;
-        private int spriteYPos;
-		private ISprite Visible = TileSpriteFactory.Instance.CreateSprite_ItemBlockUsed();
-        private ISprite Invisible; //Maybe it is not needed, needed to be fixed later.
-		private ISprite currentState;
-        public InvisibleItemBlockTile(int spriteXPos, int spriteYPos)
+        private enum BlockState
         {
-            this.spriteXPos = spriteXPos;
-            this.spriteYPos = spriteYPos;
+            Invisible,
+            Visible
+        }
+
+        private BlockState currentState;
+        private ISprite visibleSprite = TileSpriteFactory.Instance.CreateSprite_ItemBlockUsed();
+
+        public InvisibleItemBlockTile(int spawnXPos, int spawnYPos)
+            : base(spawnXPos, spawnYPos)
+        {
+            currentSprite = visibleSprite;
+            currentState = BlockState.Invisible;
             MarioEvents.OnUseHiddenBlock += ChangeToVisible;
             MarioEvents.OnReset += ChangeToInvisible;
         }
-        public void ChangeState()
+
+        public override void Update(GameTime gameTime)
         {
-            this.State = 1;
+            //Only call base function if we're visible. Else draw nothing.
+            if (currentState != BlockState.Invisible)
+                base.Update(gameTime);
         }
-		public void ChangeToVisible()
-		{
-			this.State = 1;
-            this.currentState = this.Visible;
-		}
-		public void ChangeToInvisible()
-		{
-			this.State = 0;
-            this.currentState = this.Invisible;
-		}
-        public void Update(GameTime gameTime)
+
+        public override void Draw(SpriteBatch spriteBatch)
         {
-            if (this.State == 1) {
-                this.currentState = this.Visible;
-                this.currentState.Update(gameTime, this.spriteXPos, this.spriteYPos);
-            }
+            //Only call base function if we're visible. Else draw nothing.
+            if (currentState != BlockState.Invisible)
+                base.Draw(spriteBatch);
         }
-        public void Draw(SpriteBatch spriteBatch) { 
-            if (this.State == 1) { 
-                this.currentState.Draw(spriteBatch);
+
+        public override void ChangeState()
+        {
+            //Toggles us between visible and invisible
+            if (currentState == BlockState.Invisible)
+            {
+                currentSprite = visibleSprite;
+                currentState = BlockState.Visible;
             }
+            else
+                currentState = BlockState.Invisible;
+        }
+
+        ///TODO: Temp methods for sprint2
+        public void ChangeToVisible()
+        {
+            if (currentState == BlockState.Invisible)
+                ChangeState();
+        }
+
+        public void ChangeToInvisible()
+        {
+            if (currentState == BlockState.Visible)
+                ChangeState();
         }
     }
 }

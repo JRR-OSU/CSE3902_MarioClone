@@ -3,64 +3,67 @@ using Microsoft.Xna.Framework;
 
 namespace Lasagna
 {
-    class BreakableBrickTile : ITile
+    public class BreakableBrickTile : BaseTile
     {
-        /// <summary>
-        /// State = 0 : Not breaked, State = 1 : Breaking, State = 2: Broke
-        /// </summary>
-        private int State = 0;
-        private int spriteXPos;
-        private int spriteYPos;
-		private ISprite Unbreaked = TileSpriteFactory.Instance.CreateSprite_BreakableBrick();
-        private ISprite Breaking; //Reserved for breaking tile sprite.
-		private ISprite Broke; //Maybe it is not needed, needed to be fixed later.
-		private ISprite currentState;
-
-        public BreakableBrickTile(int spriteXPos, int spriteYPos)
+        private enum BlockState
         {
-            this.spriteXPos = spriteXPos;
-            this.spriteYPos = spriteYPos;
+            Idle,
+            Breaking,
+            Broken
+        }
+
+        private BlockState currentState;
+        private ISprite idleSprite = TileSpriteFactory.Instance.CreateSprite_BreakableBrick();
+        private ISprite breakingSprite; //Reserved for breaking tile sprite.
+
+        public BreakableBrickTile(int spawnXPos, int spawnYPos)
+            : base(spawnXPos, spawnYPos)
+        {
+            currentSprite = idleSprite;
+            currentState = BlockState.Idle;
             MarioEvents.OnDestroyBrickBlock += ChangeToInvisible;
             MarioEvents.OnReset += ChangeToDefault;
         }
 
-        public void ChangeState()
+        public override void Update(GameTime gameTime)
         {
-            this.State ++;
+            //Only call base function if we're visible. Else draw nothing.
+            if (currentState != BlockState.Broken)
+                base.Update(gameTime);
         }
-		public void ChangeToInvisible()
-		{
-			this.State = 2;
-            this.currentState = this.Broke;
-		}
-		public void ChangeToDefault()
-		{
-			this.State = 0;
-            this.currentState = this.Unbreaked;
-		}
-        public void Update(GameTime gameTime)
-        {
-            if (this.State == 0) {
-                this.currentState = this.Unbreaked;
-            }
-            else if (this.State == 1) {
-                this.currentState = this.Breaking;
-            }
-            else if (this.State == 2) {
-                this.currentState = this.Broke;
-            }
-            if (this.State == 0 || this.State == 1)
-            {
-                this.currentState.Update(gameTime, this.spriteXPos, this.spriteYPos);
-            }
-		}
 
-		public void Draw(SpriteBatch spriteBatch)
-		{
-            if (this.State == 0 || this.State == 1)
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            //Only call base function if we're visible. Else draw nothing.
+            if (currentState != BlockState.Broken)
+                base.Draw(spriteBatch);
+        }
+
+        public override void ChangeState()
+        {
+            ///TODO: Implement breaking transition here
+            //Toggles us between used and unused
+            if (currentState != BlockState.Idle)
             {
-                this.currentState.Draw(spriteBatch);
+                currentSprite = idleSprite;
+                currentState = BlockState.Idle;
             }
-		}
+            else
+                currentState = BlockState.Broken;
+        }
+
+        ///TODO: Temp methods for sprint2
+        public void ChangeToInvisible()
+        {
+            if (currentState == BlockState.Idle)
+                ChangeState();
+        }
+
+        public void ChangeToDefault()
+        {
+            if (currentState == BlockState.Broken)
+                ChangeState();
+        }
+
     }
 }

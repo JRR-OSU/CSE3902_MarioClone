@@ -1,28 +1,14 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework;
-
-namespace Lasagna
+﻿namespace Lasagna
 {
-    class UnbreakableBlockTile : ITile
+    public class UnbreakableBlockTile : BaseTile
     {
-        private int spriteXPos;
-        private int spriteYPos;
-        public UnbreakableBlockTile(int spriteXPos, int spriteYPos)
+        public UnbreakableBlockTile(int spawnXPos, int spawnYPos)
+            : base(spawnXPos, spawnYPos)
         {
-            this.spriteXPos = spriteXPos;
-            this.spriteYPos = spriteYPos;
+            currentSprite = TileSpriteFactory.Instance.CreateSprite_UnbreakableBlock();
         }
-        private ISprite currentState = TileSpriteFactory.Instance.CreateSprite_UnbreakableBlock();
-        public void ChangeState()
-        {
-            return;
-        }
-        public void Update(GameTime gameTime)
-        {
-            this.currentState.Update(gameTime, this.spriteXPos, this.spriteYPos);
-        }
-        public void Draw(SpriteBatch spriteBatch) {
-            this.currentState.Draw(spriteBatch);
-        }
+
+        //Not needed currently
+        public override void ChangeState() {}
     }
 }
