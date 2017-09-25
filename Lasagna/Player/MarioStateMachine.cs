@@ -21,13 +21,6 @@ namespace Lasagna
         private Dictionary<MarioMovement, ISprite> fireStates = new Dictionary<MarioMovement, ISprite>();
         private Dictionary<MarioMovement, ISprite> starStates = new Dictionary<MarioMovement, ISprite>();
 
-
-
-        /// <summary>
-        /// TODO: HANDLE SPRITE CHANGES VIA CHANGE SPRITE METHOD
-        /// </summary>
-
-
         public MarioStateMachine()
         {
             smallStates.Add(MarioMovement.IdleLeft, MarioSpriteFactory.Instance.CreateSprite_MarioSmall_IdleLeft());
@@ -60,15 +53,17 @@ namespace Lasagna
 
         public void Grow()
         {
+            if (marioMovement == MarioMovement.Die)
+                marioMovement = MarioMovement.IdleRight;
             marioState = MarioState.Big;
-            marioMovement = MarioMovement.IdleRight;
             currentSprite = bigStates[marioMovement];
         }
 
         public void Fire()
         {
+            if (marioMovement == MarioMovement.Die)
+                marioMovement = MarioMovement.IdleRight;
             marioState = MarioState.Fire;
-            marioMovement = MarioMovement.IdleRight;
             currentSprite = fireStates[marioMovement];
         }
 
@@ -86,284 +81,139 @@ namespace Lasagna
         {
             if (marioMovement == MarioMovement.Die)
                 return;
-            if (marioState == MarioState.Big)
-            {
-
-                if (marioMovement == MarioMovement.RunLeft)
+            if (marioMovement == MarioMovement.RunLeft)
+                marioMovement = MarioMovement.IdleLeft;
+            else
+                marioMovement = MarioMovement.RunLeft;
+            switch (marioState)
                 {
-                    marioMovement = MarioMovement.IdleLeft;
-                    currentSprite = bigStates[marioMovement];
-
-                }
-                else
-                {
-                    marioMovement = MarioMovement.RunLeft;
-
-                    currentSprite = bigStates[marioMovement];
-                }
-            }
-            else if (marioState == MarioState.Fire)
-            {
-
-                if (marioMovement == MarioMovement.RunLeft)
-                {
-                    marioMovement = MarioMovement.IdleLeft;
-                    currentSprite = fireStates[marioMovement];
-
-                }
-                else
-                {
-                    marioMovement = MarioMovement.RunLeft;
-
-                    currentSprite = fireStates[marioMovement];
-                }
-            }
-            else if (marioState == MarioState.Small)
-            {
-
-                if (marioMovement == MarioMovement.RunLeft)
-                {
-                    marioMovement = MarioMovement.IdleLeft;
-                    currentSprite = smallStates[marioMovement];
-
-                }
-                else
-                {
-                    marioMovement = MarioMovement.RunLeft;
-
-                    currentSprite = smallStates[marioMovement];
-                }
-            }
-
+                    case MarioState.Big:
+                        currentSprite = bigStates[marioMovement];
+                        break;
+                    case MarioState.Fire:
+                        currentSprite = fireStates[marioMovement];
+                        break;
+                    case MarioState.Small:
+                        currentSprite = smallStates[marioMovement];
+                    break;
+                }        
         }
 
         public void MoveRight()
         {
             if (marioMovement == MarioMovement.Die)
                 return;
-            if (marioState == MarioState.Big)
+            if (marioMovement == MarioMovement.RunRight)
+                marioMovement = MarioMovement.IdleRight;
+            else
+                marioMovement = MarioMovement.RunRight;
+            switch (marioState)
             {
-
-                if (marioMovement == MarioMovement.RunRight)
-                {
-                    marioMovement = MarioMovement.IdleRight;
-                    currentSprite = bigStates[marioMovement];
-
-                }
-                else
-                {
-                    marioMovement = MarioMovement.RunRight;
-
-                    currentSprite = bigStates[marioMovement];
-                }
-            }
-            else if (marioState == MarioState.Fire)
-            {
-
-                if (marioMovement == MarioMovement.RunRight)
-                {
-                    marioMovement = MarioMovement.IdleRight;
-                    currentSprite = fireStates[marioMovement];
-
-                }
-                else
-                {
-                    marioMovement = MarioMovement.RunRight;
-
-                    currentSprite = fireStates[marioMovement];
-                }
-            }
-            else if (marioState == MarioState.Small)
-            {
-
-                if (marioMovement == MarioMovement.RunRight)
-                {
-                    marioMovement = MarioMovement.IdleRight;
+                case MarioState.Big: 
+                    currentSprite = bigStates[marioMovement];      
+                    break;
+                case MarioState.Fire:
+                    currentSprite = fireStates[marioMovement];          
+                    break;
+                case MarioState.Small:
                     currentSprite = smallStates[marioMovement];
-
-                }
-                else
-                {
-                    marioMovement = MarioMovement.RunRight;
-                    currentSprite = smallStates[marioMovement];
-                }
+                    break;
             }
-
+            
         }
-
+        public void HandleCrouch()
+        {
+            if((marioMovement == MarioMovement.RunLeft || marioMovement == MarioMovement.IdleLeft) && marioState != MarioState.Small)
+            {
+                marioMovement = MarioMovement.CrouchLeft;
+                return;
+            }
+            else if((marioMovement == MarioMovement.RunRight || marioMovement == MarioMovement.IdleRight) && marioState != MarioState.Small)
+            {
+                marioMovement = MarioMovement.CrouchRight;
+                return;
+            }
+            switch (marioMovement)
+            {
+                case MarioMovement.JumpLeft:
+                    marioMovement = MarioMovement.IdleLeft;
+                    break;
+                case MarioMovement.JumpRight:
+                    marioMovement = MarioMovement.IdleRight;
+                    break;
+             
+            }
+            
+        }
         public void Crouch()
         {
             if (marioMovement == MarioMovement.Die)
                 return;
-
-            if (marioMovement == MarioMovement.JumpRight || marioMovement == MarioMovement.JumpLeft)
+            HandleCrouch();
+            switch (marioState)
             {
-
-                if (marioState == MarioState.Big)
-                {
-                    if (marioMovement == MarioMovement.JumpRight)
-                    {
-                        marioMovement = MarioMovement.IdleRight;
-                        currentSprite = bigStates[marioMovement];
-                    }
-                    else if (marioMovement == MarioMovement.JumpLeft)
-                    {
-                        marioMovement = MarioMovement.IdleLeft;
-                        currentSprite = bigStates[marioMovement];
-                    }
-                }
-                else if (marioState == MarioState.Fire)
-                {
-                    if (marioMovement == MarioMovement.JumpRight)
-                    {
-                        marioMovement = MarioMovement.IdleRight;
-                        currentSprite = fireStates[marioMovement];
-
-                    }
-                    else if (marioMovement == MarioMovement.JumpLeft)
-                    {
-                        marioMovement = MarioMovement.IdleLeft;
-                        currentSprite = fireStates[marioMovement];
-                    }
-                }
-                else if (marioState == MarioState.Small)
-                {
-                    if (marioMovement == MarioMovement.JumpRight)
-                    {
-                        marioMovement = MarioMovement.IdleRight;
-                        currentSprite = smallStates[marioMovement];
-
-                    }
-                    else if (marioMovement == MarioMovement.JumpLeft)
-                    {
-                        marioMovement = MarioMovement.IdleLeft;
-                        currentSprite = smallStates[marioMovement];
-
-                    }
-                }
-                return;
-            }
-
-            else
-            {
-                if (marioMovement == MarioMovement.RunLeft || marioMovement == MarioMovement.IdleLeft)
-                {
-                    marioMovement = MarioMovement.CrouchLeft;
-                    if (marioState == MarioState.Big)
-                    {
-                        currentSprite = bigStates[marioMovement];
-                    }
-                    else if (marioState == MarioState.Fire)
-                    {
-                        currentSprite = fireStates[marioMovement];
-
-                    }
-                    else if (marioState == MarioState.Small)
-                    {
-                        return;
-                    }
-                    return;
-                }
-
-                else if (marioMovement == MarioMovement.RunRight || marioMovement == MarioMovement.IdleRight)
-                {
-                    marioMovement = MarioMovement.CrouchRight;
-                    if (marioState == MarioState.Big)
-                    {
-                        currentSprite = bigStates[marioMovement];
-                    }
-                    else if (marioState == MarioState.Fire)
-                    {
-                        currentSprite = fireStates[marioMovement];
-                    }
-                    else if (marioState == MarioState.Small)
-                    {
-                        return;
-                    }
-                    return;
-                }
+                case MarioState.Big:
+                    currentSprite = bigStates[marioMovement];
+                    break;
+                case MarioState.Fire:
+                    currentSprite = fireStates[marioMovement];
+                    break;
+                case MarioState.Small:
+                    currentSprite = smallStates[marioMovement];
+                    break;
             }
 
         }
-
+        public void HandleJump()
+        {
+            if (marioMovement == MarioMovement.RunLeft || marioMovement == MarioMovement.IdleLeft)
+            {
+                marioMovement = MarioMovement.JumpLeft;
+                return;
+            }
+            else if (marioMovement == MarioMovement.RunRight || marioMovement == MarioMovement.IdleRight)
+            {
+                marioMovement = MarioMovement.JumpRight;
+                return;
+            }
+            switch (marioMovement)
+            {
+                case MarioMovement.CrouchLeft:
+                    marioMovement = MarioMovement.IdleLeft;
+                    break;
+                case MarioMovement.CrouchRight:
+                    marioMovement = MarioMovement.IdleRight;
+                    break;
+            }
+        }
         public void Jump()
         {
             if (marioMovement == MarioMovement.Die)
                 return;
-
-            if (marioMovement == MarioMovement.JumpLeft || marioMovement == MarioMovement.JumpRight)
-                return;
-
-            if (marioMovement == MarioMovement.RunLeft || marioMovement == MarioMovement.IdleLeft)
+            HandleJump();
+            switch (marioState)
             {
-                marioMovement = MarioMovement.JumpLeft;
-                if (marioState == MarioState.Big)
-                {
+                case MarioState.Big:
                     currentSprite = bigStates[marioMovement];
-                }
-                else if (marioState == MarioState.Fire)
-                {
+                    break;
+                case MarioState.Fire:
                     currentSprite = fireStates[marioMovement];
-                }
-                else if (marioState == MarioState.Small)
-                {
+                    break;
+                case MarioState.Small:
                     currentSprite = smallStates[marioMovement];
-                }
-                return;
+                    break;
             }
-
-            else if (marioMovement == MarioMovement.RunRight || marioMovement == MarioMovement.IdleRight)
-            {
-                marioMovement = MarioMovement.JumpRight;
-                if (marioState == MarioState.Big)
-                {
-                    currentSprite = bigStates[marioMovement];
-                }
-                else if (marioState == MarioState.Fire)
-                {
-                    currentSprite = fireStates[marioMovement];
-                }
-                else if (marioState == MarioState.Small)
-                {
-                    currentSprite = smallStates[marioMovement];
-                }
-                return;
-            }
-
-            else if (marioState != MarioState.Small && marioMovement == MarioMovement.CrouchRight)
-            {
-                marioMovement = MarioMovement.IdleRight;
-                if (marioState == MarioState.Big)
-                {
-                    currentSprite = bigStates[marioMovement];
-                }
-                else if (marioState == MarioState.Fire)
-                {
-                    currentSprite = fireStates[marioMovement];
-                }
-                return;
-            }
-
-            else if (marioState != MarioState.Small && marioMovement == MarioMovement.CrouchLeft)
-            {
-                marioMovement = MarioMovement.IdleLeft;
-                if (marioState == MarioState.Big)
-                {
-                    currentSprite = bigStates[marioMovement];
-                }
-                else if (marioState == MarioState.Fire)
-                {
-                    currentSprite = fireStates[marioMovement];
-                }
-            }
-
-
         }
 
         public void Shrink()
         {
             marioState = MarioState.Small;
-            marioMovement = MarioMovement.IdleRight;
+            if (marioMovement == MarioMovement.CrouchLeft)
+                marioMovement = MarioMovement.IdleLeft;
+            else if (marioMovement == MarioMovement.CrouchRight)
+                marioMovement = MarioMovement.IdleRight;
+            else if (marioMovement == MarioMovement.Die)
+                marioMovement = MarioMovement.IdleRight;
             currentSprite = smallStates[marioMovement];
         }
 

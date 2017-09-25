@@ -111,6 +111,5 @@ namespace Lasagna
             stateMachine.Draw(spriteBatch);
         }
 
-        
     }
 }
