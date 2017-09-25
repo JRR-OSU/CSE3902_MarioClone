@@ -77,6 +77,21 @@ namespace Lasagna
             // Perhaps used for a transitional state
         }
 
+        private void SwitchCurrentSprite(MarioMovement marioMovement)
+        {
+            switch (marioState)
+            {
+                case MarioState.Big:
+                    currentSprite = bigStates[marioMovement];
+                    break;
+                case MarioState.Fire:
+                    currentSprite = fireStates[marioMovement];
+                    break;
+                case MarioState.Small:
+                    currentSprite = smallStates[marioMovement];
+                    break;
+            }
+        }
         public void MoveLeft()
         {
             if (marioMovement == MarioMovement.Die)
@@ -85,18 +100,7 @@ namespace Lasagna
                 marioMovement = MarioMovement.IdleLeft;
             else
                 marioMovement = MarioMovement.RunLeft;
-            switch (marioState)
-                {
-                    case MarioState.Big:
-                        currentSprite = bigStates[marioMovement];
-                        break;
-                    case MarioState.Fire:
-                        currentSprite = fireStates[marioMovement];
-                        break;
-                    case MarioState.Small:
-                        currentSprite = smallStates[marioMovement];
-                    break;
-                }        
+            SwitchCurrentSprite(marioMovement);
         }
 
         public void MoveRight()
@@ -107,19 +111,7 @@ namespace Lasagna
                 marioMovement = MarioMovement.IdleRight;
             else
                 marioMovement = MarioMovement.RunRight;
-            switch (marioState)
-            {
-                case MarioState.Big: 
-                    currentSprite = bigStates[marioMovement];      
-                    break;
-                case MarioState.Fire:
-                    currentSprite = fireStates[marioMovement];          
-                    break;
-                case MarioState.Small:
-                    currentSprite = smallStates[marioMovement];
-                    break;
-            }
-            
+            SwitchCurrentSprite(marioMovement);
         }
         public void HandleCrouch()
         {
@@ -141,28 +133,15 @@ namespace Lasagna
                 case MarioMovement.JumpRight:
                     marioMovement = MarioMovement.IdleRight;
                     break;
-             
+
             }
-            
         }
         public void Crouch()
         {
             if (marioMovement == MarioMovement.Die)
                 return;
             HandleCrouch();
-            switch (marioState)
-            {
-                case MarioState.Big:
-                    currentSprite = bigStates[marioMovement];
-                    break;
-                case MarioState.Fire:
-                    currentSprite = fireStates[marioMovement];
-                    break;
-                case MarioState.Small:
-                    currentSprite = smallStates[marioMovement];
-                    break;
-            }
-
+            SwitchCurrentSprite(marioMovement);
         }
         public void HandleJump()
         {
@@ -191,18 +170,7 @@ namespace Lasagna
             if (marioMovement == MarioMovement.Die)
                 return;
             HandleJump();
-            switch (marioState)
-            {
-                case MarioState.Big:
-                    currentSprite = bigStates[marioMovement];
-                    break;
-                case MarioState.Fire:
-                    currentSprite = fireStates[marioMovement];
-                    break;
-                case MarioState.Small:
-                    currentSprite = smallStates[marioMovement];
-                    break;
-            }
+            SwitchCurrentSprite(marioMovement);
         }
 
         public void Shrink()
