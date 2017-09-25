@@ -1,14 +1,13 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
 
 namespace Lasagna
 {
     public class MarioGame : Game
     {
-        private GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
-        private GameTime gameTime;
         private KeyboardController keyControl;
         private List<ITile> tiles = new List<ITile>();
         private List<IEnemy> enemies = new List<IEnemy>();
@@ -18,13 +17,11 @@ namespace Lasagna
 
         public MarioGame()
         {
-            graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
         }
 
         protected override void Initialize()
         {
-            gameTime = new GameTime();
             keyControl = new KeyboardController();
 
             //Subscribe to events
@@ -100,7 +97,7 @@ namespace Lasagna
         }
 
         //Event handlers
-        private void OnQuit()
+        private void OnQuit(object sender, EventArgs e)
         {
             Exit();
         }

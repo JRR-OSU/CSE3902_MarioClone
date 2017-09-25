@@ -1,6 +1,9 @@
-﻿namespace Lasagna
+﻿using System;
+
+namespace Lasagna
 {
-    public delegate void InputEventHandler();
+    public delegate void InputEventHandler(object sender, EventArgs e);
+    public delegate void MarioEventHandler();
 
     //Class which contains all events for the project in one easy to locate place.
     public static class MarioEvents
@@ -21,88 +24,88 @@
         public static event InputEventHandler OnDestroyBrickBlock;
         public static event InputEventHandler OnUseHiddenBlock;
 
-        public static void Quit()
+        public static void Quit(object sender, EventArgs e)
         {
             if (OnQuit != null)
-                OnQuit();
+                OnQuit(sender, e);
         }
 
-        public static void Reset()
+        public static void Reset(object sender, EventArgs e)
         {
             if (OnReset != null)
-                OnReset();
+                OnReset(sender, e);
         }
 
-        public static void MoveLeft()
+        public static void MoveLeft(object sender, EventArgs e)
         {
             if (OnMoveLeft != null)
-                OnMoveLeft();
+                OnMoveLeft(sender, e);
         }
 
-        public static void MoveRight()
+        public static void MoveRight(object sender, EventArgs e)
         {
             if (OnMoveRight != null)
-                OnMoveRight();
+                OnMoveRight(sender, e);
         }
 
-        public static void Jump()
+        public static void Jump(object sender, EventArgs e)
         {
             if (OnJump != null)
-                OnJump();
+                OnJump(sender, e);
         }
 
-        public static void Crouch()
+        public static void Crouch(object sender, EventArgs e)
         {
             if (OnCrouch != null)
-                OnCrouch();
+                OnCrouch(sender, e);
         }
 
-        public static void Fire()
+        public static void Fire(object sender, EventArgs e)
         {
             if (OnFire != null)
-                OnFire();
+                OnFire(sender, e);
         }
 
-        public static void MarioDamage()
+        public static void MarioDamage(object sender, EventArgs e)
         {
             if (OnMarioDamage != null)
-                OnMarioDamage();
+                OnMarioDamage(sender, e);
         }
 
-        public static void MarioDie()
+        public static void MarioDie(object sender, EventArgs e)
         {
             if (OnMarioDie != null)
-                OnMarioDie();
+                OnMarioDie(sender, e);
         }
 
-        public static void GetMushroom()
+        public static void GetMushroom(object sender, EventArgs e)
         {
             if (OnGetMushroom != null)
-                OnGetMushroom();
+                OnGetMushroom(sender, e);
         }
 
-        public static void GetFireFlower()
+        public static void GetFireFlower(object sender, EventArgs e)
         {
             if (OnGetFireFlower != null)
-                OnGetFireFlower();
+                OnGetFireFlower(sender, e);
         }
 
-        public static void UseQuestionBlock()
+        public static void UseQuestionBlock(object sender, EventArgs e)
         {
             if (OnUseQuestionBlock != null)
-                OnUseQuestionBlock();
+                OnUseQuestionBlock(sender, e);
         }
 
-        public static void DestroyBrickBlock()
+        public static void DestroyBrickBlock(object sender, EventArgs e)
         {
             if (OnDestroyBrickBlock != null)
-                OnDestroyBrickBlock();
+                OnDestroyBrickBlock(sender, e);
         }
 
-        public static void UseHiddenBlock()
+        public static void UseHiddenBlock(object sender, EventArgs e)
         {
             if (OnUseHiddenBlock != null)
-                OnUseHiddenBlock();
+                OnUseHiddenBlock(sender, e);
         }
     }
 }

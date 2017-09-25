@@ -5,7 +5,7 @@
         public FloorBlockTile(int spawnXPos, int spawnYPos)
             : base(spawnXPos, spawnYPos)
         {
-            currentSprite = TileSpriteFactory.Instance.CreateSprite_Floor();
+            CurrentSprite = TileSpriteFactory.Instance.CreateSprite_Floor();
         }
 
         //Not needed currently

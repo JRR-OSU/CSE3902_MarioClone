@@ -5,7 +5,7 @@
         public UnbreakableBlockTile(int spawnXPos, int spawnYPos)
             : base(spawnXPos, spawnYPos)
         {
-            currentSprite = TileSpriteFactory.Instance.CreateSprite_UnbreakableBlock();
+            CurrentSprite = TileSpriteFactory.Instance.CreateSprite_UnbreakableBlock();
         }
 
         //Not needed currently

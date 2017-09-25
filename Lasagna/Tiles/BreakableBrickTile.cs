@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using System;
 
 namespace Lasagna
 {
@@ -19,7 +20,7 @@ namespace Lasagna
         public BreakableBrickTile(int spawnXPos, int spawnYPos)
             : base(spawnXPos, spawnYPos)
         {
-            currentSprite = idleSprite;
+            CurrentSprite = idleSprite;
             currentState = BlockState.Idle;
             MarioEvents.OnDestroyBrickBlock += ChangeToInvisible;
             MarioEvents.OnReset += ChangeToDefault;
@@ -45,7 +46,7 @@ namespace Lasagna
             //Toggles us between used and unused
             if (currentState != BlockState.Idle)
             {
-                currentSprite = idleSprite;
+                CurrentSprite = idleSprite;
                 currentState = BlockState.Idle;
             }
             else
@@ -53,13 +54,13 @@ namespace Lasagna
         }
 
         ///TODO: Temp methods for sprint2
-        public void ChangeToInvisible()
+        public void ChangeToInvisible(object sender, EventArgs e)
         {
             if (currentState == BlockState.Idle)
                 ChangeState();
         }
 
-        public void ChangeToDefault()
+        public void ChangeToDefault(object sender, EventArgs e)
         {
             if (currentState == BlockState.Broken)
                 ChangeState();

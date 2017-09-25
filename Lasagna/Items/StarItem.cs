@@ -5,7 +5,7 @@
         public StarItem(int spawnPosX, int spawnPosY)
             : base(spawnPosX, spawnPosY)
         {
-            itemSprite = ItemSpriteFactory.Instance.CreateSprite_Star();
+            ItemSprite = ItemSpriteFactory.Instance.CreateSprite_Star();
         }
     }
 }

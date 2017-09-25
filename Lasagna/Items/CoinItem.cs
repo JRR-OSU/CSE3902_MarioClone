@@ -5,7 +5,7 @@
         public CoinItem(int spawnPosX, int spawnPosY)
             : base(spawnPosX, spawnPosY)
         {
-            itemSprite = ItemSpriteFactory.Instance.CreateSprite_Coin();
+            ItemSprite = ItemSpriteFactory.Instance.CreateSprite_Coin();
         }
     }
 }

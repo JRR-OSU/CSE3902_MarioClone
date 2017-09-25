@@ -1,4 +1,6 @@
-﻿namespace Lasagna
+﻿using System;
+
+namespace Lasagna
 {
     public class QuestionBlockTile : BaseTile
     {
@@ -15,7 +17,7 @@
         public QuestionBlockTile(int spawnXPos, int spawnYPos)
             : base(spawnXPos, spawnYPos)
         {
-            currentSprite = unused;
+            CurrentSprite = unused;
             currentState = BlockState.Idle;
             MarioEvents.OnUseQuestionBlock += ChangeToUsed;
             MarioEvents.OnReset += ChangeToDefault;
@@ -26,23 +28,23 @@
             //Toggles us between used and unused
             if (currentState == BlockState.Idle)
             {
-                currentSprite = used;
+                CurrentSprite = used;
                 currentState = BlockState.Used;
             }
             else
             {
-                currentSprite = unused;
+                CurrentSprite = unused;
                 currentState = BlockState.Idle;
             }
         }
 
         ///TODO: Temp methods for sprint2
-        private void ChangeToUsed()
+        private void ChangeToUsed(object sender, EventArgs e)
         {
             if (currentState == BlockState.Idle)
                 ChangeState();
         }
-        private void ChangeToDefault()
+        private void ChangeToDefault(object sender, EventArgs e)
         {
             if (currentState == BlockState.Used)
                 ChangeState();

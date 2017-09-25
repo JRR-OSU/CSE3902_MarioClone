@@ -6,9 +6,23 @@ namespace Lasagna
 {
     public class NonAnimatedSprite : ISprite
     {
-        protected Texture2D sourceSpriteSheet;
-        protected Rectangle sourceRectangle;
-        protected Rectangle destinationRectangle;
+        private Texture2D sourceSpriteSheet;
+        private Rectangle sourceRectangle;
+        private Rectangle destinationRectangle;
+
+        protected Texture2D SourceSpriteSheet { get { return sourceSpriteSheet; } }
+        protected Rectangle SourceRectangle
+        {
+            get
+            {
+                if (sourceRectangle == null)
+                    sourceRectangle = new Rectangle();
+
+                return sourceRectangle;
+            }
+            set { sourceRectangle = value; }
+        }
+        protected Rectangle DestinationRectangle { get { return destinationRectangle; } }
 
         public int Height
         {

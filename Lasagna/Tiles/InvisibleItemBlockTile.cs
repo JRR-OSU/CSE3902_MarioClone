@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using System;
 
 namespace Lasagna
 {
@@ -17,7 +18,7 @@ namespace Lasagna
         public InvisibleItemBlockTile(int spawnXPos, int spawnYPos)
             : base(spawnXPos, spawnYPos)
         {
-            currentSprite = visibleSprite;
+            CurrentSprite = visibleSprite;
             currentState = BlockState.Invisible;
             MarioEvents.OnUseHiddenBlock += ChangeToVisible;
             MarioEvents.OnReset += ChangeToInvisible;
@@ -42,7 +43,7 @@ namespace Lasagna
             //Toggles us between visible and invisible
             if (currentState == BlockState.Invisible)
             {
-                currentSprite = visibleSprite;
+                CurrentSprite = visibleSprite;
                 currentState = BlockState.Visible;
             }
             else
@@ -50,13 +51,13 @@ namespace Lasagna
         }
 
         ///TODO: Temp methods for sprint2
-        public void ChangeToVisible()
+        public void ChangeToVisible(object sender, EventArgs e)
         {
             if (currentState == BlockState.Invisible)
                 ChangeState();
         }
 
-        public void ChangeToInvisible()
+        public void ChangeToInvisible(object sender, EventArgs e)
         {
             if (currentState == BlockState.Visible)
                 ChangeState();

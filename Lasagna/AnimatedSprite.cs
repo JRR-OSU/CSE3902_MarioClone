@@ -20,17 +20,13 @@ namespace Lasagna
             sourceSpriteSheetColumns = spriteSheetColumns;
             sourceSpriteSheetRows = spriteSheetRows;
             animationFPS = spriteAnimationFPS;
-            
-            if (sourceRectangle == null)
-                sourceRectangle = new Rectangle();
 
             //Calculate an individual sprite size on the source sheet based on our number of rows and columns
-            sourceRectangle.Width = sourceSpriteSheet.Width / sourceSpriteSheetColumns;
-            sourceRectangle.Height = sourceSpriteSheet.Height / sourceSpriteSheetRows;
+            SourceRectangle = new Rectangle(SourceRectangle.X, SourceRectangle.Y, SourceSpriteSheet.Width / sourceSpriteSheetColumns, SourceSpriteSheet.Height / sourceSpriteSheetRows);
 
             totalFrames = spriteSheetColumns * spriteSheetRows;
         }
-        
+
         public override void Update(GameTime gameTime, int spriteXPos, int spriteYPos)
         {
             if (gameTime == null)
@@ -51,14 +47,10 @@ namespace Lasagna
                 if (currentFrame >= totalFrames)
                     currentFrame = 0;
 
-                if (sourceRectangle == null)
-                    sourceRectangle = new Rectangle();
-
                 //Calculate new frame source position
                 int row = (int)((float)currentFrame / (float)sourceSpriteSheetColumns);
                 int column = currentFrame % sourceSpriteSheetColumns;
-                sourceRectangle.X = sourceRectangle.Width * column;
-                sourceRectangle.Y = sourceRectangle.Height * row;
+                SourceRectangle = new Rectangle(SourceRectangle.Width * column, SourceRectangle.Height * row, SourceRectangle.Width, SourceRectangle.Height);
             }
         }
     }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using System;
 using System.Collections.Generic;
 
 namespace Lasagna
@@ -9,7 +10,7 @@ namespace Lasagna
         public KeyboardController()
         {
             //Setup all key events we accept
-            keyEvents = new Dictionary<Keys, InputEventHandler>
+            keyEvents = new Dictionary<Keys, MarioEventHandler>
             {
                 { Keys.Q, Quit },
                 { Keys.R, Reset },
@@ -33,7 +34,7 @@ namespace Lasagna
         }
 
         //Keys and what event they trigger
-        private Dictionary<Keys, InputEventHandler> keyEvents;
+        private Dictionary<Keys, MarioEventHandler> keyEvents;
         //Used for determining if key was just pressed this frame
         private KeyboardState oldKeyboardState;
 
@@ -42,7 +43,7 @@ namespace Lasagna
             KeyboardState newKeyboardState = Keyboard.GetState();
 
             //Iterate over all keys, if they are pressed down this frame raise event.
-            foreach (KeyValuePair<Keys, InputEventHandler> keyPair in keyEvents)
+            foreach (KeyValuePair<Keys, MarioEventHandler> keyPair in keyEvents)
             {
                 if (keyPair.Value != null && oldKeyboardState.IsKeyUp(keyPair.Key) && newKeyboardState.IsKeyDown(keyPair.Key))
                     keyPair.Value();
@@ -53,72 +54,72 @@ namespace Lasagna
 
         public void Quit()
         {
-            MarioEvents.Quit();
+            MarioEvents.Quit(this, EventArgs.Empty);
         }
 
         public void Reset()
         {
-            MarioEvents.Reset();
+            MarioEvents.Reset(this, EventArgs.Empty);
         }
 
         public void MoveLeft()
         {
-            MarioEvents.MoveLeft();
+            MarioEvents.MoveLeft(this, EventArgs.Empty);
         }
 
         public void MoveRight()
         {
-            MarioEvents.MoveRight();
+            MarioEvents.MoveRight(this, EventArgs.Empty);
         }
 
         public void Jump()
         {
-            MarioEvents.Jump();
+            MarioEvents.Jump(this, EventArgs.Empty);
         }
 
         public void Crouch()
         {
-            MarioEvents.Crouch();
+            MarioEvents.Crouch(this, EventArgs.Empty);
         }
 
         public void Fire()
         {
-            MarioEvents.Fire();
+            MarioEvents.Fire(this, EventArgs.Empty);
         }
 
         public void MarioDamage()
         {
-            MarioEvents.MarioDamage();
+            MarioEvents.MarioDamage(this, EventArgs.Empty);
         }
 
         public void MarioDie()
         {
-            MarioEvents.MarioDie();
+            MarioEvents.MarioDie(this, EventArgs.Empty);
         }
 
         public void GetMushroom()
         {
-            MarioEvents.GetMushroom();
+            MarioEvents.GetMushroom(this, EventArgs.Empty);
         }
 
         public void GetFireFlower()
         {
-            MarioEvents.GetFireFlower();
+            MarioEvents.GetFireFlower(this, EventArgs.Empty);
         }
 
         public void UseQuestionBlock()
         {
-            MarioEvents.UseQuestionBlock();
+            MarioEvents.UseQuestionBlock(this, EventArgs.Empty);
         }
 
         public void DestroyBrickBlock()
         {
-            MarioEvents.DestroyBrickBlock();
+            MarioEvents.DestroyBrickBlock(this, EventArgs.Empty);
         }
 
         public void UseHiddenBlock()
         {
-            MarioEvents.UseHiddenBlock();
+            MarioEvents.UseHiddenBlock(this, EventArgs.Empty);
         }
     }
 }

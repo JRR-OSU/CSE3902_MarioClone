@@ -23,10 +23,10 @@ namespace Lasagna
 
         public override void ChangeState(EnemyState newState)
         {
-            if (koopaStates != null && koopaStates.ContainsKey(currentState) && koopaStates[currentState] != null)
+            if (koopaStates != null && koopaStates.ContainsKey(CurrentState) && koopaStates[CurrentState] != null)
             {
-                currentState = newState;
-                currentSprite = koopaStates[currentState];
+                CurrentState = newState;
+                CurrentSprite = koopaStates[CurrentState];
             }
         }
 

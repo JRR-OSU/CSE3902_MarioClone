@@ -6,7 +6,7 @@
         public LifeMushroomItem(int spawnPosX, int spawnPosY)
             : base(spawnPosX, spawnPosY)
         {
-            itemSprite = ItemSpriteFactory.Instance.CreateSprite_PowerupMushroom();
+            ItemSprite = ItemSpriteFactory.Instance.CreateSprite_PowerupMushroom();
         }
     }
 }

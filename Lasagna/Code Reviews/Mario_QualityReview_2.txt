@@ -1,0 +1,20 @@
+﻿Tim Williams
+09/19/2017
+Sprint2
+Mario.cs
+Jon Reed
+
+Having the MarioStateMachine class in the same class are Mario makes the code confusing, it should be split out into a separate class.
+
+For the events, hooking them directly into the state machine events would be better than hooking them into methods in Mario.cs 
+which simply call the methods in the statemachine class.
+
+MarioSpriteFactory.CreateSprite shouldn't be called each time you change the current sprite, this creates unneccessary garbage.
+Instead, have a field for each sprite the statemachine uses, and in the constructor initialize all those fields with the appropriate 
+MarioSpriteFactory.CreateSprite method. This way you only call the create method once, not every time his state changes.
+
+Maybe make canJump a method which returns a bool instead of a field. This way the logic to determine if mario can jump is in one statement, 
+so it's easily changeable later, rather than having to find all places where canJump is modifed.
+
+There's a lot of branching logic in the MarioSateMachine class, for the different states. Maybe do this via a dictionary instead of branching if-else statements.
+Have a dictionary where the key is a state, the value is a sprite. That way you can easily set the sprite based on the current state and movement with one line.

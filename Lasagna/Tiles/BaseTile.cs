@@ -5,11 +5,19 @@ namespace Lasagna
 {
     public abstract class BaseTile : ITile
     {
-        protected ISprite currentSprite;
-        protected int posX;
-        protected int posY;
+        private ISprite currentSprite;
+        private int posX;
+        private int posY;
 
-        public BaseTile(int spawnPosX, int spawnPosY)
+        protected ISprite CurrentSprite
+        {
+            get { return currentSprite; }
+            set { currentSprite = value; }
+        }
+        protected int PosX { get { return posX; } }
+        protected int PosY { get { return posY; } }
+
+        protected BaseTile(int spawnPosX, int spawnPosY)
         {
             posX = spawnPosX;
             posY = spawnPosY;

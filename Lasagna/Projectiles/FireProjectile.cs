@@ -15,14 +15,14 @@
         public FireProjectile(int spawnPosX, int spawnPosY)
             : base(spawnPosX, spawnPosY)
         {
-            currentSprite = fireballDefault;
+            CurrentSprite = fireballDefault;
         }
 
         public override void ChangeState()
         {
             ///TODO: Make this work with other states later. Right now just switches to explode.
             currentState = FireballStates.Explode;
-            currentSprite = fireballExplode;
+            CurrentSprite = fireballExplode;
         }
     }
 }

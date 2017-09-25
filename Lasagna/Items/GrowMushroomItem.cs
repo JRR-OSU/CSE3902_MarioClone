@@ -5,7 +5,7 @@
         public GrowMushroomItem(int spawnPosX, int spawnPosY)
             : base(spawnPosX, spawnPosY)
         {
-            itemSprite = ItemSpriteFactory.Instance.CreateSprite_1UpMushroom();
+            ItemSprite = ItemSpriteFactory.Instance.CreateSprite_1UpMushroom();
         }
     }
 }

@@ -7,7 +7,7 @@
         public MissileProjectile(int spawnPosX, int spawnPosY)
             : base(spawnPosX, spawnPosY)
         {
-            currentSprite = missileSprite;
+            CurrentSprite = missileSprite;
         }
 
         public override void ChangeState()

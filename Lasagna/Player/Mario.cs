@@ -30,7 +30,7 @@ namespace Lasagna
             MarioEvents.OnFire += MarioFireProjectile;
             MarioEvents.OnGetFireFlower += FireState;
 
-            MarioEvents.OnMarioDie +=Die;
+            MarioEvents.OnMarioDie += Die;
 
             MarioEvents.OnReset += Reset;
 
@@ -39,12 +39,12 @@ namespace Lasagna
  
         }
 
-        private void Reset()
+        private void Reset(object sender, EventArgs e)
         {
             stateMachine.Reset();
         }
 
-        public void MarioFireProjectile()
+        public void MarioFireProjectile(object sender, EventArgs e)
         {
             stateMachine.MarioFireProjectile();
         }
@@ -54,39 +54,39 @@ namespace Lasagna
             stateMachine.GetFireflower();
         }
      
-        public void MoveLeft()
+        public void MoveLeft(object sender, EventArgs e)
         {
             stateMachine.MoveLeft();
         }
 
-        public void MoveRight()
+        public void MoveRight(object sender, EventArgs e)
         {
             stateMachine.MoveRight();
         }
 
 
-        public void Crouch()
+        public void Crouch(object sender, EventArgs e)
         {
            stateMachine.Crouch();
         }
 
 
-        public void Jump()
+        public void Jump(object sender, EventArgs e)
         {
             stateMachine.Jump();
         }
 
-        public void Grow()
+        public void Grow(object sender, EventArgs e)
         {
             stateMachine.Grow();
         }
 
-        public void FireState()
+        public void FireState(object sender, EventArgs e)
         {
             stateMachine.Fire();
         }
 
-        public void Shrink()
+        public void Shrink(object sender, EventArgs e)
         {
             stateMachine.Shrink();
         }
@@ -96,7 +96,7 @@ namespace Lasagna
             stateMachine.Star();
         }
 
-        public void Die()
+        public void Die(object sender, EventArgs e)
         {
             stateMachine.KillMario();
         }

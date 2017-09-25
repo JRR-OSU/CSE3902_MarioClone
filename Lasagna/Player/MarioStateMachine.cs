@@ -77,18 +77,18 @@ namespace Lasagna
             // Perhaps used for a transitional state
         }
 
-        private void SwitchCurrentSprite(MarioMovement marioMovement)
+        private void SwitchCurrentSprite(MarioMovement newMovement)
         {
             switch (marioState)
             {
                 case MarioState.Big:
-                    currentSprite = bigStates[marioMovement];
+                    currentSprite = bigStates[newMovement];
                     break;
                 case MarioState.Fire:
-                    currentSprite = fireStates[marioMovement];
+                    currentSprite = fireStates[newMovement];
                     break;
                 case MarioState.Small:
-                    currentSprite = smallStates[marioMovement];
+                    currentSprite = smallStates[newMovement];
                     break;
             }
         }

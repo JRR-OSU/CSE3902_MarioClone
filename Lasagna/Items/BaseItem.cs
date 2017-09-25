@@ -6,11 +6,19 @@ namespace Lasagna
     public abstract class BaseItem : IItem
     {
         //Change this later if items support states.
-        protected ISprite itemSprite;
-        protected int posX;
-        protected int posY;
+        private ISprite itemSprite;
+        private int posX;
+        private int posY;
 
-        public BaseItem(int spawnPosX, int spawnPosY)
+        protected ISprite ItemSprite
+        {
+            get { return itemSprite; }
+            set { itemSprite = value; }
+        }
+        protected int PosX { get { return posX; } }
+        protected int PosY { get { return posY; } }
+
+        protected BaseItem(int spawnPosX, int spawnPosY)
         {
             posX = spawnPosX;
             posY = spawnPosY;

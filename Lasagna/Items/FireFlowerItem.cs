@@ -5,7 +5,7 @@
         public FireFlowerItem(int spawnPosX, int spawnPosY)
             : base(spawnPosX, spawnPosY)
         {
-            itemSprite = ItemSpriteFactory.Instance.CreateSprite_FireFlower();
+            ItemSprite = ItemSpriteFactory.Instance.CreateSprite_FireFlower();
         }
     }
 }

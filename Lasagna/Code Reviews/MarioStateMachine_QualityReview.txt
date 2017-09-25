@@ -1,0 +1,9 @@
+﻿Tim Williams
+09/25/2017
+Sprint2
+Mario.cs
+Jon Reed
+
+Overall the code seems very functional. Perhaps have nested dictionaries for sprites, to make switching sprites easier and take less code?
+
+If we were to add in more powerups for Mario, you would have to add an entirely new dictionary. By nestng the dictionaries you could avoid this.
