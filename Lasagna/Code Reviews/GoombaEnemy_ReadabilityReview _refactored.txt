@@ -1,0 +1,12 @@
+Jon Reed
+09/25/2017
+Sprint2 - Refactored Implementation
+GoombaEnemy.cs
+Yiwei Zhang
+5 minutes
+
+Fields and methods are still appropriately and readably named. 
+
+Logic is simple and very easy to understand. The use of the abstract class allows this class to be more readable. The Dictionary is defined readably as well.
+
+The only thing I would say is perhaps harder to understand is the use of base: in the constructor, however this just extends from the now-implemented abstract class, which overall improves readability. 

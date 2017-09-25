@@ -95,7 +95,9 @@
   <ItemGroup>
     <Content Include="Code Reviews\AnimatedSprite_ReadabilityReview.txt" />
     <Content Include="Code Reviews\AnimatedSprite_QualityReview.txt" />
+    <Content Include="Code Reviews\GoombaEnemy_QualityReview _refactored.txt" />
     <Content Include="Code Reviews\GoombaEnemy_QualityReview.txt" />
+    <Content Include="Code Reviews\GoombaEnemy_ReadabilityReview _refactored.txt" />
     <Content Include="Code Reviews\GoombaEnemy_ReadabilityReview.txt" />
     <Content Include="Code Reviews\Mario_QualityReview.txt" />
     <Content Include="Code Reviews\Mario_ReadabilityReview.txt" />
