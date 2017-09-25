@@ -1,0 +1,10 @@
+﻿Zeyu Li
+09/25/2017
+Sprint 2
+MarioSpriteFactory.cs
+Timothy Williams
+5 minutes
+
+The code is clean and easy for reading. Seems all the variable names are in correct format. Method names
+are easy to understand. It is my first time to see the region block, it seems useful. The class structure
+is also very obvious. That is why I consider this file as readable.

@@ -93,6 +93,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Code Reviews\MarioSpriteFactory_ReadabilityReview.txt" />
+    <Content Include="Code Reviews\MarioSpriteFactory_QualityReview.txt" />
     <Content Include="Code Reviews\AnimatedSprite_ReadabilityReview.txt" />
     <Content Include="Code Reviews\AnimatedSprite_QualityReview.txt" />
     <Content Include="Code Reviews\GoombaEnemy_QualityReview.txt" />

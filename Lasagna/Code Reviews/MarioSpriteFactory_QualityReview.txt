@@ -1,0 +1,13 @@
+﻿Zeyu Li
+09/25/2017
+Sprint 2
+MarioSpriteFactory.cs
+Timothy Williams
+
+This file of codes is in high cohesion and low coupling. For instance, the fields follow correct naming formats, 
+easy to know what are they used for. One load method can be used to load all the needed content in just one call.
+Other object types are well defined, strictly follow the object-oriented programming principles, do not have extra
+part of code. It is a good example for me to learn to write high quality codes.
+
+Again, I think I am not able to do further improvements to the codes. Hope that after the growth of my programming
+ability, I can finish more improvements.
