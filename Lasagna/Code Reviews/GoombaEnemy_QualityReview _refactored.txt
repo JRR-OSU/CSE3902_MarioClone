@@ -1,0 +1,12 @@
+Jon Reed
+09/25/2017
+Sprint2
+GoombaEnemy.cs - Refactored Implementation
+Yiwei Zhang
+5 minutes
+
+This source file accomplishes everything it needs to, and after being refactored it is significantly more reusable. 
+
+The use now of the enum increases single point control over change, as does the ChangeState method. The use of the abstract class reduces clutter and increases cohesion. 
+
+Lastly the use of the dictionary allows for more organization of initialized sprites. Quality of this file has increased significantly after refactoring.

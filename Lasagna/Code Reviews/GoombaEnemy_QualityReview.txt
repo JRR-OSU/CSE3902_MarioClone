@@ -1,12 +1,12 @@
 Jon Reed
-09/20/2017
-Sprint2
+09/25/2017
+Sprint2 - Refactored Implementation 
 GoombaEnemy.cs
 Yiwei Zhang
 5 minutes
 
-Consider a little separation in the fields to seperate the groups of variables, i.e., ISprites and bools...etc. 
+Consider a little separation in the fields to separate the groups of variables, i.e., ISprites and bools...etc. 
 
 This source file is very well written and accomplishes the goal very simply and directly. The logic can be slightly simplified in the update method by just saying if(this.liveState). 
 
-Everything looks and functions great.
+Everything looks and functions great. 
