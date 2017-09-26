@@ -7,6 +7,7 @@ namespace Lasagna
 {
     public class MarioGame : Game
     {
+        private GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
         private KeyboardController keyControl;
         private List<ITile> tiles = new List<ITile>();
@@ -17,6 +18,7 @@ namespace Lasagna
 
         public MarioGame()
         {
+            graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
         }
 
