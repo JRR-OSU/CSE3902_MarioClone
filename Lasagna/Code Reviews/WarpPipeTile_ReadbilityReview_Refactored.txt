@@ -1,0 +1,11 @@
+﻿Yiwei Zhang
+09/25/2017
+Sprint2
+WarpPipeTile.cs - Refactored Implementation
+Zeyu li
+10 minutes
+
+The names of fields and methods are much more clearly stated by using upper and lower cases.
+The use of enum to intialize states improves readbility a lot.
+Edited comments explain why the code should like this instead of what the variables are, thus improve readbility.
+The overall structure is cleaner than the previous one.

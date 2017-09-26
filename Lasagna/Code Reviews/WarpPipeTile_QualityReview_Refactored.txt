@@ -1,0 +1,10 @@
+﻿Yiwei Zhang
+09/25/2017
+Sprint2
+WarpPipeTile.cs - Refactored Implementation
+Zeyu li
+5 minutes
+
+The cohesion of this class increases by using BaseTile interfaces
+The check of pipeTipSprite is a good practice to handle all kinds of needs and prevents classes from getting errors
+
