@@ -28,14 +28,17 @@ namespace Lasagna
             items = new List<IItem>();
 
             //If we were given a bad file, exit.
-            if (filepath.EndsWith(".xml") || !File.Exists(filepath))
+            if (!filepath.EndsWith(".xml") || !File.Exists(filepath))
+            {
+                Debug.WriteLine("Error! Invalid filepath given for loading level: \"" + filepath + "\"");
                 return false;
+            }
 
             bool success = true;
 
             //Get an xmlreader for our file
             XmlReader reader = XmlReader.Create(filepath);
-            
+
             //Iterate through all of our file lines, and fill out timelines as applicable
             while (reader.Read())
             {
@@ -96,7 +99,7 @@ namespace Lasagna
 
                 }
                 else
-                    Debug.WriteLine("Warning: \"{0}\" level XML file has element of unknown type: {1}", filepath, reader.LocalName);*/
+                    Debug.WriteLine("Warning: \"" + filepath + "\" level XML file has element of unknown type: " + reader.LocalName);*/
             }
 
             return success;

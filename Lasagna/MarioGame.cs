@@ -41,7 +41,7 @@ namespace Lasagna
             ProjectileSpriteFactory.Instance.LoadAllContent(Content);
             TileSpriteFactory.Instance.LoadAllContent(Content);
 
-            LevelCreator.LoadLevelFromXML("Level XML/Mario_1-1.xml", out players, out enemies, out tiles, out items);
+            LevelCreator.LoadLevelFromXML(Environment.CurrentDirectory + "\\Level XML\\Mario_1-1.xml", out players, out enemies, out tiles, out items);
             //
 
             ///TODO: This is temporary for Sprint2
