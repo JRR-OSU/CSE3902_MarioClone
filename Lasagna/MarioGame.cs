@@ -10,6 +10,7 @@ namespace Lasagna
         private GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
         private KeyboardController keyControl;
+        private ISprite levelBackground;
         private List<ITile> tiles = new List<ITile>();
         private List<IEnemy> enemies = new List<IEnemy>();
         private List<IItem> items = new List<IItem>();
@@ -40,8 +41,9 @@ namespace Lasagna
             MarioSpriteFactory.Instance.LoadAllContent(Content);
             ProjectileSpriteFactory.Instance.LoadAllContent(Content);
             TileSpriteFactory.Instance.LoadAllContent(Content);
+            BackgroundSpriteFactory.Instance.LoadAllContent(Content, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height);
 
-            LevelCreator.LoadLevelFromXML(Environment.CurrentDirectory + "\\Level XML\\Mario_1-1.xml", out players, out enemies, out tiles, out items);
+            LevelCreator.LoadLevelFromXML(Environment.CurrentDirectory + "\\Level XML\\Mario_1-1.xml", out levelBackground, out players, out enemies, out tiles, out items);
             //
 
             ///TODO: This is temporary for Sprint2
@@ -69,6 +71,9 @@ namespace Lasagna
         {
             keyControl.Update();
 
+            if (levelBackground != null)
+                levelBackground.Update(gameTime, 0, 0);
+
             foreach (ITile t in tiles)
                 t.Update(gameTime);
             foreach (IProjectile t in projectiles)
@@ -79,13 +84,16 @@ namespace Lasagna
                 t.Update(gameTime);
             foreach (IPlayer p in players)
                 p.Update(gameTime);
-            
+
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
+
+            if (levelBackground != null)
+                levelBackground.Draw(spriteBatch);
 
             foreach (ITile t in tiles)
                 t.Draw(spriteBatch);
@@ -97,7 +105,7 @@ namespace Lasagna
                 t.Draw(spriteBatch);
             foreach (IPlayer p in players)
                 p.Draw(spriteBatch);
-            
+
             base.Draw(gameTime);
         }
 

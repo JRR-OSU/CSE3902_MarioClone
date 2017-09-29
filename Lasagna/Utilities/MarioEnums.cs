@@ -26,6 +26,11 @@ namespace Lasagna
         Bottom
     }
 
+    public enum LevelType
+    {
+        MarioClear
+    }
+
     public enum PlayerType
     {
         Mario
