@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Root leveltype="MarioClear">
+  <Players>
+    <Player type="Mario" posx="200" posy="300" />
+  </Players>
+  <Enemies>
+    <Enemy type="Goomba" posx="420" posy="132" />
+    <Enemy type="Koopa" posx="490" posy="132" />
+  </Enemies>
+  <Tiles>
+    <Tile type="Brick" posx="280" posy="200" />
+    <!-- <Tile type="Brick" posx="280" posy="200" item="Coin" /> EXAMPLE FOR LATER -->
+    <Tile type="Flag" posx="560" posy="80" />
+    <Tile type="Floor" posx="350" posy="200" />
+    <Tile type="InvisibleItemBlock" posx="140" posy="200" />
+    <!-- <Tile type="InvisibleItemBlock" posx="140" posy="200" item="Coin" /> EXAMPLE FOR LATER -->
+    <Tile type="QuestionBlock" posx="210" posy="200" item="GrowMushroom" />
+    <Tile type="UnbreakableBlock" posx="70" posy="200" />
+    <Tile type="Pipe" posx="420" posy="200" height="3" />
+    <!-- <Tile type="Pipe" posx="420" posy="200" height="3" warpDest="Whatever" /> EXAMPLE FOR LATER -->
+  </Tiles>
+  <Items>
+    <Item type="Coin" posx="140" posy="100" />
+    <Item type="FireFlower" posx="70" posy="100" />
+    <Item type="GrowMushroom" posx="210" posy="100" />
+    <Item type="LifeMushroom" posx="280" posy="100" />
+    <Item type="Star" posx="350" posy="100" />
+  </Items>
+</Root>

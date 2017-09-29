@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Lasagna
 {
-    interface IPlayer
+    public interface IPlayer
     {
         void Update(GameTime gameTime);
         void Draw(SpriteBatch spriteBatch);

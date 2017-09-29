@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Lasagna
 {
-    interface ITile
+    public interface ITile
     {
         void Update(GameTime gameTime);
         void Draw(SpriteBatch spriteBatch);

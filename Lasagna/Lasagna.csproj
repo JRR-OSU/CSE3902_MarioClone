@@ -61,6 +61,7 @@
     <Compile Include="Enemies\MovingEnemy.cs" />
     <Compile Include="Interfaces\IPlayer.cs" />
     <Compile Include="Items\BaseItem.cs" />
+    <Compile Include="LevelCreator.cs" />
     <Compile Include="Player\MarioStateMachine.cs" />
     <Compile Include="Projectiles\BaseProjectile.cs" />
     <Compile Include="Projectiles\MissileProjectile.cs" />
@@ -126,6 +127,7 @@
     <Content Include="Code Reviews\WarpPipeTile_ReadbilityReview.txt" />
     <Content Include="Code Reviews\WarpPipeTile_QualityReview.txt" />
     <Content Include="Icon.ico" />
+    <Content Include="Level XML\Mario_1-1.xml" />
   </ItemGroup>
   <ItemGroup>
     <MonoGameContentReference Include="Content\Content.mgcb" />
@@ -138,6 +140,7 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
