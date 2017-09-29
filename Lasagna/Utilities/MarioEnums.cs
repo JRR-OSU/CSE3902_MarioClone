@@ -16,4 +16,18 @@ namespace Lasagna
         WalkRight,
         Dead
     }
+
+    public enum CollisionSide
+    {
+        None,
+        Left,
+        Right,
+        Top,
+        Bottom
+    }
+
+    public enum PlayerType
+    {
+        Mario
+    }
 }
