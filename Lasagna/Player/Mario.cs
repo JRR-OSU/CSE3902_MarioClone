@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 
@@ -9,6 +10,7 @@ namespace Lasagna
     public class Mario : IPlayer
     {
         private MarioStateMachine stateMachine;
+        private MarioCollisionHandler marioCollisionHandler;
 
         private int spriteXPos;
         private int spriteYPos;
@@ -19,6 +21,7 @@ namespace Lasagna
         public Mario(int x, int y)
         {
             stateMachine = new MarioStateMachine();
+            marioCollisionHandler = new MarioCollisionHandler(this);
            
             MarioEvents.OnMoveLeft += MoveLeft;
             MarioEvents.OnMoveRight += MoveRight;
@@ -36,8 +39,8 @@ namespace Lasagna
 
             spriteXPos = x;
             spriteYPos = y;
- 
         }
+
 
         private void Reset(object sender, EventArgs e)
         {
@@ -62,14 +65,13 @@ namespace Lasagna
         public void MoveRight(object sender, EventArgs e)
         {
             stateMachine.MoveRight();
-        }
 
+        }
 
         public void Crouch(object sender, EventArgs e)
         {
            stateMachine.Crouch();
         }
-
 
         public void Jump(object sender, EventArgs e)
         {
@@ -101,8 +103,72 @@ namespace Lasagna
             stateMachine.KillMario();
         }
 
+        bool GetKeysPressed(KeyboardState keyState, params Keys[] keys)
+        {
+            bool result = false;
+            for (int i = 0; i < keys.Length; i++)
+            {
+                result |= keyState.IsKeyDown(keys[i]);
+            }
+            return result;
+        }
+
         public void Update(GameTime gameTime)
         {
+            KeyboardState newState = Keyboard.GetState();
+
+            if (newState.IsKeyDown(Keys.W) && newState.IsKeyDown(Keys.D))
+            {
+                spriteXPos += 3;
+                spriteYPos -= 3;
+            }
+            else if (newState.IsKeyDown(Keys.W) && newState.IsKeyDown(Keys.A))
+            {
+                spriteXPos -= 3;
+                spriteYPos -= 3;
+            }
+            else if (newState.IsKeyDown(Keys.S) && newState.IsKeyDown(Keys.D))
+            {
+                spriteXPos += 3;
+                spriteYPos += 3;
+            }
+            else if (newState.IsKeyDown(Keys.S) && newState.IsKeyDown(Keys.A))
+            {
+                spriteXPos -= 3;
+                spriteYPos += 3;
+            }
+            else if (newState.IsKeyDown(Keys.D))
+            {
+                spriteXPos += 3;
+            }
+            else if (newState.IsKeyDown(Keys.A))
+            {
+                spriteXPos -= 3;
+            }
+            else if (newState.IsKeyDown(Keys.W))
+            {
+                spriteYPos -= 3;
+            }
+            else if (newState.IsKeyDown(Keys.S))
+            {
+                spriteYPos += 3;
+            }
+            if(spriteXPos < 0)
+            {
+                spriteXPos = 0;
+            }
+            else if(spriteXPos > 760)
+            {
+                spriteXPos = 760;
+            }
+            if(spriteYPos < 0)
+            {
+                spriteYPos = 0;
+            }
+            else if(spriteYPos > 420)
+            {
+                spriteYPos = 420;
+            }
             stateMachine.Update(gameTime, spriteXPos, spriteYPos);
         }
 

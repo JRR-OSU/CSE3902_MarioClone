@@ -63,6 +63,7 @@
     <Compile Include="Interfaces\IPlayer.cs" />
     <Compile Include="Items\BaseItem.cs" />
     <Compile Include="LevelCreator.cs" />
+    <Compile Include="Player\MarioCollisionHandler.cs" />
     <Compile Include="Player\MarioStateMachine.cs" />
     <Compile Include="Projectiles\BaseProjectile.cs" />
     <Compile Include="Projectiles\MissileProjectile.cs" />
