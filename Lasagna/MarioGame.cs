@@ -50,19 +50,26 @@ namespace Lasagna
         {
             keyControl.Update();
 
+            CollisionDetection.Instance.Update(players, enemies, tiles, items);
+
             if (levelBackground != null)
                 levelBackground.Update(gameTime, 0, 0);
 
-            foreach (ITile t in tiles)
-                t.Update(gameTime);
-            foreach (IProjectile t in projectiles)
-                t.Update(gameTime);
-            foreach (IEnemy t in enemies)
-                t.Update(gameTime);
-            foreach (IItem t in items)
-                t.Update(gameTime);
-            foreach (IPlayer p in players)
-                p.Update(gameTime);
+            foreach (ITile tile in tiles)
+                if (tile != null)
+                    tile.Update(gameTime);
+            foreach (IProjectile projectile in projectiles)
+                if (projectile != null)
+                    projectile.Update(gameTime);
+            foreach (IEnemy enemy in enemies)
+                if (enemy != null)
+                    enemy.Update(gameTime);
+            foreach (IItem item in items)
+                if (item != null)
+                    item.Update(gameTime);
+            foreach (IPlayer player in players)
+                if (player != null)
+                    player.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -74,16 +81,21 @@ namespace Lasagna
             if (levelBackground != null)
                 levelBackground.Draw(spriteBatch);
 
-            foreach (ITile t in tiles)
-                t.Draw(spriteBatch);
-            foreach (IEnemy t in enemies)
-                t.Draw(spriteBatch);
-            foreach (IItem t in items)
-                t.Draw(spriteBatch);
-            foreach (IProjectile t in projectiles)
-                t.Draw(spriteBatch);
-            foreach (IPlayer p in players)
-                p.Draw(spriteBatch);
+            foreach (ITile tile in tiles)
+                if (tile != null)
+                    tile.Draw(spriteBatch);
+            foreach (IEnemy enemy in enemies)
+                if (enemy != null)
+                    enemy.Draw(spriteBatch);
+            foreach (IItem item in items)
+                if (item != null)
+                    item.Draw(spriteBatch);
+            foreach (IProjectile projectile in projectiles)
+                if (projectile != null)
+                    projectile.Draw(spriteBatch);
+            foreach (IPlayer player in players)
+                if (player != null)
+                    player.Draw(spriteBatch);
 
             base.Draw(gameTime);
         }
