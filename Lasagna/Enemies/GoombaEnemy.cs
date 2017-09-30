@@ -18,6 +18,7 @@ namespace Lasagna
             {
                 goombaStates.Add(EnemyState.WalkLeft, goombaStates[EnemyState.Idle]);
                 goombaStates.Add(EnemyState.WalkRight, goombaStates[EnemyState.Idle]);
+                CurrentSprite = goombaStates[EnemyState.Idle];
             }
         }
 

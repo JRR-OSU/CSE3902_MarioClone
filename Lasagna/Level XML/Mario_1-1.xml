@@ -12,11 +12,11 @@
     <!-- <Tile type="Brick" posx="280" posy="200" item="Coin" /> EXAMPLE FOR LATER -->
     <Tile type="Flag" repeat="0" repeatspace="0" posx="560" posy="80" />
     <Tile type="Floor" repeat="0" repeatspace="0" posx="350" posy="200" />
-    <Tile type="InvisibleItemBlock" repeat="0" repeatspace="0" posx="140" posy="200" />
+    <Tile type="InvisibleBlock" repeat="0" repeatspace="0" posx="140" posy="200" />
     <!-- <Tile type="InvisibleItemBlock" posx="140" posy="200" item="Coin" /> EXAMPLE FOR LATER -->
     <Tile type="QuestionBlock" repeat="0" repeatspace="0" posx="210" posy="200" item="GrowMushroom" />
     <Tile type="UnbreakableBlock" repeat="0" repeatspace="0" posx="70" posy="200" />
-    <Tile type="Pipe" repeat="0" repeatspace="0" posx="420" posy="200" height="3" />
+    <Tile type="Pipe" repeat="0" repeatspace="0" posx="420" posy="200" />
     <!-- <Tile type="Pipe" posx="420" posy="200" height="3" warpDest="Whatever" /> EXAMPLE FOR LATER -->
   </Tiles>
   <Items>

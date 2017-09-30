@@ -11,11 +11,50 @@ namespace Lasagna
 {
     public class LevelCreator
     {
-        private static Dictionary<LevelType, ISprite> levelBackdrops = new Dictionary<LevelType, ISprite>()
+        private readonly Dictionary<LevelType, ISprite> levelBackdrops = new Dictionary<LevelType, ISprite>()
         {
-            { LevelType.MarioClear, BackgroundSpriteFactory.Instance.CreateBackground_MarioClear() }
+            // { LevelType.MarioClear, BackgroundSpriteFactory.Instance.CreateBackground_MarioClear() }
+        };
+        private readonly Dictionary<PlayerType, Func<int, int, IPlayer>> playerTypes = new Dictionary<PlayerType, Func<int, int, IPlayer>>()
+        {
+            { PlayerType.Mario, (int posX, int posY) => new Mario(posX, posY) }
+        };
+        private readonly Dictionary<EnemyType, Func<int, int, IEnemy>> enemyTypes = new Dictionary<EnemyType, Func<int, int, IEnemy>>()
+        {
+            { EnemyType.Goomba, (int posX, int posY) => new GoombaEnemy(posX, posY) },
+            { EnemyType.Koopa, (int posX, int posY) => new KoopaEnemy(posX, posY) }
+        };
+        private readonly Dictionary<TileType, Func<int, int, ITile>> tileTypes = new Dictionary<TileType, Func<int, int, ITile>>()
+        {
+            { TileType.Brick, (int posX, int posY) => new BreakableBrickTile(posX, posY)},
+            { TileType.Flag, (int posX, int posY) => new FlagPoleTile(posX, posY)},
+            { TileType.Floor, (int posX, int posY) => new FloorBlockTile(posX, posY)},
+            { TileType.InvisibleBlock, (int posX, int posY) => new InvisibleItemBlockTile(posX, posY)},
+            { TileType.QuestionBlock, (int posX, int posY) => new QuestionBlockTile(posX, posY)},
+            { TileType.UnbreakableBlock, (int posX, int posY) => new UnbreakableBlockTile(posX, posY)},
+            { TileType.Pipe, (int posX, int posY) => new WarpPipeTile(posX, posY, 3)}
+        };
+        private readonly Dictionary<ItemType, Func<int, int, IItem>> itemTypes = new Dictionary<ItemType, Func<int, int, IItem>>()
+        {
+            { ItemType.Coin, (int posX, int posY) => new CoinItem(posX, posY)},
+            { ItemType.FireFlower, (int posX, int posY) => new FireFlowerItem(posX, posY)},
+            { ItemType.GrowMushroom, (int posX, int posY) => new GrowMushroomItem(posX, posY)},
+            { ItemType.LifeMushroom, (int posX, int posY) => new LifeMushroomItem(posX, posY)},
+            { ItemType.Star, (int posX, int posY) => new StarItem(posX, posY)},
         };
 
+        private static LevelCreator instance;
+
+        public static LevelCreator Instance
+        {
+            get
+            {
+                if (instance == null)
+                    instance = new LevelCreator();
+
+                return instance;
+            }
+        }
 
         /// <summary>
         /// Spawns all objects needed for a level based on an XML file
@@ -26,7 +65,7 @@ namespace Lasagna
         /// <param name="Tiles">List of tiles spawned for this level</param>
         /// <param name="items">List of items spawned for this level</param>
         /// <returns>True if level loading was successful, false if there was an error.</returns>
-        public static bool LoadLevelFromXML(string filepath, out ISprite levelBackground, out List<IPlayer> players, out List<IEnemy> enemies, out List<ITile> tiles, out List<IItem> items)
+        public bool LoadLevelFromXML(string filepath, out ISprite levelBackground, out List<IPlayer> players, out List<IEnemy> enemies, out List<ITile> tiles, out List<IItem> items)
         {
             levelBackground = null;
             players = new List<IPlayer>();
@@ -82,36 +121,156 @@ namespace Lasagna
                 }
                 else if (reader.LocalName == "Enemies")
                 {
+                    if (!reader.ReadToDescendant("Enemy"))
+                        continue;
 
+                    //Add first enemy element
+                    IEnemy enemy;
+                    int posX, posY;
+                    if (int.TryParse(reader.GetAttribute("posx"), out posX)
+                        && int.TryParse(reader.GetAttribute("posy"), out posY)
+                        && TryCreateEnemyFromEnum(reader.GetAttribute("type"), posX, posY, out enemy))
+                    {
+                        enemies.Add(enemy);
+                    }
+
+                    //Add all subsequent elements
+                    while (reader.ReadToNextSibling("Enemy"))
+                    {
+                        if (int.TryParse(reader.GetAttribute("posx"), out posX)
+                           && int.TryParse(reader.GetAttribute("posy"), out posY)
+                           && TryCreateEnemyFromEnum(reader.GetAttribute("type"), posX, posY, out enemy))
+                        {
+                            enemies.Add(enemy);
+                        }
+                    }
                 }
                 else if (reader.LocalName == "Tiles")
                 {
+                    if (!reader.ReadToDescendant("Tile"))
+                        continue;
 
+                    //Add first tile element
+                    ITile tile;
+                    int posX, posY;
+                    if (int.TryParse(reader.GetAttribute("posx"), out posX)
+                        && int.TryParse(reader.GetAttribute("posy"), out posY)
+                        && TryCreateTileFromEnum(reader.GetAttribute("type"), posX, posY, out tile))
+                    {
+                        tiles.Add(tile);
+                    }
+
+                    //Add all subsequent elements
+                    while (reader.ReadToNextSibling("Tile"))
+                    {
+                        if (int.TryParse(reader.GetAttribute("posx"), out posX)
+                           && int.TryParse(reader.GetAttribute("posy"), out posY)
+                           && TryCreateTileFromEnum(reader.GetAttribute("type"), posX, posY, out tile))
+                        {
+                            tiles.Add(tile);
+                        }
+                    }
                 }
                 else if (reader.LocalName == "Items")
                 {
+                    if (!reader.ReadToDescendant("Item"))
+                        continue;
 
+                    //Add first item element
+                    IItem item;
+                    int posX, posY;
+                    if (int.TryParse(reader.GetAttribute("posx"), out posX)
+                        && int.TryParse(reader.GetAttribute("posy"), out posY)
+                        && TryCreateItemFromEnum(reader.GetAttribute("type"), posX, posY, out item))
+                    {
+                        items.Add(item);
+                    }
+
+                    //Add all subsequent elements
+                    while (reader.ReadToNextSibling("Item"))
+                    {
+                        if (int.TryParse(reader.GetAttribute("posx"), out posX)
+                           && int.TryParse(reader.GetAttribute("posy"), out posY)
+                           && TryCreateItemFromEnum(reader.GetAttribute("type"), posX, posY, out item))
+                        {
+                            items.Add(item);
+                        }
+                    }
                 }
                 else
-                    Debug.WriteLine("Warning: \"" + filepath + "\" level XML file has element of unknown type: " + reader.LocalName); */
+                    Debug.WriteLine("Warning: \"" + filepath + "\" level XML file has element of unknown type: " + reader.LocalName);
             }
 
             return true;
         }
 
-        private static bool TryGetLevelTypeFromEnum(string lType, out LevelType t)
+        private bool TryGetLevelTypeFromEnum(string lType, out LevelType t)
         {
             t = 0;
             return !string.IsNullOrEmpty(lType) && Enum.TryParse(lType, out t);
         }
 
-        private static bool TryCreatePlayerFromEnum(string pType, int posX, int posY, out IPlayer pl)
+        private bool TryCreatePlayerFromEnum(string pType, int posX, int posY, out IPlayer pl)
         {
             pl = null;
+            PlayerType t;
 
-            if ()
+            //If passed null parameter, or can't cast to type, or we don't have a delegate for type, exit.
+            if (string.IsNullOrEmpty(pType) || !Enum.TryParse(pType, out t) || !playerTypes.ContainsKey(t))
+            {
+                Debug.WriteLine("Invalid type passed for creating player: " + pType);
+                return false;
+            }
 
-            return false;
+            pl = playerTypes[t].Invoke(posX, posY);
+            return true;
+        }
+
+        private bool TryCreateEnemyFromEnum(string eType, int posX, int posY, out IEnemy enemy)
+        {
+            enemy = null;
+            EnemyType t;
+
+            //If passed null parameter, or can't cast to type, or we don't have a delegate for type, exit.
+            if (string.IsNullOrEmpty(eType) || !Enum.TryParse(eType, out t) || !enemyTypes.ContainsKey(t))
+            {
+                Debug.WriteLine("Invalid type passed for creating enemy: " + eType);
+                return false;
+            }
+
+            enemy = enemyTypes[t].Invoke(posX, posY);
+            return true;
+        }
+        private bool TryCreateTileFromEnum(string tType, int posX, int posY, out ITile tile)
+        {
+            tile = null;
+            TileType t;
+
+            //If passed null parameter, or can't cast to type, or we don't have a delegate for type, exit.
+            if (string.IsNullOrEmpty(tType) || !Enum.TryParse(tType, out t) || !tileTypes.ContainsKey(t))
+            {
+                Debug.WriteLine("Invalid type passed for creating tile: " + tType);
+                return false;
+            }
+
+            tile = tileTypes[t].Invoke(posX, posY);
+            return true;
+        }
+
+        private bool TryCreateItemFromEnum(string iType, int posX, int posY, out IItem item)
+        {
+            item = null;
+            ItemType t;
+
+            //If passed null parameter, or can't cast to type, or we don't have a delegate for type, exit.
+            if (string.IsNullOrEmpty(iType) || !Enum.TryParse(iType, out t) || !itemTypes.ContainsKey(t))
+            {
+                Debug.WriteLine("Invalid type passed for creating item: " + iType);
+                return false;
+            }
+
+            item = itemTypes[t].Invoke(posX, posY);
+            return true;
         }
     }
 }

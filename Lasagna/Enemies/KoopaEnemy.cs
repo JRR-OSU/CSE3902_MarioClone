@@ -18,6 +18,7 @@ namespace Lasagna
             {
                 koopaStates.Add(EnemyState.WalkLeft, koopaStates[EnemyState.Idle]);
                 koopaStates.Add(EnemyState.WalkRight, koopaStates[EnemyState.Idle]);
+                CurrentSprite = koopaStates[EnemyState.Idle];
             }
         }
 

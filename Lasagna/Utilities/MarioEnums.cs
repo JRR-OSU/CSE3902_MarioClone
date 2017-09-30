@@ -35,4 +35,30 @@ namespace Lasagna
     {
         Mario
     }
+
+    public enum EnemyType
+    {
+        Goomba,
+        Koopa
+    }
+
+    public enum TileType
+    {
+        Brick,
+        Flag,
+        Floor,
+        InvisibleBlock,
+        QuestionBlock,
+        UnbreakableBlock,
+        Pipe
+    }
+
+    public enum ItemType
+    {
+        Coin,
+        FireFlower,
+        GrowMushroom,
+        LifeMushroom,
+        Star
+    }
 }

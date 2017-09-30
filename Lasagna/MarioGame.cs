@@ -43,28 +43,7 @@ namespace Lasagna
             TileSpriteFactory.Instance.LoadAllContent(Content);
             BackgroundSpriteFactory.Instance.LoadAllContent(Content, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height);
 
-            LevelCreator.LoadLevelFromXML(Environment.CurrentDirectory + "\\Level XML\\Mario_1-1.xml", out levelBackground, out players, out enemies, out tiles, out items);
-            //
-
-            ///TODO: This is temporary for Sprint2
-            tiles.Add(new BreakableBrickTile(280, 200));
-            tiles.Add(new FlagPoleTile(560, 80));
-            tiles.Add(new FloorBlockTile(350, 200));
-            tiles.Add(new InvisibleItemBlockTile(140, 200));
-            tiles.Add(new QuestionBlockTile(210, 200));
-            tiles.Add(new UnbreakableBlockTile(70, 200));
-            tiles.Add(new WarpPipeTile(420, 200, 3));
-
-            items.Add(new CoinItem(140, 100));
-            items.Add(new FireFlowerItem(70, 100));
-            items.Add(new GrowMushroomItem(210, 100));
-            items.Add(new LifeMushroomItem(280, 100));
-            items.Add(new StarItem(350, 100));
-
-            enemies.Add(new GoombaEnemy(420, 132));
-            enemies.Add(new KoopaEnemy(490, 132));
-
-            players.Add(new Mario(200, 300));
+            LevelCreator.Instance.LoadLevelFromXML(Environment.CurrentDirectory + "\\Level XML\\Mario_1-1.xml", out levelBackground, out players, out enemies, out tiles, out items);
         }
 
         protected override void Update(GameTime gameTime)
