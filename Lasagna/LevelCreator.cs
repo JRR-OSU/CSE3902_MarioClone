@@ -2,9 +2,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml;
 
 namespace Lasagna
@@ -13,7 +10,7 @@ namespace Lasagna
     {
         private readonly Dictionary<LevelType, ISprite> levelBackdrops = new Dictionary<LevelType, ISprite>()
         {
-            // { LevelType.MarioClear, BackgroundSpriteFactory.Instance.CreateBackground_MarioClear() }
+            { LevelType.MarioClear, BackgroundSpriteFactory.Instance.CreateBackground_MarioClear() }
         };
         private readonly Dictionary<PlayerType, Func<int, int, IPlayer>> playerTypes = new Dictionary<PlayerType, Func<int, int, IPlayer>>()
         {

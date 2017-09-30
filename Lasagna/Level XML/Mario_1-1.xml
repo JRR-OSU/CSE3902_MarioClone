@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Root leveltype="MarioClear_NULL">
+<Root leveltype="MarioClear">
   <Players>
     <Player type="Mario" posx="200" posy="300" />
   </Players>

@@ -26,7 +26,7 @@ namespace Lasagna
         {
             screenWidth = newScreenWidth;
             screenHeight = newScreenHeight;
-            //marioClearSheet = content.Load<Texture2D>("LevelBackgrounds/Mario_Clear");
+            marioClearSheet = content.Load<Texture2D>("LevelBackgrounds/Mario_Clear");
         }
 
         public NonAnimatedSprite CreateBackground_MarioClear()
