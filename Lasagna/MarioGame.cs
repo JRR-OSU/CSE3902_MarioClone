@@ -50,8 +50,6 @@ namespace Lasagna
         {
             keyControl.Update();
 
-            CollisionDetection.Instance.Update(players, enemies, tiles, items);
-
             if (levelBackground != null)
                 levelBackground.Update(gameTime, 0, 0);
 
@@ -70,6 +68,8 @@ namespace Lasagna
             foreach (IPlayer player in players)
                 if (player != null)
                     player.Update(gameTime);
+
+            CollisionDetection.Instance.Update(players, enemies, tiles, items);
 
             base.Update(gameTime);
         }
