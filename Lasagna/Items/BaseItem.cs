@@ -35,5 +35,14 @@ namespace Lasagna
             if (itemSprite != null)
                 itemSprite.Draw(spriteBatch);
         }
+        public virtual Rectangle GetRectangle()
+        {
+            Rectangle temp;
+            temp.X = posX;
+            temp.Y = posY;
+            temp.Height = itemSprite.Height;
+            temp.Width = itemSprite.Width;
+            return temp;
+        }
     }
 }

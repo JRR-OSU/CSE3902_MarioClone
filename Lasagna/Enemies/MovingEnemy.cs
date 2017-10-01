@@ -48,5 +48,14 @@ namespace Lasagna
         {
             ChangeState(EnemyState.Dead);
         }
+        public virtual Rectangle GetRectangle()
+        {
+            Rectangle temp;
+            temp.X = posX;
+            temp.Y = posY;
+            temp.Height = currentSprite.Height;
+            temp.Width = currentSprite.Width;
+            return temp;
+        }
     }
 }

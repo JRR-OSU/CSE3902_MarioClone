@@ -9,5 +9,6 @@ namespace Lasagna
         void Draw(SpriteBatch spriteBatch);
         void ChangeState(EnemyState newState);
         void Damage();
+        Rectangle GetRectangle();
     }
 }
