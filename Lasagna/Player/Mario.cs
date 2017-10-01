@@ -10,10 +10,12 @@ namespace Lasagna
     public class Mario : IPlayer
     {
         private MarioStateMachine stateMachine;
-        private MarioCollisionHandler marioCollisionHandler;
+      //  private MarioCollisionHandler marioCollisionHandler;
 
         private int spriteXPos;
         private int spriteYPos;
+
+        public Rectangle GetRect { get { return new Rectangle(spriteXPos, spriteYPos, GetCurrentSprite().Width, GetCurrentSprite().Height); }}
         
         /// <summary>
         /// These methods will just change state, the state machine will handle sprite changes
@@ -21,7 +23,7 @@ namespace Lasagna
         public Mario(int x, int y)
         {
             stateMachine = new MarioStateMachine();
-            marioCollisionHandler = new MarioCollisionHandler(this);
+           // marioCollisionHandler = new MarioCollisionHandler();
            
             MarioEvents.OnMoveLeft += MoveLeft;
             MarioEvents.OnMoveRight += MoveRight;
@@ -41,6 +43,10 @@ namespace Lasagna
             spriteYPos = y;
         }
 
+        private ISprite GetCurrentSprite()
+        {
+                return stateMachine.GetCurrentSprite();
+        }
 
         private void Reset(object sender, EventArgs e)
         {

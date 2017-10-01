@@ -206,6 +206,11 @@ namespace Lasagna
             currentSprite.Draw(spriteBatch);
         }
 
+        public ISprite GetCurrentSprite()
+        {
+            return currentSprite;
+        }
+
         public void Reset()
         {
             marioState = MarioState.Small;
