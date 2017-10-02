@@ -22,6 +22,7 @@ namespace Lasagna
                 { Keys.A, MoveLeft },
                 { Keys.Right, MoveRight },
                 { Keys.D, MoveRight },
+                { Keys.M, EnableMouseController },
 
                 { Keys.Y, MarioDamage },
                 { Keys.O, MarioDie },
@@ -120,6 +121,10 @@ namespace Lasagna
         public void UseHiddenBlock()
         {
             MarioEvents.UseHiddenBlock(this, EventArgs.Empty);
+        }
+        public void EnableMouseController()
+        {
+            //Wait for mouse controller
         }
     }
 }
