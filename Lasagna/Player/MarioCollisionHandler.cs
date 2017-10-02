@@ -11,7 +11,7 @@ namespace Lasagna
         private MarioStateMachine mario;
 
         /// <summary>
-        /// Test code for collisions... will flesh out when we finish collision detection
+        /// Test code for collisions... will flesh out when we finish collision detection.
         /// </summary>
         /// <param name="player"></param>
         public MarioCollisionHandler(MarioStateMachine player)

@@ -10,6 +10,7 @@ namespace Lasagna
     public class Mario : IPlayer
     {
         private MarioStateMachine stateMachine;
+        private MarioCollisionHandler marioCollisionHandler;
       //  private MarioCollisionHandler marioCollisionHandler;
 
         private int spriteXPos;
@@ -23,7 +24,7 @@ namespace Lasagna
         public Mario(int x, int y)
         {
             stateMachine = new MarioStateMachine();
-           // marioCollisionHandler = new MarioCollisionHandler();
+            marioCollisionHandler = new MarioCollisionHandler(stateMachine);
            
             MarioEvents.OnMoveLeft += MoveLeft;
             MarioEvents.OnMoveRight += MoveRight;
@@ -45,7 +46,7 @@ namespace Lasagna
 
         private ISprite GetCurrentSprite()
         {
-                return stateMachine.GetCurrentSprite();
+            return stateMachine.GetCurrentSprite();
         }
 
         private void Reset(object sender, EventArgs e)
@@ -109,15 +110,21 @@ namespace Lasagna
             stateMachine.KillMario();
         }
 
-        bool GetKeysPressed(KeyboardState keyState, params Keys[] keys)
+        public void OnCollisionResponse(IPlayer player, CollisionSide side)
         {
-            bool result = false;
-            for (int i = 0; i < keys.Length; i++)
-            {
-                result |= keyState.IsKeyDown(keys[i]);
-            }
-            return result;
+            marioCollisionHandler.OnCollisionResponse(player, side);
         }
+
+        public void OnCollisionResponse(IItem item, CollisionSide side)
+        {
+            marioCollisionHandler.OnCollisionResponse(item, side);
+        }
+
+        public void OnCollisionResponse(ITile tile, CollisionSide side)
+        {
+            marioCollisionHandler.OnCollisionResponse(tile, side);
+        }
+
 
         public void Update(GameTime gameTime)
         {
