@@ -44,11 +44,23 @@ namespace Lasagna
             temp.Width = itemSprite.Width;
             return temp;
         }
+
         public virtual void OnCollisionResponse(IPlayer mario, CollisionSide side)
         {
             //Destroy the item after mario takes it
             itemSprite = null;
         }
+
+        public virtual void OnCollisionResponse(IEnemy enemy, CollisionSide side)
+        {
+            return;
+        }
+
+        public virtual void OnCollisionResponse(IProjectile projectile, CollisionSide side)
+        {
+            return;
+        }
+
         public virtual void OnCollisionResponse(ITile tile, CollisionSide side)
         {
             return;

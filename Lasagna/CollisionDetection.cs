@@ -24,11 +24,11 @@ namespace Lasagna
             CollisionSide side1, side2;
 
             //Tiles are static, so don't need to check against themselves.
-            /*foreach (ITile tile in tiles)
+            foreach (ITile tile in tiles)
             {
                 foreach (IPlayer player in players)
                 {
-                    if (CheckCollision(tile.GetProperties(), player.GetRectangle(), out overlap, out side1, out side2))
+                    if (CheckCollision(tile.GetProperties(), player.GetRect, out overlap, out side1, out side2))
                     {
                         tile.OnCollisionResponse(player, side1);
                         player.OnCollisionResponse(tile, side2);
@@ -57,7 +57,7 @@ namespace Lasagna
             {
                 foreach (IEnemy enemy in enemies)
                 {
-                    if (CheckCollision(player.GetRectangle(), enemy.GetRectangle(), out overlap, out side1, out side2))
+                    if (CheckCollision(player.GetRect, enemy.GetRectangle(), out overlap, out side1, out side2))
                     {
                         player.OnCollisionResponse(enemy, side1);
                         enemy.OnCollisionResponse(player, side2);
@@ -65,7 +65,7 @@ namespace Lasagna
                 }
                 foreach (IItem item in items)
                 {
-                    if (CheckCollision(player.GetRectangle(), item.GetRectangle(), out overlap, out side1, out side2))
+                    if (CheckCollision(player.GetRect, item.GetRectangle(), out overlap, out side1, out side2))
                     {
                         player.OnCollisionResponse(item, side1);
                         item.OnCollisionResponse(player, side2);
@@ -84,7 +84,7 @@ namespace Lasagna
                         item.OnCollisionResponse(enemy, side2);
                     }
                 }
-            }*/
+            }
         }
 
         private bool CheckCollision(Rectangle r1, Rectangle r2, out Rectangle overlapRect, out CollisionSide r1CollisionSide, out CollisionSide r2CollisionSide)

@@ -10,6 +10,7 @@ namespace Lasagna
         void ChangeState();
         Rectangle GetProperties();
         void OnCollisionResponse(IPlayer Mario, CollisionSide side);
+        void OnCollisionResponse(IEnemy enemy, CollisionSide side);
         void OnCollisionResponse(IItem Item, CollisionSide side);
     }
 }

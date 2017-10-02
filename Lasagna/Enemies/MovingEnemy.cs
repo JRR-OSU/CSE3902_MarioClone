@@ -61,6 +61,10 @@ namespace Lasagna
         {
             return;
         }
+        public virtual void OnCollisionResponse(IItem item, CollisionSide side)
+        {
+            return;
+        }
         public virtual void OnCollisionResponse(IProjectile fireball, CollisionSide side)
         {
             return;
