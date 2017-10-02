@@ -24,5 +24,14 @@
             currentState = FireballStates.Explode;
             CurrentSprite = fireballExplode;
         }
+        public override void OnCollisionResponse(IEnemy Enemy, CollisionSide side)
+        {
+            this.ChangeState();
+        }
+        public override void OnCollisionResponse(IItem Item, CollisionSide side)
+        {
+            //Reserved for changing direction of fireball.
+            return;
+        }
     }
 }

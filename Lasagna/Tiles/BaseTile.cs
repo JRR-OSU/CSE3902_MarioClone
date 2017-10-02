@@ -8,6 +8,7 @@ namespace Lasagna
         private ISprite currentSprite;
         private int posX;
         private int posY;
+        public Rectangle Properties;
 
         protected ISprite CurrentSprite
         {
@@ -34,7 +35,22 @@ namespace Lasagna
             if (currentSprite != null)
                 currentSprite.Draw(spriteBatch);
         }
-
+        public Rectangle GetProperties()
+        {
+            this.Properties.X = this.posX;
+            this.Properties.Y = this.posY;
+            this.Properties.Width = this.currentSprite.Width;
+            this.Properties.Height = this.currentSprite.Height;
+            return this.Properties;
+        }
+        public virtual void OnCollisionResponse(IPlayer Mario, CollisionSide side)
+        {
+            return;
+        }
+        public virtual void OnCollisionResponse(IItem Item, CollisionSide side)
+        {
+            return;
+        }
         public abstract void ChangeState();
     }
 }
