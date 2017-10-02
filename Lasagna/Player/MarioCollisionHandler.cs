@@ -23,35 +23,56 @@ namespace Lasagna
 
        public void OnCollisionResponse(IPlayer player, CollisionSide side)
         {
-            Console.WriteLine("Collison mario with player");
+           // Console.WriteLine("Collison mario with player");
             state.Reset();
         }
 
         public void OnCollisionResponse(IItem item, CollisionSide side)
         {
-            Console.WriteLine("Collison mario with item");
-            Console.WriteLine(item + " " + " " + side);
-            state.Reset();
+            //Console.WriteLine("Collison mario with item");
+            //Console.WriteLine(item + " " + " " + side);
+
+            if(item is FireFlowerItem)
+            {
+                state.Fire();
+            }
+            else if(item is GrowMushroomItem)
+            {
+                state.Grow();
+            }
+            else if (item is StarItem)
+            {
+                state.Star();
+            }
+            
         }
 
         public void OnCollisionResponse(ITile tile, CollisionSide side)
         {
-            Console.WriteLine("Collison mario with tile");
-            Console.WriteLine(tile + " " + " " + side);
 
             if (tile is FloorBlockTile)
             {
-                mario.SetPos(mario.GetRect.X, tile.GetProperties().Y - tile.GetProperties().Height);
+                if(state.GetState() != MarioStateMachine.MarioState.Small)
+                    mario.SetPos(mario.GetRect.X, (tile.GetProperties().Y - tile.GetProperties().Height) - (mario.GetRect.Height) / 2);
+                else
+                    mario.SetPos(mario.GetRect.X, (tile.GetProperties().Y - tile.GetProperties().Height));
+                return;
             }
             else if (tile is QuestionBlockTile || tile is UnbreakableBlockTile || tile is WarpPipeTile)
             {
                 switch (side)
                 {
                     case CollisionSide.Top:
-                        mario.SetPos(mario.GetRect.X, tile.GetProperties().Y - tile.GetProperties().Height);
+                        if (state.GetState() != MarioStateMachine.MarioState.Small)
+                            mario.SetPos(mario.GetRect.X, (tile.GetProperties().Y - tile.GetProperties().Height) - (mario.GetRect.Height) / 2);
+                        else
+                            mario.SetPos(mario.GetRect.X, (tile.GetProperties().Y - tile.GetProperties().Height));
                         break;
                     case CollisionSide.Bottom:
-                        mario.SetPos(mario.GetRect.X, tile.GetProperties().Y + tile.GetProperties().Height);
+                        if (state.GetState() != MarioStateMachine.MarioState.Small)
+                            mario.SetPos(mario.GetRect.X, (tile.GetProperties().Y + tile.GetProperties().Height) + (mario.GetRect.Height / 2));
+                        else
+                            mario.SetPos(mario.GetRect.X, (tile.GetProperties().Y + tile.GetProperties().Height));
                         break;
                     case CollisionSide.Left:
                         mario.SetPos(tile.GetProperties().X + tile.GetProperties().Width, mario.GetRect.Y);
@@ -66,8 +87,8 @@ namespace Lasagna
 
         public void OnCollisionResponse(IEnemy enemy, CollisionSide side)
         {
-            Console.WriteLine("Collison mario with enemy");
-            Console.WriteLine(enemy + " " + " " + side);
+            // Console.WriteLine("Collison mario with enemy");
+            // Console.WriteLine(enemy + " " + " " + side);
             state.Reset();
         }
     }

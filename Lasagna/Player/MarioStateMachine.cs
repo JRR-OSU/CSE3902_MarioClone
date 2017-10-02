@@ -10,7 +10,7 @@ namespace Lasagna
 {
     public class MarioStateMachine
     {
-        private enum MarioState { Small, Big, Fire, Star };
+        public enum MarioState { Small, Big, Fire, Star };
         private enum MarioMovement { CrouchRight, CrouchLeft, IdleLeft, IdleRight, RunLeft, RunRight, JumpLeft, JumpRight, Die };
         private MarioState marioState = MarioState.Small;
         private MarioMovement marioMovement = MarioMovement.IdleRight;
@@ -48,9 +48,9 @@ namespace Lasagna
             fireStates.Add(MarioMovement.RunRight, MarioSpriteFactory.Instance.CreateSprite_MarioFire_RunRight());
             fireStates.Add(MarioMovement.JumpLeft, MarioSpriteFactory.Instance.CreateSprite_MarioFire_JumpLeft());
             fireStates.Add(MarioMovement.JumpRight, MarioSpriteFactory.Instance.CreateSprite_MarioFire_JumpRight());
-
         }
 
+        
         public void Grow()
         {
             if (marioMovement == MarioMovement.Die)
@@ -117,12 +117,12 @@ namespace Lasagna
         {
             if((marioMovement == MarioMovement.RunLeft || marioMovement == MarioMovement.IdleLeft) && marioState != MarioState.Small)
             {
-                marioMovement = MarioMovement.CrouchLeft;
+                //marioMovement = MarioMovement.CrouchLeft;
                 return;
             }
             else if((marioMovement == MarioMovement.RunRight || marioMovement == MarioMovement.IdleRight) && marioState != MarioState.Small)
             {
-                marioMovement = MarioMovement.CrouchRight;
+                //marioMovement = MarioMovement.CrouchRight;
                 return;
             }
             switch (marioMovement)
@@ -210,6 +210,11 @@ namespace Lasagna
         public ISprite GetCurrentSprite()
         {
             return currentSprite;
+        }
+        public MarioState GetState()
+        {
+
+            return marioState; 
         }
 
         public void Reset()

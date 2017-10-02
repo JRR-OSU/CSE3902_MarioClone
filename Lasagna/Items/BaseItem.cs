@@ -38,6 +38,10 @@ namespace Lasagna
         }
         public virtual Rectangle GetRectangle()
         {
+            if(itemSprite == null)
+            {
+                return new Rectangle(0,0,0,0);
+            }
             temp.X = posX;
             temp.Y = posY;
             temp.Height = itemSprite.Height;
