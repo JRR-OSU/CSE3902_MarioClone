@@ -25,7 +25,7 @@ namespace Lasagna
         public Mario(int x, int y)
         {
             stateMachine = new MarioStateMachine();
-            marioCollisionHandler = new MarioCollisionHandler(stateMachine);
+            marioCollisionHandler = new MarioCollisionHandler(this, stateMachine);
            
             MarioEvents.OnMoveLeft += MoveLeft;
             MarioEvents.OnMoveRight += MoveRight;
@@ -47,6 +47,11 @@ namespace Lasagna
             orignalPos[1] = spriteYPos;
         }
 
+        public void SetPos(int x, int y)
+        {
+            spriteXPos = x;
+            spriteYPos = y;
+        }
         private ISprite GetCurrentSprite()
         {
             return stateMachine.GetCurrentSprite();
@@ -71,22 +76,26 @@ namespace Lasagna
      
         public void MoveLeft(object sender, EventArgs e)
         {
+            spriteXPos -= 3;
             stateMachine.MoveLeft();
         }
 
         public void MoveRight(object sender, EventArgs e)
         {
+            spriteXPos += 3;
             stateMachine.MoveRight();
 
         }
 
         public void Crouch(object sender, EventArgs e)
         {
-           stateMachine.Crouch();
+            spriteYPos += 3;
+            stateMachine.Crouch();
         }
 
         public void Jump(object sender, EventArgs e)
         {
+            spriteYPos -= 3;
             stateMachine.Jump();
         }
 
@@ -137,57 +146,19 @@ namespace Lasagna
 
         public void Update(GameTime gameTime)
         {
-            KeyboardState newState = Keyboard.GetState();
-
-            if (newState.IsKeyDown(Keys.W) && newState.IsKeyDown(Keys.D))
-            {
-                spriteXPos += 3;
-                spriteYPos -= 3;
-            }
-            else if (newState.IsKeyDown(Keys.W) && newState.IsKeyDown(Keys.A))
-            {
-                spriteXPos -= 3;
-                spriteYPos -= 3;
-            }
-            else if (newState.IsKeyDown(Keys.S) && newState.IsKeyDown(Keys.D))
-            {
-                spriteXPos += 3;
-                spriteYPos += 3;
-            }
-            else if (newState.IsKeyDown(Keys.S) && newState.IsKeyDown(Keys.A))
-            {
-                spriteXPos -= 3;
-                spriteYPos += 3;
-            }
-            else if (newState.IsKeyDown(Keys.D))
-            {
-                spriteXPos += 3;
-            }
-            else if (newState.IsKeyDown(Keys.A))
-            {
-                spriteXPos -= 3;
-            }
-            else if (newState.IsKeyDown(Keys.W))
-            {
-                spriteYPos -= 3;
-            }
-            else if (newState.IsKeyDown(Keys.S))
-            {
-                spriteYPos += 3;
-            }
-            if(spriteXPos < 0)
+            if (spriteXPos < 0)
             {
                 spriteXPos = 0;
             }
-            else if(spriteXPos > 760)
+            else if (spriteXPos > 760)
             {
                 spriteXPos = 760;
             }
-            if(spriteYPos < 0)
+            if (spriteYPos < 0)
             {
                 spriteYPos = 0;
             }
-            else if(spriteYPos > 420)
+            else if (spriteYPos > 420)
             {
                 spriteYPos = 420;
             }

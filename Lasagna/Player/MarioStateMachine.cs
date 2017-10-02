@@ -96,20 +96,20 @@ namespace Lasagna
         {
             if (marioMovement == MarioMovement.Die)
                 return;
-            if (marioMovement == MarioMovement.RunLeft)
-                marioMovement = MarioMovement.IdleLeft;
-            else
+            //if (marioMovement == MarioMovement.RunLeft)
+            //    marioMovement = MarioMovement.IdleLeft;
+           // else
                 marioMovement = MarioMovement.RunLeft;
             SwitchCurrentSprite(marioMovement);
         }
 
         public void MoveRight()
         {
-            if (marioMovement == MarioMovement.Die)
-                return;
-            if (marioMovement == MarioMovement.RunRight)
-                marioMovement = MarioMovement.IdleRight;
-            else
+           // if (marioMovement == MarioMovement.Die)
+           //     return;
+          //  if (marioMovement == MarioMovement.RunRight)
+          //      marioMovement = MarioMovement.IdleRight;
+          //  else
                 marioMovement = MarioMovement.RunRight;
             SwitchCurrentSprite(marioMovement);
         }
@@ -198,6 +198,7 @@ namespace Lasagna
 
         public void Update(GameTime gameTime, int spriteXPos, int spriteYPos)
         {
+
             currentSprite.Update(gameTime, spriteXPos, spriteYPos);
         }
 
