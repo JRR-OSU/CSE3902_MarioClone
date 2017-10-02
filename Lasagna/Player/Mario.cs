@@ -14,7 +14,7 @@ namespace Lasagna
 
         private int spriteXPos;
         private int spriteYPos;
-        
+
         /// <summary>
         /// These methods will just change state, the state machine will handle sprite changes
         /// </summary>
@@ -22,18 +22,18 @@ namespace Lasagna
         {
             stateMachine = new MarioStateMachine();
             marioCollisionHandler = new MarioCollisionHandler(this);
-           
+
             MarioEvents.OnMoveLeft += MoveLeft;
             MarioEvents.OnMoveRight += MoveRight;
             MarioEvents.OnJump += Jump;
             MarioEvents.OnCrouch += Crouch;
 
-            //MarioEvents.OnGetMushroom += Grow;
-           // MarioEvents.OnMarioDamage += Shrink;
+            MarioEvents.OnGetMushroom += Grow;
+            MarioEvents.OnMarioDamage += Shrink;
             MarioEvents.OnFire += MarioFireProjectile;
-           // MarioEvents.OnGetFireFlower += FireState;
+            MarioEvents.OnGetFireFlower += FireState;
 
-           // MarioEvents.OnMarioDie += Die;
+            MarioEvents.OnMarioDie += Die;
 
             MarioEvents.OnReset += Reset;
 
@@ -56,7 +56,7 @@ namespace Lasagna
         {
             stateMachine.GetFireflower();
         }
-     
+
         public void MoveLeft(object sender, EventArgs e)
         {
             stateMachine.MoveLeft();
@@ -70,7 +70,7 @@ namespace Lasagna
 
         public void Crouch(object sender, EventArgs e)
         {
-           stateMachine.Crouch();
+            stateMachine.Crouch();
         }
 
         public void Jump(object sender, EventArgs e)
@@ -153,19 +153,19 @@ namespace Lasagna
             {
                 spriteYPos += 3;
             }
-            if(spriteXPos < 0)
+            if (spriteXPos < 0)
             {
                 spriteXPos = 0;
             }
-            else if(spriteXPos > 760)
+            else if (spriteXPos > 760)
             {
                 spriteXPos = 760;
             }
-            if(spriteYPos < 0)
+            if (spriteYPos < 0)
             {
                 spriteYPos = 0;
             }
-            else if(spriteYPos > 420)
+            else if (spriteYPos > 420)
             {
                 spriteYPos = 420;
             }
