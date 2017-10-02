@@ -10,6 +10,7 @@ namespace Lasagna
         private EnemyState currentState;
         private int posX;
         private int posY;
+        public Rectangle temp;
 
         protected ISprite CurrentSprite
         {
@@ -48,14 +49,43 @@ namespace Lasagna
         {
             ChangeState(EnemyState.Dead);
         }
-        public virtual Rectangle GetRectangle()
+        public Rectangle GetRectangle()
         {
-            Rectangle temp;
             temp.X = posX;
             temp.Y = posY;
             temp.Height = currentSprite.Height;
             temp.Width = currentSprite.Width;
             return temp;
+        }
+        public virtual void OnCollisionResponse(IPlayer mario,CollisionSide side)
+        {
+            return;
+        }
+        public virtual void OnCollisionResponse(IProjectile fireball, CollisionSide side)
+        {
+            return;
+        }
+        public virtual void OnCollisionResponse(IEnemy otherEnemy, CollisionSide side)
+        {
+            if (side.Equals(CollisionSide.Right))
+            {
+                ChangeState(EnemyState.WalkLeft);
+            }
+            else if (side.Equals(CollisionSide.Left))
+            {
+                ChangeState(EnemyState.WalkRight);
+            }
+        }
+        public virtual void OnCollisionResponse(ITile tile, CollisionSide side)
+        {
+            if (side.Equals(CollisionSide.Right))
+            {
+                ChangeState(EnemyState.WalkLeft);
+            }
+            else if (side.Equals(CollisionSide.Left))
+            {
+                ChangeState(EnemyState.WalkRight);
+            }
         }
     }
 }

@@ -8,5 +8,9 @@
         {
             ItemSprite = ItemSpriteFactory.Instance.CreateSprite_PowerupMushroom();
         }
+        public override void OnCollisionResponse(ITile tile, CollisionSide side)
+        {
+            //TO DO: Mushroom will bounce when it hits the tile
+        }
     }
 }

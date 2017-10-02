@@ -9,6 +9,7 @@ namespace Lasagna
         private ISprite itemSprite;
         private int posX;
         private int posY;
+        public Rectangle temp;
 
         protected ISprite ItemSprite
         {
@@ -37,12 +38,20 @@ namespace Lasagna
         }
         public virtual Rectangle GetRectangle()
         {
-            Rectangle temp;
             temp.X = posX;
             temp.Y = posY;
             temp.Height = itemSprite.Height;
             temp.Width = itemSprite.Width;
             return temp;
+        }
+        public virtual void OnCollisionResponse(IPlayer mario, CollisionSide side)
+        {
+            //Destroy the item after mario takes it
+            itemSprite = null;
+        }
+        public virtual void OnCollisionResponse(ITile tile, CollisionSide side)
+        {
+            return;
         }
     }
 }

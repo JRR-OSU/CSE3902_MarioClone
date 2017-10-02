@@ -30,5 +30,21 @@ namespace Lasagna
                 CurrentSprite = goombaStates[CurrentState];
             }
         }
+        public override void OnCollisionResponse(IPlayer mario, CollisionSide side)
+        {
+            if(side.Equals(CollisionSide.Top))
+            {
+                ChangeState(EnemyState.Dead);
+            }
+        }
+        public override void OnCollisionResponse(IProjectile fireball, CollisionSide side)
+        {
+            if (side.Equals(CollisionSide.Left) || side.Equals(CollisionSide.Right))
+            {
+                ChangeState(EnemyState.Dead);
+            }
+        }
+
+
     }
 }

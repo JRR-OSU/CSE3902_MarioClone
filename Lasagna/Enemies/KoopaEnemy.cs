@@ -36,5 +36,20 @@ namespace Lasagna
             ///TODO: Turn into shell here instead of calling base method
             base.Damage();
         }
+        public override void OnCollisionResponse(IPlayer mario, CollisionSide side)
+        {
+            if (side.Equals(CollisionSide.Top))
+            {
+                Damage();
+            }
+        }
+        public override void OnCollisionResponse(IProjectile fireball, CollisionSide side)
+        {
+            if (side.Equals(CollisionSide.Left) || side.Equals(CollisionSide.Right))
+            {
+                Damage();
+            }
+        }
+
     }
 }
