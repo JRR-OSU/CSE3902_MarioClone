@@ -62,6 +62,7 @@
     <Compile Include="Enemies\MovingEnemy.cs" />
     <Compile Include="Interfaces\IPlayer.cs" />
     <Compile Include="Items\BaseItem.cs" />
+    <Compile Include="MouseController.cs" />
     <Compile Include="LevelCreator.cs" />
     <Compile Include="Player\MarioCollisionHandler.cs" />
     <Compile Include="Player\MarioStateMachine.cs" />
