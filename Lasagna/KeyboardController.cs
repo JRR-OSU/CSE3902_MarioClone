@@ -124,7 +124,7 @@ namespace Lasagna
         }
         public void EnableMouseController()
         {
-            //Wait for mouse controller
+            MouseController mouse = new MouseController();
         }
     }
 }
