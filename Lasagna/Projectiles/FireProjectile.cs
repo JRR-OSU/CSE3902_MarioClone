@@ -30,8 +30,10 @@
         }
         public override void OnCollisionResponse(IItem Item, CollisionSide side)
         {
-            //Reserved for changing direction of fireball.
-            return;
+            if (side.Equals(CollisionSide.Right))
+            {
+                this.ChangeState();
+            }
         }
     }
 }
