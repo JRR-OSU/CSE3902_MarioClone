@@ -28,12 +28,12 @@ namespace Lasagna
             MarioEvents.OnJump += Jump;
             MarioEvents.OnCrouch += Crouch;
 
-            MarioEvents.OnGetMushroom += Grow;
-            MarioEvents.OnMarioDamage += Shrink;
+            //MarioEvents.OnGetMushroom += Grow;
+           // MarioEvents.OnMarioDamage += Shrink;
             MarioEvents.OnFire += MarioFireProjectile;
-            MarioEvents.OnGetFireFlower += FireState;
+           // MarioEvents.OnGetFireFlower += FireState;
 
-            MarioEvents.OnMarioDie += Die;
+           // MarioEvents.OnMarioDie += Die;
 
             MarioEvents.OnReset += Reset;
 

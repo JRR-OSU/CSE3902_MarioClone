@@ -74,40 +74,5 @@ namespace Lasagna
         {
             MarioEvents.Fire(this, EventArgs.Empty);
         }
-
-        public void MarioDamage()
-        {
-            MarioEvents.MarioDamage(this, EventArgs.Empty);
-        }
-
-        public void MarioDie()
-        {
-            MarioEvents.MarioDie(this, EventArgs.Empty);
-        }
-
-        public void GetMushroom()
-        {
-            MarioEvents.GetMushroom(this, EventArgs.Empty);
-        }
-
-        public void GetFireFlower()
-        {
-            MarioEvents.GetFireFlower(this, EventArgs.Empty);
-        }
-
-        public void UseQuestionBlock()
-        {
-            MarioEvents.UseQuestionBlock(this, EventArgs.Empty);
-        }
-
-        public void DestroyBrickBlock()
-        {
-            MarioEvents.DestroyBrickBlock(this, EventArgs.Empty);
-        }
-
-        public void UseHiddenBlock()
-        {
-            MarioEvents.UseHiddenBlock(this, EventArgs.Empty);
-        }
     }
 }

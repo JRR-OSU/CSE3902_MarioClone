@@ -20,7 +20,6 @@ namespace Lasagna
         {
             CurrentSprite = visibleSprite;
             currentState = BlockState.Invisible;
-            MarioEvents.OnUseHiddenBlock += ChangeToVisible;
             MarioEvents.OnReset += ChangeToInvisible;
         }
 

@@ -19,7 +19,6 @@ namespace Lasagna
         {
             CurrentSprite = unused;
             currentState = BlockState.Idle;
-            MarioEvents.OnUseQuestionBlock += ChangeToUsed;
             MarioEvents.OnReset += ChangeToDefault;
         }
 

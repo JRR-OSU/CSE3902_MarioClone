@@ -22,7 +22,6 @@ namespace Lasagna
         {
             CurrentSprite = idleSprite;
             currentState = BlockState.Idle;
-            MarioEvents.OnDestroyBrickBlock += ChangeToInvisible;
             MarioEvents.OnReset += ChangeToDefault;
         }
 

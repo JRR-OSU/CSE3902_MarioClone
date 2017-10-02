@@ -148,13 +148,13 @@ namespace Lasagna
                         continue;
 
                     //Add first tile element
-                    ITile tile;
+                    List<ITile> newTiles = new List<ITile>();
                     int posX, posY;
                     if (int.TryParse(reader.GetAttribute("posx"), out posX)
                         && int.TryParse(reader.GetAttribute("posy"), out posY)
-                        && TryCreateTileFromEnum(reader.GetAttribute("type"), posX, posY, out tile))
+                        && TryCreateTileFromEnum(reader.GetAttribute("type"), reader.GetAttribute("repeat"), reader.GetAttribute("repeatspace"), posX, posY, out newTiles))
                     {
-                        tiles.Add(tile);
+                        tiles.AddRange(newTiles);
                     }
 
                     //Add all subsequent elements
@@ -162,9 +162,9 @@ namespace Lasagna
                     {
                         if (int.TryParse(reader.GetAttribute("posx"), out posX)
                            && int.TryParse(reader.GetAttribute("posy"), out posY)
-                           && TryCreateTileFromEnum(reader.GetAttribute("type"), posX, posY, out tile))
+                           && TryCreateTileFromEnum(reader.GetAttribute("type"), reader.GetAttribute("repeat"), reader.GetAttribute("repeatspace"), posX, posY, out newTiles))
                         {
-                            tiles.Add(tile);
+                            tiles.AddRange(newTiles);
                         }
                     }
                 }
@@ -238,9 +238,9 @@ namespace Lasagna
             enemy = enemyTypes[t].Invoke(posX, posY);
             return true;
         }
-        private bool TryCreateTileFromEnum(string tType, int posX, int posY, out ITile tile)
+        private bool TryCreateTileFromEnum(string tType, string repeatTimes, string repeatSpace, int posX, int posY, out List<ITile> tiles)
         {
-            tile = null;
+            tiles = new List<ITile>();
             TileType t;
 
             //If passed null parameter, or can't cast to type, or we don't have a delegate for type, exit.
@@ -250,7 +250,32 @@ namespace Lasagna
                 return false;
             }
 
-            tile = tileTypes[t].Invoke(posX, posY);
+            //Create base tile
+            tiles.Add(tileTypes[t].Invoke(posX, posY));
+
+            //If this element has a repeat field, and it has a valid integer, repeat this tile according to the field.
+            //Each repeated tile is spawned to the right of the base tile.
+            ///TODO: Maybe change this to take a directional param later?
+            int rTimes,
+                rSpace = 0;
+            if (tiles.Count > 0 && tiles[0] != null && !string.IsNullOrEmpty(repeatTimes) && int.TryParse(repeatTimes, out rTimes))
+            {
+                if (rTimes < 0)
+                    rTimes = 0;
+                //Try to get spacing between tiles, defaulting to no space.
+                if (!string.IsNullOrEmpty(repeatSpace))
+                    rSpace = int.Parse(repeatSpace);
+                if (rSpace < 0)
+                    rSpace = 0;
+                
+                //Add tile width to spacing
+                rSpace += tiles[0].GetProperties().Width;
+
+                //Spawn each subsequent tile
+                for (int i = 1; i <= rTimes; i++)
+                    tiles.Add(tileTypes[t].Invoke(posX + (rSpace * i), posY));
+            }
+
             return true;
         }
 
