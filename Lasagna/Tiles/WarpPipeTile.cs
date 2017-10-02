@@ -13,6 +13,7 @@ namespace Lasagna
         private int posY;
         private int pipeTipHeight;
         private int pipeBaseHeight;
+        public Rectangle Properties;
 
         public WarpPipeTile(int spawnPosX, int spawnPosY, int pipeHeight)
         {
@@ -62,6 +63,24 @@ namespace Lasagna
             for (int i = 0; i < pipeBaseSprites.Length; i++)
                 if (pipeBaseSprites[i] != null)
                     pipeBaseSprites[i].Draw(spriteBatch);
+        }
+
+        public Rectangle GetProperties()
+        {
+            this.Properties.X = this.posX;
+            this.Properties.Y = this.posY;
+            this.Properties.Width = this.pipeTipSprite.Width;
+            this.Properties.Width = this.pipeTipHeight + this.pipeBaseHeight * this.height;
+            return this.Properties;
+        }
+
+        public void OnCollisionResponse(IPlayer Mario, CollisionSide side)
+        {
+            return;
+        }
+        public void OnCollisionResponse(IItem Item, CollisionSide side)
+        {
+            return;
         }
     }
 }

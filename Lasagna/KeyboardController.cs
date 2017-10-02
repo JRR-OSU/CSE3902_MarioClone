@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
+﻿using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 
@@ -10,43 +9,49 @@ namespace Lasagna
         public KeyboardController()
         {
             //Setup all key events we accept
-            keyEvents = new Dictionary<Keys, MarioEventHandler>
+            onKeyDownEvents = new Dictionary<Keys[], MarioEventHandler>
             {
-                { Keys.Q, Quit },
-                { Keys.R, Reset },
-                { Keys.Up, Jump },
-                { Keys.W, Jump },
-                { Keys.Down, Crouch },
-                { Keys.S, Crouch },
-                { Keys.Left, MoveLeft },
-                { Keys.A, MoveLeft },
-                { Keys.Right, MoveRight },
-                { Keys.D, MoveRight },
+                { new [] { Keys.Q }, Quit },
+                { new [] { Keys.R }, Reset },
+                { new [] { Keys.M }, EnableMouseController },
+            };
 
-                { Keys.Y, MarioDamage },
-                { Keys.O, MarioDie },
-                { Keys.U, GetMushroom },
-                { Keys.I, GetFireFlower },
-                { Keys.Z, UseQuestionBlock },
-                { Keys.X, DestroyBrickBlock },
-                { Keys.C, UseHiddenBlock },
+            onKeyHeldEvents = new Dictionary<Keys[], MarioEventHandler>
+            {
+                { new [] { Keys.Up, Keys.W }, Jump },
+                { new [] { Keys.Down, Keys.S }, Crouch },
+                { new [] { Keys.Left, Keys.A }, MoveLeft },
+                { new [] { Keys.Right, Keys.D }, MoveRight },
             };
         }
 
         //Keys and what event they trigger
-        private Dictionary<Keys, MarioEventHandler> keyEvents;
-        //Used for determining if key was just pressed this frame
+        private readonly Dictionary<Keys[], MarioEventHandler> onKeyDownEvents;
+        private readonly Dictionary<Keys[], MarioEventHandler> onKeyHeldEvents;
+        //Used for determining if key was just pressed this frame for keys that only get on down
         private KeyboardState oldKeyboardState;
 
         public void Update()
         {
             KeyboardState newKeyboardState = Keyboard.GetState();
 
-            //Iterate over all keys, if they are pressed down this frame raise event.
-            foreach (KeyValuePair<Keys, MarioEventHandler> keyPair in keyEvents)
+            //Iterate over all down keys, if they are pressed down this frame and not last frame raise event.
+            foreach (KeyValuePair<Keys[], MarioEventHandler> keyPair in onKeyDownEvents)
             {
-                if (keyPair.Value != null && oldKeyboardState.IsKeyUp(keyPair.Key) && newKeyboardState.IsKeyDown(keyPair.Key))
-                    keyPair.Value();
+                foreach (Keys k in keyPair.Key)
+                {
+                    if (keyPair.Value != null && oldKeyboardState.IsKeyUp(k) && newKeyboardState.IsKeyDown(k))
+                        keyPair.Value();
+                }
+            }
+            //Iterate over all held keys, if they are pressed down this frame raise event.
+            foreach (KeyValuePair<Keys[], MarioEventHandler> keyPair in onKeyHeldEvents)
+            {
+                foreach (Keys k in keyPair.Key)
+                {
+                    if (keyPair.Value != null && newKeyboardState.IsKeyDown(k))
+                        keyPair.Value();
+                }
             }
 
             oldKeyboardState = newKeyboardState;
@@ -87,39 +92,9 @@ namespace Lasagna
             MarioEvents.Fire(this, EventArgs.Empty);
         }
 
-        public void MarioDamage()
+        public void EnableMouseController()
         {
-            MarioEvents.MarioDamage(this, EventArgs.Empty);
-        }
-
-        public void MarioDie()
-        {
-            MarioEvents.MarioDie(this, EventArgs.Empty);
-        }
-
-        public void GetMushroom()
-        {
-            MarioEvents.GetMushroom(this, EventArgs.Empty);
-        }
-
-        public void GetFireFlower()
-        {
-            MarioEvents.GetFireFlower(this, EventArgs.Empty);
-        }
-
-        public void UseQuestionBlock()
-        {
-            MarioEvents.UseQuestionBlock(this, EventArgs.Empty);
-        }
-
-        public void DestroyBrickBlock()
-        {
-            MarioEvents.DestroyBrickBlock(this, EventArgs.Empty);
-        }
-
-        public void UseHiddenBlock()
-        {
-            MarioEvents.UseHiddenBlock(this, EventArgs.Empty);
+            MouseController mouse = new MouseController();
         }
     }
 }

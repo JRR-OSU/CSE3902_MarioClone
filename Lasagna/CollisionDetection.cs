@@ -24,30 +24,30 @@ namespace Lasagna
             CollisionSide side1, side2;
 
             //Tiles are static, so don't need to check against themselves.
-            /*foreach (ITile tile in tiles)
+            foreach (ITile tile in tiles)
             {
                 foreach (IPlayer player in players)
                 {
-                    if (CheckCollision(tile.Bounds, player.Bounds, out overlap, out side1, out side2))
+                    if (CheckCollision(tile.GetProperties(), player.GetRect, out overlap, out side1, out side2))
                     {
-                        tile.HasCollided(player, side);
-                        player.HasCollided(tile, side);
+                        tile.OnCollisionResponse(player, side1);
+                        player.OnCollisionResponse(tile, side2);
                     }
                 }
                 foreach (IEnemy enemy in enemies)
                 {
-                    if (CheckCollision(tile.Bounds, enemy.Bounds, out overlap, out side1, out side2))
+                    if (CheckCollision(tile.GetProperties(), enemy.GetRectangle(), out overlap, out side1, out side2))
                     {
-                        tile.HasCollided(enemy, side);
-                        enemy.HasCollided(tile, side);
+                        tile.OnCollisionResponse(enemy, side1);
+                        enemy.OnCollisionResponse(tile, side2);
                     }
                 }
                 foreach (IItem item in items)
                 {
-                    if (CheckCollision(tile.Bounds, item.Bounds, out overlap, out side1, out side2))
+                    if (CheckCollision(tile.GetProperties(), item.GetRectangle(), out overlap, out side1, out side2))
                     {
-                        tile.HasCollided(item, side);
-                        item.HasCollided(tile, side);
+                        tile.OnCollisionResponse(item, side1);
+                        item.OnCollisionResponse(tile, side2);
                     }
                 }
             }
@@ -57,18 +57,18 @@ namespace Lasagna
             {
                 foreach (IEnemy enemy in enemies)
                 {
-                    if (CheckCollision(player.Bounds, enemy.Bounds, out overlap, out side1, out side2))
+                    if (CheckCollision(player.GetRect, enemy.GetRectangle(), out overlap, out side1, out side2))
                     {
-                        player.HasCollided(enemy, side);
-                        enemy.HasCollided(player, side);
+                        player.OnCollisionResponse(enemy, side1);
+                        enemy.OnCollisionResponse(player, side2);
                     }
                 }
                 foreach (IItem item in items)
                 {
-                    if (CheckCollision(player.Bounds, item.Bounds, out overlap, out side1, out side2))
+                    if (CheckCollision(player.GetRect, item.GetRectangle(), out overlap, out side1, out side2))
                     {
-                        player.HasCollided(item, side);
-                        item.HasCollided(player, side);
+                        player.OnCollisionResponse(item, side1);
+                        item.OnCollisionResponse(player, side2);
                     }
                 }
             }
@@ -78,13 +78,13 @@ namespace Lasagna
             {
                 foreach (IItem item in items)
                 {
-                    if (CheckCollision(enemy.Bounds, item.Bounds, out overlap, out side1, out side2))
+                    if (CheckCollision(enemy.GetRectangle(), item.GetRectangle(), out overlap, out side1, out side2))
                     {
-                        enemy.HasCollided(item, side);
-                        item.HasCollided(enemy, side);
+                        enemy.OnCollisionResponse(item, side1);
+                        item.OnCollisionResponse(enemy, side2);
                     }
                 }
-            }*/
+            }
         }
 
         private bool CheckCollision(Rectangle r1, Rectangle r2, out Rectangle overlapRect, out CollisionSide r1CollisionSide, out CollisionSide r2CollisionSide)

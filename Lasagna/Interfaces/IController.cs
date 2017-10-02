@@ -10,12 +10,5 @@
         void Jump();
         void Crouch();
         void Fire();
-        void MarioDamage();
-        void MarioDie();
-        void GetMushroom();
-        void GetFireFlower();
-        void UseQuestionBlock();
-        void DestroyBrickBlock();
-        void UseHiddenBlock();
     }
 }

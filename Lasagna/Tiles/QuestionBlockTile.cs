@@ -19,7 +19,6 @@ namespace Lasagna
         {
             CurrentSprite = unused;
             currentState = BlockState.Idle;
-            MarioEvents.OnUseQuestionBlock += ChangeToUsed;
             MarioEvents.OnReset += ChangeToDefault;
         }
 
@@ -48,6 +47,13 @@ namespace Lasagna
         {
             if (currentState == BlockState.Used)
                 ChangeState();
+        }
+        public override void OnCollisionResponse(IPlayer Mario, CollisionSide side)
+        {
+            if (side.Equals(CollisionSide.Bottom))
+            {
+                this.ChangeState();
+            }
         }
     }
 }

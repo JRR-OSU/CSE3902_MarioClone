@@ -36,5 +36,13 @@ namespace Lasagna
         }
 
         public abstract void ChangeState();
+        public virtual void OnCollisionResponse(IEnemy Enemy, CollisionSide side)
+        {
+            return;
+        }
+        public virtual void OnCollisionResponse(IItem Item, CollisionSide side)
+        {
+            return;
+        }
     }
 }

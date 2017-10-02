@@ -16,14 +16,6 @@ namespace Lasagna
         public static event InputEventHandler OnCrouch;
         public static event InputEventHandler OnFire;
 
-        public static event InputEventHandler OnMarioDamage;
-        public static event InputEventHandler OnMarioDie;
-        public static event InputEventHandler OnGetMushroom;
-        public static event InputEventHandler OnGetFireFlower;
-        public static event InputEventHandler OnUseQuestionBlock;
-        public static event InputEventHandler OnDestroyBrickBlock;
-        public static event InputEventHandler OnUseHiddenBlock;
-
         public static void Quit(object sender, EventArgs e)
         {
             if (OnQuit != null)
@@ -64,48 +56,6 @@ namespace Lasagna
         {
             if (OnFire != null)
                 OnFire(sender, e);
-        }
-
-        public static void MarioDamage(object sender, EventArgs e)
-        {
-            if (OnMarioDamage != null)
-                OnMarioDamage(sender, e);
-        }
-
-        public static void MarioDie(object sender, EventArgs e)
-        {
-            if (OnMarioDie != null)
-                OnMarioDie(sender, e);
-        }
-
-        public static void GetMushroom(object sender, EventArgs e)
-        {
-            if (OnGetMushroom != null)
-                OnGetMushroom(sender, e);
-        }
-
-        public static void GetFireFlower(object sender, EventArgs e)
-        {
-            if (OnGetFireFlower != null)
-                OnGetFireFlower(sender, e);
-        }
-
-        public static void UseQuestionBlock(object sender, EventArgs e)
-        {
-            if (OnUseQuestionBlock != null)
-                OnUseQuestionBlock(sender, e);
-        }
-
-        public static void DestroyBrickBlock(object sender, EventArgs e)
-        {
-            if (OnDestroyBrickBlock != null)
-                OnDestroyBrickBlock(sender, e);
-        }
-
-        public static void UseHiddenBlock(object sender, EventArgs e)
-        {
-            if (OnUseHiddenBlock != null)
-                OnUseHiddenBlock(sender, e);
         }
     }
 }

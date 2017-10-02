@@ -22,7 +22,6 @@ namespace Lasagna
         {
             CurrentSprite = idleSprite;
             currentState = BlockState.Idle;
-            MarioEvents.OnDestroyBrickBlock += ChangeToInvisible;
             MarioEvents.OnReset += ChangeToDefault;
         }
 
@@ -65,6 +64,12 @@ namespace Lasagna
             if (currentState == BlockState.Broken)
                 ChangeState();
         }
-
+        public override void OnCollisionResponse(IPlayer Mario, CollisionSide side)
+        {
+            if (side.Equals(CollisionSide.Bottom))
+            {
+                this.ChangeState();
+            }
+        }
     }
 }

@@ -20,7 +20,6 @@ namespace Lasagna
         {
             CurrentSprite = visibleSprite;
             currentState = BlockState.Invisible;
-            MarioEvents.OnUseHiddenBlock += ChangeToVisible;
             MarioEvents.OnReset += ChangeToInvisible;
         }
 
@@ -61,6 +60,13 @@ namespace Lasagna
         {
             if (currentState == BlockState.Visible)
                 ChangeState();
+        }
+        public override void OnCollisionResponse(IPlayer Mario, CollisionSide side)
+        {
+            if (side.Equals(CollisionSide.Bottom))
+            {
+                this.ChangeState();
+            }
         }
     }
 }
