@@ -89,5 +89,10 @@ namespace Lasagna
         {
             return;
         }
+
+        public void OnCollisionResponse(IEnemy enemy, CollisionSide side)
+        {
+            return;
+        }
     }
 }

@@ -15,6 +15,7 @@ namespace Lasagna
 
         private int spriteXPos;
         private int spriteYPos;
+        private int[] orignalPos = new int[2];
 
         public Rectangle GetRect { get { return new Rectangle(spriteXPos, spriteYPos, GetCurrentSprite().Width, GetCurrentSprite().Height); }}
         
@@ -31,17 +32,19 @@ namespace Lasagna
             MarioEvents.OnJump += Jump;
             MarioEvents.OnCrouch += Crouch;
 
-            MarioEvents.OnGetMushroom += Grow;
-            MarioEvents.OnMarioDamage += Shrink;
+            //MarioEvents.OnGetMushroom += Grow;
+            //MarioEvents.OnMarioDamage += Shrink;
             MarioEvents.OnFire += MarioFireProjectile;
-            MarioEvents.OnGetFireFlower += FireState;
+           // MarioEvents.OnGetFireFlower += FireState;
 
-            MarioEvents.OnMarioDie += Die;
+           // MarioEvents.OnMarioDie += Die;
 
             MarioEvents.OnReset += Reset;
 
             spriteXPos = x;
             spriteYPos = y;
+            orignalPos[0] = spriteXPos;
+            orignalPos[1] = spriteYPos;
         }
 
         private ISprite GetCurrentSprite()
@@ -51,6 +54,8 @@ namespace Lasagna
 
         private void Reset(object sender, EventArgs e)
         {
+            spriteXPos = orignalPos[0];
+            spriteYPos = orignalPos[1];
             stateMachine.Reset();
         }
 
@@ -125,6 +130,10 @@ namespace Lasagna
             marioCollisionHandler.OnCollisionResponse(tile, side);
         }
 
+        public void OnCollisionResponse(IEnemy enemy, CollisionSide side)
+        {
+            marioCollisionHandler.OnCollisionResponse(enemy, side);
+        }
 
         public void Update(GameTime gameTime)
         {

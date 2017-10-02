@@ -33,5 +33,10 @@ namespace Lasagna
         {
             mario.Reset();
         }
+
+        public void OnCollisionResponse(IEnemy enemy, CollisionSide side)
+        {
+            mario.Reset();
+        }
     }
 }

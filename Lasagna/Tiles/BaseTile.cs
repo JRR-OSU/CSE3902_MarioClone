@@ -52,5 +52,10 @@ namespace Lasagna
             return;
         }
         public abstract void ChangeState();
+
+        public void OnCollisionResponse(IEnemy enemy, CollisionSide side)
+        {
+            return;
+        }
     }
 }
