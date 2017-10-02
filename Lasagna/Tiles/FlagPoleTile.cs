@@ -81,7 +81,8 @@ namespace Lasagna
 
         public void OnCollisionResponse(IPlayer Mario, CollisionSide side)
         {
-            throw new System.NotImplementedException();
+            //Reserved for moving flag down. (Need to be discussed.)
+            return;
         }
 
         public void OnCollisionResponse(IItem Item, CollisionSide side)
