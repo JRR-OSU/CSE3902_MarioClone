@@ -5,10 +5,10 @@ namespace Lasagna
 {
     public interface ITile
     {
+        Rectangle Properties { get; }
         void Update(GameTime gameTime);
         void Draw(SpriteBatch spriteBatch);
         void ChangeState();
-        Rectangle GetProperties();
         void OnCollisionResponse(IPlayer Mario, CollisionSide side);
         void OnCollisionResponse(IEnemy enemy, CollisionSide side);
         void OnCollisionResponse(IItem Item, CollisionSide side);

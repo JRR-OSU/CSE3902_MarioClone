@@ -53,9 +53,9 @@ namespace Lasagna
             if (tile is FloorBlockTile)
             {
                 if(state.GetState() != MarioStateMachine.MarioState.Small)
-                    mario.SetPos(mario.GetRect.X, (tile.GetProperties().Y - tile.GetProperties().Height) - (mario.GetRect.Height) / 2);
+                    mario.SetPos(mario.GetRect.X, (tile.Properties.Y - tile.Properties.Height) - (mario.GetRect.Height) / 2);
                 else
-                    mario.SetPos(mario.GetRect.X, (tile.GetProperties().Y - tile.GetProperties().Height));
+                    mario.SetPos(mario.GetRect.X, (tile.Properties.Y - tile.Properties.Height));
                 return;
             }
             else if (tile is QuestionBlockTile || tile is UnbreakableBlockTile || tile is WarpPipeTile)
@@ -64,21 +64,21 @@ namespace Lasagna
                 {
                     case CollisionSide.Top:
                         if (state.GetState() != MarioStateMachine.MarioState.Small)
-                            mario.SetPos(mario.GetRect.X, (tile.GetProperties().Y - tile.GetProperties().Height) - (mario.GetRect.Height) / 2);
+                            mario.SetPos(mario.GetRect.X, (tile.Properties.Y - tile.Properties.Height) - (mario.GetRect.Height) / 2);
                         else
-                            mario.SetPos(mario.GetRect.X, (tile.GetProperties().Y - tile.GetProperties().Height));
+                            mario.SetPos(mario.GetRect.X, (tile.Properties.Y - tile.Properties.Height));
                         break;
                     case CollisionSide.Bottom:
                         if (state.GetState() != MarioStateMachine.MarioState.Small)
-                            mario.SetPos(mario.GetRect.X, (tile.GetProperties().Y + tile.GetProperties().Height) + (mario.GetRect.Height / 2));
+                            mario.SetPos(mario.GetRect.X, (tile.Properties.Y + tile.Properties.Height) + (mario.GetRect.Height / 2));
                         else
-                            mario.SetPos(mario.GetRect.X, (tile.GetProperties().Y + tile.GetProperties().Height));
+                            mario.SetPos(mario.GetRect.X, (tile.Properties.Y + tile.Properties.Height));
                         break;
                     case CollisionSide.Left:
-                        mario.SetPos(tile.GetProperties().X + tile.GetProperties().Width, mario.GetRect.Y);
+                        mario.SetPos(tile.Properties.X + tile.Properties.Width, mario.GetRect.Y);
                         break;
                     case CollisionSide.Right:
-                        mario.SetPos(tile.GetProperties().X - tile.GetProperties().Width, mario.GetRect.Y);
+                        mario.SetPos(tile.Properties.X - tile.Properties.Width, mario.GetRect.Y);
                         break;
                 }
             }

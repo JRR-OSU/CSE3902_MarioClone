@@ -28,7 +28,7 @@ namespace Lasagna
             {
                 foreach (IPlayer player in players)
                 {
-                    if (CheckCollision(tile.GetProperties(), player.GetRect, out overlap, out side1, out side2))
+                    if (CheckCollision(tile.Properties, player.GetRect, out overlap, out side1, out side2))
                     {
                         tile.OnCollisionResponse(player, side1);
                         player.OnCollisionResponse(tile, side2);
@@ -36,7 +36,7 @@ namespace Lasagna
                 }
                 foreach (IEnemy enemy in enemies)
                 {
-                    if (CheckCollision(tile.GetProperties(), enemy.GetRectangle, out overlap, out side1, out side2))
+                    if (CheckCollision(tile.Properties, enemy.GetRectangle, out overlap, out side1, out side2))
                     {
                         tile.OnCollisionResponse(enemy, side1);
                         enemy.OnCollisionResponse(tile, side2);
@@ -44,7 +44,7 @@ namespace Lasagna
                 }
                 foreach (IItem item in items)
                 {
-                    if (CheckCollision(tile.GetProperties(), item.GetRectangle, out overlap, out side1, out side2))
+                    if (CheckCollision(tile.Properties, item.GetRectangle, out overlap, out side1, out side2))
                     {
                         tile.OnCollisionResponse(item, side1);
                         item.OnCollisionResponse(tile, side2);

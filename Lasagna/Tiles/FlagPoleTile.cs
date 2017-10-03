@@ -18,7 +18,7 @@ namespace Lasagna
         private int posY;
         private int flagOffsetX;
         private int flagOffsetY;
-        public Rectangle Properties;
+        public Rectangle Properties { get { return new Rectangle(this.posX, this.posY, this.flagPoleSprite.Width, this.flagPoleSprite.Height); } }
 
         public FlagPoleTile(int spawnPosX, int spawnPosY)
         {
@@ -68,15 +68,6 @@ namespace Lasagna
                 flagPoleSprite.Draw(spriteBatch);
             if (flagSprite != null)
                 flagSprite.Draw(spriteBatch);
-        }
-
-        public Rectangle GetProperties()
-        {
-            this.Properties.X = this.posX;
-            this.Properties.Y = this.posY;
-            this.Properties.Width = this.flagPoleSprite.Width;
-            this.Properties.Height = this.flagPoleSprite.Height;
-            return this.Properties;
         }
 
         public void OnCollisionResponse(IPlayer Mario, CollisionSide side)
