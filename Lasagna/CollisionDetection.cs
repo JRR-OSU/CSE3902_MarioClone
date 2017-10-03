@@ -36,7 +36,7 @@ namespace Lasagna
                 }
                 foreach (IEnemy enemy in enemies)
                 {
-                    if (CheckCollision(tile.GetProperties(), enemy.GetRectangle(), out overlap, out side1, out side2))
+                    if (CheckCollision(tile.GetProperties(), enemy.GetRectangle, out overlap, out side1, out side2))
                     {
                         tile.OnCollisionResponse(enemy, side1);
                         enemy.OnCollisionResponse(tile, side2);
@@ -44,7 +44,7 @@ namespace Lasagna
                 }
                 foreach (IItem item in items)
                 {
-                    if (CheckCollision(tile.GetProperties(), item.GetRectangle(), out overlap, out side1, out side2))
+                    if (CheckCollision(tile.GetProperties(), item.GetRectangle, out overlap, out side1, out side2))
                     {
                         tile.OnCollisionResponse(item, side1);
                         item.OnCollisionResponse(tile, side2);
@@ -57,7 +57,7 @@ namespace Lasagna
             {
                 foreach (IEnemy enemy in enemies)
                 {
-                    if (CheckCollision(player.GetRect, enemy.GetRectangle(), out overlap, out side1, out side2))
+                    if (CheckCollision(player.GetRect, enemy.GetRectangle, out overlap, out side1, out side2))
                     {
                         player.OnCollisionResponse(enemy, side1);
                         enemy.OnCollisionResponse(player, side2);
@@ -65,7 +65,7 @@ namespace Lasagna
                 }
                 foreach (IItem item in items)
                 {
-                    if (CheckCollision(player.GetRect, item.GetRectangle(), out overlap, out side1, out side2))
+                    if (CheckCollision(player.GetRect, item.GetRectangle, out overlap, out side1, out side2))
                     {
                         player.OnCollisionResponse(item, side1);
                         item.OnCollisionResponse(player, side2);
@@ -78,7 +78,7 @@ namespace Lasagna
             {
                 foreach (IItem item in items)
                 {
-                    if (CheckCollision(enemy.GetRectangle(), item.GetRectangle(), out overlap, out side1, out side2))
+                    if (CheckCollision(enemy.GetRectangle, item.GetRectangle, out overlap, out side1, out side2))
                     {
                         enemy.OnCollisionResponse(item, side1);
                         item.OnCollisionResponse(enemy, side2);

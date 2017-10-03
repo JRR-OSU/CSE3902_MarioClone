@@ -9,6 +9,7 @@ namespace Lasagna
         private Texture2D goombaWalkSheet;
         private Texture2D koopaDieSheet;
         private Texture2D koopaWalkSheet;
+        private Texture2D goombaFlippedSheet;
 
         private static EnemySpriteFactory instance;
 
@@ -25,6 +26,7 @@ namespace Lasagna
 
         public void LoadAllContent(ContentManager content)
         {
+            goombaFlippedSheet = content.Load<Texture2D>("EnemySprites/Goomba_Flipped");
             goombaDieSheet = content.Load<Texture2D>("EnemySprites/Goomba_Die");
             goombaWalkSheet = content.Load<Texture2D>("EnemySprites/Goomba_Walk");
             koopaDieSheet = content.Load<Texture2D>("EnemySprites/Koopa_Die");
@@ -34,6 +36,10 @@ namespace Lasagna
         public NonAnimatedSprite CreateSprite_Goomba_Die()
         {
             return new NonAnimatedSprite(goombaDieSheet, 32, 16);
+        }
+        public NonAnimatedSprite CreateSprite_Goomba_Flipped()
+        {
+            return new NonAnimatedSprite(goombaFlippedSheet, 32, 16);
         }
 
         public AnimatedSprite CreateSprite_Goomba_Walk()

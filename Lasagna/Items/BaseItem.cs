@@ -24,6 +24,17 @@ namespace Lasagna
             posX = spawnPosX;
             posY = spawnPosY;
         }
+        public Rectangle GetRectangle
+        {
+            get
+            {
+                if (itemSprite == null)
+                {
+                    return new Rectangle(posX, posY, 0, 0);
+                }
+                return new Rectangle(posX, posY, itemSprite.Width, itemSprite.Height);
+            }
+        }
 
         public void Update(GameTime gameTime)
         {
@@ -36,19 +47,7 @@ namespace Lasagna
             if (itemSprite != null)
                 itemSprite.Draw(spriteBatch);
         }
-        public virtual Rectangle GetRectangle()
-        {
-            if(itemSprite == null)
-            {
-                return new Rectangle(0,0,0,0);
-            }
-            temp.X = posX;
-            temp.Y = posY;
-            temp.Height = itemSprite.Height;
-            temp.Width = itemSprite.Width;
-            return temp;
-        }
-
+        
         public virtual void OnCollisionResponse(IPlayer mario, CollisionSide side)
         {
             //Destroy the item after mario takes it

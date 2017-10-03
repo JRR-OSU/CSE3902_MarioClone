@@ -9,7 +9,7 @@ namespace Lasagna
         void Draw(SpriteBatch spriteBatch);
         void ChangeState(EnemyState newState);
         void Damage();
-        Rectangle GetRectangle();
+        Rectangle GetRectangle { get; }
         void OnCollisionResponse(IProjectile fireball, CollisionSide side);
         void OnCollisionResponse(IItem item, CollisionSide side);
         void OnCollisionResponse(IPlayer mario, CollisionSide side);

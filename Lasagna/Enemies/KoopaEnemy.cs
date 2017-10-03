@@ -33,8 +33,9 @@ namespace Lasagna
 
         public override void Damage()
         {
-            ///TODO: Turn into shell here instead of calling base method
-            base.Damage();
+            //TODO: Turn into shell here instead of calling base method
+            //Koopa can be killed with one attack in level 1-1
+            ChangeState(EnemyState.Dead);
         }
         public override void OnCollisionResponse(IPlayer mario, CollisionSide side)
         {

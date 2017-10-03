@@ -10,8 +10,8 @@ namespace Lasagna
         private EnemyState currentState;
         private int posX;
         private int posY;
-        public Rectangle temp;
 
+        
         protected ISprite CurrentSprite
         {
             get { return currentSprite; }
@@ -30,6 +30,9 @@ namespace Lasagna
             posX = spawnPosX;
             posY = spawnPosY;
         }
+        public Rectangle GetRectangle
+        { get { return new Rectangle(posX, posY, currentSprite.Width, currentSprite.Height); } }
+
 
         public virtual void Update(GameTime gameTime)
         {
@@ -45,18 +48,8 @@ namespace Lasagna
 
         public abstract void ChangeState(EnemyState newState);
 
-        public virtual void Damage()
-        {
-            ChangeState(EnemyState.Dead);
-        }
-        public Rectangle GetRectangle()
-        {
-            temp.X = posX;
-            temp.Y = posY;
-            temp.Height = currentSprite.Height;
-            temp.Width = currentSprite.Width;
-            return temp;
-        }
+        public abstract void Damage();
+        
         public virtual void OnCollisionResponse(IPlayer mario,CollisionSide side)
         {
             return;
@@ -91,5 +84,6 @@ namespace Lasagna
                 ChangeState(EnemyState.WalkRight);
             }
         }
-    }
+        
+}
 }

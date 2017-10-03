@@ -7,7 +7,7 @@ namespace Lasagna
     {
         void Update(GameTime gameTime);
         void Draw(SpriteBatch spriteBatch);
-        Rectangle GetRectangle();
+        Rectangle GetRectangle { get; }
         void OnCollisionResponse(IProjectile fireball, CollisionSide side);
         void OnCollisionResponse(IPlayer mario, CollisionSide side);
         void OnCollisionResponse(IEnemy otherEnemy, CollisionSide side);

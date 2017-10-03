@@ -14,7 +14,8 @@ namespace Lasagna
         Idle,
         WalkLeft,
         WalkRight,
-        Dead
+        Dead,
+        Flipped
     }
 
     public enum CollisionSide

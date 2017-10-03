@@ -8,6 +8,7 @@ namespace Lasagna
         {
             { EnemyState.Idle, EnemySpriteFactory.Instance.CreateSprite_Goomba_Walk() },
             { EnemyState.Dead, EnemySpriteFactory.Instance.CreateSprite_Goomba_Die() },
+            { EnemyState.Flipped, EnemySpriteFactory.Instance.CreateSprite_Goomba_Flipped() },
         };
 
         public GoombaEnemy(int spawnPosX, int spawnPosY) 
@@ -21,7 +22,10 @@ namespace Lasagna
                 CurrentSprite = goombaStates[EnemyState.Idle];
             }
         }
-
+        public override void Damage()
+        {
+            return;
+        }
         public override void ChangeState(EnemyState newState)
         {
             if (goombaStates != null && goombaStates.ContainsKey(CurrentState) && goombaStates[CurrentState] != null)
@@ -41,7 +45,7 @@ namespace Lasagna
         {
             if (side.Equals(CollisionSide.Left) || side.Equals(CollisionSide.Right))
             {
-                ChangeState(EnemyState.Dead);
+                ChangeState(EnemyState.Flipped);
             }
         }
 
