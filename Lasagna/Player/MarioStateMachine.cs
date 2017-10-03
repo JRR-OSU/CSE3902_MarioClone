@@ -92,6 +92,19 @@ namespace Lasagna
                     break;
             }
         }
+
+        public void SetIdleState()
+        {
+            if(marioMovement == MarioMovement.RunRight)
+            {
+                marioMovement = MarioMovement.IdleRight;
+            }
+            else if (marioMovement == MarioMovement.RunLeft)
+            {
+                marioMovement = MarioMovement.IdleLeft;
+            }
+            SwitchCurrentSprite(marioMovement);
+        }
         public void MoveLeft()
         {
             if (marioMovement == MarioMovement.Die)

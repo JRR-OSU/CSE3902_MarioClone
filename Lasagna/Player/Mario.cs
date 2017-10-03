@@ -63,6 +63,11 @@ namespace Lasagna
             spriteYPos = orignalPos[1];
             stateMachine.Reset();
         }
+        
+        public void SetIdleState()
+        {
+            stateMachine.SetIdleState();
+        }
 
         public void MarioFireProjectile(object sender, EventArgs e)
         {
@@ -146,6 +151,10 @@ namespace Lasagna
 
         public void Update(GameTime gameTime)
         {
+            if (Keyboard.GetState().GetPressedKeys().Length == 0)
+            {
+                SetIdleState();
+            }
             if (spriteXPos < 0)
             {
                 spriteXPos = 0;
