@@ -64,7 +64,7 @@ namespace Lasagna
 
         public override void OnCollisionResponse(IPlayer Mario, CollisionSide side)
         {
-            if (this.currentState == BlockState.Invisible && side.Equals(CollisionSide.Top))
+            if (this.currentState.Equals(BlockState.Invisible) && side.Equals(CollisionSide.Top))
             {
                 this.ChangeState();
             }

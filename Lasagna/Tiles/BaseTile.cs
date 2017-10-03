@@ -8,7 +8,7 @@ namespace Lasagna
         private ISprite currentSprite;
         private int posX;
         private int posY;
-        public Rectangle Properties{ get { return new Rectangle(this.posX, this.posY, this.currentSprite.Width, this.currentSprite.Height); } }
+        public virtual Rectangle Properties{ get { return new Rectangle(this.posX, this.posY, this.currentSprite.Width, this.currentSprite.Height); } }
             
         protected ISprite CurrentSprite
         {
