@@ -120,7 +120,7 @@ namespace Lasagna
                 if (CheckCollision(tile.Properties, rect, out tileSide, out sourceSide))
                 {
                     //Invisible blocks can only be collided if they're hit from the bottom
-                    if (tile is InvisibleItemBlockTile && tileSide != CollisionSide.Bottom)
+                    if (tile is InvisibleItemBlockTile && tileSide != CollisionSide.Bottom && !((InvisibleItemBlockTile)tile).IsVisible)
                         continue;
 
                     tile.OnCollisionResponse(sourceCollider, tileSide);
