@@ -7,7 +7,8 @@
         {
             ItemSprite = ItemSpriteFactory.Instance.CreateSprite_Star();
         }
-        public override void OnCollisionResponse(ITile tile, CollisionSide side)
+
+        protected override void OnCollisionResponse(ITile tile, CollisionSide side)
         {
             //TO DO: Star will bounce when it hits the tile
         }

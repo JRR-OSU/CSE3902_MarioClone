@@ -4,7 +4,7 @@ using System;
 
 namespace Lasagna
 {
-    public abstract class MovingEnemy : IEnemy, ICollider
+    public abstract class MovingEnemy : IEnemy
     {
         private ISprite currentSprite;
         private EnemyState currentState;
@@ -59,7 +59,7 @@ namespace Lasagna
 
         public abstract void Damage();
 
-        public virtual void OnCollisionResponse(ICollider otherCollider, CollisionSide side)
+        public void OnCollisionResponse(ICollider otherCollider, CollisionSide side)
         {
             if (otherCollider is IPlayer)
                 OnCollisionResponse((IPlayer)otherCollider, side);

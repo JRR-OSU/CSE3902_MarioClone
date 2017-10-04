@@ -39,9 +39,11 @@ namespace Lasagna
 
         //Empty for now
         public void ChangeState() { }
+
         public  int GetState() {
             return 0;
         }
+
         public void Update(GameTime gameTime)
         {
             if (pipeTipSprite != null)
@@ -58,6 +60,7 @@ namespace Lasagna
                 }
             }
         }
+
         public void Draw(SpriteBatch spriteBatch)
         {
             if (pipeTipSprite != null)
@@ -67,18 +70,9 @@ namespace Lasagna
                     pipeBaseSprites[i].Draw(spriteBatch);
         }
 
-        public void OnCollisionResponse(IPlayer Mario, CollisionSide side)
+        public void OnCollisionResponse(ICollider otherCollider, CollisionSide side)
         {
-            return;
-        }
-        public void OnCollisionResponse(IItem Item, CollisionSide side)
-        {
-            return;
-        }
-
-        public void OnCollisionResponse(IEnemy enemy, CollisionSide side)
-        {
-            return;
+            //TODO: Warp mario on down if thisis warp pipe.
         }
     }
 }

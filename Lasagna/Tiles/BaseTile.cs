@@ -34,21 +34,21 @@ namespace Lasagna
             if (currentSprite != null)
                 currentSprite.Draw(spriteBatch);
         }
-        
-        public virtual void OnCollisionResponse(IPlayer Mario, CollisionSide side)
-        {
-            return;
-        }
-        public virtual void OnCollisionResponse(IItem Item, CollisionSide side)
-        {
-            return;
-        }
+
         public abstract void ChangeState();
+
         public virtual int GetState()
         {
             return 0;
         }
-        public void OnCollisionResponse(IEnemy enemy, CollisionSide side)
+
+        public void OnCollisionResponse(ICollider otherCollider, CollisionSide side)
+        {
+            if (otherCollider is IPlayer)
+                OnCollisionResponse((IPlayer)otherCollider, side);
+        }
+
+        protected virtual void OnCollisionResponse(IPlayer player, CollisionSide side)
         {
             return;
         }

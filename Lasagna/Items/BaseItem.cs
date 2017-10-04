@@ -57,24 +57,43 @@ namespace Lasagna
             if (itemSprite != null && currentState != ItemState.Taken)
                 itemSprite.Draw(spriteBatch);
         }
-        
-        public virtual void OnCollisionResponse(IPlayer mario, CollisionSide side)
+
+        public void OnCollisionResponse(ICollider otherCollider, CollisionSide side)
+        {
+            if (otherCollider is IPlayer)
+                OnCollisionResponse((IPlayer)otherCollider, side);
+            else if (otherCollider is IEnemy)
+                OnCollisionResponse((IEnemy)otherCollider, side);
+            else if (otherCollider is IItem)
+                OnCollisionResponse((IItem)otherCollider, side);
+            else if (otherCollider is ITile)
+                OnCollisionResponse((ITile)otherCollider, side);
+            else if (otherCollider is IProjectile)
+                OnCollisionResponse((IProjectile)otherCollider, side);
+        }
+
+        protected virtual void OnCollisionResponse(IPlayer mario, CollisionSide side)
         {
             //Destroy the item after mario takes it
             currentState = ItemState.Taken;
         }
 
-        public virtual void OnCollisionResponse(IEnemy enemy, CollisionSide side)
+        protected virtual void OnCollisionResponse(IEnemy enemy, CollisionSide side)
         {
             return;
         }
 
-        public virtual void OnCollisionResponse(IProjectile projectile, CollisionSide side)
+        protected virtual void OnCollisionResponse(IItem item, CollisionSide side)
         {
             return;
         }
 
-        public virtual void OnCollisionResponse(ITile tile, CollisionSide side)
+        protected virtual void OnCollisionResponse(IProjectile projectile, CollisionSide side)
+        {
+            return;
+        }
+
+        protected virtual void OnCollisionResponse(ITile tile, CollisionSide side)
         {
             return;
         }

@@ -10,7 +10,7 @@ namespace Lasagna
             Idle,
             Moving
         }
-      
+
         private ISprite flagSprite = TileSpriteFactory.Instance.CreateSprite_Flag();
         private ISprite flagPoleSprite = TileSpriteFactory.Instance.CreateSprite_FlagPole();
         private BlockState currentState;
@@ -78,19 +78,15 @@ namespace Lasagna
                 flagSprite.Draw(spriteBatch);
         }
 
-        public void OnCollisionResponse(IPlayer Mario, CollisionSide side)
+        public void OnCollisionResponse(ICollider otherCollider, CollisionSide side)
+        {
+            if (otherCollider is IPlayer)
+                OnCollisionResponse((IPlayer)otherCollider, side);
+        }
+
+        private void OnCollisionResponse(IPlayer Mario, CollisionSide side)
         {
             //Reserved for moving flag down. (Need to be discussed.)
-            return;
-        }
-
-        public void OnCollisionResponse(IItem Item, CollisionSide side)
-        {
-            return;
-        }
-
-        public void OnCollisionResponse(IEnemy enemy, CollisionSide side)
-        {
             return;
         }
     }

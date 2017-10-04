@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Lasagna
 {
-    public interface ITile
+    public interface ITile : ICollider
     {
         Rectangle Properties { get; }
         void Update(GameTime gameTime);

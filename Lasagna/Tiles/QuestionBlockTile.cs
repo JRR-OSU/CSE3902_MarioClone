@@ -45,23 +45,20 @@ namespace Lasagna
                 return 1;
             }
         }
-        ///TODO: Temp methods for sprint2
-        private void ChangeToUsed(object sender, EventArgs e)
-        {
-            if (currentState == BlockState.Idle)
-                ChangeState();
-        }
-        private void ChangeToDefault(object sender, EventArgs e)
-        {
-            if (currentState == BlockState.Used)
-                ChangeState();
-        }
-        public override void OnCollisionResponse(IPlayer Mario, CollisionSide side)
+
+        protected override void OnCollisionResponse(IPlayer Mario, CollisionSide side)
         {
             if (this.currentState.Equals(BlockState.Idle) && side.Equals(CollisionSide.Bottom))
             {
                 this.ChangeState();
             }
+        }
+
+        ///TODO: Temp methods for sprint3
+        private void ChangeToDefault(object sender, EventArgs e)
+        {
+            if (currentState == BlockState.Used)
+                ChangeState();
         }
     }
 }
