@@ -20,11 +20,10 @@ namespace Lasagna
         {
             get
             {
-                if (CurrentSprite == null)
-                {
+                if (CurrentSprite == null || currentState == BlockState.Broken)
                     return new Rectangle(base.PosX, base.PosY, 0, 0);
-                }
-                return new Rectangle(base.PosX, base.PosY, CurrentSprite.Width, CurrentSprite.Height);
+                else
+                    return new Rectangle(base.PosX, base.PosY, CurrentSprite.Width, CurrentSprite.Height);
             }
         }
 
@@ -60,9 +59,9 @@ namespace Lasagna
                 currentState = BlockState.Idle;
             }
             else
-                CurrentSprite = null;
                 currentState = BlockState.Broken;
         }
+
         public override int GetState()
         {
             if (currentState == BlockState.Idle)
@@ -72,24 +71,20 @@ namespace Lasagna
                 return 1;
             }
         }
-        ///TODO: Temp methods for sprint2
-        public void ChangeToInvisible(object sender, EventArgs e)
-        {
-            if (currentState == BlockState.Idle)
-                ChangeState();
-        }
 
-        public void ChangeToDefault(object sender, EventArgs e)
-        {
-            if (currentState == BlockState.Broken)
-                ChangeState();
-        }
         public override void OnCollisionResponse(IPlayer Mario, CollisionSide side)
         {
             if (this.currentState.Equals(BlockState.Idle) && side.Equals(CollisionSide.Bottom))
             {
                 this.ChangeState();
             }
+        }
+
+        ///TODO: Temp methods for sprint3
+        public void ChangeToDefault(object sender, EventArgs e)
+        {
+            if (currentState == BlockState.Broken)
+                ChangeState();
         }
     }
 }
