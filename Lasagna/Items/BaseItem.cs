@@ -30,7 +30,7 @@ namespace Lasagna
             {
                 if (itemSprite == null)
                 {
-                    return new Rectangle(posX, posY, 0, 0);
+                    return new Rectangle(0, 0, 0, 0);
                 }
                 return new Rectangle(posX, posY, itemSprite.Width, itemSprite.Height);
             }

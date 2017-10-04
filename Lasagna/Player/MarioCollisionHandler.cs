@@ -82,6 +82,16 @@ namespace Lasagna
                         break;
                 }
             }
+            else if (tile is FlagPoleTile)
+            {
+                /*
+                if (state.GetState() != MarioStateMachine.MarioState.Small)
+                    mario.SetPos(mario.GetRect.X, (tile.Properties.Y - tile.Properties.Height) - (mario.GetRect.Height) / 2);
+                else
+                    mario.SetPos(mario.GetRect.X, (tile.Properties.Y - tile.Properties.Height));
+                return;
+                */
+            }
             
         }
 
@@ -89,7 +99,10 @@ namespace Lasagna
         {
             // Console.WriteLine("Collison mario with enemy");
             // Console.WriteLine(enemy + " " + " " + side);
-            state.Reset();
+            if (!side.Equals(CollisionSide.Top))
+            {
+                state.Reset();
+            }
         }
     }
 }
