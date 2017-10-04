@@ -39,10 +39,9 @@ namespace Lasagna
             get
             {
                 if (itemSprite == null || currentState == ItemState.Taken)
-                {
-                    return new Rectangle(0, 0, 0, 0);
-                }
-                return new Rectangle(posX, posY, itemSprite.Width, itemSprite.Height);
+                    return Rectangle.Empty;
+                else
+                    return new Rectangle(posX, posY, itemSprite.Width, itemSprite.Height);
             }
         }
 

@@ -133,6 +133,12 @@ namespace Lasagna
 
         private bool CheckCollision(Rectangle r1, Rectangle r2, out CollisionSide r1CollisionSide, out CollisionSide r2CollisionSide)
         {
+            r1CollisionSide = CollisionSide.None;
+            r2CollisionSide = CollisionSide.None;
+
+            if (r1.IsEmpty || r2.IsEmpty)
+                return false;
+
             Rectangle overlapRect = Rectangle.Intersect(r1, r2);
 
             r1CollisionSide = GetSideOfCollision(r1, overlapRect);

@@ -21,7 +21,7 @@ namespace Lasagna
             get
             {
                 if (CurrentSprite == null || currentState == BlockState.Broken)
-                    return new Rectangle(0, 0, 0, 0);
+                    return Rectangle.Empty;
                 else
                     return new Rectangle(base.PosX, base.PosY, CurrentSprite.Width, CurrentSprite.Height);
             }
