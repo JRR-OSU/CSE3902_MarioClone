@@ -23,7 +23,11 @@ namespace Lasagna
             set { currentState = value; }
         }
         protected int PosX { get { return posX; } }
-        protected int PosY { get { return posY; } }
+        protected int PosY
+        {
+            get { return posY; }
+            set { posY = value; }
+        }
 
         protected MovingEnemy(int spawnPosX, int spawnPosY)
         {

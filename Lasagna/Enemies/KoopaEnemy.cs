@@ -28,6 +28,12 @@ namespace Lasagna
         {
             if (koopaStates != null && koopaStates.ContainsKey(CurrentState) && koopaStates[CurrentState] != null)
             {
+                //Many sprites have different heights, and Monogame has sprite pos in top left,
+                //fix the positioning here so it doesn't flicker.
+                int heightDifference = koopaStates[CurrentState].Height - koopaStates[newState].Height;
+                if (heightDifference != 0)
+                    PosY = PosY + heightDifference;
+
                 CurrentState = newState;
                 CurrentSprite = koopaStates[CurrentState];
             }
