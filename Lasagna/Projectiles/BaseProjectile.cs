@@ -36,7 +36,7 @@ namespace Lasagna
         }
 
         public abstract void ChangeState();
-
+        
         public void OnCollisionResponse(ICollider otherCollider, CollisionSide side)
         {
             if (otherCollider is IPlayer)
@@ -47,8 +47,6 @@ namespace Lasagna
                 OnCollisionResponse((IItem)otherCollider, side);
             else if (otherCollider is ITile)
                 OnCollisionResponse((ITile)otherCollider, side);
-            else if (otherCollider is IProjectile)
-                OnCollisionResponse((IProjectile)otherCollider, side);
         }
 
         protected virtual void OnCollisionResponse(IEnemy Enemy, CollisionSide side)
@@ -67,11 +65,6 @@ namespace Lasagna
         }
 
         protected virtual void OnCollisionResponse(ITile tile, CollisionSide side)
-        {
-            return;
-        }
-
-        protected virtual void OnCollisionResponse(IProjectile projectile, CollisionSide side)
         {
             return;
         }
