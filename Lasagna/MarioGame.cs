@@ -50,6 +50,8 @@ namespace Lasagna
 
         protected override void Update(GameTime gameTime)
         {
+            CollisionDetection.Instance.Update(players, enemies, tiles, items);
+
             keyControl.Update();
             if (players != null && players.Count > 0)
                 mouseControl.Update(players[0], enemies, tiles);
@@ -72,8 +74,6 @@ namespace Lasagna
             foreach (IPlayer player in players)
                 if (player != null)
                     player.Update(gameTime);
-
-            CollisionDetection.Instance.Update(players, enemies, tiles, items);
 
             base.Update(gameTime);
         }
