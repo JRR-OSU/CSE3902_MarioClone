@@ -24,11 +24,13 @@
             currentState = FireballStates.Explode;
             CurrentSprite = fireballExplode;
         }
-        public override void OnCollisionResponse(IEnemy Enemy, CollisionSide side)
+
+        protected override void OnCollisionResponse(IEnemy Enemy, CollisionSide side)
         {
             this.ChangeState();
         }
-        public override void OnCollisionResponse(IItem Item, CollisionSide side)
+
+        protected override void OnCollisionResponse(IItem Item, CollisionSide side)
         {
             if (side.Equals(CollisionSide.Right))
             {

@@ -37,13 +37,41 @@ namespace Lasagna
 
         public abstract void ChangeState();
 
-        public void On
+        public void OnCollisionResponse(ICollider otherCollider, CollisionSide side)
+        {
+            if (otherCollider is IPlayer)
+                OnCollisionResponse((IPlayer)otherCollider, side);
+            else if (otherCollider is IEnemy)
+                OnCollisionResponse((IEnemy)otherCollider, side);
+            else if (otherCollider is IItem)
+                OnCollisionResponse((IItem)otherCollider, side);
+            else if (otherCollider is ITile)
+                OnCollisionResponse((ITile)otherCollider, side);
+            else if (otherCollider is IProjectile)
+                OnCollisionResponse((IProjectile)otherCollider, side);
+        }
 
-        public virtual void OnCollisionResponse(IEnemy Enemy, CollisionSide side)
+        protected virtual void OnCollisionResponse(IEnemy Enemy, CollisionSide side)
         {
             return;
         }
-        public virtual void OnCollisionResponse(IItem Item, CollisionSide side)
+
+        protected virtual void OnCollisionResponse(IItem Item, CollisionSide side)
+        {
+            return;
+        }
+
+        protected virtual void OnCollisionResponse(IPlayer player, CollisionSide side)
+        {
+            return;
+        }
+
+        protected virtual void OnCollisionResponse(ITile tile, CollisionSide side)
+        {
+            return;
+        }
+
+        protected virtual void OnCollisionResponse(IProjectile projectile, CollisionSide side)
         {
             return;
         }
