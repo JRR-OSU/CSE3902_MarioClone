@@ -58,7 +58,7 @@ namespace Lasagna
                     mario.SetPos(mario.GetRect.X, (tile.Properties.Y - tile.Properties.Height));
                 return;
             }
-            else if (tile is QuestionBlockTile || tile is UnbreakableBlockTile || tile is WarpPipeTile)
+            else if (tile is QuestionBlockTile || tile is InvisibleItemBlockTile || tile is BreakableBrickTile || tile is UnbreakableBlockTile || tile is WarpPipeTile)
             {
                 switch (side)
                 {
