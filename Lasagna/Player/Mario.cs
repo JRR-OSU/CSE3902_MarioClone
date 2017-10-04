@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace Lasagna
 {
-    public class Mario : IPlayer
+    public class Mario : IPlayer, ICollider
     {
         private MarioStateMachine stateMachine;
         private MarioCollisionHandler marioCollisionHandler;
@@ -129,24 +129,16 @@ namespace Lasagna
             stateMachine.KillMario();
         }
 
-        public void OnCollisionResponse(IPlayer player, CollisionSide side)
+        public void OnCollisionResponse(ICollider otherCollider, CollisionSide side)
         {
-            marioCollisionHandler.OnCollisionResponse(player, side);
-        }
-
-        public void OnCollisionResponse(IItem item, CollisionSide side)
-        {
-            marioCollisionHandler.OnCollisionResponse(item, side);
-        }
-
-        public void OnCollisionResponse(ITile tile, CollisionSide side)
-        {
-            marioCollisionHandler.OnCollisionResponse(tile, side);
-        }
-
-        public void OnCollisionResponse(IEnemy enemy, CollisionSide side)
-        {
-            marioCollisionHandler.OnCollisionResponse(enemy, side);
+            if (otherCollider is IPlayer)
+                marioCollisionHandler.OnCollisionResponse((IPlayer) otherCollider, side);
+            else if (otherCollider is IEnemy)
+                marioCollisionHandler.OnCollisionResponse((IEnemy)otherCollider, side);
+            else if (otherCollider is ITile)
+                marioCollisionHandler.OnCollisionResponse((ITile)otherCollider, side);
+            else if (otherCollider is IItem)
+                marioCollisionHandler.OnCollisionResponse((IItem)otherCollider, side);
         }
 
         public void Update(GameTime gameTime)

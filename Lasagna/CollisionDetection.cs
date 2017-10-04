@@ -24,6 +24,10 @@ namespace Lasagna
             //Tiles are static, so don't need to check against themselves.
             foreach (ITile tile in tiles)
             {
+                //If this tile is not ICollider, skip loop
+                if (!(tile is ICollider))
+                    continue;
+
                 CollisionSide tileSide, otherColliderSide;
                 foreach (IPlayer player in players)
                 {
@@ -92,7 +96,7 @@ namespace Lasagna
             }
         }
 
-        public bool CheckRectForCollisions(Rectangle rect, List<IEnemy> enemies, List<ITile> tiles, out CollisionSide sourceSide)
+        public bool CheckRectForCollisions(ICollider sourceCollider, Rectangle rect, List<IEnemy> enemies, List<ITile> tiles, out CollisionSide sourceSide)
         {
             bool collided = false;
             sourceSide = CollisionSide.None;
@@ -106,6 +110,7 @@ namespace Lasagna
                 CollisionSide enemySide;
                 if (CheckCollision(enemy.GetRectangle, rect, out enemySide, out sourceSide))
                 {
+                    enemy.OnCollisionResponse(sourceCollider, enemySide);
                     collided = true;
                 }
             }
@@ -121,6 +126,7 @@ namespace Lasagna
                     if (tile is InvisibleItemBlockTile && tileSide != CollisionSide.Bottom)
                         continue;
 
+                    tile.OnCollisionResponse(sourceCollider, tileSide);
                     collided = true;
                 }
             }
