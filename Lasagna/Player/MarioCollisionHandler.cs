@@ -20,7 +20,9 @@ namespace Lasagna
             state = marioState;
             mario = player;
         }
-
+        //TODO damage with enemies, enemies have colliders
+        // Star power sprite sheet
+        // Refactor if statements
        public void OnCollisionResponse(IPlayer player, CollisionSide side)
         {
            // Console.WriteLine("Collison mario with player");
@@ -49,7 +51,7 @@ namespace Lasagna
 
         public void OnCollisionResponse(ITile tile, CollisionSide side)
         {
-
+            Console.WriteLine(side);
             if (tile is FloorBlockTile)
             {
                 if(state.GetState() != MarioStateMachine.MarioState.Small)
@@ -64,13 +66,13 @@ namespace Lasagna
                 {
                     case CollisionSide.Top:
                         if (state.GetState() != MarioStateMachine.MarioState.Small)
-                            mario.SetPos(mario.GetRect.X, (tile.Properties.Y - tile.Properties.Height) - (mario.GetRect.Height) / 2);
+                            mario.SetPos(mario.GetRect.X, (tile.Properties.Y - mario.GetRect.Height));
                         else
                             mario.SetPos(mario.GetRect.X, (tile.Properties.Y - tile.Properties.Height));
                         break;
                     case CollisionSide.Bottom:
                         if (state.GetState() != MarioStateMachine.MarioState.Small)
-                            mario.SetPos(mario.GetRect.X, (tile.Properties.Y + tile.Properties.Height) + (mario.GetRect.Height / 2));
+                            mario.SetPos(mario.GetRect.X, (tile.Properties.Y + tile.Properties.Height));
                         else
                             mario.SetPos(mario.GetRect.X, (tile.Properties.Y + tile.Properties.Height));
                         break;
@@ -101,7 +103,7 @@ namespace Lasagna
             // Console.WriteLine(enemy + " " + " " + side);
             if (!side.Equals(CollisionSide.Top))
             {
-                state.Reset();
+           //     state.Reset();
             }
         }
     }
