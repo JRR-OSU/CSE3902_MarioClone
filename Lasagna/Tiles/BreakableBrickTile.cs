@@ -16,6 +16,17 @@ namespace Lasagna
         private BlockState currentState;
         private ISprite idleSprite = TileSpriteFactory.Instance.CreateSprite_BreakableBrick();
         private ISprite breakingSprite; //Reserved for breaking tile sprite.
+        public override Rectangle Properties
+        {
+            get
+            {
+                if (CurrentSprite == null)
+                {
+                    return new Rectangle(base.PosX, base.PosY, 0, 0);
+                }
+                return new Rectangle(base.PosX, base.PosY, CurrentSprite.Width, CurrentSprite.Height);
+            }
+        }
 
         public BreakableBrickTile(int spawnXPos, int spawnYPos)
             : base(spawnXPos, spawnYPos)
@@ -49,9 +60,18 @@ namespace Lasagna
                 currentState = BlockState.Idle;
             }
             else
+                CurrentSprite = null;
                 currentState = BlockState.Broken;
         }
-
+        public override int GetState()
+        {
+            if (currentState == BlockState.Idle)
+                return 0;
+            else
+            {
+                return 1;
+            }
+        }
         ///TODO: Temp methods for sprint2
         public void ChangeToInvisible(object sender, EventArgs e)
         {

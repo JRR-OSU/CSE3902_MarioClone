@@ -8,17 +8,7 @@ namespace Lasagna
         private ISprite currentSprite;
         private int posX;
         private int posY;
-        public virtual Rectangle Properties
-        {
-            get
-            {
-                if (CurrentSprite == null)
-                {
-                    return new Rectangle(0, 0, 0, 0);
-                }
-                return new Rectangle(posX, posY, CurrentSprite.Width, CurrentSprite.Height);
-            }
-        }
+        public virtual Rectangle Properties { get { return new Rectangle(posX, posY, CurrentSprite.Width, CurrentSprite.Height); } }
         protected ISprite CurrentSprite
         {
             get { return currentSprite; }
@@ -54,7 +44,10 @@ namespace Lasagna
             return;
         }
         public abstract void ChangeState();
-
+        public virtual int GetState()
+        {
+            return 0;
+        }
         public void OnCollisionResponse(IEnemy enemy, CollisionSide side)
         {
             return;

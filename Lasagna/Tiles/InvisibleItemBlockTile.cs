@@ -61,7 +61,15 @@ namespace Lasagna
             }
                
         }
-
+        public override int GetState()
+        {
+            if (currentState == BlockState.Invisible)
+                return 0;
+            else
+            {
+                return 1;
+            }
+        }
         ///TODO: Temp methods for sprint2
         public void ChangeToVisible(object sender, EventArgs e)
         {

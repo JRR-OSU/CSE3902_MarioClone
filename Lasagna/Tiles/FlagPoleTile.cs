@@ -51,7 +51,15 @@ namespace Lasagna
             }
 
         }
-
+        public int GetState()
+        {
+            if (currentState == BlockState.Idle)
+                return 0;
+            else
+            {
+                return 1;
+            }
+        }
         public void Update(GameTime gameTime)
         {
             ///TODO: If moving make flag move down

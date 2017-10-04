@@ -39,7 +39,9 @@ namespace Lasagna
 
         //Empty for now
         public void ChangeState() { }
-
+        public  int GetState() {
+            return 0;
+        }
         public void Update(GameTime gameTime)
         {
             if (pipeTipSprite != null)

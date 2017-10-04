@@ -99,7 +99,7 @@ namespace Lasagna
         {
             // Console.WriteLine("Collison mario with enemy");
             // Console.WriteLine(enemy + " " + " " + side);
-            if (!side.Equals(CollisionSide.Top))
+            if (!side.Equals(CollisionSide.Bottom))
             {
                 state.Reset();
             }
