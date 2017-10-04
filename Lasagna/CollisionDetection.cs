@@ -34,8 +34,8 @@ namespace Lasagna
                         if (tile is InvisibleItemBlockTile && tileSide != CollisionSide.Bottom && !((InvisibleItemBlockTile)tile).IsVisible)
                             continue;
 
-                        tile.OnCollisionResponse(player, tileSide);
                         player.OnCollisionResponse(tile, otherColliderSide);
+                        tile.OnCollisionResponse(player, tileSide);
                     }
                 }
                 foreach (IEnemy enemy in enemies)
