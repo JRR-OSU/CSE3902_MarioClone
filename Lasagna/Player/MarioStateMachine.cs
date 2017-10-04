@@ -95,11 +95,11 @@ namespace Lasagna
 
         public void SetIdleState()
         {
-            if(marioMovement == MarioMovement.RunRight)
+            if(marioMovement == MarioMovement.RunRight || marioMovement == MarioMovement.JumpRight)
             {
                 marioMovement = MarioMovement.IdleRight;
             }
-            else if (marioMovement == MarioMovement.RunLeft)
+            else if (marioMovement == MarioMovement.RunLeft || marioMovement == MarioMovement.JumpLeft)
             {
                 marioMovement = MarioMovement.IdleLeft;
             }
@@ -200,7 +200,7 @@ namespace Lasagna
 
         public void Star()
         {
-            marioState = MarioState.Star;
+            //marioState = MarioState.Star;
         }
 
         public void KillMario()

@@ -75,10 +75,10 @@ namespace Lasagna
                             mario.SetPos(mario.GetRect.X, (tile.Properties.Y + tile.Properties.Height));
                         break;
                     case CollisionSide.Left:
-                        mario.SetPos(tile.Properties.X + tile.Properties.Width, mario.GetRect.Y);
+                        mario.SetPos(tile.Properties.X + tile.Properties.Width+5, mario.GetRect.Y);
                         break;
                     case CollisionSide.Right:
-                        mario.SetPos(tile.Properties.X - tile.Properties.Width, mario.GetRect.Y);
+                        mario.SetPos(tile.Properties.X - mario.GetRect.Width-5, mario.GetRect.Y);
                         break;
                 }
             }
