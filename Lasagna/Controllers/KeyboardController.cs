@@ -13,7 +13,7 @@ namespace Lasagna
             {
                 { new [] { Keys.Q }, Quit },
                 { new [] { Keys.R }, Reset },
-                { new [] { Keys.M }, EnableMouseController },
+                { new [] { Keys.M }, ToggleMouseController },
             };
 
             onKeyHeldEvents = new Dictionary<Keys[], MarioEventHandler>
@@ -57,44 +57,44 @@ namespace Lasagna
             oldKeyboardState = newKeyboardState;
         }
 
-        public void Quit()
+        public  void Quit()
         {
             MarioEvents.Quit(this, EventArgs.Empty);
         }
 
-        public void Reset()
+        public  void Reset()
         {
             MarioEvents.Reset(this, EventArgs.Empty);
         }
 
-        public void MoveLeft()
+        public  void MoveLeft()
         {
             MarioEvents.MoveLeft(this, EventArgs.Empty);
         }
 
-        public void MoveRight()
+        public  void MoveRight()
         {
             MarioEvents.MoveRight(this, EventArgs.Empty);
         }
 
-        public void Jump()
+        public  void Jump()
         {
             MarioEvents.Jump(this, EventArgs.Empty);
         }
 
-        public void Crouch()
+        public  void Crouch()
         {
             MarioEvents.Crouch(this, EventArgs.Empty);
         }
 
-        public void Fire()
+        public  void Fire()
         {
             MarioEvents.Fire(this, EventArgs.Empty);
         }
 
-        public void EnableMouseController()
+        public  void ToggleMouseController()
         {
-            MouseController mouse = new MouseController();
+            MarioEvents.ToggleMouseController(this, EventArgs.Empty);
         }
     }
 }

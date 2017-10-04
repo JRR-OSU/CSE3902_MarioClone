@@ -15,6 +15,7 @@ namespace Lasagna
         public static event InputEventHandler OnJump;
         public static event InputEventHandler OnCrouch;
         public static event InputEventHandler OnFire;
+        public static event InputEventHandler OnToggleMouseController;
 
         public static void Quit(object sender, EventArgs e)
         {
@@ -56,6 +57,12 @@ namespace Lasagna
         {
             if (OnFire != null)
                 OnFire(sender, e);
+        }
+
+        public static void ToggleMouseController(object sender, EventArgs e)
+        {
+            if (OnToggleMouseController != null)
+                OnToggleMouseController(sender, e);
         }
     }
 }

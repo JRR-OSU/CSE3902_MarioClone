@@ -5,74 +5,30 @@ using System.Collections.Generic;
 
 namespace Lasagna
 {
-    public class MouseController : IController
+    //This doesn't inherit from IController because it is so vastly different from other controllers.
+    public class MouseController
     {
-        private int MousePosX;
-        private int MousePosY;
-        private MouseState State;
+        private bool enabled;
+
         public MouseController()
         {
-            State = Mouse.GetState();
-            this.MousePosX = State.X;
-            this.MousePosY = State.Y;
+            enabled = false;
+            MarioEvents.OnToggleMouseController += ToggleMouseController;
         }
+
         public void Update()
         {
-            if (this.MousePosX > State.X)
-            {
-                this.MoveLeft();
-                this.MousePosX = State.X;
-            }
-            else if (this.MousePosX < State.X)
-            {
-                this.MoveRight();
-                this.MousePosX = State.X;
-            }
-            else if (this.MousePosY > State.Y)
-            {
-                this.Jump();
-                this.MousePosY = State.Y;
-            }
-            else if (this.MousePosY < State.Y)
-            {
-                this.Reset();
-                this.MousePosY = State.Y;
-            }
+            if (!enabled)
+                return;
+
+            MouseState currentState = Mouse.GetState();
+
+
         }
 
-        public void Quit()
+        public void ToggleMouseController(object sender, EventArgs e)
         {
-            MarioEvents.Quit(this, EventArgs.Empty);
-        }
-
-        public void Reset()
-        {
-            MarioEvents.Reset(this, EventArgs.Empty);
-        }
-
-        public void MoveLeft()
-        {
-            MarioEvents.MoveLeft(this, EventArgs.Empty);
-        }
-
-        public void MoveRight()
-        {
-            MarioEvents.MoveRight(this, EventArgs.Empty);
-        }
-
-        public void Jump()
-        {
-            MarioEvents.Jump(this, EventArgs.Empty);
-        }
-
-        public void Crouch()
-        {
-            MarioEvents.Crouch(this, EventArgs.Empty);
-        }
-
-        public void Fire()
-        {
-            MarioEvents.Fire(this, EventArgs.Empty);
+            enabled = !enabled;
         }
     }
 }
