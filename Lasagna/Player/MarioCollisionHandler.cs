@@ -11,34 +11,23 @@ namespace Lasagna
         private MarioStateMachine state;
         private Mario mario;
 
-        /// <summary>
-        /// Test code for collisions... will flesh out when we finish collision detection.
-        /// </summary>
-        /// <param name="marioState"></param>
         public MarioCollisionHandler(Mario player, MarioStateMachine marioState)
         {
             state = marioState;
             mario = player;
         }
-        //TODO damage with enemies, enemies have colliders
-        // Star power sprite sheet
-        // Refactor if statements
-       public void OnCollisionResponse(IPlayer player, CollisionSide side)
+        public void OnCollisionResponse(IPlayer player, CollisionSide side)
         {
-           // Console.WriteLine("Collison mario with player");
             state.Reset();
         }
 
         public void OnCollisionResponse(IItem item, CollisionSide side)
         {
-            //Console.WriteLine("Collison mario with item");
-            //Console.WriteLine(item + " " + " " + side);
-
-            if(item is FireFlowerItem)
+            if (item is FireFlowerItem)
             {
                 state.Fire();
             }
-            else if(item is GrowMushroomItem)
+            else if (item is GrowMushroomItem)
             {
                 state.Grow();
             }
@@ -46,64 +35,49 @@ namespace Lasagna
             {
                 state.Star();
             }
-            
+
         }
 
         public void OnCollisionResponse(ITile tile, CollisionSide side)
         {
-            Console.WriteLine(side);
-            if (tile is FloorBlockTile)
+            switch (side)
             {
-                if(state.GetState() != MarioStateMachine.MarioState.Small)
-                    mario.SetPosition(mario.GetRect.X, (tile.Properties.Y - tile.Properties.Height) - (mario.GetRect.Height) / 2);
-                else
-                    mario.SetPosition(mario.GetRect.X, (tile.Properties.Y - tile.Properties.Height));
-                return;
+                case CollisionSide.Bottom:
+                    mario.SetPosition(mario.GetRect.X, (tile.Properties.Y - mario.GetRect.Height));
+                    break;
+                case CollisionSide.Top:
+                    mario.SetPosition(mario.GetRect.X, (tile.Properties.Y + tile.Properties.Height));
+                    break;
+                case CollisionSide.Left:
+                    mario.SetPosition(tile.Properties.X + tile.Properties.Width + 3, mario.GetRect.Y);
+                    break;
+                case CollisionSide.Right:
+                    mario.SetPosition(tile.Properties.X - mario.GetRect.Width - 3, mario.GetRect.Y);
+                    break;
             }
-            else if (tile is QuestionBlockTile || tile is InvisibleItemBlockTile || tile is BreakableBrickTile || tile is UnbreakableBlockTile || tile is WarpPipeTile)
-            {
-                switch (side)
-                {
-                    case CollisionSide.Bottom:
-                        if (state.GetState() != MarioStateMachine.MarioState.Small)
-                            mario.SetPosition(mario.GetRect.X, (tile.Properties.Y - mario.GetRect.Height));
-                        else
-                            mario.SetPosition(mario.GetRect.X, (tile.Properties.Y - tile.Properties.Height));
-                        break;
-                    case CollisionSide.Top:
-                        if (state.GetState() != MarioStateMachine.MarioState.Small)
-                            mario.SetPosition(mario.GetRect.X, (tile.Properties.Y + tile.Properties.Height));
-                        else
-                            mario.SetPosition(mario.GetRect.X, (tile.Properties.Y + tile.Properties.Height));
-                        break;
-                    case CollisionSide.Left:
-                        mario.SetPosition(tile.Properties.X + tile.Properties.Width+5, mario.GetRect.Y);
-                        break;
-                    case CollisionSide.Right:
-                        mario.SetPosition(tile.Properties.X - mario.GetRect.Width-5, mario.GetRect.Y);
-                        break;
-                }
-            }
-            else if (tile is FlagPoleTile)
-            {
-                /*
-                if (state.GetState() != MarioStateMachine.MarioState.Small)
-                    mario.SetPos(mario.GetRect.X, (tile.Properties.Y - tile.Properties.Height) - (mario.GetRect.Height) / 2);
-                else
-                    mario.SetPos(mario.GetRect.X, (tile.Properties.Y - tile.Properties.Height));
-                return;
-                */
-            }
-            
+
         }
 
         public void OnCollisionResponse(IEnemy enemy, CollisionSide side)
         {
-            // Console.WriteLine("Collison mario with enemy");
-            // Console.WriteLine(enemy + " " + " " + side);
+            if (state.isStar() || (enemy is GoombaEnemy && enemy.GetRectangle.Height <= 16) || (enemy is KoopaEnemy && enemy.GetRectangle.Height <= 40)) // if star or enemy is dead
+                return;
             if (!side.Equals(CollisionSide.Bottom))
             {
-           //     state.Reset();
+                switch (state.GetState())
+                {
+                    case MarioStateMachine.MarioState.Small:
+                        mario.Die();
+                        break;
+                    default:
+                        mario.SetPosition(mario.GetRect.X - mario.GetRect.Width, mario.GetRect.Y + mario.GetRect.Height);
+                        state.Shrink();
+                        break;
+                }
+            }
+            else
+            {
+                mario.SetPosition(mario.GetRect.X, mario.GetRect.Y - enemy.GetRectangle.Height);
             }
         }
     }

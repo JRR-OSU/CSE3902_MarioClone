@@ -11,11 +11,12 @@ namespace Lasagna
     {
         private MarioStateMachine stateMachine;
         private MarioCollisionHandler marioCollisionHandler;
-      //  private MarioCollisionHandler marioCollisionHandler;
 
         private int spriteXPos;
         private int spriteYPos;
         private int[] orignalPos = new int[2];
+
+        private bool marioIsDead = false;
 
         public Rectangle GetRect { get { return new Rectangle(spriteXPos, spriteYPos, GetCurrentSprite().Width, GetCurrentSprite().Height); }}
         
@@ -31,15 +32,12 @@ namespace Lasagna
             MarioEvents.OnMoveRight += MoveRight;
             MarioEvents.OnJump += Jump;
             MarioEvents.OnCrouch += Crouch;
-
+            MarioEvents.OnFire += MarioFireProjectile;
+            MarioEvents.OnReset += Reset;
             //MarioEvents.OnGetMushroom += Grow;
             //MarioEvents.OnMarioDamage += Shrink;
-            MarioEvents.OnFire += MarioFireProjectile;
-           // MarioEvents.OnGetFireFlower += FireState;
-
-           // MarioEvents.OnMarioDie += Die;
-
-            MarioEvents.OnReset += Reset;
+            // MarioEvents.OnMarioDie += Die;
+            // MarioEvents.OnGetFireFlower += FireState;
 
             spriteXPos = x;
             spriteYPos = y;
@@ -61,6 +59,7 @@ namespace Lasagna
         {
             spriteXPos = orignalPos[0];
             spriteYPos = orignalPos[1];
+            marioIsDead = false;
             stateMachine.Reset();
         }
         
@@ -81,27 +80,35 @@ namespace Lasagna
      
         public void MoveLeft(object sender, EventArgs e)
         {
-            spriteXPos -= 3;
-            stateMachine.MoveLeft();
+            if (!marioIsDead) { 
+                spriteXPos -= 3;
+                stateMachine.MoveLeft();
+            }
         }
 
         public void MoveRight(object sender, EventArgs e)
         {
-            spriteXPos += 3;
-            stateMachine.MoveRight();
+            if (!marioIsDead) { 
+                spriteXPos += 3;
+                stateMachine.MoveRight();
+            }
 
         }
 
         public void Crouch(object sender, EventArgs e)
         {
-            spriteYPos += 3;
-            stateMachine.Crouch();
+            if (!marioIsDead) { 
+                spriteYPos += 3;
+                stateMachine.Crouch();
+            }
         }
 
         public void Jump(object sender, EventArgs e)
         {
-            spriteYPos -= 3;
-            stateMachine.Jump();
+            if (!marioIsDead) { 
+                spriteYPos -= 3;
+                stateMachine.Jump();
+            }
         }
 
         public void Grow(object sender, EventArgs e)
@@ -126,6 +133,14 @@ namespace Lasagna
 
         public void Die(object sender, EventArgs e)
         {
+            marioIsDead = true;
+            stateMachine.KillMario();
+        }
+
+        // Overload of die which is used for Mario Collision
+        public void Die()
+        {
+            marioIsDead = true;
             stateMachine.KillMario();
         }
 
@@ -143,11 +158,11 @@ namespace Lasagna
 
         public void Update(GameTime gameTime)
         {
-            if (Keyboard.GetState().GetPressedKeys().Length == 0)
+            if (Keyboard.GetState().GetPressedKeys().Length == 0) // Set idle if no key is pressed
             {
                 SetIdleState();
             }
-            if (spriteXPos < 0)
+            if (spriteXPos < 0) // Restrict mario to screen bounds
             {
                 spriteXPos = 0;
             }
@@ -164,6 +179,7 @@ namespace Lasagna
                 spriteYPos = 420;
             }
             stateMachine.Update(gameTime, spriteXPos, spriteYPos);
+
         }
 
         public void Draw(SpriteBatch spriteBatch)

@@ -10,11 +10,19 @@ namespace Lasagna
 {
     public class MarioStateMachine
     {
-        public enum MarioState { Small, Big, Fire, Star };
+        public enum MarioState { Small, Big, Fire };
         private enum MarioMovement { CrouchRight, CrouchLeft, IdleLeft, IdleRight, RunLeft, RunRight, JumpLeft, JumpRight, Die };
         private MarioState marioState = MarioState.Small;
         private MarioMovement marioMovement = MarioMovement.IdleRight;
         private ISprite currentSprite = MarioSpriteFactory.Instance.CreateSprite_MarioSmall_IdleRight();
+
+        private bool canGrow = true;
+
+        private bool starPower = false;
+        private int starDuration = 600;
+        private int starCounter = 0;
+        private int frameCount = 0;
+
 
         private Dictionary<MarioMovement, ISprite> smallStates = new Dictionary<MarioMovement, ISprite>();
         private Dictionary<MarioMovement, ISprite> bigStates = new Dictionary<MarioMovement, ISprite>();
@@ -50,17 +58,23 @@ namespace Lasagna
             fireStates.Add(MarioMovement.JumpRight, MarioSpriteFactory.Instance.CreateSprite_MarioFire_JumpRight());
         }
 
-        
+
+
         public void Grow()
         {
+
             if (marioMovement == MarioMovement.Die)
                 marioMovement = MarioMovement.IdleRight;
-            marioState = MarioState.Big;
-            currentSprite = bigStates[marioMovement];
+            if (canGrow)
+            {
+                marioState = MarioState.Big;
+                currentSprite = bigStates[marioMovement];
+            }
         }
 
         public void Fire()
         {
+            canGrow = false;
             if (marioMovement == MarioMovement.Die)
                 marioMovement = MarioMovement.IdleRight;
             marioState = MarioState.Fire;
@@ -95,7 +109,7 @@ namespace Lasagna
 
         public void SetIdleState()
         {
-            if(marioMovement == MarioMovement.RunRight || marioMovement == MarioMovement.JumpRight)
+            if (marioMovement == MarioMovement.RunRight || marioMovement == MarioMovement.JumpRight)
             {
                 marioMovement = MarioMovement.IdleRight;
             }
@@ -111,29 +125,29 @@ namespace Lasagna
                 return;
             //if (marioMovement == MarioMovement.RunLeft)
             //    marioMovement = MarioMovement.IdleLeft;
-           // else
-                marioMovement = MarioMovement.RunLeft;
+            // else
+            marioMovement = MarioMovement.RunLeft;
             SwitchCurrentSprite(marioMovement);
         }
 
         public void MoveRight()
         {
-           // if (marioMovement == MarioMovement.Die)
-           //     return;
-          //  if (marioMovement == MarioMovement.RunRight)
-          //      marioMovement = MarioMovement.IdleRight;
-          //  else
-                marioMovement = MarioMovement.RunRight;
+            // if (marioMovement == MarioMovement.Die)
+            //     return;
+            //  if (marioMovement == MarioMovement.RunRight)
+            //      marioMovement = MarioMovement.IdleRight;
+            //  else
+            marioMovement = MarioMovement.RunRight;
             SwitchCurrentSprite(marioMovement);
         }
         public void HandleCrouch()
         {
-            if((marioMovement == MarioMovement.RunLeft || marioMovement == MarioMovement.IdleLeft) && marioState != MarioState.Small)
+            if ((marioMovement == MarioMovement.RunLeft || marioMovement == MarioMovement.IdleLeft) && marioState != MarioState.Small)
             {
                 //marioMovement = MarioMovement.CrouchLeft;
                 return;
             }
-            else if((marioMovement == MarioMovement.RunRight || marioMovement == MarioMovement.IdleRight) && marioState != MarioState.Small)
+            else if ((marioMovement == MarioMovement.RunRight || marioMovement == MarioMovement.IdleRight) && marioState != MarioState.Small)
             {
                 //marioMovement = MarioMovement.CrouchRight;
                 return;
@@ -188,7 +202,11 @@ namespace Lasagna
 
         public void Shrink()
         {
-            marioState = MarioState.Small;
+            canGrow = true;
+            if (marioState == MarioState.Fire)
+                marioState = MarioState.Big;
+            else
+                marioState = MarioState.Small;
             if (marioMovement == MarioMovement.CrouchLeft)
                 marioMovement = MarioMovement.IdleLeft;
             else if (marioMovement == MarioMovement.CrouchRight)
@@ -200,7 +218,45 @@ namespace Lasagna
 
         public void Star()
         {
-            //marioState = MarioState.Star;
+            starPower = true;
+        }
+        public bool isStar()
+        {
+            return starPower;
+        }
+        private void HandleStarPower()
+        {
+            if (starCounter < starDuration)
+            {
+                starCounter++;
+            }
+            else
+            {
+                starPower = false;
+                starCounter = 0;
+            }
+        }
+        private void DrawStarMario(SpriteBatch spriteBatch)
+        {
+            if (frameCount < 3)
+            {
+                currentSprite.Draw(spriteBatch, Color.LightGreen);
+            }
+            else if (frameCount < 6)
+            {
+                currentSprite.Draw(spriteBatch, Color.MediumVioletRed);
+            }
+            else if (frameCount < 9)
+            {
+                currentSprite.Draw(spriteBatch, Color.Black);
+            }
+            else
+            {
+                currentSprite.Draw(spriteBatch);
+            }
+            frameCount++;
+            if (frameCount > 12)
+                frameCount = 0;
         }
 
         public void KillMario()
@@ -211,13 +267,22 @@ namespace Lasagna
 
         public void Update(GameTime gameTime, int spriteXPos, int spriteYPos)
         {
-
+            if (starPower)
+            {
+                HandleStarPower();
+            }
             currentSprite.Update(gameTime, spriteXPos, spriteYPos);
         }
-
         public void Draw(SpriteBatch spriteBatch)
         {
-            currentSprite.Draw(spriteBatch);
+            if (starPower)
+            {
+                DrawStarMario(spriteBatch);
+            }
+            else
+            {
+                currentSprite.Draw(spriteBatch);
+            }
         }
 
         public ISprite GetCurrentSprite()
@@ -226,12 +291,12 @@ namespace Lasagna
         }
         public MarioState GetState()
         {
-
-            return marioState; 
+            return marioState;
         }
 
         public void Reset()
         {
+            canGrow = true;
             marioState = MarioState.Small;
             marioMovement = MarioMovement.IdleRight;
             currentSprite = smallStates[marioMovement];
