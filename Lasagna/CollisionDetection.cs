@@ -21,15 +21,13 @@ namespace Lasagna
 
         public void Update(List<IPlayer> players, List<IEnemy> enemies, List<ITile> tiles, List<IItem> items)
         {
-            Rectangle overlap;
-
             //Tiles are static, so don't need to check against themselves.
             foreach (ITile tile in tiles)
             {
                 CollisionSide tileSide, otherColliderSide;
                 foreach (IPlayer player in players)
                 {
-                    if (CheckCollision(tile.Properties, player.GetRect, out overlap, out tileSide, out otherColliderSide))
+                    if (CheckCollision(tile.Properties, player.GetRect, out tileSide, out otherColliderSide))
                     {
                         //Invisible blocks can only be collided if they're hit from the bottom
                         if (tile is InvisibleItemBlockTile && tileSide != CollisionSide.Bottom)
@@ -41,7 +39,7 @@ namespace Lasagna
                 }
                 foreach (IEnemy enemy in enemies)
                 {
-                    if (CheckCollision(tile.Properties, enemy.GetRectangle, out overlap, out tileSide, out otherColliderSide))
+                    if (CheckCollision(tile.Properties, enemy.GetRectangle, out tileSide, out otherColliderSide))
                     {
                         tile.OnCollisionResponse(enemy, tileSide);
                         enemy.OnCollisionResponse(tile, otherColliderSide);
@@ -49,7 +47,7 @@ namespace Lasagna
                 }
                 foreach (IItem item in items)
                 {
-                    if (CheckCollision(tile.Properties, item.GetRectangle, out overlap, out tileSide, out otherColliderSide))
+                    if (CheckCollision(tile.Properties, item.GetRectangle, out tileSide, out otherColliderSide))
                     {
                         tile.OnCollisionResponse(item, tileSide);
                         item.OnCollisionResponse(tile, otherColliderSide);
@@ -63,7 +61,7 @@ namespace Lasagna
                 CollisionSide playerSide, otherColliderSide;
                 foreach (IEnemy enemy in enemies)
                 {
-                    if (CheckCollision(player.GetRect, enemy.GetRectangle, out overlap, out playerSide, out otherColliderSide))
+                    if (CheckCollision(player.GetRect, enemy.GetRectangle, out playerSide, out otherColliderSide))
                     {
                         player.OnCollisionResponse(enemy, playerSide);
                         enemy.OnCollisionResponse(player, otherColliderSide);
@@ -71,7 +69,7 @@ namespace Lasagna
                 }
                 foreach (IItem item in items)
                 {
-                    if (CheckCollision(player.GetRect, item.GetRectangle, out overlap, out playerSide, out otherColliderSide))
+                    if (CheckCollision(player.GetRect, item.GetRectangle, out playerSide, out otherColliderSide))
                     {
                         player.OnCollisionResponse(item, playerSide);
                         item.OnCollisionResponse(player, otherColliderSide);
@@ -85,7 +83,7 @@ namespace Lasagna
                 CollisionSide enemySide, otherColliderSide;
                 foreach (IItem item in items)
                 {
-                    if (CheckCollision(enemy.GetRectangle, item.GetRectangle, out overlap, out enemySide, out otherColliderSide))
+                    if (CheckCollision(enemy.GetRectangle, item.GetRectangle, out enemySide, out otherColliderSide))
                     {
                         enemy.OnCollisionResponse(item, enemySide);
                         item.OnCollisionResponse(enemy, otherColliderSide);
@@ -94,17 +92,45 @@ namespace Lasagna
             }
         }
 
-        public bool CheckRectForCollisions(Rectangle rect, out CollisionSide side)
+        public bool CheckRectForCollisions(Rectangle rect, List<IEnemy> enemies, List<ITile> tiles, out CollisionSide sourceSide)
         {
             bool collided = false;
-            side = CollisionSide.None;
+            sourceSide = CollisionSide.None;
+            Rectangle overlap;
+
+            foreach (IEnemy enemy in enemies)
+            {
+                if (collided == true)
+                    continue;
+
+                CollisionSide enemySide;
+                if (CheckCollision(enemy.GetRectangle, rect, out enemySide, out sourceSide))
+                {
+                    collided = true;
+                }
+            }
+            foreach (ITile tile in tiles)
+            {
+                if (collided == true)
+                    continue;
+
+                CollisionSide tileSide;
+                if (CheckCollision(tile.Properties, rect, out tileSide, out sourceSide))
+                {
+                    //Invisible blocks can only be collided if they're hit from the bottom
+                    if (tile is InvisibleItemBlockTile && tileSide != CollisionSide.Bottom)
+                        continue;
+
+                    collided = true;
+                }
+            }
 
             return collided;
         }
 
-        private bool CheckCollision(Rectangle r1, Rectangle r2, out Rectangle overlapRect, out CollisionSide r1CollisionSide, out CollisionSide r2CollisionSide)
+        private bool CheckCollision(Rectangle r1, Rectangle r2, out CollisionSide r1CollisionSide, out CollisionSide r2CollisionSide)
         {
-            overlapRect = Rectangle.Intersect(r1, r2);
+            Rectangle overlapRect = Rectangle.Intersect(r1, r2);
 
             r1CollisionSide = GetSideOfCollision(r1, overlapRect);
             r2CollisionSide = GetSideOfCollision(r2, overlapRect);

@@ -52,7 +52,7 @@ namespace Lasagna
         {
             keyControl.Update();
             if (players != null && players.Count > 0)
-                mouseControl.Update(players[0]);
+                mouseControl.Update(players[0], enemies, tiles);
 
             if (levelBackground != null)
                 levelBackground.Update(gameTime, 0, 0);

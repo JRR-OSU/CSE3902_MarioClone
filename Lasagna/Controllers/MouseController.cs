@@ -16,7 +16,7 @@ namespace Lasagna
             MarioEvents.OnToggleMouseController += ToggleMouseController;
         }
 
-        public void Update(IPlayer player)
+        public void Update(IPlayer player, List<IEnemy> enemies, List<ITile> tiles)
         {
             if (!enabled || player == null)
                 return;
@@ -27,11 +27,7 @@ namespace Lasagna
             playerRect.X = currentState.X;
             playerRect.Y = currentState.Y;
 
-            if (CollisionDetection.Instance.CheckRectForCollisions(playerRect, out side))
-            {
-
-            }
-            else 
+            if (!CollisionDetection.Instance.CheckRectForCollisions(playerRect, enemies, tiles, out side))
                 player.SetPosition(playerRect.X, playerRect.Y);
         }
 
