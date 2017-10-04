@@ -31,7 +31,16 @@ namespace Lasagna
             posY = spawnPosY;
         }
         public Rectangle GetRectangle
-        { get { return new Rectangle(posX, posY, currentSprite.Width, currentSprite.Height); } }
+        {
+            get
+            {
+                if (CurrentSprite == null)
+                {
+                    return new Rectangle(0, 0, 0, 0);
+                }
+                return new Rectangle(posX, posY, CurrentSprite.Width, CurrentSprite.Height);
+            }
+        }
 
 
         public virtual void Update(GameTime gameTime)
