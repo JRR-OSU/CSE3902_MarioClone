@@ -24,37 +24,49 @@ namespace Lasagna
             //Tiles are static, so don't need to check against themselves.
             foreach (ITile tile in tiles)
             {
-                //If this tile is not ICollider, skip loop
+                //If this is not ICollider, skip loop
                 if (!(tile is ICollider))
                     continue;
 
                 CollisionSide tileSide, otherColliderSide;
                 foreach (IPlayer player in players)
                 {
+                    //If this is not ICollider, skip loop
+                    if (!(player is ICollider))
+                        continue;
+
                     if (CheckCollision(tile.Properties, player.GetRect, out tileSide, out otherColliderSide))
                     {
                         //Invisible blocks can only be collided if they're hit from the bottom
                         if (tile is InvisibleItemBlockTile && tileSide != CollisionSide.Bottom)
                             continue;
 
-                        tile.OnCollisionResponse(player, tileSide);
-                        player.OnCollisionResponse(tile, otherColliderSide);
+                        tile.OnCollisionResponse((ICollider)player, tileSide);
+                        player.OnCollisionResponse((ICollider)tile, otherColliderSide);
                     }
                 }
                 foreach (IEnemy enemy in enemies)
                 {
+                    //If this is not ICollider, skip loop
+                    if (!(enemy is ICollider))
+                        continue;
+
                     if (CheckCollision(tile.Properties, enemy.GetRectangle, out tileSide, out otherColliderSide))
                     {
-                        tile.OnCollisionResponse(enemy, tileSide);
-                        enemy.OnCollisionResponse(tile, otherColliderSide);
+                        tile.OnCollisionResponse((ICollider)enemy, tileSide);
+                        enemy.OnCollisionResponse((ICollider)tile, otherColliderSide);
                     }
                 }
                 foreach (IItem item in items)
                 {
+                    //If this is not ICollider, skip loop
+                    if (!(item is ICollider))
+                        continue;
+
                     if (CheckCollision(tile.Properties, item.GetRectangle, out tileSide, out otherColliderSide))
                     {
-                        tile.OnCollisionResponse(item, tileSide);
-                        item.OnCollisionResponse(tile, otherColliderSide);
+                        tile.OnCollisionResponse((ICollider)item, tileSide);
+                        item.OnCollisionResponse((ICollider)tile, otherColliderSide);
                     }
                 }
             }
@@ -62,21 +74,33 @@ namespace Lasagna
             //Players vs. Enemies & Items
             foreach (IPlayer player in players)
             {
+                //If this is not ICollider, skip loop
+                if (!(player is ICollider))
+                    continue;
+
                 CollisionSide playerSide, otherColliderSide;
                 foreach (IEnemy enemy in enemies)
                 {
+                    //If this is not ICollider, skip loop
+                    if (!(enemy is ICollider))
+                        continue;
+
                     if (CheckCollision(player.GetRect, enemy.GetRectangle, out playerSide, out otherColliderSide))
                     {
-                        player.OnCollisionResponse(enemy, playerSide);
-                        enemy.OnCollisionResponse(player, otherColliderSide);
+                        player.OnCollisionResponse((ICollider)enemy, playerSide);
+                        enemy.OnCollisionResponse((ICollider)player, otherColliderSide);
                     }
                 }
                 foreach (IItem item in items)
                 {
+                    //If this is not ICollider, skip loop
+                    if (!(item is ICollider))
+                        continue;
+
                     if (CheckCollision(player.GetRect, item.GetRectangle, out playerSide, out otherColliderSide))
                     {
-                        player.OnCollisionResponse(item, playerSide);
-                        item.OnCollisionResponse(player, otherColliderSide);
+                        player.OnCollisionResponse((ICollider)item, playerSide);
+                        item.OnCollisionResponse((ICollider)player, otherColliderSide);
                     }
                 }
             }
@@ -84,13 +108,21 @@ namespace Lasagna
             //Enemies vs items
             foreach (IEnemy enemy in enemies)
             {
+                //If this is not ICollider, skip loop
+                if (!(enemy is ICollider))
+                    continue;
+
                 CollisionSide enemySide, otherColliderSide;
                 foreach (IItem item in items)
                 {
+                    //If this is not ICollider, skip loop
+                    if (!(item is ICollider))
+                        continue;
+
                     if (CheckCollision(enemy.GetRectangle, item.GetRectangle, out enemySide, out otherColliderSide))
                     {
-                        enemy.OnCollisionResponse(item, enemySide);
-                        item.OnCollisionResponse(enemy, otherColliderSide);
+                        enemy.OnCollisionResponse((ICollider)item, enemySide);
+                        item.OnCollisionResponse((ICollider)enemy, otherColliderSide);
                     }
                 }
             }
@@ -104,19 +136,19 @@ namespace Lasagna
 
             foreach (IEnemy enemy in enemies)
             {
-                if (collided == true)
+                if (collided == true | !(enemy is ICollider))
                     continue;
 
                 CollisionSide enemySide;
                 if (CheckCollision(enemy.GetRectangle, rect, out enemySide, out sourceSide))
                 {
-                    enemy.OnCollisionResponse(sourceCollider, enemySide);
+                    enemy.OnCollisionResponse((ICollider)sourceCollider, enemySide);
                     collided = true;
                 }
             }
             foreach (ITile tile in tiles)
             {
-                if (collided == true)
+                if (collided == true || !(tile is ICollider))
                     continue;
 
                 CollisionSide tileSide;
@@ -126,7 +158,7 @@ namespace Lasagna
                     if (tile is InvisibleItemBlockTile && tileSide != CollisionSide.Bottom)
                         continue;
 
-                    tile.OnCollisionResponse(sourceCollider, tileSide);
+                    tile.OnCollisionResponse((ICollider)sourceCollider, tileSide);
                     collided = true;
                 }
             }

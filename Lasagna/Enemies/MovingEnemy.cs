@@ -4,14 +4,14 @@ using System;
 
 namespace Lasagna
 {
-    public abstract class MovingEnemy : IEnemy
+    public abstract class MovingEnemy : IEnemy, ICollider
     {
         private ISprite currentSprite;
         private EnemyState currentState;
         private int posX;
         private int posY;
 
-        
+
         protected ISprite CurrentSprite
         {
             get { return currentSprite; }
@@ -58,20 +58,37 @@ namespace Lasagna
         public abstract void ChangeState(EnemyState newState);
 
         public abstract void Damage();
-        
-        public virtual void OnCollisionResponse(IPlayer mario,CollisionSide side)
+
+        public virtual void OnCollisionResponse(ICollider otherCollider, CollisionSide side)
+        {
+            if (otherCollider is IPlayer)
+                OnCollisionResponse((IPlayer)otherCollider, side);
+            else if (otherCollider is IEnemy)
+                OnCollisionResponse((IEnemy)otherCollider, side);
+            else if (otherCollider is IItem)
+                OnCollisionResponse((IItem)otherCollider, side);
+            else if (otherCollider is ITile)
+                OnCollisionResponse((ITile)otherCollider, side);
+            else if (otherCollider is IProjectile)
+                OnCollisionResponse((IProjectile)otherCollider, side);
+        }
+
+        protected virtual void OnCollisionResponse(IPlayer mario, CollisionSide side)
         {
             return;
         }
-        public virtual void OnCollisionResponse(IItem item, CollisionSide side)
+
+        protected virtual void OnCollisionResponse(IItem item, CollisionSide side)
         {
             return;
         }
-        public virtual void OnCollisionResponse(IProjectile fireball, CollisionSide side)
+
+        protected virtual void OnCollisionResponse(IProjectile fireball, CollisionSide side)
         {
             return;
         }
-        public virtual void OnCollisionResponse(IEnemy otherEnemy, CollisionSide side)
+
+        protected virtual void OnCollisionResponse(IEnemy otherEnemy, CollisionSide side)
         {
             if (side.Equals(CollisionSide.Right))
             {
@@ -82,7 +99,8 @@ namespace Lasagna
                 ChangeState(EnemyState.WalkRight);
             }
         }
-        public virtual void OnCollisionResponse(ITile tile, CollisionSide side)
+
+        protected virtual void OnCollisionResponse(ITile tile, CollisionSide side)
         {
             if (side.Equals(CollisionSide.Right))
             {
@@ -93,6 +111,5 @@ namespace Lasagna
                 ChangeState(EnemyState.WalkRight);
             }
         }
-        
-}
+    }
 }

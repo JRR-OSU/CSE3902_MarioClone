@@ -11,7 +11,7 @@ namespace Lasagna
             { EnemyState.Flipped, EnemySpriteFactory.Instance.CreateSprite_Goomba_Flipped() },
         };
 
-        public GoombaEnemy(int spawnPosX, int spawnPosY) 
+        public GoombaEnemy(int spawnPosX, int spawnPosY)
             : base(spawnPosX, spawnPosY)
         {
             //WalkLeft and WalkRight use same sprite as idle, set that here.
@@ -22,10 +22,12 @@ namespace Lasagna
                 CurrentSprite = goombaStates[EnemyState.Idle];
             }
         }
+
         public override void Damage()
         {
             return;
         }
+
         public override void ChangeState(EnemyState newState)
         {
             if (goombaStates != null && goombaStates.ContainsKey(CurrentState) && goombaStates[CurrentState] != null)
@@ -34,21 +36,21 @@ namespace Lasagna
                 CurrentSprite = goombaStates[CurrentState];
             }
         }
-        public override void OnCollisionResponse(IPlayer mario, CollisionSide side)
+
+        protected override void OnCollisionResponse(IPlayer mario, CollisionSide side)
         {
-            if(side.Equals(CollisionSide.Top))
+            if (side.Equals(CollisionSide.Top))
             {
                 ChangeState(EnemyState.Dead);
             }
         }
-        public override void OnCollisionResponse(IProjectile fireball, CollisionSide side)
+
+        protected override void OnCollisionResponse(IProjectile fireball, CollisionSide side)
         {
             if (side.Equals(CollisionSide.Left) || side.Equals(CollisionSide.Right))
             {
                 ChangeState(EnemyState.Flipped);
             }
         }
-
-
     }
 }

@@ -38,14 +38,16 @@ namespace Lasagna
             //TODO: Turn into shell here instead of calling base method
             ChangeState(EnemyState.Shell);
         }
-        public override void OnCollisionResponse(IPlayer mario, CollisionSide side)
+
+        protected override void OnCollisionResponse(IPlayer mario, CollisionSide side)
         {
             if (side.Equals(CollisionSide.Top))
             {
                 Damage();
             }
         }
-        public override void OnCollisionResponse(IProjectile fireball, CollisionSide side)
+
+        protected override void OnCollisionResponse(IProjectile fireball, CollisionSide side)
         {
             if (side.Equals(CollisionSide.Left) || side.Equals(CollisionSide.Right))
             {
