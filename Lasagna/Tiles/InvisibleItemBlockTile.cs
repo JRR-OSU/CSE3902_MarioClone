@@ -19,12 +19,16 @@ namespace Lasagna
         {
             get
             {
-                if (currentState.Equals(BlockState.Invisible))
-                {
+                if (currentState == BlockState.Invisible)
                     return new Rectangle(base.PosX, base.PosY + CurrentSprite.Height, CurrentSprite.Width, 0);
-                }
-                return new Rectangle(base.PosX, base.PosY, CurrentSprite.Width, CurrentSprite.Height);
+                else
+                    return new Rectangle(base.PosX, base.PosY, CurrentSprite.Width, CurrentSprite.Height);
             }
+        }
+
+        public bool IsVisible
+        {
+            get { return currentState == BlockState.Visible; }
         }
 
         public InvisibleItemBlockTile(int spawnXPos, int spawnYPos)
