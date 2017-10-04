@@ -56,6 +56,11 @@ namespace Lasagna
 
         public void Draw(SpriteBatch spriteBatch)
         {
+            Draw(spriteBatch, Color.White);
+        }
+
+        public void Draw(SpriteBatch spriteBatch, Color spriteTint)
+        {
             if (spriteBatch == null)
             {
                 Debug.WriteLine("Null sprite batch passed for drawing sprite!");
@@ -68,7 +73,7 @@ namespace Lasagna
                 sourceRectangle = new Rectangle();
 
             spriteBatch.Begin();
-            spriteBatch.Draw(sourceSpriteSheet, destinationRectangle, sourceRectangle, Color.White);
+            spriteBatch.Draw(sourceSpriteSheet, destinationRectangle, sourceRectangle, spriteTint);
             spriteBatch.End();
         }
 
