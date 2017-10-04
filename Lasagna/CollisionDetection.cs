@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 
 namespace Lasagna
@@ -30,6 +31,10 @@ namespace Lasagna
                 {
                     if (CheckCollision(tile.Properties, player.GetRect, out overlap, out side1, out side2))
                     {
+                        //Invisible blocks can only be collided if they're hit from the bottom
+                        if (tile is InvisibleItemBlockTile && side1 != CollisionSide.Bottom)
+                            continue;
+
                         tile.OnCollisionResponse(player, side1);
                         player.OnCollisionResponse(tile, side2);
                     }
