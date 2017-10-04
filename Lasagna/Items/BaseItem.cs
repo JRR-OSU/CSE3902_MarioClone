@@ -1,15 +1,22 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 
 namespace Lasagna
 {
     public abstract class BaseItem : IItem
     {
+        private enum ItemState
+        {
+            Idle,
+            Taken
+        }
+
         //Change this later if items support states.
         private ISprite itemSprite;
+        private ItemState currentState;
         private int posX;
         private int posY;
-        public Rectangle temp;
 
         protected ISprite ItemSprite
         {
@@ -23,7 +30,10 @@ namespace Lasagna
         {
             posX = spawnPosX;
             posY = spawnPosY;
+            currentState = ItemState.Idle;
+            MarioEvents.OnReset += ChangeToDefault;
         }
+
         public Rectangle GetRectangle
         {
             get
@@ -38,20 +48,20 @@ namespace Lasagna
 
         public void Update(GameTime gameTime)
         {
-            if (itemSprite != null)
+            if (itemSprite != null && currentState != ItemState.Taken)
                 itemSprite.Update(gameTime, posX, posY);
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            if (itemSprite != null)
+            if (itemSprite != null && currentState != ItemState.Taken)
                 itemSprite.Draw(spriteBatch);
         }
         
         public virtual void OnCollisionResponse(IPlayer mario, CollisionSide side)
         {
             //Destroy the item after mario takes it
-            itemSprite = null;
+            currentState = ItemState.Taken;
         }
 
         public virtual void OnCollisionResponse(IEnemy enemy, CollisionSide side)
@@ -67,6 +77,13 @@ namespace Lasagna
         public virtual void OnCollisionResponse(ITile tile, CollisionSide side)
         {
             return;
+        }
+
+        ///TODO: Temp methods for sprint3
+        public void ChangeToDefault(object sender, EventArgs e)
+        {
+            if (currentState == ItemState.Taken)
+                currentState = ItemState.Idle;
         }
     }
 }
