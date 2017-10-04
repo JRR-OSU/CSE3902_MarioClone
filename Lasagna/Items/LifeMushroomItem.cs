@@ -6,7 +6,7 @@
         public LifeMushroomItem(int spawnPosX, int spawnPosY)
             : base(spawnPosX, spawnPosY)
         {
-            ItemSprite = ItemSpriteFactory.Instance.CreateSprite_PowerupMushroom();
+            ItemSprite = ItemSpriteFactory.Instance.CreateSprite_1UpMushroom();
         }
         public override void OnCollisionResponse(ITile tile, CollisionSide side)
         {
