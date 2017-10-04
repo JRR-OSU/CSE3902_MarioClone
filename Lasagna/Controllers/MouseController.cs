@@ -16,14 +16,23 @@ namespace Lasagna
             MarioEvents.OnToggleMouseController += ToggleMouseController;
         }
 
-        public void Update()
+        public void Update(IPlayer player)
         {
-            if (!enabled)
+            if (!enabled || player == null)
                 return;
 
+            CollisionSide side;
             MouseState currentState = Mouse.GetState();
+            Rectangle playerRect = player.GetRect;
+            playerRect.X = currentState.X;
+            playerRect.Y = currentState.Y;
 
+            if (CollisionDetection.Instance.CheckRectForCollisions(playerRect, out side))
+            {
 
+            }
+            else 
+                player.SetPosition(playerRect.X, playerRect.Y);
         }
 
         public void ToggleMouseController(object sender, EventArgs e)

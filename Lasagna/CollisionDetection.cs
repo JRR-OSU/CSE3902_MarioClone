@@ -94,6 +94,14 @@ namespace Lasagna
             }
         }
 
+        public bool CheckRectForCollisions(Rectangle rect, out CollisionSide side)
+        {
+            bool collided = false;
+            side = CollisionSide.None;
+
+            return collided;
+        }
+
         private bool CheckCollision(Rectangle r1, Rectangle r2, out Rectangle overlapRect, out CollisionSide r1CollisionSide, out CollisionSide r2CollisionSide)
         {
             overlapRect = Rectangle.Intersect(r1, r2);

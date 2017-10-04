@@ -51,7 +51,8 @@ namespace Lasagna
         protected override void Update(GameTime gameTime)
         {
             keyControl.Update();
-            mouseControl.Update();
+            if (players != null && players.Count > 0)
+                mouseControl.Update(players[0]);
 
             if (levelBackground != null)
                 levelBackground.Update(gameTime, 0, 0);

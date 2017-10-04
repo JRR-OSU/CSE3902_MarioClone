@@ -16,6 +16,7 @@ namespace Lasagna
 
 
         void OnCollisionResponse(ITile tile, CollisionSide side);
+        void SetPosition(int x, int y);
 
         Rectangle GetRect { get; }
     }

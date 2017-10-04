@@ -47,7 +47,7 @@ namespace Lasagna
             orignalPos[1] = spriteYPos;
         }
 
-        public void SetPos(int x, int y)
+        public void SetPosition(int x, int y)
         {
             spriteXPos = x;
             spriteYPos = y;
