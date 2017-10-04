@@ -14,6 +14,17 @@ namespace Lasagna
 
         private BlockState currentState;
         private ISprite visibleSprite = TileSpriteFactory.Instance.CreateSprite_ItemBlockUsed();
+        public override Rectangle Properties
+        {
+            get
+            {
+                if (currentState.Equals(BlockState.Invisible))
+                {
+                    return new Rectangle(base.PosX, base.PosY + CurrentSprite.Height, CurrentSprite.Width, 0);
+                }
+                return new Rectangle(base.PosX, base.PosY, CurrentSprite.Width, CurrentSprite.Height);
+            }
+        }
         public InvisibleItemBlockTile(int spawnXPos, int spawnYPos)
             : base(spawnXPos, spawnYPos)
         {
@@ -50,7 +61,15 @@ namespace Lasagna
             }
                
         }
-
+        public override int GetState()
+        {
+            if (currentState == BlockState.Invisible)
+                return 0;
+            else
+            {
+                return 1;
+            }
+        }
         ///TODO: Temp methods for sprint2
         public void ChangeToVisible(object sender, EventArgs e)
         {
@@ -66,7 +85,7 @@ namespace Lasagna
         
         public override void OnCollisionResponse(IPlayer Mario, CollisionSide side)
         {
-            if (this.currentState.Equals(BlockState.Invisible) && side.Equals(CollisionSide.Top))
+            if (this.currentState.Equals(BlockState.Invisible) && side.Equals(CollisionSide.Bottom))
             {
                 this.ChangeState();
             }

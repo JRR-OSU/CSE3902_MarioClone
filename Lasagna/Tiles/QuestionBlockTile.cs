@@ -36,7 +36,15 @@ namespace Lasagna
                 currentState = BlockState.Idle;
             }
         }
-
+        public override int GetState()
+        {
+            if (currentState == BlockState.Idle)
+                return 0;
+            else
+            {
+                return 1;
+            }
+        }
         ///TODO: Temp methods for sprint2
         private void ChangeToUsed(object sender, EventArgs e)
         {
@@ -50,7 +58,7 @@ namespace Lasagna
         }
         public override void OnCollisionResponse(IPlayer Mario, CollisionSide side)
         {
-            if (this.currentState.Equals(BlockState.Idle) && side.Equals(CollisionSide.Top))
+            if (this.currentState.Equals(BlockState.Idle) && side.Equals(CollisionSide.Bottom))
             {
                 this.ChangeState();
             }

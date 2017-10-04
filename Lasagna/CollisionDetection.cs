@@ -108,7 +108,7 @@ namespace Lasagna
                 side = (overlapRect.Center.X < sourceRect.Center.X) ? CollisionSide.Left : CollisionSide.Right;
             //Else overlap rect is wider than tall, collision must be on the top or bottom side
             else
-                side = (overlapRect.Center.Y < sourceRect.Center.Y) ? CollisionSide.Bottom : CollisionSide.Top;
+                side = (overlapRect.Center.Y < sourceRect.Center.Y) ? CollisionSide.Top : CollisionSide.Bottom;
 
             return side;
         }

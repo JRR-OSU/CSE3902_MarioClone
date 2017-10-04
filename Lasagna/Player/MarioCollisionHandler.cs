@@ -64,13 +64,13 @@ namespace Lasagna
             {
                 switch (side)
                 {
-                    case CollisionSide.Top:
+                    case CollisionSide.Bottom:
                         if (state.GetState() != MarioStateMachine.MarioState.Small)
                             mario.SetPos(mario.GetRect.X, (tile.Properties.Y - mario.GetRect.Height));
                         else
                             mario.SetPos(mario.GetRect.X, (tile.Properties.Y - tile.Properties.Height));
                         break;
-                    case CollisionSide.Bottom:
+                    case CollisionSide.Top:
                         if (state.GetState() != MarioStateMachine.MarioState.Small)
                             mario.SetPos(mario.GetRect.X, (tile.Properties.Y + tile.Properties.Height));
                         else
@@ -101,7 +101,7 @@ namespace Lasagna
         {
             // Console.WriteLine("Collison mario with enemy");
             // Console.WriteLine(enemy + " " + " " + side);
-            if (!side.Equals(CollisionSide.Top))
+            if (!side.Equals(CollisionSide.Bottom))
             {
            //     state.Reset();
             }
