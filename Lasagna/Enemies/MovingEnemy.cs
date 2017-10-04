@@ -11,7 +11,6 @@ namespace Lasagna
         private int posX;
         private int posY;
 
-
         protected ISprite CurrentSprite
         {
             get { return currentSprite; }
@@ -29,6 +28,7 @@ namespace Lasagna
         {
             posX = spawnPosX;
             posY = spawnPosY;
+            MarioEvents.OnReset += ChangeToDefault;
         }
         public Rectangle GetRectangle
         {
@@ -40,7 +40,6 @@ namespace Lasagna
                     return new Rectangle(posX, posY, CurrentSprite.Width, CurrentSprite.Height);
             }
         }
-
 
         public virtual void Update(GameTime gameTime)
         {
@@ -57,6 +56,13 @@ namespace Lasagna
         public abstract void ChangeState(EnemyState newState);
 
         public abstract void Damage();
+
+        private void ChangeToDefault (object sender, EventArgs e)
+        {
+            //If we're not idle, change to idle.
+            if (currentState != EnemyState.Idle)
+                ChangeState(EnemyState.Idle);
+        }
 
         //Many sprites have different heights or widths, and Monogame has sprite pos in top left,
         //fix the positioning here so it doesn't flicker.
