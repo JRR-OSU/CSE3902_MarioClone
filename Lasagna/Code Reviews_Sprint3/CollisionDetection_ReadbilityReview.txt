@@ -1,0 +1,11 @@
+﻿Zeyu Li
+10/04/2017
+Sprint 3
+CollisionDetection.cs
+Timothy Williams
+5 minutes
+
+The code generally looks good. Only some method headers look similar. For instance, the CheckCollisions()
+and CheckRectCollisions(), maybe those can be renamed into a better way. It seems that overlap Rectangle
+is not used after the definition of it. As what I talked about in the quality review, if the Update() is
+simplified, then the code will be more readable than the current code.

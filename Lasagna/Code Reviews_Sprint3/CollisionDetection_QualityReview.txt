@@ -1,0 +1,13 @@
+﻿Zeyu Li
+10/04/2017
+Sprint 3
+CollisionDetection.cs
+Timothy Williams
+
+Code generally looks good, everything except the collision on the invisible tile work fine. Code looks a little
+complicated at this time. Some lines of code are repeated. For instance, some lines in Update() method are very
+similar to the lines of code in CheckRectCollision(). It is definitely a good code, at least I am not able to
+handle collision detection part at this time.
+
+I think maybe there is a way to call CheckRectCollision() in the Update() method, thus, we make the Update()
+method look tidy and clean. Except this part, in my perspective, I think no more improvement can be made.
