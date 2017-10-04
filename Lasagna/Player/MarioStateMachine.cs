@@ -10,6 +10,7 @@ namespace Lasagna
 {
     public class MarioStateMachine
     {
+        private Mario mario;
         public enum MarioState { Small, Big, Fire };
         private enum MarioMovement { CrouchRight, CrouchLeft, IdleLeft, IdleRight, RunLeft, RunRight, JumpLeft, JumpRight, Die };
         private MarioState marioState = MarioState.Small;
@@ -29,7 +30,7 @@ namespace Lasagna
         private Dictionary<MarioMovement, ISprite> fireStates = new Dictionary<MarioMovement, ISprite>();
         private Dictionary<MarioMovement, ISprite> starStates = new Dictionary<MarioMovement, ISprite>();
 
-        public MarioStateMachine()
+        public MarioStateMachine(Mario player)
         {
             smallStates.Add(MarioMovement.IdleLeft, MarioSpriteFactory.Instance.CreateSprite_MarioSmall_IdleLeft());
             smallStates.Add(MarioMovement.IdleRight, MarioSpriteFactory.Instance.CreateSprite_MarioSmall_IdleRight());
@@ -56,10 +57,28 @@ namespace Lasagna
             fireStates.Add(MarioMovement.RunRight, MarioSpriteFactory.Instance.CreateSprite_MarioFire_RunRight());
             fireStates.Add(MarioMovement.JumpLeft, MarioSpriteFactory.Instance.CreateSprite_MarioFire_JumpLeft());
             fireStates.Add(MarioMovement.JumpRight, MarioSpriteFactory.Instance.CreateSprite_MarioFire_JumpRight());
+
+            mario = player;
         }
 
 
-
+        public void DamageMario()
+        {
+            if (starPower)
+                return;
+            if(marioState == MarioState.Fire)
+            {
+                marioState = MarioState.Big;
+            }
+            else if(marioState == MarioState.Big)
+            {
+                marioState = MarioState.Small;
+            }
+            else if(marioState == MarioState.Small)
+            {
+                mario.Die();
+            }
+        }
         public void Grow()
         {
 
@@ -297,6 +316,7 @@ namespace Lasagna
         public void Reset()
         {
             canGrow = true;
+            starPower = false;
             marioState = MarioState.Small;
             marioMovement = MarioMovement.IdleRight;
             currentSprite = smallStates[marioMovement];

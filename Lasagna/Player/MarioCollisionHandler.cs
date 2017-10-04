@@ -62,23 +62,26 @@ namespace Lasagna
         {
             if (state.isStar() || (enemy is GoombaEnemy && enemy.GetRectangle.Height <= 16) || (enemy is KoopaEnemy && enemy.GetRectangle.Height <= 40)) // if star or enemy is dead
                 return;
-            if (!side.Equals(CollisionSide.Bottom))
+            switch (side)
             {
-                switch (state.GetState())
-                {
-                    case MarioStateMachine.MarioState.Small:
-                        mario.Die();
-                        break;
-                    default:
-                        mario.SetPosition(mario.GetRect.X - mario.GetRect.Width, mario.GetRect.Y + mario.GetRect.Height);
-                        state.Shrink();
-                        break;
-                }
+                case CollisionSide.Bottom:
+                    mario.SetPosition(mario.GetRect.X, (mario.GetRect.Y - enemy.GetRectangle.Height)); // Jump effect if landing on top of an enemy
+                    break;
+                case CollisionSide.Top:
+                    state.DamageMario();
+                    mario.SetPosition(mario.GetRect.X, (mario.GetRect.Y + mario.GetRect.Height));
+                    break;
+                case CollisionSide.Left:
+                    state.DamageMario();
+                    mario.SetPosition(mario.GetRect.X + mario.GetRect.Width/2, mario.GetRect.Y);
+                    break;
+                case CollisionSide.Right:
+                    state.DamageMario();
+                    mario.SetPosition(mario.GetRect.X - mario.GetRect.Width/2, mario.GetRect.Y);
+                    break;
             }
-            else
-            {
-                mario.SetPosition(mario.GetRect.X, mario.GetRect.Y - enemy.GetRectangle.Height);
-            }
+
+
         }
     }
 }
