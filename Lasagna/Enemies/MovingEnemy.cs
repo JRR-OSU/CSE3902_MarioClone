@@ -23,11 +23,7 @@ namespace Lasagna
             set { currentState = value; }
         }
         protected int PosX { get { return posX; } }
-        protected int PosY
-        {
-            get { return posY; }
-            set { posY = value; }
-        }
+        protected int PosY { get { return posY; } }
 
         protected MovingEnemy(int spawnPosX, int spawnPosY)
         {
@@ -62,6 +58,18 @@ namespace Lasagna
         public abstract void ChangeState(EnemyState newState);
 
         public abstract void Damage();
+
+        //Many sprites have different heights or widths, and Monogame has sprite pos in top left,
+        //fix the positioning here so it doesn't flicker.
+        protected void FixSpritePosition(ISprite oldSprite, ISprite newSprite)
+        {
+            int heightDifference = oldSprite.Height - newSprite.Height;
+            if (heightDifference != 0)
+                posY = posY + heightDifference;
+            int widthDifference = oldSprite.Width - newSprite.Width;
+            if (widthDifference != 0)
+                posX = posX + widthDifference;
+        }
 
         public void OnCollisionResponse(ICollider otherCollider, CollisionSide side)
         {
