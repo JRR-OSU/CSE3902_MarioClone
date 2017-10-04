@@ -8,6 +8,8 @@ namespace Lasagna
         {
             { EnemyState.Idle, EnemySpriteFactory.Instance.CreateSprite_Koopa_Walk() },
             { EnemyState.Dead, EnemySpriteFactory.Instance.CreateSprite_Koopa_Die() },
+            { EnemyState.Shell, EnemySpriteFactory.Instance.CreateSprite_Koopa_Shell() },
+            { EnemyState.Idle_Right, EnemySpriteFactory.Instance.CreateSprite_Koopa_Walk_Right() },
         };
 
         public KoopaEnemy(int spawnPosX, int spawnPosY)
@@ -17,7 +19,7 @@ namespace Lasagna
             if (koopaStates.ContainsKey(EnemyState.Idle))
             {
                 koopaStates.Add(EnemyState.WalkLeft, koopaStates[EnemyState.Idle]);
-                koopaStates.Add(EnemyState.WalkRight, koopaStates[EnemyState.Idle]);
+                koopaStates.Add(EnemyState.WalkRight, koopaStates[EnemyState.Idle_Right]);
                 CurrentSprite = koopaStates[EnemyState.Idle];
             }
         }
@@ -34,8 +36,7 @@ namespace Lasagna
         public override void Damage()
         {
             //TODO: Turn into shell here instead of calling base method
-            //Koopa can be killed with one attack in level 1-1
-            ChangeState(EnemyState.Dead);
+            ChangeState(EnemyState.Shell);
         }
         public override void OnCollisionResponse(IPlayer mario, CollisionSide side)
         {
@@ -48,7 +49,7 @@ namespace Lasagna
         {
             if (side.Equals(CollisionSide.Left) || side.Equals(CollisionSide.Right))
             {
-                Damage();
+                ChangeState(EnemyState.Dead);
             }
         }
 
