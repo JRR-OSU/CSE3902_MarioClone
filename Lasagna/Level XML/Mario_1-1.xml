@@ -10,7 +10,7 @@
   <Tiles>
     <Tile type="Brick" repeat="0" repeatspace="0" posx="280" posy="200" />
     <!-- <Tile type="Brick" posx="280" posy="200" item="Coin" /> EXAMPLE FOR LATER -->
-    <Tile type="Flag" repeat="0" repeatspace="0" posx="560" posy="80" />
+    <!-- <Tile type="Flag" repeat="0" repeatspace="0" posx="560" posy="80" /> -->
     <Tile type="Floor" repeat="24" repeatspace="0" posx="0" posy="450" />
     <Tile type="InvisibleBlock" repeat="0" repeatspace="0" posx="140" posy="200" />
     <!-- <Tile type="InvisibleItemBlock" posx="140" posy="200" item="Coin" /> EXAMPLE FOR LATER -->
