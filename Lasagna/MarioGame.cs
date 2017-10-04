@@ -10,6 +10,7 @@ namespace Lasagna
         private GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
         private KeyboardController keyControl;
+        private MouseController mouseControl;
         private ISprite levelBackground;
         private List<ITile> tiles = new List<ITile>();
         private List<IEnemy> enemies = new List<IEnemy>();
@@ -26,6 +27,7 @@ namespace Lasagna
         protected override void Initialize()
         {
             keyControl = new KeyboardController();
+            mouseControl = new MouseController();
 
             //Subscribe to events
             MarioEvents.OnQuit += OnQuit;
@@ -49,6 +51,7 @@ namespace Lasagna
         protected override void Update(GameTime gameTime)
         {
             keyControl.Update();
+            mouseControl.Update();
 
             if (levelBackground != null)
                 levelBackground.Update(gameTime, 0, 0);
