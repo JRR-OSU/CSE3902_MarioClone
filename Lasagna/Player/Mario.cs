@@ -25,7 +25,7 @@ namespace Lasagna
         /// </summary>
         public Mario(int x, int y)
         {
-            stateMachine = new MarioStateMachine();
+            stateMachine = new MarioStateMachine(this);
             marioCollisionHandler = new MarioCollisionHandler(this, stateMachine);
            
             MarioEvents.OnMoveLeft += MoveLeft;
