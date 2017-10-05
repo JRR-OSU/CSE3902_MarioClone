@@ -1,0 +1,10 @@
+﻿Yiwei Zhang
+10/04/2017
+Sprint 3
+InvisibleItemBlockTile.cs
+Zeyu Li
+10 minutes
+
+ChangeState() methods does not need to toggle between Invisible and Visible to me since we only want to change from invisible to visible, I cannot think of a situation which we need to
+change from Visible to Invisible.
+isVisible and GetState seems to be the same, no need to write two methods with same functionality

@@ -133,6 +133,8 @@
     <Content Include="Code Reviews_Sprint2\WarpPipeTile_QualityReview.txt" />
     <Content Include="Code Reviews_Sprint3\CollisionDetection_QualityReview.txt" />
     <Content Include="Code Reviews_Sprint3\CollisionDetection_ReadbilityReview.txt" />
+    <Content Include="Code Reviews_Sprint3\InvisibleItemBlockTile_ReadbilityReview.txt" />
+    <Content Include="Code Reviews_Sprint3\InvisibleItemBlock_QualityReview.txt" />
     <Content Include="Icon.ico" />
     <Content Include="Level XML\Mario_1-1.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

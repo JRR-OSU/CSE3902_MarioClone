@@ -1,0 +1,10 @@
+﻿Yiwei Zhang
+10/04/2017
+Sprint 3
+InvisibleItemBlockTile.cs
+Zeyu Li
+10 minutes
+
+Fields and methods are properly named according to their functionality.
+Appropriate comments are added to parts which are hard to understand for the reader
+Properties has two return statements, this issue needs to be fixed later
