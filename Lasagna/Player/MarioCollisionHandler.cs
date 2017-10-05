@@ -62,6 +62,7 @@ namespace Lasagna
         {
             if (state.isStar() || (enemy is GoombaEnemy && enemy.GetRectangle.Height <= 16) || (enemy is KoopaEnemy && enemy.GetRectangle.Height <= 40)) // if star or enemy is dead
                 return;
+
             switch (side)
             {
                 case CollisionSide.Bottom:

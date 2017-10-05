@@ -107,6 +107,7 @@ namespace Lasagna
                 CollisionSide enemySide;
                 if (CheckCollision(enemy.GetRectangle, rect, out enemySide, out sourceSide))
                 {
+                    sourceCollider.OnCollisionResponse(enemy, sourceSide);
                     enemy.OnCollisionResponse(sourceCollider, enemySide);
                     collided = true;
                 }
@@ -123,6 +124,7 @@ namespace Lasagna
                     if (tile is InvisibleItemBlockTile && !tileSide.Equals(CollisionSide.Bottom) && !sourceSide.Equals(CollisionSide.Top) && !((InvisibleItemBlockTile)tile).IsVisible)
                         continue;
 
+                    sourceCollider.OnCollisionResponse(tile, sourceSide);
                     tile.OnCollisionResponse(sourceCollider, tileSide);
                     collided = true;
                 }

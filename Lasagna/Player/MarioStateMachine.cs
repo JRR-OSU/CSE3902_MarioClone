@@ -24,6 +24,7 @@ namespace Lasagna
         private int starCounter = 0;
         private int frameCount = 0;
 
+        public bool StarPowered { get { return starPower; } }
 
         private Dictionary<MarioMovement, ISprite> smallStates = new Dictionary<MarioMovement, ISprite>();
         private Dictionary<MarioMovement, ISprite> bigStates = new Dictionary<MarioMovement, ISprite>();

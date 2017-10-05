@@ -27,7 +27,7 @@ namespace Lasagna
             playerRect.X = currentState.X;
             playerRect.Y = currentState.Y;
 
-            if (!CollisionDetection.Instance.CheckRectForCollisions(player, playerRect, enemies, tiles, out side))
+            if (!player.IsDead && !CollisionDetection.Instance.CheckRectForCollisions(player, playerRect, enemies, tiles, out side))
                 player.SetPosition(playerRect.X, playerRect.Y);
         }
 

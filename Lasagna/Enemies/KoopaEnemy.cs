@@ -42,7 +42,7 @@ namespace Lasagna
 
         protected override void OnCollisionResponse(IPlayer mario, CollisionSide side)
         {
-            if (side.Equals(CollisionSide.Top))
+            if (side.Equals(CollisionSide.Top) || (mario is Mario && ((Mario)mario).StarPowered))
             {
                 Damage();
             }

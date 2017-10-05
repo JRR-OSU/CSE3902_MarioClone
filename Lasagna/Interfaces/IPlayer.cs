@@ -10,5 +10,6 @@ namespace Lasagna
         void SetPosition(int x, int y);
 
         Rectangle GetRect { get; }
+        bool IsDead { get; }
     }
 }

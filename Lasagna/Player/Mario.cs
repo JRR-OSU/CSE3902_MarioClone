@@ -18,8 +18,11 @@ namespace Lasagna
 
         private bool marioIsDead = false;
 
-        public Rectangle GetRect { get { return new Rectangle(spriteXPos, spriteYPos, GetCurrentSprite().Width, GetCurrentSprite().Height); }}
-        
+        public bool IsDead { get { return marioIsDead; } }
+        public bool StarPowered { get { return stateMachine != null && stateMachine.StarPowered; } }
+
+        public Rectangle GetRect { get { return new Rectangle(spriteXPos, spriteYPos, GetCurrentSprite().Width, GetCurrentSprite().Height); } }
+
         /// <summary>
         /// These methods will just change state, the state machine will handle sprite changes
         /// </summary>
@@ -27,7 +30,7 @@ namespace Lasagna
         {
             stateMachine = new MarioStateMachine(this);
             marioCollisionHandler = new MarioCollisionHandler(this, stateMachine);
-           
+
             MarioEvents.OnMoveLeft += MoveLeft;
             MarioEvents.OnMoveRight += MoveRight;
             MarioEvents.OnJump += Jump;
@@ -62,7 +65,7 @@ namespace Lasagna
             marioIsDead = false;
             stateMachine.Reset();
         }
-        
+
         public void SetIdleState()
         {
             stateMachine.SetIdleState();
@@ -77,10 +80,11 @@ namespace Lasagna
         {
             stateMachine.GetFireflower();
         }
-     
+
         public void MoveLeft(object sender, EventArgs e)
         {
-            if (!marioIsDead) { 
+            if (!marioIsDead)
+            {
                 spriteXPos -= 3;
                 stateMachine.MoveLeft();
             }
@@ -88,7 +92,8 @@ namespace Lasagna
 
         public void MoveRight(object sender, EventArgs e)
         {
-            if (!marioIsDead) { 
+            if (!marioIsDead)
+            {
                 spriteXPos += 3;
                 stateMachine.MoveRight();
             }
@@ -97,7 +102,8 @@ namespace Lasagna
 
         public void Crouch(object sender, EventArgs e)
         {
-            if (!marioIsDead) { 
+            if (!marioIsDead)
+            {
                 spriteYPos += 3;
                 stateMachine.Crouch();
             }
@@ -105,7 +111,8 @@ namespace Lasagna
 
         public void Jump(object sender, EventArgs e)
         {
-            if (!marioIsDead) { 
+            if (!marioIsDead)
+            {
                 spriteYPos -= 3;
                 stateMachine.Jump();
             }
@@ -147,7 +154,7 @@ namespace Lasagna
         public void OnCollisionResponse(ICollider otherCollider, CollisionSide side)
         {
             if (otherCollider is IPlayer)
-                marioCollisionHandler.OnCollisionResponse((IPlayer) otherCollider, side);
+                marioCollisionHandler.OnCollisionResponse((IPlayer)otherCollider, side);
             else if (otherCollider is IEnemy)
                 marioCollisionHandler.OnCollisionResponse((IEnemy)otherCollider, side);
             else if (otherCollider is ITile)

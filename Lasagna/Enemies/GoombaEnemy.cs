@@ -40,9 +40,7 @@ namespace Lasagna
 
         protected override void OnCollisionResponse(IPlayer mario, CollisionSide side)
         {
-            //if(mario.isStar())
-                //ChangeState(EnemyState.Dead);
-            if (side.Equals(CollisionSide.Top))
+            if (side.Equals(CollisionSide.Top) || (mario is Mario && ((Mario)mario).StarPowered))
             {
                 ChangeState(EnemyState.Dead);
             }
