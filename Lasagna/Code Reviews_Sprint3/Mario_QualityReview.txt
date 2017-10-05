@@ -1,0 +1,11 @@
+﻿Tim Williams
+10/04/2017
+Sprint3
+Mario.cs
+Jon Reed
+
+Avoid commented out code, and try to reduce logic branching.
+What will happen when we add in physics for jumping? 
+Currently update and state handling is confusing, seems to rely on teleporting mario around a lot.
+
+If we add in jumping, this would break because of the way collisions teleport the sprite

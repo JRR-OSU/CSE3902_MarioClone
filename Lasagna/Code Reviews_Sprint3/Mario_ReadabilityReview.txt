@@ -1,0 +1,11 @@
+﻿Tim Williams
+10/04/2017
+Sprint3
+Mario.cs
+Jon Reed
+5 minutes
+
+Methods and fields are fairly clearly named.
+
+Try and reduce number of if statements, it makes the code slightly less readable. 
+Try to reduce logic branching and have a bit more abstraction by splitting statements out to methods.
