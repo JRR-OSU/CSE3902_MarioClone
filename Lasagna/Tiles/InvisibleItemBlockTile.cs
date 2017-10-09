@@ -19,10 +19,16 @@ namespace Lasagna
         {
             get
             {
+                Rectangle properties = new Rectangle();
                 if (currentState == BlockState.Invisible)
-                    return new Rectangle(base.PosX, base.PosY + CurrentSprite.Height, CurrentSprite.Width, 0);
+                {
+                    properties = new Rectangle(base.PosX, base.PosY + CurrentSprite.Height, CurrentSprite.Width, 0);
+                }
                 else
-                    return new Rectangle(base.PosX, base.PosY, CurrentSprite.Width, CurrentSprite.Height);
+                {
+                    properties = new Rectangle(base.PosX, base.PosY, CurrentSprite.Width, CurrentSprite.Height);
+                }
+                return properties;
             }
         }
 
@@ -66,15 +72,6 @@ namespace Lasagna
                 currentState = BlockState.Invisible;
             }
 
-        }
-        public override int GetState()
-        {
-            if (currentState == BlockState.Invisible)
-                return 0;
-            else
-            {
-                return 1;
-            }
         }
 
         protected override void OnCollisionResponse(IPlayer Mario, CollisionSide side)

@@ -15,15 +15,21 @@ namespace Lasagna
 
         private BlockState currentState;
         private ISprite idleSprite = TileSpriteFactory.Instance.CreateSprite_BreakableBrick();
-        private ISprite breakingSprite; //Reserved for breaking tile sprite.
+        //private ISprite breakingSprite; //Reserved for breaking tile sprite.
         public override Rectangle Properties
         {
             get
             {
+                Rectangle properties = new Rectangle();
                 if (CurrentSprite == null || currentState == BlockState.Broken)
-                    return Rectangle.Empty;
+                {
+                    properties = Rectangle.Empty;
+                }
                 else
-                    return new Rectangle(base.PosX, base.PosY, CurrentSprite.Width, CurrentSprite.Height);
+                {
+                    properties = new Rectangle(base.PosX, base.PosY, CurrentSprite.Width, CurrentSprite.Height);
+                }
+                return properties;
             }
         }
 

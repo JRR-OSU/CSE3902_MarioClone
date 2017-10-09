@@ -32,7 +32,7 @@
 
         protected override void OnCollisionResponse(IItem Item, CollisionSide side)
         {
-            if (side.Equals(CollisionSide.Right))
+            if (side.Equals(CollisionSide.Right) && this.currentState == FireballStates.Idle)
             {
                 this.ChangeState();
             }
