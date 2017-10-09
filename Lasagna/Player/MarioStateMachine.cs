@@ -91,7 +91,8 @@ namespace Lasagna
             }
         }
 
-        public void Fire()
+        
+        public void SetFireState()
         {
             canGrow = false;
             if (marioMovement == MarioMovement.Die)

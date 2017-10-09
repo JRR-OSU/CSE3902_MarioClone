@@ -29,7 +29,7 @@ namespace Lasagna
 
             if (item is FireFlowerItem)
             {
-                state.Fire();
+                state.SetFireState();
             }
             else if (item is GrowMushroomItem)
             {
