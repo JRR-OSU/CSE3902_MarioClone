@@ -60,9 +60,25 @@ namespace Lasagna
 
         public void OnCollisionResponse(IEnemy enemy, CollisionSide side)
         {
-            if (state.isStar() || (enemy is GoombaEnemy && enemy.GetRectangle.Height <= 16) || (enemy is KoopaEnemy && enemy.GetRectangle.Height <= 40)) // if star or enemy is dead
+            if (state.isStar() || (enemy is GoombaEnemy && enemy.GetRectangle.Height <= 16) || (enemy is KoopaEnemy && enemy.GetRectangle.Height <= 40))// if star or enemy is dead
+            {
+                switch (side)
+                {
+                    case CollisionSide.Bottom:
+                        mario.SetPosition(mario.GetRect.X, (mario.GetRect.Y - enemy.GetRectangle.Height)); 
+                        break;
+                    case CollisionSide.Top:
+                        mario.SetPosition(mario.GetRect.X, (mario.GetRect.Y + mario.GetRect.Height));
+                        break;
+                    case CollisionSide.Left:
+                        mario.SetPosition(mario.GetRect.X + mario.GetRect.Width / 2, mario.GetRect.Y);
+                        break;
+                    case CollisionSide.Right:
+                        mario.SetPosition(mario.GetRect.X - mario.GetRect.Width / 2, mario.GetRect.Y);
+                        break;
+                }
                 return;
-
+            }
             switch (side)
             {
                 case CollisionSide.Bottom:
