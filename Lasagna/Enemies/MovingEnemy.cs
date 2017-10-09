@@ -34,10 +34,14 @@ namespace Lasagna
         {
             get
             {
-                if (CurrentSprite == null)
-                    return Rectangle.Empty;
-                else
-                    return new Rectangle(posX, posY, CurrentSprite.Width, CurrentSprite.Height);
+                Rectangle returnValue = new Rectangle();
+                if (CurrentSprite == null){
+                    returnValue = Rectangle.Empty;
+                }
+                else{
+                    returnValue = Rectangle(posX, posY, CurrentSprite.Width, CurrentSprite.Height);
+                }
+                return returnValue;
             }
         }
 
