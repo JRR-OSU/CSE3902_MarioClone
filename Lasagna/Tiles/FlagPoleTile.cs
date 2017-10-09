@@ -65,6 +65,10 @@ namespace Lasagna
             if (flagSprite != null)
                 flagSprite.Update(gameTime, posX + flagOffsetX, posY + flagOffsetY);
         }
+        public virtual void Update(IPlayer player, GameTime gameTime)
+        {
+            return;
+        }
 
         public void Draw(SpriteBatch spriteBatch)
         {

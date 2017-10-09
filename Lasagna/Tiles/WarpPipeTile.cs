@@ -60,7 +60,10 @@ namespace Lasagna
                 }
             }
         }
-
+        public virtual void Update(IPlayer player, GameTime gameTime)
+        {
+            return;
+        }
         public void Draw(SpriteBatch spriteBatch)
         {
             if (pipeTipSprite != null)

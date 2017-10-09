@@ -60,8 +60,21 @@ namespace Lasagna
                 levelBackground.Update(gameTime, 0, 0);
 
             foreach (ITile tile in tiles)
-                if (tile != null)
-                    tile.Update(gameTime);
+                if (tile != null) {
+                    if (!(tile is InvisibleItemBlockTile)){
+                        tile.Update(gameTime);
+                    }
+                    //If the tile is an invisible block, then use a different update method.
+                    else
+                    {
+                        foreach (IPlayer player in players)
+                            if (player != null)
+                            {
+                                tile.Update(player, gameTime);
+                            }
+                                
+                    }
+                }
             foreach (IProjectile projectile in projectiles)
                 if (projectile != null)
                     projectile.Update(gameTime);

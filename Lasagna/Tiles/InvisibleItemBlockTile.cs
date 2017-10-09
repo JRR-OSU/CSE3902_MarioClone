@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using System;
-using System.Diagnostics;
 
 namespace Lasagna
 {
@@ -16,24 +15,6 @@ namespace Lasagna
         private BlockState currentState;
         private ISprite visibleSprite = TileSpriteFactory.Instance.CreateSprite_ItemBlockUsed();
         private bool CollidedWithThreeSides = false;
-
-        /*public override Rectangle Bounds
-        {
-            get
-            {
-                Rectangle properties = new Rectangle();
-                if (currentState == BlockState.Invisible)
-                {
-                    properties = new Rectangle(base.PosX, base.PosY, CurrentSprite.Width, CurrentSprite.Height - 10);
-                }
-                else
-                {
-                    properties = new Rectangle(base.PosX, base.PosY, CurrentSprite.Width, CurrentSprite.Height);
-                }
-                return properties;
-            }
-        }
-        */
 
         public override bool MarioCollidedWithThreeSides() { return this.CollidedWithThreeSides; }
 
@@ -50,11 +31,17 @@ namespace Lasagna
             MarioEvents.OnReset += ChangeToInvisible;
         }
 
-        public override void Update(GameTime gameTime)
+        public override void Update(IPlayer Mario, GameTime gameTime)
         {
             //Only call base function if we're visible. Else draw nothing.
-            if (currentState != BlockState.Invisible)
+            if (currentState != BlockState.Invisible) { 
                 base.Update(gameTime);
+            }
+            //Once the Mario is lower than the block, toggle the collision status back.
+            if (Mario.Bounds.Y > this.CurrentSprite.Height + base.PosY)
+            {
+                this.CollidedWithThreeSides = false;
+            }
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -81,17 +68,13 @@ namespace Lasagna
 
         protected override void OnCollisionResponse(IPlayer Mario, CollisionSide side)
         {
+            //If the Mario hit the invisible block from top, left and right sides, toggle the collision status to true.
             if (this.currentState.Equals(BlockState.Invisible) && (side.Equals(CollisionSide.Top) ||
                 side.Equals(CollisionSide.Left) || side.Equals(CollisionSide.Right)))
             {
                 this.CollidedWithThreeSides = true;
             }
-            if (this.currentState.Equals(BlockState.Invisible) &&
-                (Mario.Bounds.Y > base.PosY + CurrentSprite.Height))
-            {
-                Debug.WriteLine(this.CollidedWithThreeSides);
-                this.CollidedWithThreeSides = false;
-            }
+            //If the Mario hit the invisible block from the bottom, then change the state of the block.
             if (this.currentState.Equals(BlockState.Invisible) && side.Equals(CollisionSide.Bottom) && 
                 this.CollidedWithThreeSides == false)
             {

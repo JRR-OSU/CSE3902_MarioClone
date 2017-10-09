@@ -44,6 +44,7 @@ namespace Lasagna
 
         public void OnCollisionResponse(ITile tile, CollisionSide side)
         {
+            //If the Mario hits the invisible block from the top, left and right sides of the block, do nothing.
             if (tile is InvisibleItemBlockTile && ((InvisibleItemBlockTile)tile).MarioCollidedWithThreeSides())
             {
                 return;
