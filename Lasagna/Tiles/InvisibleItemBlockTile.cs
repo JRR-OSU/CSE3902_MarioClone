@@ -14,6 +14,7 @@ namespace Lasagna
 
         private BlockState currentState;
         private ISprite visibleSprite = TileSpriteFactory.Instance.CreateSprite_ItemBlockUsed();
+        public bool CollidedWithThreeSides = false;
 
         public override Rectangle Bounds
         {
@@ -31,6 +32,8 @@ namespace Lasagna
                 return properties;
             }
         }
+
+        public override bool MarioCollidedWithThreeSides() { return this.CollidedWithThreeSides; }
 
         public bool IsVisible
         {
@@ -76,7 +79,13 @@ namespace Lasagna
 
         protected override void OnCollisionResponse(IPlayer Mario, CollisionSide side)
         {
-            if (this.currentState.Equals(BlockState.Invisible) && side.Equals(CollisionSide.Bottom))
+            if (this.currentState.Equals(BlockState.Invisible) && (side.Equals(CollisionSide.Top) ||
+                side.Equals(CollisionSide.Left) || side.Equals(CollisionSide.Right)))
+            {
+                this.CollidedWithThreeSides = true;
+            }
+            if (this.currentState.Equals(BlockState.Invisible) && side.Equals(CollisionSide.Bottom) && 
+                this.CollidedWithThreeSides == false)
             {
                 this.ChangeState();
             }

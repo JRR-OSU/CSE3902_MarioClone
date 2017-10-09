@@ -8,5 +8,6 @@ namespace Lasagna
         void Update(GameTime gameTime);
         void Draw(SpriteBatch spriteBatch);
         void ChangeState();
+        bool MarioCollidedWithThreeSides();
     }
 }

@@ -23,6 +23,7 @@ namespace Lasagna
             posY = spawnPosY;
         }
 
+        public abstract bool MarioCollidedWithThreeSides();
         public virtual void Update(GameTime gameTime)
         {
             if (currentSprite != null)
