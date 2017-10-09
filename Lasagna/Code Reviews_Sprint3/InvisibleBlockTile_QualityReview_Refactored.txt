@@ -1,0 +1,11 @@
+﻿Yiwei Zhang
+10/09/2017
+Sprint 3
+InvisibleBlockTile.cs - Refactored
+Zeyu Li
+5 minutes
+
+ChangeState() methods still toggle from visible state to invisible state.
+Fix the two methods with same functionality problem.
+Fix a potential problem that Mario may mistakly trigger invisible blocks when he drops through the blocks.
+Overall code has high cohesion and low coupling after fixing the warnings.

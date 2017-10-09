@@ -141,6 +141,8 @@
     <Content Include="Code Reviews_Sprint3\InvisibleItemBlock_QualityReview.txt" />
     <Content Include="Code Reviews_Sprint3\Mario_QualityReview.txt" />
     <Content Include="Code Reviews_Sprint3\Mario_ReadabilityReview.txt" />
+    <Content Include="Code Reviews_Sprint3\InvisibleBlockTile_ReadbilityReview_Refactored.txt" />
+    <Content Include="Code Reviews_Sprint3\InvisibleBlockTile_QualityReview_Refactored.txt" />
     <Content Include="Icon.ico" />
     <Content Include="Level XML\Mario_1-1.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
