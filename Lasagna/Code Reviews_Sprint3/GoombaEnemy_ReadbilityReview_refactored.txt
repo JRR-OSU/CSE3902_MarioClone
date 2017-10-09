@@ -1,0 +1,8 @@
+﻿Jon Reed
+10/09/2017
+Sprint 3
+GoombaEnemy.cs - Refactored
+Yiwei Zhang
+5 minutes
+
+The code is still very readable. The code is also now free of code smells, and overall more cohesive. The collision is now working properly.
