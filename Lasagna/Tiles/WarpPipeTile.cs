@@ -15,6 +15,10 @@ namespace Lasagna
         private int pipeBaseHeight;
         public Rectangle Bounds { get { return new Rectangle(this.posX, this.posY, this.pipeTipSprite.Width, this.pipeTipHeight + this.pipeBaseHeight * this.height); } }
 
+        public virtual bool MarioCollidedWithThreeSides()
+        {
+            return true;
+        }
         public WarpPipeTile(int spawnPosX, int spawnPosY, int pipeHeight)
         {
             posX = spawnPosX;

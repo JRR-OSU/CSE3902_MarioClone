@@ -42,22 +42,29 @@ namespace Lasagna
 
         }
 
-        public void OnCollisionResponse(ICollider tile, CollisionSide side)
+        public void OnCollisionResponse(ITile tile, CollisionSide side)
         {
-            switch (side)
+            if (tile is InvisibleItemBlockTile && ((InvisibleItemBlockTile)tile).MarioCollidedWithThreeSides())
             {
-                case CollisionSide.Bottom:
-                    mario.SetPosition(mario.Bounds.X, (tile.Bounds.Y - mario.Bounds.Height));
-                    break;
-                case CollisionSide.Top:
-                    mario.SetPosition(mario.Bounds.X, (tile.Bounds.Y + tile.Bounds.Height));
-                    break;
-                case CollisionSide.Left:
-                    mario.SetPosition(tile.Bounds.X + tile.Bounds.Width + 3, mario.Bounds.Y);
-                    break;
-                case CollisionSide.Right:
-                    mario.SetPosition(tile.Bounds.X - mario.Bounds.Width - 3, mario.Bounds.Y);
-                    break;
+                return;
+            }
+            else
+            {
+                switch (side)
+                {
+                    case CollisionSide.Bottom:
+                        mario.SetPosition(mario.Bounds.X, (tile.Bounds.Y - mario.Bounds.Height));
+                        break;
+                    case CollisionSide.Top:
+                        mario.SetPosition(mario.Bounds.X, (tile.Bounds.Y + tile.Bounds.Height));
+                        break;
+                    case CollisionSide.Left:
+                        mario.SetPosition(tile.Bounds.X + tile.Bounds.Width + 3, mario.Bounds.Y);
+                        break;
+                    case CollisionSide.Right:
+                        mario.SetPosition(tile.Bounds.X - mario.Bounds.Width - 3, mario.Bounds.Y);
+                        break;
+                }
             }
 
         }
