@@ -9,6 +9,16 @@ namespace Lasagna
         private int posX;
         private int posY;
 
+        public Rectangle Bounds
+        {
+            get
+            {
+                if (currentSprite != null)
+                    return new Rectangle(posX, posY, currentSprite.Width, currentSprite.Height);
+                else
+                    return Rectangle.Empty;
+            }
+        }
         protected ISprite CurrentSprite
         {
             get { return currentSprite; }
@@ -36,7 +46,7 @@ namespace Lasagna
         }
 
         public abstract void ChangeState();
-        
+
         public void OnCollisionResponse(ICollider otherCollider, CollisionSide side)
         {
             if (otherCollider is IPlayer)

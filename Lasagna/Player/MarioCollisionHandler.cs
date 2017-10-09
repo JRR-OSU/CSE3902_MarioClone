@@ -43,16 +43,16 @@ namespace Lasagna
             switch (side)
             {
                 case CollisionSide.Bottom:
-                    mario.SetPosition(mario.GetRect.X, (tile.Properties.Y - mario.GetRect.Height));
+                    mario.SetPosition(mario.Bounds.X, (tile.Bounds.Y - mario.Bounds.Height));
                     break;
                 case CollisionSide.Top:
-                    mario.SetPosition(mario.GetRect.X, (tile.Properties.Y + tile.Properties.Height));
+                    mario.SetPosition(mario.Bounds.X, (tile.Bounds.Y + tile.Bounds.Height));
                     break;
                 case CollisionSide.Left:
-                    mario.SetPosition(tile.Properties.X + tile.Properties.Width + 3, mario.GetRect.Y);
+                    mario.SetPosition(tile.Bounds.X + tile.Bounds.Width + 3, mario.Bounds.Y);
                     break;
                 case CollisionSide.Right:
-                    mario.SetPosition(tile.Properties.X - mario.GetRect.Width - 3, mario.GetRect.Y);
+                    mario.SetPosition(tile.Bounds.X - mario.Bounds.Width - 3, mario.Bounds.Y);
                     break;
             }
 
@@ -60,21 +60,21 @@ namespace Lasagna
 
         public void OnCollisionResponse(IEnemy enemy, CollisionSide side)
         {
-            if (state.isStar() || (enemy is GoombaEnemy && enemy.GetRectangle.Height <= 16) || (enemy is KoopaEnemy && enemy.GetRectangle.Height <= 40))// if star or enemy is dead
+            if (state.isStar() || (enemy is GoombaEnemy && enemy.Bounds.Height <= 16) || (enemy is KoopaEnemy && enemy.Bounds.Height <= 40))// if star or enemy is dead
             {
                 switch (side)
                 {
                     case CollisionSide.Bottom:
-                        mario.SetPosition(mario.GetRect.X, (mario.GetRect.Y - enemy.GetRectangle.Height)); 
+                        mario.SetPosition(mario.Bounds.X, (mario.Bounds.Y - enemy.Bounds.Height)); 
                         break;
                     case CollisionSide.Top:
-                        mario.SetPosition(mario.GetRect.X, (mario.GetRect.Y + mario.GetRect.Height));
+                        mario.SetPosition(mario.Bounds.X, (mario.Bounds.Y + mario.Bounds.Height));
                         break;
                     case CollisionSide.Left:
-                        mario.SetPosition(mario.GetRect.X + mario.GetRect.Width / 2, mario.GetRect.Y);
+                        mario.SetPosition(mario.Bounds.X + mario.Bounds.Width / 2, mario.Bounds.Y);
                         break;
                     case CollisionSide.Right:
-                        mario.SetPosition(mario.GetRect.X - mario.GetRect.Width / 2, mario.GetRect.Y);
+                        mario.SetPosition(mario.Bounds.X - mario.Bounds.Width / 2, mario.Bounds.Y);
                         break;
                 }
                 return;
@@ -82,19 +82,19 @@ namespace Lasagna
             switch (side)
             {
                 case CollisionSide.Bottom:
-                    mario.SetPosition(mario.GetRect.X, (mario.GetRect.Y - enemy.GetRectangle.Height)); // Jump effect if landing on top of an enemy
+                    mario.SetPosition(mario.Bounds.X, (mario.Bounds.Y - enemy.Bounds.Height)); // Jump effect if landing on top of an enemy
                     break;
                 case CollisionSide.Top:
                     state.DamageMario();
-                    mario.SetPosition(mario.GetRect.X, (mario.GetRect.Y + mario.GetRect.Height));
+                    mario.SetPosition(mario.Bounds.X, (mario.Bounds.Y + mario.Bounds.Height));
                     break;
                 case CollisionSide.Left:
                     state.DamageMario();
-                    mario.SetPosition(mario.GetRect.X + mario.GetRect.Width/2, mario.GetRect.Y);
+                    mario.SetPosition(mario.Bounds.X + mario.Bounds.Width/2, mario.Bounds.Y);
                     break;
                 case CollisionSide.Right:
                     state.DamageMario();
-                    mario.SetPosition(mario.GetRect.X - mario.GetRect.Width/2, mario.GetRect.Y);
+                    mario.SetPosition(mario.Bounds.X - mario.Bounds.Width/2, mario.Bounds.Y);
                     break;
             }
 

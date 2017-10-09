@@ -2,12 +2,12 @@
 {
     public class MissileProjectile : BaseProjectile
     {
-        private ISprite missileSprite; //Reserved for missle sprite.
+       // private ISprite missileSprite; //Reserved for missle sprite.
 
         public MissileProjectile(int spawnPosX, int spawnPosY)
             : base(spawnPosX, spawnPosY)
         {
-            CurrentSprite = missileSprite;
+            //CurrentSprite = missileSprite;
         }
 
         public override void ChangeState()

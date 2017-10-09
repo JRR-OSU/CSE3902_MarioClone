@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace Lasagna
 {
@@ -20,15 +21,35 @@ namespace Lasagna
         }
 
         //By the interfaces, we know IPlayer, IEnemy, ITile, and IItem are all IColliders as well.
-        public void Update(List<IPlayer> players, List<IEnemy> enemies, List<ITile> tiles, List<IItem> items)
+        public void Update(ReadOnlyCollection<IPlayer> players, ReadOnlyCollection<IEnemy> enemies, ReadOnlyCollection<ITile> tiles, ReadOnlyCollection<IItem> items)
         {
+            //Players vs. Tiles, Enemies, Items.
+            foreach (IPlayer player in players)
+            {
+                CheckAllCollisions<ITile>(player, player.Bounds, tiles);
+                CheckAllCollisions<IEnemy>(player, player.Bounds, enemies);
+                CheckAllCollisions<IItem>(player, player.Bounds, items);
+            }
+
             //Tiles are static, so don't need to check against themselves.
+            //Tiles vs. Enemies, Items.
             foreach (ITile tile in tiles)
+            {
+                CheckAllCollisions<IEnemy>(tile, tile.Bounds, enemies);
+                CheckAllCollisions<IItem>(tile, tile.Bounds, items);
+            }
+
+            //Enemies vs items
+            foreach (IEnemy enemy in enemies)
+                CheckAllCollisions<IItem>(enemy, enemy.Bounds, items);
+
+            //Tiles are static, so don't need to check against themselves.
+            /*foreach (ITile tile in tiles)
             {
                 CollisionSide tileSide, otherColliderSide;
                 foreach (IPlayer player in players)
                 {
-                    if (CheckCollision(tile.Properties, player.GetRect, out tileSide, out otherColliderSide))
+                    if (CheckCollision(tile.Bounds, player.Bounds, out tileSide, out otherColliderSide))
                     {
                         //Invisible blocks can only be collided if they're hit from the bottom
                         if (tile is InvisibleItemBlockTile && !tileSide.Equals(CollisionSide.Bottom) && !otherColliderSide.Equals(CollisionSide.Top) && !((InvisibleItemBlockTile)tile).IsVisible)
@@ -40,7 +61,7 @@ namespace Lasagna
                 }
                 foreach (IEnemy enemy in enemies)
                 {
-                    if (CheckCollision(tile.Properties, enemy.GetRectangle, out tileSide, out otherColliderSide))
+                    if (CheckCollision(tile.Bounds, enemy.Bounds, out tileSide, out otherColliderSide))
                     {
                         tile.OnCollisionResponse(enemy, tileSide);
                         enemy.OnCollisionResponse(tile, otherColliderSide);
@@ -48,7 +69,7 @@ namespace Lasagna
                 }
                 foreach (IItem item in items)
                 {
-                    if (CheckCollision(tile.Properties, item.GetRectangle, out tileSide, out otherColliderSide))
+                    if (CheckCollision(tile.Bounds, item.Bounds, out tileSide, out otherColliderSide))
                     {
                         tile.OnCollisionResponse(item, tileSide);
                         item.OnCollisionResponse(tile, otherColliderSide);
@@ -62,7 +83,7 @@ namespace Lasagna
                 CollisionSide playerSide, otherColliderSide;
                 foreach (IEnemy enemy in enemies)
                 {
-                    if (CheckCollision(player.GetRect, enemy.GetRectangle, out playerSide, out otherColliderSide))
+                    if (CheckCollision(player.Bounds, enemy.Bounds, out playerSide, out otherColliderSide))
                     {
                         player.OnCollisionResponse(enemy, playerSide);
                         enemy.OnCollisionResponse(player, otherColliderSide);
@@ -70,7 +91,7 @@ namespace Lasagna
                 }
                 foreach (IItem item in items)
                 {
-                    if (CheckCollision(player.GetRect, item.GetRectangle, out playerSide, out otherColliderSide))
+                    if (CheckCollision(player.Bounds, item.Bounds, out playerSide, out otherColliderSide))
                     {
                         player.OnCollisionResponse(item, playerSide);
                         item.OnCollisionResponse(player, otherColliderSide);
@@ -84,20 +105,52 @@ namespace Lasagna
                 CollisionSide enemySide, otherColliderSide;
                 foreach (IItem item in items)
                 {
-                    if (CheckCollision(enemy.GetRectangle, item.GetRectangle, out enemySide, out otherColliderSide))
+                    if (CheckCollision(enemy.Bounds, item.Bounds, out enemySide, out otherColliderSide))
                     {
                         enemy.OnCollisionResponse(item, enemySide);
                         item.OnCollisionResponse(enemy, otherColliderSide);
                     }
                 }
+            }*/
+        }
+
+        private void CheckAllCollisions<T>(ICollider sourceCollider, Rectangle sourceRect, ReadOnlyCollection<T> targetColliders)
+        {
+            if (!typeof(ICollider).IsAssignableFrom(typeof(T)) || sourceCollider == null
+                || sourceRect == Rectangle.Empty || targetColliders == null)
+                return;
+
+            CollisionSide sourceSide, targetSide;
+            
+            foreach (ICollider col in targetColliders)
+            {
+                if (CheckCollision(sourceRect, col.Bounds, out sourceSide, out targetSide))
+                {
+                    if (!CheckInvalidInvisibleCollision(sourceCollider, col, sourceSide, targetSide))
+                        continue;
+
+                    sourceCollider.OnCollisionResponse(col, sourceSide);
+                    col.OnCollisionResponse(sourceCollider, targetSide);
+                }
             }
+        }
+
+        //Checks if either part of a collision is an invisible item block, and if so returns if the collision is valid.
+        //Invisible blocks can only be collided if they're hit from the bottom
+        private bool CheckInvalidInvisibleCollision(ICollider sourceCollider, ICollider targetCollider, CollisionSide sourceSide, CollisionSide targetSide)
+        {
+            if (sourceCollider is InvisibleItemBlockTile && (!sourceSide.Equals(CollisionSide.Bottom) || !targetSide.Equals(CollisionSide.Top)) && !((InvisibleItemBlockTile)sourceCollider).IsVisible)
+                return false;
+            else if (targetCollider is InvisibleItemBlockTile && (!targetSide.Equals(CollisionSide.Bottom) || !sourceSide.Equals(CollisionSide.Top)) && !((InvisibleItemBlockTile)targetCollider).IsVisible)
+                return false;
+            else
+                return true;
         }
 
         public bool CheckRectForCollisions(ICollider sourceCollider, Rectangle rect, List<IEnemy> enemies, List<ITile> tiles, out CollisionSide sourceSide)
         {
             bool collided = false;
             sourceSide = CollisionSide.None;
-            Rectangle overlap;
 
             foreach (IEnemy enemy in enemies)
             {
@@ -105,7 +158,7 @@ namespace Lasagna
                     continue;
 
                 CollisionSide enemySide;
-                if (CheckCollision(enemy.GetRectangle, rect, out enemySide, out sourceSide))
+                if (CheckCollision(enemy.Bounds, rect, out enemySide, out sourceSide))
                 {
                     sourceCollider.OnCollisionResponse(enemy, sourceSide);
                     enemy.OnCollisionResponse(sourceCollider, enemySide);
@@ -118,7 +171,7 @@ namespace Lasagna
                     continue;
 
                 CollisionSide tileSide;
-                if (CheckCollision(tile.Properties, rect, out tileSide, out sourceSide))
+                if (CheckCollision(tile.Bounds, rect, out tileSide, out sourceSide))
                 {
                     //Invisible blocks can only be collided if they're hit from the bottom
                     if (tile is InvisibleItemBlockTile && !tileSide.Equals(CollisionSide.Bottom) && !sourceSide.Equals(CollisionSide.Top) && !((InvisibleItemBlockTile)tile).IsVisible)

@@ -50,7 +50,7 @@ namespace Lasagna
 
         protected override void Update(GameTime gameTime)
         {
-            CollisionDetection.Instance.Update(players, enemies, tiles, items);
+            CollisionDetection.Instance.Update(players.AsReadOnly(), enemies.AsReadOnly(), tiles.AsReadOnly(), items.AsReadOnly());
 
             keyControl.Update();
             if (players != null && players.Count > 0)

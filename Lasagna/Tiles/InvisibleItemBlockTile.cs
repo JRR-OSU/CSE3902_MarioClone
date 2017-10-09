@@ -15,7 +15,7 @@ namespace Lasagna
         private BlockState currentState;
         private ISprite visibleSprite = TileSpriteFactory.Instance.CreateSprite_ItemBlockUsed();
 
-        public override Rectangle Properties
+        public override Rectangle Bounds
         {
             get
             {

@@ -34,7 +34,7 @@ namespace Lasagna
             MarioEvents.OnReset += ChangeToDefault;
         }
 
-        public Rectangle GetRectangle
+        public Rectangle Bounds
         {
             get
             {

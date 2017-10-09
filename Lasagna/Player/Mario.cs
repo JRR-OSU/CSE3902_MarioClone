@@ -21,7 +21,7 @@ namespace Lasagna
         public bool IsDead { get { return marioIsDead; } }
         public bool StarPowered { get { return stateMachine != null && stateMachine.StarPowered; } }
 
-        public Rectangle GetRect { get { return new Rectangle(spriteXPos, spriteYPos, GetCurrentSprite().Width, GetCurrentSprite().Height); } }
+        public Rectangle Bounds { get { return new Rectangle(spriteXPos, spriteYPos, GetCurrentSprite().Width, GetCurrentSprite().Height); } }
 
         /// <summary>
         /// These methods will just change state, the state machine will handle sprite changes

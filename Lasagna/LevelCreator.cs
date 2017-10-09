@@ -269,7 +269,7 @@ namespace Lasagna
                     rSpace = 0;
                 
                 //Add tile width to spacing
-                rSpace += tiles[0].Properties.Width;
+                rSpace += tiles[0].Bounds.Width;
 
                 //Spawn each subsequent tile
                 for (int i = 1; i <= rTimes; i++)

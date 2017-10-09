@@ -23,7 +23,7 @@ namespace Lasagna
 
             CollisionSide side;
             MouseState currentState = Mouse.GetState();
-            Rectangle playerRect = player.GetRect;
+            Rectangle playerRect = player.Bounds;
             playerRect.X = currentState.X;
             playerRect.Y = currentState.Y;
 
