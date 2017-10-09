@@ -51,15 +51,7 @@ namespace Lasagna
             }
 
         }
-        public int GetState()
-        {
-            if (currentState == BlockState.Idle)
-                return 0;
-            else
-            {
-                return 1;
-            }
-        }
+
         public void Update(GameTime gameTime)
         {
             ///TODO: If moving make flag move down
@@ -84,8 +76,11 @@ namespace Lasagna
                 OnCollisionResponse((IPlayer)otherCollider, side);
         }
 
-        private void OnCollisionResponse(IPlayer Mario, CollisionSide side)
+        private static void OnCollisionResponse(IPlayer Mario, CollisionSide side)
         {
+            if (Mario == null || side == CollisionSide.None)
+                return;
+
             //Reserved for moving flag down. (Need to be discussed.)
             return;
         }

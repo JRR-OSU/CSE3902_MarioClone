@@ -29,7 +29,6 @@ namespace Lasagna
         private Dictionary<MarioMovement, ISprite> smallStates = new Dictionary<MarioMovement, ISprite>();
         private Dictionary<MarioMovement, ISprite> bigStates = new Dictionary<MarioMovement, ISprite>();
         private Dictionary<MarioMovement, ISprite> fireStates = new Dictionary<MarioMovement, ISprite>();
-        private Dictionary<MarioMovement, ISprite> starStates = new Dictionary<MarioMovement, ISprite>();
 
         public MarioStateMachine(Mario player)
         {
@@ -67,15 +66,15 @@ namespace Lasagna
         {
             if (starPower)
                 return;
-            if(marioState == MarioState.Fire)
+            if (marioState == MarioState.Fire)
             {
                 marioState = MarioState.Big;
             }
-            else if(marioState == MarioState.Big)
+            else if (marioState == MarioState.Big)
             {
                 marioState = MarioState.Small;
             }
-            else if(marioState == MarioState.Small)
+            else if (marioState == MarioState.Small)
             {
                 mario.Die();
             }
@@ -101,12 +100,12 @@ namespace Lasagna
             currentSprite = fireStates[marioMovement];
         }
 
-        public void MarioFireProjectile()
+        public static void MarioFireProjectile()
         {
 
         }
 
-        public void GetFireflower()
+        public static void GetFireflower()
         {
             // Perhaps used for a transitional state
         }
@@ -305,13 +304,13 @@ namespace Lasagna
             }
         }
 
-        public ISprite GetCurrentSprite()
+        public ISprite CurrentSprite
         {
-            return currentSprite;
+            get { return currentSprite; }
         }
-        public MarioState GetState()
+        public MarioState CurrentState
         {
-            return marioState;
+            get { return marioState; }
         }
 
         public void Reset()

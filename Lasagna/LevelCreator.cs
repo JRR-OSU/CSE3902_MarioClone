@@ -201,7 +201,7 @@ namespace Lasagna
             return true;
         }
 
-        private bool TryGetLevelTypeFromEnum(string lType, out LevelType t)
+        private static bool TryGetLevelTypeFromEnum(string lType, out LevelType t)
         {
             t = 0;
             return !string.IsNullOrEmpty(lType) && Enum.TryParse(lType, out t);

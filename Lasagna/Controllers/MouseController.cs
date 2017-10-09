@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace Lasagna
 {
@@ -16,18 +17,17 @@ namespace Lasagna
             MarioEvents.OnToggleMouseController += ToggleMouseController;
         }
 
-        public void Update(IPlayer player, List<IEnemy> enemies, List<ITile> tiles)
+        public void Update(IPlayer player, ReadOnlyCollection<IEnemy> enemies, ReadOnlyCollection<ITile> tiles)
         {
             if (!enabled || player == null)
                 return;
-
-            CollisionSide side;
+            
             MouseState currentState = Mouse.GetState();
             Rectangle playerRect = player.Bounds;
             playerRect.X = currentState.X;
             playerRect.Y = currentState.Y;
 
-            if (!player.IsDead && !CollisionDetection.Instance.CheckRectForCollisions(player, playerRect, enemies, tiles, out side))
+            if (!player.IsDead && !CollisionDetection.CheckRectForCollisions(player, playerRect, enemies, tiles))
                 player.SetPosition(playerRect.X, playerRect.Y);
         }
 

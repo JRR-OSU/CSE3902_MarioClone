@@ -7,7 +7,6 @@ namespace Lasagna
 {
     public class MarioGame : Game
     {
-        private GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
         private KeyboardController keyControl;
         private MouseController mouseControl;
@@ -20,7 +19,7 @@ namespace Lasagna
 
         public MarioGame()
         {
-            graphics = new GraphicsDeviceManager(this);
+            new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
         }
 
@@ -50,11 +49,11 @@ namespace Lasagna
 
         protected override void Update(GameTime gameTime)
         {
-            CollisionDetection.Instance.Update(players.AsReadOnly(), enemies.AsReadOnly(), tiles.AsReadOnly(), items.AsReadOnly());
+            CollisionDetection.Update(players.AsReadOnly(), enemies.AsReadOnly(), tiles.AsReadOnly(), items.AsReadOnly());
 
             keyControl.Update();
             if (players != null && players.Count > 0)
-                mouseControl.Update(players[0], enemies, tiles);
+                mouseControl.Update(players[0], enemies.AsReadOnly(), tiles.AsReadOnly());
 
             if (levelBackground != null)
                 levelBackground.Update(gameTime, 0, 0);

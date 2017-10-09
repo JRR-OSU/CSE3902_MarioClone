@@ -37,11 +37,6 @@ namespace Lasagna
 
         public abstract void ChangeState();
 
-        public virtual int GetState()
-        {
-            return 0;
-        }
-
         public void OnCollisionResponse(ICollider otherCollider, CollisionSide side)
         {
             if (otherCollider is IPlayer)

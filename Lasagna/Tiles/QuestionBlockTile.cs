@@ -36,15 +36,6 @@ namespace Lasagna
                 currentState = BlockState.Idle;
             }
         }
-        public override int GetState()
-        {
-            if (currentState == BlockState.Idle)
-                return 0;
-            else
-            {
-                return 1;
-            }
-        }
 
         protected override void OnCollisionResponse(IPlayer Mario, CollisionSide side)
         {

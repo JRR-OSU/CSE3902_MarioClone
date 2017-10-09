@@ -55,7 +55,7 @@ namespace Lasagna
         }
         private ISprite GetCurrentSprite()
         {
-            return stateMachine.GetCurrentSprite();
+            return stateMachine.CurrentSprite;
         }
 
         private void Reset(object sender, EventArgs e)
@@ -73,12 +73,14 @@ namespace Lasagna
 
         public void MarioFireProjectile(object sender, EventArgs e)
         {
-            stateMachine.MarioFireProjectile();
+            MarioStateMachine.MarioFireProjectile();
+            //stateMachine.MarioFireProjectile();
         }
 
         public void GetFireflower()
         {
-            stateMachine.GetFireflower();
+            MarioStateMachine.GetFireflower();
+            //stateMachine.GetFireflower();
         }
 
         public void MoveLeft(object sender, EventArgs e)

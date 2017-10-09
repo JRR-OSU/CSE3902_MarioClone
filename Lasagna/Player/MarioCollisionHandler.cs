@@ -18,11 +18,15 @@ namespace Lasagna
         }
         public void OnCollisionResponse(IPlayer player, CollisionSide side)
         {
-            state.Reset();
+            if (player != null && side != CollisionSide.None)
+                state.Reset();
         }
 
         public void OnCollisionResponse(IItem item, CollisionSide side)
         {
+            if (item == null && side != CollisionSide.None)
+                return;
+
             if (item is FireFlowerItem)
             {
                 state.Fire();
@@ -38,7 +42,7 @@ namespace Lasagna
 
         }
 
-        public void OnCollisionResponse(ITile tile, CollisionSide side)
+        public void OnCollisionResponse(ICollider tile, CollisionSide side)
         {
             switch (side)
             {
@@ -65,7 +69,7 @@ namespace Lasagna
                 switch (side)
                 {
                     case CollisionSide.Bottom:
-                        mario.SetPosition(mario.Bounds.X, (mario.Bounds.Y - enemy.Bounds.Height)); 
+                        mario.SetPosition(mario.Bounds.X, (mario.Bounds.Y - enemy.Bounds.Height));
                         break;
                     case CollisionSide.Top:
                         mario.SetPosition(mario.Bounds.X, (mario.Bounds.Y + mario.Bounds.Height));
@@ -90,11 +94,11 @@ namespace Lasagna
                     break;
                 case CollisionSide.Left:
                     state.DamageMario();
-                    mario.SetPosition(mario.Bounds.X + mario.Bounds.Width/2, mario.Bounds.Y);
+                    mario.SetPosition(mario.Bounds.X + mario.Bounds.Width / 2, mario.Bounds.Y);
                     break;
                 case CollisionSide.Right:
                     state.DamageMario();
-                    mario.SetPosition(mario.Bounds.X - mario.Bounds.Width/2, mario.Bounds.Y);
+                    mario.SetPosition(mario.Bounds.X - mario.Bounds.Width / 2, mario.Bounds.Y);
                     break;
             }
 
