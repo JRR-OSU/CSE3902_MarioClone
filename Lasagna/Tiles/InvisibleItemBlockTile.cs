@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using System;
-using System.Threading;
+using System.Diagnostics;
 
 namespace Lasagna
 {
@@ -15,7 +15,7 @@ namespace Lasagna
 
         private BlockState currentState;
         private ISprite visibleSprite = TileSpriteFactory.Instance.CreateSprite_ItemBlockUsed();
-        public bool CollidedWithThreeSides = false;
+        private bool CollidedWithThreeSides = false;
 
         /*public override Rectangle Bounds
         {
@@ -86,17 +86,17 @@ namespace Lasagna
             {
                 this.CollidedWithThreeSides = true;
             }
-            if (this.currentState.Equals(BlockState.Invisible) && side.Equals(CollisionSide.Bottom) &&
-                this.CollidedWithThreeSides == true)
+            if (this.currentState.Equals(BlockState.Invisible) &&
+                (Mario.Bounds.Y > base.PosY + CurrentSprite.Height))
             {
+                Debug.WriteLine(this.CollidedWithThreeSides);
                 this.CollidedWithThreeSides = false;
             }
-            else if (this.currentState.Equals(BlockState.Invisible) && side.Equals(CollisionSide.Bottom) && 
+            if (this.currentState.Equals(BlockState.Invisible) && side.Equals(CollisionSide.Bottom) && 
                 this.CollidedWithThreeSides == false)
             {
                 this.ChangeState();
             }
-            
         }
 
         ///TODO: Temp methods for sprint3
