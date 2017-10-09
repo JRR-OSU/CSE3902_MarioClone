@@ -23,9 +23,7 @@ namespace Lasagna
 
         public Rectangle Bounds { get { return new Rectangle(spriteXPos, spriteYPos, GetCurrentSprite().Width, GetCurrentSprite().Height); } }
 
-        /// <summary>
-        /// These methods will just change state, the state machine will handle sprite changes
-        /// </summary>
+
         public Mario(int x, int y)
         {
             stateMachine = new MarioStateMachine(this);
@@ -35,12 +33,7 @@ namespace Lasagna
             MarioEvents.OnMoveRight += MoveRight;
             MarioEvents.OnJump += Jump;
             MarioEvents.OnCrouch += Crouch;
-            //TODO: Implement next sprint: MarioEvents.OnFire += MarioFireProjectile;
             MarioEvents.OnReset += Reset;
-            //MarioEvents.OnGetMushroom += Grow;
-            //MarioEvents.OnMarioDamage += Shrink;
-            // MarioEvents.OnMarioDie += Die;
-            // MarioEvents.OnGetFireFlower += FireState;
 
             spriteXPos = x;
             spriteYPos = y;
@@ -74,13 +67,11 @@ namespace Lasagna
         public static void MarioFireProjectile(object sender, EventArgs e)
         {
             MarioStateMachine.MarioFireProjectile();
-            //stateMachine.MarioFireProjectile();
         }
 
         public static void GetFireflower()
         {
             MarioStateMachine.GetFireflower();
-            //stateMachine.GetFireflower();
         }
 
         public void MoveLeft(object sender, EventArgs e)
@@ -125,12 +116,6 @@ namespace Lasagna
             stateMachine.Grow();
         }
 
-        /*TODO: Implement next sprint
-         public void FireState(object sender, EventArgs e)
-        {
-            stateMachine.Fire();
-        }*/
-
         public void Shrink(object sender, EventArgs e)
         {
             stateMachine.Shrink();
@@ -166,12 +151,8 @@ namespace Lasagna
                 marioCollisionHandler.OnCollisionResponse((IItem)otherCollider, side);
         }
 
-        public void Update(GameTime gameTime)
+        public void KeepMarioScreenBounds()
         {
-            if (Keyboard.GetState().GetPressedKeys().Length == 0) // Set idle if no key is pressed
-            {
-                SetIdleState();
-            }
             if (spriteXPos < 0) // Restrict mario to screen bounds
             {
                 spriteXPos = 0;
@@ -188,6 +169,17 @@ namespace Lasagna
             {
                 spriteYPos = 420;
             }
+        }
+
+        public void Update(GameTime gameTime)
+        {
+            if (Keyboard.GetState().GetPressedKeys().Length == 0) // Set idle if no key is pressed
+            {
+                SetIdleState();
+            }
+
+            KeepMarioScreenBounds();
+
             stateMachine.Update(gameTime, spriteXPos, spriteYPos);
 
         }

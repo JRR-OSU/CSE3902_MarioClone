@@ -66,17 +66,17 @@ namespace Lasagna
         {
             if (starPower)
                 return;
-            if (marioState == MarioState.Fire)
+            switch (marioState)
             {
-                marioState = MarioState.Big;
-            }
-            else if (marioState == MarioState.Big)
-            {
-                marioState = MarioState.Small;
-            }
-            else if (marioState == MarioState.Small)
-            {
-                mario.Die();
+                case MarioState.Big:
+                    marioState = MarioState.Small;
+                    break;
+                case MarioState.Fire:
+                    marioState = MarioState.Big;
+                    break;
+                case MarioState.Small:
+                    mario.Die();
+                    break;
             }
         }
         public void Grow()

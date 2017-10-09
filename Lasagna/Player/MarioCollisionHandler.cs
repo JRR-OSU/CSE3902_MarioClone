@@ -69,39 +69,40 @@ namespace Lasagna
                 switch (side)
                 {
                     case CollisionSide.Bottom:
-                        mario.SetPosition(mario.Bounds.X, (mario.Bounds.Y - enemy.Bounds.Height));
+                        mario.SetPosition(mario.Bounds.X, (enemy.Bounds.Y- mario.Bounds.Height));
                         break;
                     case CollisionSide.Top:
+                        mario.SetPosition(mario.Bounds.X, (enemy.Bounds.Y + enemy.Bounds.Height));
+                        break;
+                    case CollisionSide.Left:
+                        mario.SetPosition((enemy.Bounds.X + enemy.Bounds.Width) +3, mario.Bounds.Y);
+                        break;
+                    case CollisionSide.Right:
+                        mario.SetPosition((enemy.Bounds.X - enemy.Bounds.Width) - 3, mario.Bounds.Y);
+                        break;
+                }
+            }
+
+            else { 
+                switch (side)
+                {
+                    case CollisionSide.Bottom:
+                        mario.SetPosition(mario.Bounds.X, (mario.Bounds.Y - enemy.Bounds.Height)); // Jump effect if landing on top of an enemy
+                        break;
+                    case CollisionSide.Top:
+                        state.DamageMario();
                         mario.SetPosition(mario.Bounds.X, (mario.Bounds.Y + mario.Bounds.Height));
                         break;
                     case CollisionSide.Left:
+                        state.DamageMario();
                         mario.SetPosition(mario.Bounds.X + mario.Bounds.Width / 2, mario.Bounds.Y);
                         break;
                     case CollisionSide.Right:
+                        state.DamageMario();
                         mario.SetPosition(mario.Bounds.X - mario.Bounds.Width / 2, mario.Bounds.Y);
                         break;
                 }
-                return;
             }
-            switch (side)
-            {
-                case CollisionSide.Bottom:
-                    mario.SetPosition(mario.Bounds.X, (mario.Bounds.Y - enemy.Bounds.Height)); // Jump effect if landing on top of an enemy
-                    break;
-                case CollisionSide.Top:
-                    state.DamageMario();
-                    mario.SetPosition(mario.Bounds.X, (mario.Bounds.Y + mario.Bounds.Height));
-                    break;
-                case CollisionSide.Left:
-                    state.DamageMario();
-                    mario.SetPosition(mario.Bounds.X + mario.Bounds.Width / 2, mario.Bounds.Y);
-                    break;
-                case CollisionSide.Right:
-                    state.DamageMario();
-                    mario.SetPosition(mario.Bounds.X - mario.Bounds.Width / 2, mario.Bounds.Y);
-                    break;
-            }
-
 
         }
     }
