@@ -89,7 +89,8 @@ namespace Lasagna
             {
                 this.ChangeState();
             }
-            else if (this.currentState.Equals(BlockState.Invisible) && side.Equals(CollisionSide.None))
+            else if (this.currentState.Equals(BlockState.Invisible) && side.Equals(CollisionSide.None) &&
+                this.CollidedWithThreeSides == true)
             {
                 this.CollidedWithThreeSides = false;
             }
