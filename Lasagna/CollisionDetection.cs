@@ -5,7 +5,7 @@ using System.Collections.ObjectModel;
 
 namespace Lasagna
 {
-    public class CollisionDetection
+    public static class CollisionDetection
     {
         //By the interfaces, we know IPlayer, IEnemy, ITile, and IItem are all IColliders as well.
         public static void Update(ReadOnlyCollection<IPlayer> players, ReadOnlyCollection<IEnemy> enemies, ReadOnlyCollection<ITile> tiles, ReadOnlyCollection<IItem> items)

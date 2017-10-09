@@ -35,7 +35,7 @@ namespace Lasagna
             MarioEvents.OnMoveRight += MoveRight;
             MarioEvents.OnJump += Jump;
             MarioEvents.OnCrouch += Crouch;
-            MarioEvents.OnFire += MarioFireProjectile;
+            //TODO: Implement next sprint: MarioEvents.OnFire += MarioFireProjectile;
             MarioEvents.OnReset += Reset;
             //MarioEvents.OnGetMushroom += Grow;
             //MarioEvents.OnMarioDamage += Shrink;
@@ -71,13 +71,13 @@ namespace Lasagna
             stateMachine.SetIdleState();
         }
 
-        public void MarioFireProjectile(object sender, EventArgs e)
+        public static void MarioFireProjectile(object sender, EventArgs e)
         {
             MarioStateMachine.MarioFireProjectile();
             //stateMachine.MarioFireProjectile();
         }
 
-        public void GetFireflower()
+        public static void GetFireflower()
         {
             MarioStateMachine.GetFireflower();
             //stateMachine.GetFireflower();
@@ -125,10 +125,11 @@ namespace Lasagna
             stateMachine.Grow();
         }
 
-        public void FireState(object sender, EventArgs e)
+        /*TODO: Implement next sprint
+         public void FireState(object sender, EventArgs e)
         {
             stateMachine.Fire();
-        }
+        }*/
 
         public void Shrink(object sender, EventArgs e)
         {

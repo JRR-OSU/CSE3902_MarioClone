@@ -2,20 +2,19 @@
 
 namespace Lasagna
 {
-    public delegate void InputEventHandler(object sender, EventArgs e);
     public delegate void MarioEventHandler();
 
     //Class which contains all events for the project in one easy to locate place.
     public static class MarioEvents
     {
-        public static event InputEventHandler OnQuit;
-        public static event InputEventHandler OnReset;
-        public static event InputEventHandler OnMoveLeft;
-        public static event InputEventHandler OnMoveRight;
-        public static event InputEventHandler OnJump;
-        public static event InputEventHandler OnCrouch;
-        public static event InputEventHandler OnFire;
-        public static event InputEventHandler OnToggleMouseController;
+        public static event EventHandler<EventArgs> OnQuit;
+        public static event EventHandler<EventArgs> OnReset;
+        public static event EventHandler<EventArgs> OnMoveLeft;
+        public static event EventHandler<EventArgs> OnMoveRight;
+        public static event EventHandler<EventArgs> OnJump;
+        public static event EventHandler<EventArgs> OnCrouch;
+        //TODO: Implement next sprint: public static event EventHandler<EventArgs> OnFire;
+        public static event EventHandler<EventArgs> OnToggleMouseController;
 
         public static void Quit(object sender, EventArgs e)
         {
@@ -53,11 +52,12 @@ namespace Lasagna
                 OnCrouch(sender, e);
         }
 
-        public static void Fire(object sender, EventArgs e)
+        /*TODO: Implement next sprint
+          public static void Fire(object sender, EventArgs e)
         {
             if (OnFire != null)
                 OnFire(sender, e);
-        }
+        }*/
 
         public static void ToggleMouseController(object sender, EventArgs e)
         {

@@ -1,4 +1,6 @@
-﻿namespace Lasagna
+﻿using System;
+
+namespace Lasagna
 {
     public interface IController
     {
@@ -9,6 +11,6 @@
         void MoveRight();
         void Jump();
         void Crouch();
-        void Fire();
+       //IMPLEMENT NEXT SPRINT: void Fire;
     }
 }

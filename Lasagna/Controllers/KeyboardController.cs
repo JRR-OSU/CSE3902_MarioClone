@@ -24,7 +24,7 @@ namespace Lasagna
                 { new [] { Keys.Right, Keys.D }, MoveRight },
             };
         }
-
+        
         //Keys and what event they trigger
         private readonly Dictionary<Keys[], MarioEventHandler> onKeyDownEvents;
         private readonly Dictionary<Keys[], MarioEventHandler> onKeyHeldEvents;
@@ -85,11 +85,6 @@ namespace Lasagna
         public  void Crouch()
         {
             MarioEvents.Crouch(this, EventArgs.Empty);
-        }
-
-        public  void Fire()
-        {
-            MarioEvents.Fire(this, EventArgs.Empty);
         }
 
         public  void ToggleMouseController()
