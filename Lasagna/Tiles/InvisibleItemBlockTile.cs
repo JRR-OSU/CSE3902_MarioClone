@@ -89,6 +89,10 @@ namespace Lasagna
             {
                 this.ChangeState();
             }
+            else if (this.currentState.Equals(BlockState.Invisible) && side.Equals(CollisionSide.None))
+            {
+                this.CollidedWithThreeSides = false;
+            }
         }
 
         ///TODO: Temp methods for sprint3
