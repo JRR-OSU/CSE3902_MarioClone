@@ -1,0 +1,8 @@
+﻿Jon Reed
+10/09/2017
+Sprint 3
+GoombaEnemy.cs - Refactored
+Yiwei Zhang
+
+This source file looks largely the same as before, however now collision is working properly. 
+The code is extremely simple and easy to understand. The code exhibits good cohesion and good coupling. 
