@@ -61,7 +61,30 @@ namespace Lasagna
             mario = player;
         }
 
+        public void Grow()
+        {
+            if (canGrow)
+            {
+                marioState = MarioState.Big;
+                currentSprite = bigStates[marioMovement];
+            }
+        }
 
+        public void Shrink()
+        {
+            canGrow = true;
+            if (marioState == MarioState.Fire)
+                marioState = MarioState.Big;
+            else
+                marioState = MarioState.Small;
+            if (marioMovement == MarioMovement.CrouchLeft)
+                marioMovement = MarioMovement.IdleLeft;
+            else if (marioMovement == MarioMovement.CrouchRight)
+                marioMovement = MarioMovement.IdleRight;
+            else if (marioMovement == MarioMovement.Die)
+                marioMovement = MarioMovement.IdleRight;
+            currentSprite = smallStates[marioMovement];
+        }
         public void DamageMario()
         {
             if (starPower)
@@ -79,24 +102,9 @@ namespace Lasagna
                     break;
             }
         }
-        public void Grow()
-        {
-
-            if (marioMovement == MarioMovement.Die)
-                marioMovement = MarioMovement.IdleRight;
-            if (canGrow)
-            {
-                marioState = MarioState.Big;
-                currentSprite = bigStates[marioMovement];
-            }
-        }
-
-        
         public void SetFireState()
         {
             canGrow = false;
-            if (marioMovement == MarioMovement.Die)
-                marioMovement = MarioMovement.IdleRight;
             marioState = MarioState.Fire;
             currentSprite = fireStates[marioMovement];
         }
@@ -141,26 +149,16 @@ namespace Lasagna
         }
         public void MoveLeft()
         {
-            if (marioMovement == MarioMovement.Die)
-                return;
-            //if (marioMovement == MarioMovement.RunLeft)
-            //    marioMovement = MarioMovement.IdleLeft;
-            // else
             marioMovement = MarioMovement.RunLeft;
             SwitchCurrentSprite(marioMovement);
         }
 
         public void MoveRight()
         {
-            // if (marioMovement == MarioMovement.Die)
-            //     return;
-            //  if (marioMovement == MarioMovement.RunRight)
-            //      marioMovement = MarioMovement.IdleRight;
-            //  else
             marioMovement = MarioMovement.RunRight;
             SwitchCurrentSprite(marioMovement);
         }
-        public void HandleCrouch()
+        public void HandleCrouch() // Crouching has commented code as we removed this functionality until physics are implemented properly
         {
             if ((marioMovement == MarioMovement.RunLeft || marioMovement == MarioMovement.IdleLeft) && marioState != MarioState.Small)
             {
@@ -185,8 +183,6 @@ namespace Lasagna
         }
         public void Crouch()
         {
-            if (marioMovement == MarioMovement.Die)
-                return;
             HandleCrouch();
             SwitchCurrentSprite(marioMovement);
         }
@@ -214,28 +210,9 @@ namespace Lasagna
         }
         public void Jump()
         {
-            if (marioMovement == MarioMovement.Die)
-                return;
             HandleJump();
             SwitchCurrentSprite(marioMovement);
         }
-
-        public void Shrink()
-        {
-            canGrow = true;
-            if (marioState == MarioState.Fire)
-                marioState = MarioState.Big;
-            else
-                marioState = MarioState.Small;
-            if (marioMovement == MarioMovement.CrouchLeft)
-                marioMovement = MarioMovement.IdleLeft;
-            else if (marioMovement == MarioMovement.CrouchRight)
-                marioMovement = MarioMovement.IdleRight;
-            else if (marioMovement == MarioMovement.Die)
-                marioMovement = MarioMovement.IdleRight;
-            currentSprite = smallStates[marioMovement];
-        }
-
         public void Star()
         {
             starPower = true;
