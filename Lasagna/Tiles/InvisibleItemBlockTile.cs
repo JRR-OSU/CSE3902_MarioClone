@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using System;
+using System.Threading;
 
 namespace Lasagna
 {
@@ -16,14 +17,14 @@ namespace Lasagna
         private ISprite visibleSprite = TileSpriteFactory.Instance.CreateSprite_ItemBlockUsed();
         public bool CollidedWithThreeSides = false;
 
-        public override Rectangle Bounds
+        /*public override Rectangle Bounds
         {
             get
             {
                 Rectangle properties = new Rectangle();
                 if (currentState == BlockState.Invisible)
                 {
-                    properties = new Rectangle(base.PosX, base.PosY + CurrentSprite.Height, CurrentSprite.Width, 0);
+                    properties = new Rectangle(base.PosX, base.PosY, CurrentSprite.Width, CurrentSprite.Height - 10);
                 }
                 else
                 {
@@ -32,6 +33,7 @@ namespace Lasagna
                 return properties;
             }
         }
+        */
 
         public override bool MarioCollidedWithThreeSides() { return this.CollidedWithThreeSides; }
 
@@ -84,16 +86,17 @@ namespace Lasagna
             {
                 this.CollidedWithThreeSides = true;
             }
-            if (this.currentState.Equals(BlockState.Invisible) && side.Equals(CollisionSide.Bottom) && 
-                this.CollidedWithThreeSides == false)
-            {
-                this.ChangeState();
-            }
-            else if (this.currentState.Equals(BlockState.Invisible) && side.Equals(CollisionSide.None) &&
+            if (this.currentState.Equals(BlockState.Invisible) && side.Equals(CollisionSide.Bottom) &&
                 this.CollidedWithThreeSides == true)
             {
                 this.CollidedWithThreeSides = false;
             }
+            else if (this.currentState.Equals(BlockState.Invisible) && side.Equals(CollisionSide.Bottom) && 
+                this.CollidedWithThreeSides == false)
+            {
+                this.ChangeState();
+            }
+            
         }
 
         ///TODO: Temp methods for sprint3

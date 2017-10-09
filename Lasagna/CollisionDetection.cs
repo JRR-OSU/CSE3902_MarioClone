@@ -52,8 +52,9 @@ namespace Lasagna
             {
                 if (CheckCollision(sourceRect, col.Bounds, out sourceSide, out targetSide))
                 {
-                    if (!CheckInvalidInvisibleCollision(sourceCollider, col, sourceSide, targetSide))
+                    /*if (!CheckInvalidInvisibleCollision(sourceCollider, col, sourceSide, targetSide))
                         continue;
+                    */
 
                     sourceCollider.OnCollisionResponse(col, sourceSide);
                     col.OnCollisionResponse(sourceCollider, targetSide);
@@ -99,7 +100,7 @@ namespace Lasagna
 
         //Checks if either part of a collision is an invisible item block, and if so returns if the collision is valid.
         //Invisible blocks can only be collided if they're hit from the bottom
-        private static bool CheckInvalidInvisibleCollision(ICollider sourceCollider, ICollider targetCollider, CollisionSide sourceSide, CollisionSide targetSide)
+        /*private static bool CheckInvalidInvisibleCollision(ICollider sourceCollider, ICollider targetCollider, CollisionSide sourceSide, CollisionSide targetSide)
         {
             if (sourceCollider is InvisibleItemBlockTile && (!sourceSide.Equals(CollisionSide.Bottom) || !targetSide.Equals(CollisionSide.Top)) && !((InvisibleItemBlockTile)sourceCollider).IsVisible)
                 return false;
@@ -108,5 +109,6 @@ namespace Lasagna
             else
                 return true;
         }
+        */
     }
 }
