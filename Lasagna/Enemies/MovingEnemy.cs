@@ -39,7 +39,7 @@ namespace Lasagna
                     returnValue = Rectangle.Empty;
                 }
                 else{
-                    returnValue = Rectangle(posX, posY, CurrentSprite.Width, CurrentSprite.Height);
+                    returnValue = new Rectangle(posX, posY, CurrentSprite.Width, CurrentSprite.Height);
                 }
                 return returnValue;
             }
