@@ -20,10 +20,6 @@ namespace Lasagna
         private int flagOffsetY;
         public Rectangle Bounds { get { return new Rectangle(this.posX, this.posY, this.flagPoleSprite.Width, this.flagPoleSprite.Height); } }
 
-        public virtual bool MarioCollidedWithThreeSides()
-        {
-            return true;
-        }
         public FlagPoleTile(int spawnPosX, int spawnPosY)
         {
             posX = spawnPosX;
@@ -65,11 +61,7 @@ namespace Lasagna
             if (flagSprite != null)
                 flagSprite.Update(gameTime, posX + flagOffsetX, posY + flagOffsetY);
         }
-        public virtual void Update(IPlayer player, GameTime gameTime)
-        {
-            return;
-        }
-
+        
         public void Draw(SpriteBatch spriteBatch)
         {
             if (flagPoleSprite != null)

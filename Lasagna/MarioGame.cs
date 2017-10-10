@@ -70,7 +70,7 @@ namespace Lasagna
                         foreach (IPlayer player in players)
                             if (player != null)
                             {
-                                tile.Update(player, gameTime);
+                                ((InvisibleItemBlockTile)tile).Update(player, gameTime);
                             }
                                 
                     }

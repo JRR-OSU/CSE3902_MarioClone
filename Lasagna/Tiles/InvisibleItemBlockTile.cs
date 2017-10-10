@@ -16,7 +16,7 @@ namespace Lasagna
         private ISprite visibleSprite = TileSpriteFactory.Instance.CreateSprite_ItemBlockUsed();
         private bool CollidedWithThreeSides = false;
 
-        public override bool MarioCollidedWithThreeSides() { return this.CollidedWithThreeSides; }
+        public bool MarioCollidedWithThreeSides() { return this.CollidedWithThreeSides; }
 
         public bool IsVisible
         {
@@ -31,7 +31,7 @@ namespace Lasagna
             MarioEvents.OnReset += ChangeToInvisible;
         }
 
-        public override void Update(IPlayer Mario, GameTime gameTime)
+        public void Update(ICollider Mario, GameTime gameTime)
         {
             //Only call base function if we're visible. Else draw nothing.
             if (currentState != BlockState.Invisible) { 

@@ -22,20 +22,11 @@ namespace Lasagna
             posX = spawnPosX;
             posY = spawnPosY;
         }
-
-        public virtual bool MarioCollidedWithThreeSides() {
-            return true;
-        }
         public virtual void Update(GameTime gameTime)
         {
             if (currentSprite != null)
                 currentSprite.Update(gameTime, posX, posY);
         }
-        public virtual void Update(IPlayer player, GameTime gametime)
-        {
-            return;
-        }
-
         public virtual void Draw(SpriteBatch spriteBatch)
         {
             if (currentSprite != null)
