@@ -1,0 +1,13 @@
+﻿Zeyu Li
+10/09/2017
+Sprint 3
+MouseController.cs
+Timothy Williams
+
+The code looks good. It is a good choice that the code does not inherit from IController,
+because there are so many methods that not needed in the mouse controller part. Thus, 
+without inheritance, the code is still in high cohesion and low coupling.
+
+I think I cannot come up with an idea to improve this code, because it looks good for me.
+There is no extra part, and the editor used the simplest way to implement the code. It is
+a good example to learn how to write high quality code.

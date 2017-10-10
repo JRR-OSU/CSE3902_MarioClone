@@ -1,0 +1,12 @@
+﻿Zeyu Li
+10/09/2017
+Sprint 3
+MouseController.cs
+Timothy Williams
+5 minutes
+
+The code looks completely readable to me. All the methods are well defined, all the variables names
+are easy to understand. It is easy for a user to distinguish the functions of each variable and
+methods even without the comments. So although there are few comments in this code, it is still
+easy to understand. For instance, for the ToggleMouseController() method, it must be used to enable
+or disable mouse.
