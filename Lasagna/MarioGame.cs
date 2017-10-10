@@ -72,7 +72,6 @@ namespace Lasagna
                             {
                                 ((InvisibleItemBlockTile)tile).Update(player, gameTime);
                             }
-                                
                     }
                 }
             foreach (IProjectile projectile in projectiles)
