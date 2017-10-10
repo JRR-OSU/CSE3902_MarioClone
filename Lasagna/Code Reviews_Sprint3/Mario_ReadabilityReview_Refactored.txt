@@ -1,0 +1,10 @@
+﻿Tim Williams
+10/09/2017
+Sprint3
+Mario.cs
+Jon Reed
+5 minutes
+
+Methods and fields are fairly clearly named.
+
+Number of if statements looks better, I can't think of any improvements for readability, things are looking good.
