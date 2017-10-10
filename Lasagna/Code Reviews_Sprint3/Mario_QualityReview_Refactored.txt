@@ -1,0 +1,12 @@
+﻿Tim Williams
+10/09/2017
+Sprint3
+Mario.cs
+Jon Reed
+
+Avoid commented out code, and try to reduce logic branching.
+Adding physics in for jumping may break things,
+given the current teleportation method of dealing with collisions.
+
+May need to change this next sprint, besides that the quality of the code seems good, 
+cohesion and coupling are good.
