@@ -14,6 +14,7 @@ namespace Lasagna
                 { new [] { Keys.Q }, Quit },
                 { new [] { Keys.R }, Reset },
                 { new [] { Keys.M }, ToggleMouseController },
+                { new [] { Keys.X }, ShootFire }
             };
 
             onKeyHeldEvents = new Dictionary<Keys[], MarioEventHandler>
@@ -90,6 +91,11 @@ namespace Lasagna
         public  void ToggleMouseController()
         {
             MarioEvents.ToggleMouseController(this, EventArgs.Empty);
+        }
+
+        public void ShootFire()
+        {
+            MarioEvents.ShootFire(this, EventArgs.Empty);
         }
     }
 }

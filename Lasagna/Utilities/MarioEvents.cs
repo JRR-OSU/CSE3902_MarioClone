@@ -13,7 +13,7 @@ namespace Lasagna
         public static event EventHandler<EventArgs> OnMoveRight;
         public static event EventHandler<EventArgs> OnJump;
         public static event EventHandler<EventArgs> OnCrouch;
-        //TODO: Implement next sprint: public static event EventHandler<EventArgs> OnFire;
+        public static event EventHandler<EventArgs> OnShootFire;
         public static event EventHandler<EventArgs> OnToggleMouseController;
 
         public static void Quit(object sender, EventArgs e)
@@ -52,12 +52,12 @@ namespace Lasagna
                 OnCrouch(sender, e);
         }
 
-        /*TODO: Implement next sprint
-          public static void Fire(object sender, EventArgs e)
+        
+        public static void ShootFire(object sender, EventArgs e)
         {
-            if (OnFire != null)
-                OnFire(sender, e);
-        }*/
+            if (OnShootFire != null)
+                OnShootFire(sender, e);
+        }
 
         public static void ToggleMouseController(object sender, EventArgs e)
         {
