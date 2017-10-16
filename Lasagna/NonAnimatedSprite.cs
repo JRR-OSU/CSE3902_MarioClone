@@ -72,7 +72,7 @@ namespace Lasagna
             if (sourceRectangle == null)
                 sourceRectangle = new Rectangle();
             
-            spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, MarioGame.CameraTransform);
+            spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, MarioGame.Instance.CameraTransform);
             spriteBatch.Draw(sourceSpriteSheet, destinationRectangle, sourceRectangle, spriteTint);
             spriteBatch.End();
         }

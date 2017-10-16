@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 
 namespace Lasagna
 {
@@ -8,5 +9,6 @@ namespace Lasagna
         void Update(GameTime gameTime);
         void Draw(SpriteBatch spriteBatch);
         void ChangeState();
+        void Reset(object sender, EventArgs e);
     }
 }

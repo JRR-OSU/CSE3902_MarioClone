@@ -70,7 +70,6 @@
     <Compile Include="Player\MarioCollisionHandler.cs" />
     <Compile Include="Player\MarioStateMachine.cs" />
     <Compile Include="Projectiles\BaseProjectile.cs" />
-    <Compile Include="Projectiles\MissileProjectile.cs" />
     <Compile Include="Tiles\BaseTile.cs" />
     <Compile Include="Tiles\InvisibleItemBlockTile.cs" />
     <Compile Include="Tiles\BreakableBrickTile.cs" />

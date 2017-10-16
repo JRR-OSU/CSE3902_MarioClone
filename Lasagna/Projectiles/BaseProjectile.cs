@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 
 namespace Lasagna
 {
@@ -31,6 +32,8 @@ namespace Lasagna
         {
             posX = spawnPosX;
             posY = spawnPosY;
+
+            MarioEvents.OnReset += Reset;
         }
 
         public virtual void Update(GameTime gameTime)
@@ -46,6 +49,11 @@ namespace Lasagna
         }
 
         public abstract void ChangeState();
+
+        public void Reset(object sender, EventArgs e)
+        {
+            MarioGame.Instance.DeRegisterProjectile(this);
+        }
 
         public void OnCollisionResponse(ICollider otherCollider, CollisionSide side)
         {
