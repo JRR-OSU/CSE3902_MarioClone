@@ -11,6 +11,6 @@ namespace Lasagna
         void MoveRight();
         void Jump();
         void Crouch();
-       //IMPLEMENT NEXT SPRINT: void Fire;
+        void ShootFire();
     }
 }

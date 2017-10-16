@@ -153,6 +153,9 @@ namespace Lasagna
 
         public void KeepMarioScreenBounds()
         {
+            ///TODO: Temp code added by tim to test camera
+            return;
+
             if (spriteXPos < 0) // Restrict mario to screen bounds
             {
                 spriteXPos = 0;
