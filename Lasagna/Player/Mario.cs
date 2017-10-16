@@ -34,9 +34,8 @@ namespace Lasagna
             MarioEvents.OnJump += Jump;
             MarioEvents.OnCrouch += Crouch;
             MarioEvents.OnReset += Reset;
-
             spriteXPos = x;
-            spriteYPos = y;
+            spriteYPos = 20;
             orignalPos[0] = spriteXPos;
             orignalPos[1] = spriteYPos;
         }
@@ -106,9 +105,10 @@ namespace Lasagna
         {
             if (!marioIsDead)
             {
-                spriteYPos -= 3;
+             //   spriteYPos -= 3;
                 stateMachine.Jump();
             }
+
         }
 
         public void Grow(object sender, EventArgs e)
@@ -169,6 +169,8 @@ namespace Lasagna
             {
                 spriteYPos = 420;
             }
+
+           // Console.WriteLine(" " + spriteXPos + " " + spriteYPos);
         }
 
         public void Update(GameTime gameTime)

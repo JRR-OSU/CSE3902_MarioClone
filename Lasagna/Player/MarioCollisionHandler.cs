@@ -55,9 +55,11 @@ namespace Lasagna
                 {
                     case CollisionSide.Bottom:
                         mario.SetPosition(mario.Bounds.X, (tile.Bounds.Y - mario.Bounds.Height));
+                        state.isCollideFloor = true;
                         break;
                     case CollisionSide.Top:
                         mario.SetPosition(mario.Bounds.X, (tile.Bounds.Y + tile.Bounds.Height));
+                        state.isCollideUnder = true;
                         break;
                     case CollisionSide.Left:
                         mario.SetPosition(tile.Bounds.X + tile.Bounds.Width + 3, mario.Bounds.Y);
@@ -78,6 +80,7 @@ namespace Lasagna
                 {
                     case CollisionSide.Bottom:
                         mario.SetPosition(mario.Bounds.X, (enemy.Bounds.Y- mario.Bounds.Height));
+                        state.isCollideFloor = true;
                         break;
                     case CollisionSide.Top:
                         mario.SetPosition(mario.Bounds.X, (enemy.Bounds.Y + enemy.Bounds.Height));
@@ -95,7 +98,7 @@ namespace Lasagna
                 switch (side)
                 {
                     case CollisionSide.Bottom:
-                        mario.SetPosition(mario.Bounds.X, (mario.Bounds.Y - enemy.Bounds.Height)); // Jump effect if landing on top of an enemy
+                        state.JumpEnemy(); // Jump effect if landing on top of an enemy
                         break;
                     case CollisionSide.Top:
                         state.DamageMario();
