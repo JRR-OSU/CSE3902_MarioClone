@@ -58,8 +58,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AnimatedSprite.cs" />
+    <Compile Include="Cameras\EdgeControlledCamera.cs" />
     <Compile Include="CollisionDetection.cs" />
     <Compile Include="Enemies\MovingEnemy.cs" />
+    <Compile Include="Interfaces\ICamera.cs" />
     <Compile Include="Interfaces\ICollider.cs" />
     <Compile Include="Interfaces\IPlayer.cs" />
     <Compile Include="Items\BaseItem.cs" />

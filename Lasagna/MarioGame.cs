@@ -8,6 +8,18 @@ namespace Lasagna
 {
     public class MarioGame : Game
     {
+        private static ICamera mainCamera;
+        public static Matrix CameraTransform
+        {
+            get
+            {
+                return (mainCamera != null) ? mainCamera.Transform : Matrix.Identity;
+            }
+        }
+
+        private float screenWidth;
+        private float screenHeight;
+
         private SpriteBatch spriteBatch;
         private KeyboardController keyControl;
         private MouseController mouseControl;
@@ -26,8 +38,12 @@ namespace Lasagna
 
         protected override void Initialize()
         {
+            screenWidth = GraphicsDevice.Viewport.Width;
+            screenHeight = GraphicsDevice.Viewport.Height;
+
             keyControl = new KeyboardController();
             mouseControl = new MouseController();
+            mainCamera = new EdgeControlledCamera(0, 0);
 
             //Subscribe to events
             MarioEvents.OnQuit += OnQuit;
@@ -60,8 +76,10 @@ namespace Lasagna
                 levelBackground.Update(gameTime, 0, 0);
 
             foreach (ITile tile in tiles)
-                if (tile != null) {
-                    if (!(tile is InvisibleItemBlockTile)){
+                if (tile != null)
+                {
+                    if (!(tile is InvisibleItemBlockTile))
+                    {
                         tile.Update(gameTime);
                     }
                     //If the tile is an invisible block, then use a different update method.
@@ -86,6 +104,9 @@ namespace Lasagna
             foreach (IPlayer player in players)
                 if (player != null)
                     player.Update(gameTime);
+
+            if (mainCamera != null)
+                mainCamera.Update(players, screenWidth, screenHeight);
 
             base.Update(gameTime);
         }
