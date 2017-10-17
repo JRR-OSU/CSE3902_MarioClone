@@ -7,8 +7,8 @@ namespace Lasagna
     public abstract class BaseProjectile : IProjectile
     {
         //Movement speed for projectiles in pixels/second
-        protected const int horizontalMoveSpeed = 200;
-        protected const int verticalMoveSpeed = 100;
+        protected const int horizontalMoveSpeed = 350;
+        protected const int verticalMoveSpeed = 200;
 
         private ISprite currentSprite;
         protected float posX;

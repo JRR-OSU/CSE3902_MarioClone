@@ -22,17 +22,16 @@ namespace Lasagna
         public void Update(List<IPlayer> players, float screenWidth, float screenHeight)
         {
             //Calculate screen edge positions
-            float rightEdge = screenXPos + screenWidth,
+            float rightEdge = screenXPos + (screenWidth / 2),
                 bottomEdge = screenYPos + screenHeight;
-
-            //Edge controlled camera moves the camera when any player touches the edge of the screen.
+            
             foreach (IPlayer pl in players)
             {
                 Rectangle bounds = pl.Bounds;
                 //Left edge
                 if (bounds.X < screenXPos)
-                    screenXPos -= (screenXPos - bounds.X);
-                //Right edge
+                    pl.SetPosition((int)screenXPos, bounds.Y);
+                //Right center
                 else if (bounds.X + bounds.Width > rightEdge)
                     screenXPos += (bounds.X + bounds.Width - rightEdge);
                 //Top edge

@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using System;
 
 namespace Lasagna
 {
@@ -13,7 +12,7 @@ namespace Lasagna
         }
 
         //How long fireball goes up after bouncing
-        private const float fireballBounceTime = 0.35f;
+        private const float fireballBounceTime = 0.2f;
 
         private float explodeTimeLeft;
         private float movingUpTimeLeft;
@@ -78,17 +77,14 @@ namespace Lasagna
             //Fireballs bound when they hit tiles
             if (side == CollisionSide.Bottom)
                 movingUpTimeLeft = fireballBounceTime;
-
-            //Call base projectile functions
-            base.OnCollisionResponse(tile, side);
+            else if (currentState == FireballStates.Idle)
+                ChangeState();
         }
 
         protected override void OnCollisionResponse(IItem Item, CollisionSide side)
         {
-            if (side.Equals(CollisionSide.Right) && this.currentState == FireballStates.Idle)
-            {
+            if (currentState == FireballStates.Idle)
                 this.ChangeState();
-            }
         }
     }
 }
