@@ -74,7 +74,7 @@ namespace Lasagna
             MarioSpriteFactory.Instance.LoadAllContent(Content);
             ProjectileSpriteFactory.Instance.LoadAllContent(Content);
             TileSpriteFactory.Instance.LoadAllContent(Content);
-            BackgroundSpriteFactory.Instance.LoadAllContent(Content, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height);
+            BackgroundSpriteFactory.Instance.LoadAllContent(Content, GraphicsDevice.Viewport.Height/232*3392, GraphicsDevice.Viewport.Height);
 
             LevelCreator.Instance.LoadLevelFromXML(Environment.CurrentDirectory + "\\Level XML\\Mario_1-1.xml", out levelBackground, out players, out enemies, out tiles, out items);
         }
