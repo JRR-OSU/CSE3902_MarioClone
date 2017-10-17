@@ -39,6 +39,14 @@ namespace Lasagna
             }
         }
 
+        public virtual float ClipLength
+        {
+            get
+            {
+                return 0;
+            }
+        }
+
         public NonAnimatedSprite(Texture2D spriteSheet, int spriteScreenXSize, int spriteScreenYSize)
         {
             sourceSpriteSheet = spriteSheet;

@@ -7,6 +7,7 @@ namespace Lasagna
     {
         int Height { get; }
         int Width { get; }
+        float ClipLength { get; }
 
         void Update(GameTime gameTime, int spriteXPos, int spriteYPos);
         void Draw(SpriteBatch spriteBatch);

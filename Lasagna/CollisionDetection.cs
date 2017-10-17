@@ -8,27 +8,32 @@ namespace Lasagna
     public static class CollisionDetection
     {
         //By the interfaces, we know IPlayer, IEnemy, ITile, and IItem are all IColliders as well.
-        public static void Update(ReadOnlyCollection<IPlayer> players, ReadOnlyCollection<IEnemy> enemies, ReadOnlyCollection<ITile> tiles, ReadOnlyCollection<IItem> items)
+        public static void Update(ReadOnlyCollection<IPlayer> players, ReadOnlyCollection<IEnemy> enemies, ReadOnlyCollection<ITile> tiles, ReadOnlyCollection<IItem> items, ReadOnlyCollection<IProjectile> projectiles)
         {
-            //Players vs. Tiles, Enemies, Items.
+            //Players vs. Tiles, Enemies, Items, projectiles.
             foreach (IPlayer player in players)
             {
                 CheckAllCollisions<ITile>(player, player.Bounds, tiles);
                 CheckAllCollisions<IEnemy>(player, player.Bounds, enemies);
                 CheckAllCollisions<IItem>(player, player.Bounds, items);
+                CheckAllCollisions<IProjectile>(player, player.Bounds, projectiles);
             }
 
             //Tiles are static, so don't need to check against themselves.
-            //Tiles vs. Enemies, Items.
+            //Tiles vs. Enemies, Items, projectiles.
             foreach (ITile tile in tiles)
             {
                 CheckAllCollisions<IEnemy>(tile, tile.Bounds, enemies);
                 CheckAllCollisions<IItem>(tile, tile.Bounds, items);
+                CheckAllCollisions<IProjectile>(tile, tile.Bounds, projectiles);
             }
 
-            //Enemies vs items
+            //Enemies vs items, projectiles
             foreach (IEnemy enemy in enemies)
+            {
                 CheckAllCollisions<IItem>(enemy, enemy.Bounds, items);
+                CheckAllCollisions<IProjectile>(enemy, enemy.Bounds, projectiles);
+            }
         }
 
         public static bool CheckRectForCollisions(ICollider sourceCollider, Rectangle rect, ReadOnlyCollection<IEnemy> enemies, ReadOnlyCollection<ITile> tiles)

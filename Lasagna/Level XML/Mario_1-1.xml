@@ -16,6 +16,8 @@
     <!-- <Tile type="InvisibleItemBlock" posx="140" posy="200" item="Coin" /> EXAMPLE FOR LATER -->
     <Tile type="QuestionBlock" repeat="0" repeatspace="0" posx="210" posy="200" item="GrowMushroom" />
     <Tile type="UnbreakableBlock" repeat="0" repeatspace="0" posx="70" posy="200" />
+    <Tile type="UnbreakableBlock" repeat="0" repeatspace="0" posx="570" posy="418" />
+    <Tile type="UnbreakableBlock" repeat="0" repeatspace="0" posx="570" posy="386" />
     <Tile type="Pipe" repeat="0" repeatspace="0" posx="620" posy="200" />
     <!-- <Tile type="Pipe" posx="420" posy="200" height="3" warpDest="Whatever" /> EXAMPLE FOR LATER -->
   </Tiles>

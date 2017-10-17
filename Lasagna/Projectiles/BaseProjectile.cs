@@ -7,7 +7,8 @@ namespace Lasagna
     public abstract class BaseProjectile : IProjectile
     {
         //Movement speed for projectiles in pixels/second
-        protected const int moveSpeed = 200;
+        protected const int horizontalMoveSpeed = 200;
+        protected const int verticalMoveSpeed = 100;
 
         private ISprite currentSprite;
         protected float posX;
@@ -88,7 +89,10 @@ namespace Lasagna
 
         protected virtual void OnCollisionResponse(ITile tile, CollisionSide side)
         {
-            return;
+            if (side == CollisionSide.Left)
+                movingRight = true;
+            else if (side == CollisionSide.Right)
+                movingRight = false;
         }
     }
 }

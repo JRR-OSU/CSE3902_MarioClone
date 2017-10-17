@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using System.Diagnostics;
+using System;
 
 namespace Lasagna
 {
@@ -13,6 +14,14 @@ namespace Lasagna
         private int currentFrame = 0;
         private int totalFrames;
         private float frameTime;
+
+        public override float ClipLength
+        {
+            get
+            {
+                return (sourceSpriteSheetColumns * sourceSpriteSheetRows) / (float)animationFPS;
+            }
+        }
 
         public AnimatedSprite(Texture2D spriteSheet, int spriteSheetColumns, int spriteSheetRows, int spriteScreenXSize, int spriteScreenYSize, int spriteAnimationFPS)
             : base(spriteSheet, spriteScreenXSize, spriteScreenYSize)
