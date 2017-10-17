@@ -13,7 +13,7 @@ namespace Lasagna
     {
         private Mario mario;
         public enum MarioState { Small, Big, Fire };
-        private enum MarioMovement { CrouchRight, CrouchLeft, IdleLeft, IdleRight, RunLeft, RunRight, JumpLeft, JumpRight, Die };
+        public enum MarioMovement { CrouchRight, CrouchLeft, IdleLeft, IdleRight, RunLeft, RunRight, JumpLeft, JumpRight, Die };
         private MarioState marioState = MarioState.Small;
         private MarioMovement marioMovement = MarioMovement.IdleRight;
         private ISprite currentSprite = MarioSpriteFactory.Instance.CreateSprite_MarioSmall_IdleRight();
@@ -115,11 +115,6 @@ namespace Lasagna
             canGrow = false;
             marioState = MarioState.Fire;
             currentSprite = fireStates[marioMovement];
-        }
-
-        public static void MarioFireProjectile()
-        {
-
         }
 
         public static void GetFireflower()
@@ -362,6 +357,10 @@ namespace Lasagna
         public MarioState CurrentState
         {
             get { return marioState; }
+        }
+        public MarioMovement CurrentMovement
+        {
+            get { return marioMovement; }
         }
 
         public void Reset()

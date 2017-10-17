@@ -34,6 +34,7 @@ namespace Lasagna
             MarioEvents.OnJump += Jump;
             MarioEvents.OnCrouch += Crouch;
             MarioEvents.OnReset += Reset;
+            MarioEvents.OnShootFire += MarioFireProjectile;
             spriteXPos = x;
             spriteYPos = 20;
             orignalPos[0] = spriteXPos;
@@ -63,9 +64,28 @@ namespace Lasagna
             stateMachine.SetIdleState();
         }
 
-        public static void MarioFireProjectile(object sender, EventArgs e)
+        public void MarioFireProjectile(object sender, EventArgs e)
         {
-            MarioStateMachine.MarioFireProjectile();
+            if (marioIsDead || stateMachine.CurrentState != MarioStateMachine.MarioState.Fire)
+                return;
+
+            bool facingRight = IsMarioMovingRight();
+
+            int spawnX = Bounds.X + (facingRight ? Bounds.Width : 0);
+
+            MarioGame.Instance.RegisterProjectile(new FireProjectile(spawnX, Bounds.Y + Bounds.Height / 2, facingRight));
+        }
+
+        private bool IsMarioMovingRight ()
+        {
+            if (stateMachine == null)
+                return false;
+
+            MarioStateMachine.MarioMovement m = stateMachine.CurrentMovement;
+            return m == MarioStateMachine.MarioMovement.CrouchRight 
+                || m == MarioStateMachine.MarioMovement.IdleRight 
+                || m == MarioStateMachine.MarioMovement.JumpRight 
+                || m == MarioStateMachine.MarioMovement.RunRight;
         }
 
         public static void GetFireflower()
@@ -105,7 +125,7 @@ namespace Lasagna
         {
             if (!marioIsDead)
             {
-             //   spriteYPos -= 3;
+                //   spriteYPos -= 3;
                 stateMachine.Jump();
             }
 
@@ -173,7 +193,7 @@ namespace Lasagna
                 spriteYPos = 420;
             }
 
-           // Console.WriteLine(" " + spriteXPos + " " + spriteYPos);
+            // Console.WriteLine(" " + spriteXPos + " " + spriteYPos);
         }
 
         public void Update(GameTime gameTime)

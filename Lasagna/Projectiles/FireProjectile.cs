@@ -1,4 +1,7 @@
-﻿namespace Lasagna
+﻿using Microsoft.Xna.Framework;
+using System;
+
+namespace Lasagna
 {
     public class FireProjectile : BaseProjectile
     {
@@ -12,10 +15,17 @@
         private ISprite fireballDefault = ProjectileSpriteFactory.Instance.CreateSprite_Fireball_Default();
         private ISprite fireballExplode = ProjectileSpriteFactory.Instance.CreateSprite_Fireball_Explode();
 
-        public FireProjectile(int spawnPosX, int spawnPosY)
-            : base(spawnPosX, spawnPosY)
+        public FireProjectile(int spawnPosX, int spawnPosY, bool startMovingRight)
+            : base(spawnPosX, spawnPosY, startMovingRight)
         {
             CurrentSprite = fireballDefault;
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            posX += (float)(gameTime.ElapsedGameTime.TotalSeconds * moveSpeed) * (MovingRight ? 1 : -1);
+
+            base.Update(gameTime);
         }
 
         public override void ChangeState()

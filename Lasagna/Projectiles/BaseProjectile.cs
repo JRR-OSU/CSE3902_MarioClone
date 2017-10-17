@@ -6,16 +6,20 @@ namespace Lasagna
 {
     public abstract class BaseProjectile : IProjectile
     {
+        //Movement speed for projectiles in pixels/second
+        protected const int moveSpeed = 200;
+
         private ISprite currentSprite;
-        private int posX;
-        private int posY;
+        protected float posX;
+        protected float posY;
+        private bool movingRight;
 
         public Rectangle Bounds
         {
             get
             {
                 if (currentSprite != null)
-                    return new Rectangle(posX, posY, currentSprite.Width, currentSprite.Height);
+                    return new Rectangle((int)posX, (int)posY, currentSprite.Width, currentSprite.Height);
                 else
                     return Rectangle.Empty;
             }
@@ -25,13 +29,13 @@ namespace Lasagna
             get { return currentSprite; }
             set { currentSprite = value; }
         }
-        protected int PosX { get { return posX; } }
-        protected int PosY { get { return posY; } }
+        protected bool MovingRight { get { return movingRight; } }
 
-        protected BaseProjectile(int spawnPosX, int spawnPosY)
+        protected BaseProjectile(int spawnPosX, int spawnPosY, bool startMovingRight)
         {
             posX = spawnPosX;
             posY = spawnPosY;
+            movingRight = startMovingRight;
 
             MarioEvents.OnReset += Reset;
         }
@@ -39,7 +43,7 @@ namespace Lasagna
         public virtual void Update(GameTime gameTime)
         {
             if (currentSprite != null)
-                currentSprite.Update(gameTime, posX, posY);
+                currentSprite.Update(gameTime, (int)posX, (int)posY);
         }
 
         public virtual void Draw(SpriteBatch spriteBatch)
