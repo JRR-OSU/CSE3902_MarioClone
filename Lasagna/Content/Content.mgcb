@@ -613,18 +613,6 @@
 /processorParam:TextureFormat=Color
 /build:MarioSprites/Mario_Small_TurnRight.png
 
-#begin LevelBackgrounds/Mario_Clear.jpg
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:LevelBackgrounds/Mario_Clear.jpg
-
 #begin EnemySprites/Goomba_Flipped.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -672,4 +660,16 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:EnemySprites/Koopa_Walk_Right.png
+
+#begin LevelBackgrounds/level_1-1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:LevelBackgrounds/level_1-1.png
 
