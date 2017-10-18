@@ -1,9 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Root leveltype="MarioClear">
   <Players>
+    <!-- -800 try -->
     <Player type="Mario" posx="90" posy="380" />
   </Players>
   <Enemies>
+    <!-- Test area enemies   
+    <Enemy type="Goomba" posx="704" posy="383" />
+    <Enemy type="Goomba" posx="704" posy="383" />
+    <Enemy type="Goomba" posx="704" posy="383" /> 
+    <Enemy type="Koopa" posx="3424" posy="375" /> 
+    <Enemy type="Koopa" posx="3424" posy="375" />
+    -->
+    <!-- Actual level -->
     <Enemy type="Goomba" posx="704" posy="383" />
     <Enemy type="Goomba" posx="1312" posy="383" />
     <Enemy type="Goomba" posx="1632" posy="383" />
@@ -25,8 +34,29 @@
   <Tiles>
     <!-- <Tile type="Brick" posx="280" posy="200" item="Coin" /> EXAMPLE FOR LATER -->
     <!-- <Tile type="InvisibleItemBlock" posx="140" posy="200" item="Coin" /> EXAMPLE FOR LATER -->
-    <!-- <Tile type="Pipe" posx="420" posy="200" height="3" warpDest="Whatever" /> EXAMPLE FOR LATER -->
+    <!-- <Tile type="Pipe" posx="420" posy="200" height="3" warpDest="Whatever" /> EXAMPLE FOR LATER -->     
     
+    <!-- Test play area blocks   
+    <Tile type="Floor" repeat="68" repeatspace="0" posx="0" posy="415" />
+    <Tile type="Floor" repeat="68" repeatspace="0" posx="0" posy="447" />   
+    
+    <Tile type="Brick" repeat="0" repeatspace="0" posx="3008" posy="287" item="" coins="" />
+    <Tile type="Brick" repeat="0" repeatspace="0" posx="3008" posy="287" item="Coin" coins="5" />
+    <Tile type="Brick" repeat="0" repeatspace="0" posx="3008" posy="287" item="GrowMushroom" coins="" />
+    
+    <Tile type="InvisibleBlock" repeat="0" repeatspace="0" posx="2048" posy="255" item="" />
+    <Tile type="InvisibleBlock" repeat="0" repeatspace="0" posx="2048" posy="255" item="LifeMushroom" />
+    
+    <Tile type="QuestionBlock" repeat="0" repeatspace="0" posx="704" posy="159" item="" />
+    <Tile type="QuestionBlock" repeat="0" repeatspace="0" posx="704" posy="159" item="FireFlower" />
+    <Tile type="QuestionBlock" repeat="0" repeatspace="0" posx="704" posy="159" item="Star" />     
+    
+    <Tile type="UnbreakableBlock" repeat="0" repeatspace="0" posx="-704" posy="383" />
+    <Tile type="UnbreakableBlock" repeat="0" repeatspace="0" posx="-704" posy="351" />
+    <Tile type="UnbreakableBlock" repeat="0" repeatspace="0" posx="-352" posy="383" />
+    <Tile type="UnbreakableBlock" repeat="0" repeatspace="0" posx="-352" posy="351" />
+    -->
+    <!-- Actual level -->
     <Tile type="Floor" repeat="68" repeatspace="0" posx="0" posy="415" />
     <Tile type="Floor" repeat="68" repeatspace="0" posx="0" posy="447" />        
     <Tile type="Floor" repeat="14" repeatspace="0" posx="2272" posy="415" />
@@ -53,7 +83,7 @@
     <Tile type="Brick" repeat="7" repeatspace="0" posx="2560" posy="159" />
     <Tile type="Brick" repeat="2" repeatspace="0" posx="2912" posy="159" />
     <Tile type="QuestionBlock" repeat="0" repeatspace="0" posx="3008" posy="159" item="" />
-    <Tile type="Brick" repeat="0" repeatspace="0" posx="3008" posy="287" item="Coin" amount="TEST" />
+    <Tile type="Brick" repeat="0" repeatspace="0" posx="3008" posy="287" item="Coin" coins="TEST" />
     <Tile type="Brick" repeat="0" repeatspace="0" posx="3200" posy="287" />
     <Tile type="Brick" repeat="0" repeatspace="0" posx="3232" posy="287" item="Star" />
     <Tile type="QuestionBlock" repeat="0" repeatspace="0" posx="3392" posy="287" item="" />
@@ -99,6 +129,7 @@
     <Tile type="Flag" repeat="0" repeatspace="0" posx="6344" posy="79" />
   </Tiles>
   <Items>
+    <!-- Remove these later, items should only come from blocks -->
     <Item type="Coin" posx="140" posy="100" />
     <Item type="FireFlower" posx="70" posy="100" />
     <Item type="GrowMushroom" posx="210" posy="100" />
