@@ -13,6 +13,8 @@
     <Enemy type="Goomba" posx="1312" posy="380" />
     <Enemy type="Goomba" posx="1632" posy="380" />
     <Enemy type="Goomba" posx="1696" posy="380" />
+    <Enemy type="Goomba" posx="3136" posy="380" />
+    <Enemy type="Goomba" posx="3200" posy="380" />
   </Enemies>
   <Tiles>
     <Tile type="Brick" repeat="0" repeatspace="0" posx="280" posy="200" />
@@ -45,6 +47,15 @@
     <Tile type="Pipe" repeat="0" repeatspace="0" posx="1472" posy="287" height="2" warpDest="" />
     <Tile type="Pipe" repeat="0" repeatspace="0" posx="1824" posy="287" height="2" warpDest="Underground" />
     <Tile type="InvisibleBlock" repeat="0" repeatspace="0" posx="2048" posy="255" item="LifeMushroom" />
+    <Tile type="Brick" repeat="0" repeatspace="0" posx="2464" posy="287" />
+    <Tile type="QuestionBlock" repeat="0" repeatspace="0" posx="2496" posy="287" item="GrowMushroom" />
+    <Tile type="Brick" repeat="0" repeatspace="0" posx="2528" posy="287" />
+    <Tile type="Brick" repeat="7" repeatspace="0" posx="2560" posy="159" />
+    <Tile type="Brick" repeat="2" repeatspace="0" posx="2944" posy="159" />
+    <Tile type="QuestionBlock" repeat="0" repeatspace="0" posx="3040" posy="159" item="" />
+    <Tile type="Brick" repeat="0" repeatspace="0" posx="3040" posy="287" item="Coin" amount="TEST" />
+    <Tile type="Brick" repeat="0" repeatspace="0" posx="3232" posy="287" />
+    <Tile type="Brick" repeat="0" repeatspace="0" posx="3232" posy="287" item="Star" />
   </Tiles>
   <Items>
     <Item type="Coin" posx="140" posy="100" />
