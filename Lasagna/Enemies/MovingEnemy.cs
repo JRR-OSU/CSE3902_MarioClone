@@ -10,6 +10,10 @@ namespace Lasagna
         private EnemyState currentState;
         private int posX;
         private int posY;
+        public enum EnemyMovement { IdleLeft, IdleRight, Flipped, Stomped };
+        public EnemyMovement enemyMovement = EnemyMovement.IdleLeft;
+        public bool isLeft = true;
+        public bool isDead = false;
 
         protected ISprite CurrentSprite
         {
@@ -47,8 +51,10 @@ namespace Lasagna
 
         public virtual void Update(GameTime gameTime)
         {
-            if (currentSprite != null)
+            if (currentSprite != null) {
+                HandleMovement();
                 currentSprite.Update(gameTime, posX, posY);
+            }
         }
 
         public virtual void Draw(SpriteBatch spriteBatch)
@@ -113,11 +119,15 @@ namespace Lasagna
         {
             if (side.Equals(CollisionSide.Right))
             {
-                ChangeState(EnemyState.WalkLeft);
+                ChangeState(EnemyState.WalkRight);
+                isLeft = true;
+                enemyMovement = EnemyMovement.IdleRight;
             }
             else if (side.Equals(CollisionSide.Left))
             {
-                ChangeState(EnemyState.WalkRight);
+                ChangeState(EnemyState.WalkLeft);
+                isLeft = false;
+                enemyMovement = EnemyMovement.IdleLeft;
             }
         }
 
@@ -125,11 +135,29 @@ namespace Lasagna
         {
             if (side.Equals(CollisionSide.Right))
             {
-                ChangeState(EnemyState.WalkLeft);
+                ChangeState(EnemyState.WalkRight);
+                isLeft = true;
+                enemyMovement = EnemyMovement.IdleRight;
             }
             else if (side.Equals(CollisionSide.Left))
             {
-                ChangeState(EnemyState.WalkRight);
+                ChangeState(EnemyState.WalkLeft);
+                isLeft = false;
+                enemyMovement = EnemyMovement.IdleLeft;
+            }
+        }
+        private void HandleMovement()
+        {
+            if (isDead == true) {
+
+            }    
+            else if (isLeft == true)
+            {
+                posX--;
+            }
+            else
+            {
+                posX++;
             }
         }
     }

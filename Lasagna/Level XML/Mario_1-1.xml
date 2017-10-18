@@ -4,8 +4,8 @@
     <Player type="Mario" posx="200" posy="300" />
   </Players>
   <Enemies>
-    <Enemy type="Goomba" posx="420" posy="132" />
-    <Enemy type="Koopa" posx="490" posy="132" />
+    <Enemy type="Goomba" posx="420" posy="200" />
+    <Enemy type="Koopa" posx="490" posy="200" />
   </Enemies>
   <Tiles>
     <Tile type="Brick" repeat="0" repeatspace="0" posx="280" posy="200" />

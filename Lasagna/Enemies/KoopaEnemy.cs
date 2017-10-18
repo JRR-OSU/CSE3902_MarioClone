@@ -9,7 +9,7 @@ namespace Lasagna
             { EnemyState.Idle, EnemySpriteFactory.Instance.CreateSprite_Koopa_Walk() },
             { EnemyState.Dead, EnemySpriteFactory.Instance.CreateSprite_Koopa_Die() },
             { EnemyState.Shell, EnemySpriteFactory.Instance.CreateSprite_Koopa_Shell() },
-            { EnemyState.Idle_Right, EnemySpriteFactory.Instance.CreateSprite_Koopa_Walk_Right() },
+            { EnemyState.Idle_Left, EnemySpriteFactory.Instance.CreateSprite_Koopa_Walk_Left() },
         };
 
         public KoopaEnemy(int spawnPosX, int spawnPosY)
@@ -19,8 +19,8 @@ namespace Lasagna
             if (koopaStates.ContainsKey(EnemyState.Idle))
             {
                 koopaStates.Add(EnemyState.WalkLeft, koopaStates[EnemyState.Idle]);
-                koopaStates.Add(EnemyState.WalkRight, koopaStates[EnemyState.Idle_Right]);
-                CurrentSprite = koopaStates[EnemyState.Idle];
+                koopaStates.Add(EnemyState.WalkRight, koopaStates[EnemyState.Idle_Left]);
+                CurrentSprite = koopaStates[EnemyState.Idle_Left];
             }
         }
 
@@ -53,6 +53,8 @@ namespace Lasagna
             if (side.Equals(CollisionSide.Left) || side.Equals(CollisionSide.Right))
             {
                 ChangeState(EnemyState.Dead);
+                isDead = true;
+                enemyMovement = EnemyMovement.Flipped;
             }
         }
 

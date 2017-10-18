@@ -43,6 +43,8 @@ namespace Lasagna
             if (side.Equals(CollisionSide.Top) || (mario is Mario && ((Mario)mario).StarPowered))
             {
                 ChangeState(EnemyState.Dead);
+                isDead = true;
+                enemyMovement = EnemyMovement.Stomped;
             }
         }
 
@@ -51,6 +53,8 @@ namespace Lasagna
             if (side.Equals(CollisionSide.Left) || side.Equals(CollisionSide.Right))
             {
                 ChangeState(EnemyState.Flipped);
+                isDead = true;
+                enemyMovement = EnemyMovement.Flipped;
             }
         }
     }

@@ -17,7 +17,7 @@ namespace Lasagna
         Dead,
         Flipped,
         Shell,
-        Idle_Right
+        Idle_Left
     }
 
     public enum CollisionSide

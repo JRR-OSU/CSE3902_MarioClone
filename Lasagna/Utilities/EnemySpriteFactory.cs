@@ -64,7 +64,7 @@ namespace Lasagna
         {
             return new AnimatedSprite(koopaWalkSheet, 2, 1, 32, 48, 8);
         }
-        public AnimatedSprite CreateSprite_Koopa_Walk_Right()
+        public AnimatedSprite CreateSprite_Koopa_Walk_Left()
         {
             return new AnimatedSprite(koopaWalkRightSheet, 2, 1, 50, 50, 8);
         }
