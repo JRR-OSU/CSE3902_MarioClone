@@ -10,11 +10,14 @@ namespace Lasagna
         private Matrix transform;
         private float screenXPos;
         private float screenYPos;
+        private float originXPos;
+        private float originYPos;
 
         public EdgeControlledCamera (float startXPos, float startYPos)
         {
             screenXPos = startXPos;
             screenYPos = startYPos;
+            MarioEvents.OnReset += Reset;
         }
 
         public Matrix Transform { get { return transform; } }
@@ -44,6 +47,12 @@ namespace Lasagna
 
             //Update our camera view matrix
             transform = Matrix.CreateTranslation(-screenXPos, -screenYPos, 0);
+        }
+
+        public void Reset(object sender, EventArgs e)
+        {
+            screenXPos = originXPos;
+            screenYPos = originYPos;
         }
     }
 }

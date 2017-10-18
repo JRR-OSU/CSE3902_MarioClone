@@ -13,7 +13,7 @@ namespace Lasagna
         private readonly Dictionary<LevelType, ISprite> levelBackdrops = new Dictionary<LevelType, ISprite>(CreateLevelTypesDictionary());
         private readonly Dictionary<PlayerType, Func<int, int, IPlayer>> playerTypes = new Dictionary<PlayerType, Func<int, int, IPlayer>>(CreatePlayerTypesDictionary());
         private readonly Dictionary<EnemyType, Func<int, int, IEnemy>> enemyTypes = new Dictionary<EnemyType, Func<int, int, IEnemy>>(CreateEnemyTypesDictionary());
-        private readonly Dictionary<TileType, Func<int, int, ITile>> tileTypes = new Dictionary<TileType, Func<int, int, ITile>>(CreateTileTypesDictionary());
+        private readonly Dictionary<TileType, Func<int, int, int, string, ITile>> tileTypes = new Dictionary<TileType, Func<int, int, int, string, ITile>>(CreateTileTypesDictionary());
         private readonly Dictionary<ItemType, Func<int, int, IItem>> itemTypes = new Dictionary<ItemType, Func<int, int, IItem>>(CreateItemTypesDictionary());
 
         private static Dictionary<LevelType, ISprite> CreateLevelTypesDictionary()
@@ -28,7 +28,7 @@ namespace Lasagna
 
         private static Dictionary<PlayerType, Func<int, int, IPlayer>> CreatePlayerTypesDictionary()
         {
-            Dictionary< PlayerType, Func<int, int, IPlayer>> newDictionary = new Dictionary<PlayerType, Func<int, int, IPlayer>>()
+            Dictionary<PlayerType, Func<int, int, IPlayer>> newDictionary = new Dictionary<PlayerType, Func<int, int, IPlayer>>()
             {
                 { PlayerType.Mario, (int posX, int posY) => new Mario(posX, posY) }
             };
@@ -46,17 +46,17 @@ namespace Lasagna
             return newDictionary;
         }
 
-        private static Dictionary<TileType, Func<int, int, ITile>> CreateTileTypesDictionary()
+        private static Dictionary<TileType, Func<int, int, int, string, ITile>> CreateTileTypesDictionary()
         {
-            Dictionary<TileType, Func<int, int, ITile>> newDictionary = new Dictionary<TileType, Func<int, int, ITile>>()
+            Dictionary<TileType, Func<int, int, int, string, ITile>> newDictionary = new Dictionary<TileType, Func<int, int, int, string, ITile>>()
             {
-                { TileType.Brick, (int posX, int posY) => new BreakableBrickTile(posX, posY)},
-                { TileType.Flag, (int posX, int posY) => new FlagPoleTile(posX, posY)},
-                { TileType.Floor, (int posX, int posY) => new FloorBlockTile(posX, posY)},
-                { TileType.InvisibleBlock, (int posX, int posY) => new InvisibleItemBlockTile(posX, posY)},
-                { TileType.QuestionBlock, (int posX, int posY) => new QuestionBlockTile(posX, posY)},
-                { TileType.UnbreakableBlock, (int posX, int posY) => new UnbreakableBlockTile(posX, posY)},
-                { TileType.Pipe, (int posX, int posY) => new WarpPipeTile(posX, posY, 3)}
+                { TileType.Brick, (int posX, int posY, int notUsed1, string notUsed2) => new BreakableBrickTile(posX, posY)},
+                { TileType.Flag, (int posX, int posY, int notUsed1, string notUsed2) => new FlagPoleTile(posX, posY)},
+                { TileType.Floor, (int posX, int posY, int notUsed1, string notUsed2) => new FloorBlockTile(posX, posY)},
+                { TileType.InvisibleBlock, (int posX, int posY, int notUsed1, string notUsed2) => new InvisibleItemBlockTile(posX, posY)},
+                { TileType.QuestionBlock, (int posX, int posY, int notUsed1, string notUsed2) => new QuestionBlockTile(posX, posY)},
+                { TileType.UnbreakableBlock, (int posX, int posY, int notUsed1, string notUsed2) => new UnbreakableBlockTile(posX, posY)},
+                { TileType.Pipe, (int posX, int posY, int height, string warpDest) => new WarpPipeTile(posX, posY, height)}
             };
 
             return newDictionary;
@@ -144,7 +144,7 @@ namespace Lasagna
                     int posX, posY;
                     if (int.TryParse(reader.GetAttribute("posx"), out posX)
                         && int.TryParse(reader.GetAttribute("posy"), out posY)
-                        && TryCreateTileFromEnum(reader.GetAttribute("type"), reader.GetAttribute("repeat"), reader.GetAttribute("repeatspace"), posX, posY, out newTiles))
+                        && TryCreateTileFromEnum(reader, reader.GetAttribute("type"), reader.GetAttribute("repeat"), reader.GetAttribute("repeatspace"), posX, posY, out newTiles))
                     {
                         tiles.AddRange(newTiles);
                     }
@@ -154,7 +154,7 @@ namespace Lasagna
                     {
                         if (int.TryParse(reader.GetAttribute("posx"), out posX)
                            && int.TryParse(reader.GetAttribute("posy"), out posY)
-                           && TryCreateTileFromEnum(reader.GetAttribute("type"), reader.GetAttribute("repeat"), reader.GetAttribute("repeatspace"), posX, posY, out newTiles))
+                           && TryCreateTileFromEnum(reader, reader.GetAttribute("type"), reader.GetAttribute("repeat"), reader.GetAttribute("repeatspace"), posX, posY, out newTiles))
                         {
                             tiles.AddRange(newTiles);
                         }
@@ -236,7 +236,8 @@ namespace Lasagna
             enemies.Add(enemyTypes[t].Invoke(posX, posY));
             return true;
         }
-        private bool TryCreateTileFromEnum(string tType, string repeatTimes, string repeatSpace, int posX, int posY, out List<ITile> tiles)
+
+        private bool TryCreateTileFromEnum(XmlReader reader, string tType, string repeatTimes, string repeatSpace, int posX, int posY, out List<ITile> tiles)
         {
             tiles = new List<ITile>();
             TileType t;
@@ -248,8 +249,21 @@ namespace Lasagna
                 return false;
             }
 
-            //Create base tile
-            tiles.Add(tileTypes[t].Invoke(posX, posY));
+            int height = -1;
+            string warpDest = "";
+
+            //If this is pipe, get optional params from reader
+            if (t == TileType.Pipe)
+            {
+                int.TryParse(reader.GetAttribute("height"), out height);
+                height = Math.Max(0, height);
+                warpDest = reader.GetAttribute("warpDest");
+
+                tiles.Add(tileTypes[t].Invoke(posX, posY, height, warpDest));
+            }
+            //Else create generic tile
+            else
+                tiles.Add(tileTypes[t].Invoke(posX, posY, -1, ""));
 
             //If this element has a repeat field, and it has a valid integer, repeat this tile according to the field.
             //Each repeated tile is spawned to the right of the base tile.
@@ -271,7 +285,7 @@ namespace Lasagna
 
                 //Spawn each subsequent tile
                 for (int i = 1; i <= rTimes; i++)
-                    tiles.Add(tileTypes[t].Invoke(posX + (rSpace * i), posY));
+                    tiles.Add(tileTypes[t].Invoke(posX + (rSpace * i), posY, height, warpDest));
             }
 
             return true;

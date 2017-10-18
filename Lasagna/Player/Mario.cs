@@ -36,7 +36,7 @@ namespace Lasagna
             MarioEvents.OnReset += Reset;
             MarioEvents.OnShootFire += MarioFireProjectile;
             spriteXPos = x;
-            spriteYPos = 20;
+            spriteYPos = y;
             orignalPos[0] = spriteXPos;
             orignalPos[1] = spriteYPos;
         }
