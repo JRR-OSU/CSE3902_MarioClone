@@ -25,6 +25,9 @@ namespace Lasagna
         public bool isCollideUnder { get; set; }
         private int jumpCounter = 0;
 
+        public bool isTouchingGround;
+
+
         private bool starPower = false;
         private int starDuration = 600;
         private int starCounter = 0;
@@ -140,25 +143,30 @@ namespace Lasagna
 
         public void SetIdleState()
         {
-            if (marioMovement == MarioMovement.RunRight || marioMovement == MarioMovement.JumpRight)
+            if (!isJumping && isCollideFloor)
             {
-                marioMovement = MarioMovement.IdleRight;
+                if (marioMovement == MarioMovement.RunRight || marioMovement == MarioMovement.JumpRight)
+                {
+                    marioMovement = MarioMovement.IdleRight;
+                }
+                else if (marioMovement == MarioMovement.RunLeft || marioMovement == MarioMovement.JumpLeft)
+                {
+                    marioMovement = MarioMovement.IdleLeft;
+                }
+                SwitchCurrentSprite(marioMovement);
             }
-            else if (marioMovement == MarioMovement.RunLeft || marioMovement == MarioMovement.JumpLeft)
-            {
-                marioMovement = MarioMovement.IdleLeft;
-            }
-            SwitchCurrentSprite(marioMovement);
         }
         public void MoveLeft()
         {
-            marioMovement = MarioMovement.RunLeft;
+            if(!isJumping || isCollideFloor)
+                marioMovement = MarioMovement.RunLeft;
             SwitchCurrentSprite(marioMovement);
         }
 
         public void MoveRight()
         {
-            marioMovement = MarioMovement.RunRight;
+            if(!isJumping || isCollideFloor)
+                marioMovement = MarioMovement.RunRight;
             SwitchCurrentSprite(marioMovement);
         }
         public void HandleCrouch() // Crouching has commented code as we removed this functionality until physics are implemented properly
@@ -212,31 +220,31 @@ namespace Lasagna
             }
 
             SwitchCurrentSprite(marioMovement);
-            if (isCollideUnder)
-            {
-                Fall();
-                return;
-            }
-            if (jumpCounter < 20)
-            {
-                mario.SetPosition(mario.Bounds.X, mario.Bounds.Y - 4);
+            //if (isCollideUnder)
+            //{
+            //    Fall();
+            //    return;
+            //}
+            //if (jumpCounter < 20)
+            //{
+            //    mario.SetPosition(mario.Bounds.X, mario.Bounds.Y - 4);
 
-            }
-            else if (jumpCounter < 25)
-            {
-                mario.SetPosition(mario.Bounds.X, mario.Bounds.Y - 2);
+            //}
+            //else if (jumpCounter < 25)
+            //{
+            //    mario.SetPosition(mario.Bounds.X, mario.Bounds.Y - 2);
 
-            }
-            else if (jumpCounter < 30)
-            {
-                mario.SetPosition(mario.Bounds.X, mario.Bounds.Y - 1);
+            //}
+            //else if (jumpCounter < 30)
+            //{
+            //    mario.SetPosition(mario.Bounds.X, mario.Bounds.Y - 1);
 
-            }
-            else if (jumpCounter >= 30)
-            {
-                Fall();
-            }
-            jumpCounter++;
+            //}
+            //else if (jumpCounter >= 30)
+            //{
+            //    Fall();
+            //}
+            //jumpCounter++;
 
 
         }
@@ -252,11 +260,11 @@ namespace Lasagna
             }
         }
 
-        private void EndJump()
+        public void EndJump()
         {
             jumpCounter = 0;
             isJumping = false;
-            SwitchCurrentSprite(marioMovement);
+            //SwitchCurrentSprite(marioMovement);
         }
         public void Jump()
         {
@@ -335,6 +343,14 @@ namespace Lasagna
             {
                 HandleJump();
                 isCollideFloor = false;
+            }
+            if(isCollideFloor)
+            {
+                if (marioMovement == MarioMovement.JumpLeft)
+                    marioMovement = MarioMovement.RunLeft;
+                else if (marioMovement == MarioMovement.JumpRight)
+                    marioMovement = MarioMovement.RunRight;
+                SwitchCurrentSprite(marioMovement);
             }
             currentSprite.Update(gameTime, spriteXPos, spriteYPos);
         }

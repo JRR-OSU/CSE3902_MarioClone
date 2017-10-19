@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -41,7 +42,6 @@ namespace Lasagna
             }
 
         }
-
         public void OnCollisionResponse(ITile tile, CollisionSide side)
         {
             //If the Mario hits the invisible block from the top, left and right sides of the block, do nothing.
@@ -51,21 +51,30 @@ namespace Lasagna
             }
             else
             {
+               // Console.WriteLine(side);
                 switch (side)
                 {
                     case CollisionSide.Bottom:
-                        mario.SetPosition(mario.Bounds.X, (tile.Bounds.Y - mario.Bounds.Height));
+                        mario.velocity.Y = 0;
+                        mario.position = (new Vector2(mario.Bounds.X, -1*(tile.Bounds.Y - mario.Bounds.Height)));
+                        //mario.SetPosition(mario.Bounds.X, (tile.Bounds.Y - mario.Bounds.Height - 5));
                         state.isCollideFloor = true;
+                        //mario.ignoreGravity = true;
+                        mario.isFalling = false;
                         break;
                     case CollisionSide.Top:
-                        mario.SetPosition(mario.Bounds.X, (tile.Bounds.Y + tile.Bounds.Height));
+                        mario.SetPosition(mario.Bounds.X, (tile.Bounds.Y + tile.Bounds.Height + 5));
+                        mario.velocity.Y = 0;
                         state.isCollideUnder = true;
+                        mario.ignoreGravity = false;
                         break;
                     case CollisionSide.Left:
-                        mario.SetPosition(tile.Bounds.X + tile.Bounds.Width + 3, mario.Bounds.Y);
+                        mario.SetPosition((tile.Bounds.X + tile.Bounds.Width), mario.Bounds.Y);
+                        mario.velocity.X = 0;
                         break;
                     case CollisionSide.Right:
-                        mario.SetPosition(tile.Bounds.X - mario.Bounds.Width - 3, mario.Bounds.Y);
+                        mario.SetPosition((tile.Bounds.X - mario.Bounds.Width), mario.Bounds.Y);
+                        mario.velocity.X = 0;
                         break;
                 }
             }
@@ -79,14 +88,15 @@ namespace Lasagna
                 switch (side)
                 {
                     case CollisionSide.Bottom:
-                        mario.SetPosition(mario.Bounds.X, (enemy.Bounds.Y- mario.Bounds.Height));
+                        mario.SetPosition(mario.Bounds.X, (enemy.Bounds.Y - mario.Bounds.Height));
                         state.isCollideFloor = true;
+                        state.EndJump();
                         break;
                     case CollisionSide.Top:
                         mario.SetPosition(mario.Bounds.X, (enemy.Bounds.Y + enemy.Bounds.Height));
                         break;
                     case CollisionSide.Left:
-                        mario.SetPosition((enemy.Bounds.X + enemy.Bounds.Width) +3, mario.Bounds.Y);
+                        mario.SetPosition((enemy.Bounds.X + enemy.Bounds.Width) + 3, mario.Bounds.Y);
                         break;
                     case CollisionSide.Right:
                         mario.SetPosition((enemy.Bounds.X - enemy.Bounds.Width) - 3, mario.Bounds.Y);
@@ -94,11 +104,15 @@ namespace Lasagna
                 }
             }
 
-            else { 
+            else
+            {
                 switch (side)
                 {
                     case CollisionSide.Bottom:
-                        state.JumpEnemy(); // Jump effect if landing on top of an enemy
+                        mario.velocity.Y = 0;
+                        mario.velocity.Y += 150;
+                        state.HandleJump();
+                        // Jump effect if landing on top of an enemy
                         break;
                     case CollisionSide.Top:
                         state.DamageMario();

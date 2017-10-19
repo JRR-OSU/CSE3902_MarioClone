@@ -16,6 +16,18 @@ namespace Lasagna
         private int spriteYPos;
         private int[] orignalPos = new int[2];
 
+        public Vector2 position;
+        public Vector2 velocity;
+        private int maxVelX = 150;
+        private int maxVelY = 200;
+        public bool isFalling = false;
+        private int maxHeight;
+        readonly Vector2 gravity = new Vector2(0, -300f);
+        float time;
+
+        public bool ignoreGravity = false;
+
+
         private bool marioIsDead = false;
 
         public bool IsDead { get { return marioIsDead; } }
@@ -53,14 +65,15 @@ namespace Lasagna
 
         private void Reset(object sender, EventArgs e)
         {
-            spriteXPos = orignalPos[0];
-            spriteYPos = orignalPos[1];
+            position.X = orignalPos[0];
+            position.Y = -1 * orignalPos[1];
             marioIsDead = false;
             stateMachine.Reset();
         }
 
         public void SetIdleState()
         {
+            velocity.X = velocity.X / 1.2f;
             stateMachine.SetIdleState();
         }
 
@@ -95,18 +108,19 @@ namespace Lasagna
 
         public void MoveLeft(object sender, EventArgs e)
         {
-            if (!marioIsDead)
+            if (!marioIsDead && !(Math.Abs(velocity.X) >= maxVelX))
             {
-                spriteXPos -= 3;
+                velocity.X -= 10;
                 stateMachine.MoveLeft();
             }
+           
         }
 
         public void MoveRight(object sender, EventArgs e)
         {
-            if (!marioIsDead)
+            if (!marioIsDead && !(Math.Abs(velocity.X) >= maxVelX))
             {
-                spriteXPos += 3;
+                velocity.X += 10;
                 stateMachine.MoveRight();
             }
 
@@ -123,13 +137,28 @@ namespace Lasagna
 
         public void Jump(object sender, EventArgs e)
         {
-            if (!marioIsDead)
+            if (!marioIsDead && !(Math.Abs(velocity.X) >= maxVelY))
             {
-                //   spriteYPos -= 3;
                 stateMachine.Jump();
+                ignoreGravity = false;
+                if (velocity.Y < 200 && position.Y * -1 > maxHeight && !isFalling)
+                    velocity.Y += 75;
+                else
+                {
+                    isFalling = true;
+                }
+
             }
 
+
         }
+
+        public void JumpEnemy()
+        {
+            ignoreGravity = false;
+            velocity.Y += 75;
+        }
+
 
         public void Grow(object sender, EventArgs e)
         {
@@ -198,10 +227,34 @@ namespace Lasagna
 
         public void Update(GameTime gameTime)
         {
+            SetPosition((int)position.X, (int)position.Y * -1);
             if (Keyboard.GetState().GetPressedKeys().Length == 0) // Set idle if no key is pressed
             {
                 SetIdleState();
             }
+            time = (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+            //if (velocity.Y == 0)
+            //   ignoreGravity = true;
+
+            if ((Math.Abs(velocity.Y) >= maxVelY))
+            {
+                stateMachine.EndJump();
+            }
+         //   Console.WriteLine(maxHeight);
+       //     Console.WriteLine(position.Y);
+            if (ignoreGravity)
+            {
+                maxHeight = ((int)position.Y + Bounds.Height * 2) * -1;
+            }
+
+            if (!ignoreGravity && velocity.Y > -200)
+                velocity += gravity * time;
+            position += velocity * time;
+
+
+            //   Console.WriteLine(position);
+           // Console.WriteLine(velocity);
 
             KeepMarioScreenBounds();
 
