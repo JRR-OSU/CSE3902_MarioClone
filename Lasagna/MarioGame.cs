@@ -58,7 +58,6 @@ namespace Lasagna
 
             keyControl = new KeyboardController();
             mouseControl = new MouseController();
-            mainCamera = new EdgeControlledCamera(0, 0);
 
             //Subscribe to events
             MarioEvents.OnQuit += OnQuit;
@@ -77,6 +76,12 @@ namespace Lasagna
             BackgroundSpriteFactory.Instance.LoadAllContent(Content, GraphicsDevice.Viewport.Height/232*3392, GraphicsDevice.Viewport.Height);
 
             LevelCreator.Instance.LoadLevelFromXML(Environment.CurrentDirectory + "\\Level XML\\Mario_1-1.xml", out levelBackground, out players, out enemies, out tiles, out items);
+
+            IPlayer pl;
+            if (players != null && players.Count > 0 && (pl = players.Find(o => o != null)) != null)
+                mainCamera = new EdgeControlledCamera(pl.Bounds.X, 0);
+            else
+                mainCamera = new EdgeControlledCamera(0, 0);
         }
 
         protected override void Update(GameTime gameTime)
