@@ -14,6 +14,9 @@ namespace Lasagna
         public EnemyMovement enemyMovement = EnemyMovement.IdleLeft;
         public bool isLeft = true;
         public bool isDead = false;
+        public bool isFall = false;
+        public bool isMoving = true;
+        private int[] orignalPos = new int[2];
 
         protected ISprite CurrentSprite
         {
@@ -32,6 +35,8 @@ namespace Lasagna
         {
             posX = spawnPosX;
             posY = spawnPosY;
+            orignalPos[0] = posX;
+            orignalPos[1] = posY;
             MarioEvents.OnReset += ChangeToDefault;
         }
         public Rectangle Bounds
@@ -48,11 +53,31 @@ namespace Lasagna
                 return returnValue;
             }
         }
-
+        public bool IsSeen()
+        {
+            bool temp = true;
+            if (posX > 760 || posX < 0)
+            {
+                temp = false;
+                isMoving = false;
+            }
+            else
+                isMoving = true;
+            return temp;
+        }
+        public void ReSet()
+        {
+            posX = orignalPos[0];
+            posY = orignalPos[1];
+            isLeft = true;
+            isDead = false;
+            ChangeState(EnemyState.WalkRight);
+        }
         public virtual void Update(GameTime gameTime)
         {
             if (currentSprite != null) {
-                HandleMovement();
+                HandleHorizontalMovement();
+                HandleVerticalMovement();
                 currentSprite.Update(gameTime, posX, posY);
             }
         }
@@ -133,6 +158,7 @@ namespace Lasagna
 
         protected virtual void OnCollisionResponse(ITile tile, CollisionSide side)
         {
+            
             if (side.Equals(CollisionSide.Right))
             {
                 ChangeState(EnemyState.WalkRight);
@@ -146,11 +172,15 @@ namespace Lasagna
                 enemyMovement = EnemyMovement.IdleLeft;
             }
         }
-        private void HandleMovement()
+        private void HandleHorizontalMovement()
         {
             if (isDead == true) {
 
             }    
+            else if(isMoving == false)
+            {
+
+            }
             else if (isLeft == true)
             {
                 posX--;
@@ -158,6 +188,13 @@ namespace Lasagna
             else
             {
                 posX++;
+            }
+        }
+        private void HandleVerticalMovement()
+        {
+            if(isFall == true)
+            {
+                
             }
         }
     }

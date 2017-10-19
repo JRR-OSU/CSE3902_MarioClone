@@ -43,7 +43,7 @@ namespace Lasagna
         }
         public NonAnimatedSprite CreateSprite_Goomba_Flipped()
         {
-            return new NonAnimatedSprite(goombaFlippedSheet, 32, 16);
+            return new NonAnimatedSprite(goombaFlippedSheet, 37, 45);
         }
 
         public AnimatedSprite CreateSprite_Goomba_Walk()
