@@ -268,6 +268,8 @@ namespace Lasagna
         }
         public void Jump()
         {
+            if(!isJumping)
+            HandleJump();
             isJumping = true;
             SwitchCurrentSprite(marioMovement);
         }
@@ -338,20 +340,23 @@ namespace Lasagna
             {
                 Grow();
             }
-
-            if (isJumping)
+            Console.WriteLine(isCollideFloor);
+             if (isJumping)
             {
-                HandleJump();
+                
                 isCollideFloor = false;
             }
-            if(isCollideFloor)
+            else if (isCollideFloor)
             {
+                isJumping = false;
                 if (marioMovement == MarioMovement.JumpLeft)
                     marioMovement = MarioMovement.RunLeft;
                 else if (marioMovement == MarioMovement.JumpRight)
                     marioMovement = MarioMovement.RunRight;
                 SwitchCurrentSprite(marioMovement);
             }
+
+           
             currentSprite.Update(gameTime, spriteXPos, spriteYPos);
         }
         public void Draw(SpriteBatch spriteBatch)

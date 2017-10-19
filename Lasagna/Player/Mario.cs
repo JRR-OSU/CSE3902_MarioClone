@@ -130,8 +130,8 @@ namespace Lasagna
         {
             if (!marioIsDead)
             {
-                spriteYPos += 3;
-                stateMachine.Crouch();
+              //  spriteYPos += 3;
+               // stateMachine.Crouch();
             }
         }
 
