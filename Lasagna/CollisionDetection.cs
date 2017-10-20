@@ -18,7 +18,7 @@ namespace Lasagna
                 CheckAllCollisions<IItem>(player, player.Bounds, items);
                 CheckAllCollisions<IProjectile>(player, player.Bounds, projectiles);
             }
-
+            
             //Tiles are static, so don't need to check against themselves.
             //Tiles vs. Enemies, Items, projectiles.
             foreach (ITile tile in tiles)
@@ -71,29 +71,36 @@ namespace Lasagna
             r1CollisionSide = CollisionSide.None;
             r2CollisionSide = CollisionSide.None;
 
-            if (r1.IsEmpty || r2.IsEmpty)
+            if (r1.IsEmpty || r2.IsEmpty || !r1.Intersects(r2))
                 return false;
+            
+            r1CollisionSide = GetSideOfCollision(r1, r2);
+            r2CollisionSide = GetSideOfCollision(r2, r1);
 
-            Rectangle overlapRect = Rectangle.Intersect(r1, r2);
-
-            r1CollisionSide = GetSideOfCollision(r1, overlapRect);
-            r2CollisionSide = GetSideOfCollision(r2, overlapRect);
-
-            return !overlapRect.IsEmpty;
+            return r1CollisionSide != CollisionSide.None && r2CollisionSide != CollisionSide.None;
         }
 
-        private static CollisionSide GetSideOfCollision(Rectangle sourceRect, Rectangle overlapRect)
+        private static CollisionSide GetSideOfCollision(Rectangle sourceRect, Rectangle targetRect)
         {
             CollisionSide side;
 
-            if (overlapRect.IsEmpty || sourceRect.IsEmpty || !sourceRect.Contains(overlapRect))
+            float avgWidth = 0.5f * (sourceRect.Width + targetRect.Width);
+            float avgHeight = 0.5f * (sourceRect.Height + targetRect.Height);
+            float xDirection = sourceRect.Center.X - targetRect.Center.X;
+            float yDirection = sourceRect.Center.Y - targetRect.Center.Y;
+
+            if (targetRect.IsEmpty || sourceRect.IsEmpty || Math.Abs(xDirection) > avgWidth || Math.Abs(yDirection) > avgHeight)
                 side = CollisionSide.None;
-            //Overlap rect is taller than wide, collision must be on the left or right side.
-            else if (overlapRect.Height > overlapRect.Width)
-                side = (overlapRect.Center.X < sourceRect.Center.X) ? CollisionSide.Left : CollisionSide.Right;
-            //Else overlap rect is wider than tall, collision must be on the top or bottom side
             else
-                side = (overlapRect.Center.Y < sourceRect.Center.Y) ? CollisionSide.Top : CollisionSide.Bottom;
+            {
+                float yWidth = avgWidth * yDirection;
+                float xHeight = avgHeight * xDirection;
+
+                if (yWidth > xHeight)
+                    side = (yWidth > -xHeight) ? CollisionSide.Top : CollisionSide.Right;
+                else
+                    side = (yWidth > -xHeight) ? CollisionSide.Left : CollisionSide.Bottom;
+            }
 
             return side;
         }

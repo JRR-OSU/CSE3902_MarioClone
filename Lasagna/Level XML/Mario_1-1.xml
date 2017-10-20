@@ -5,7 +5,7 @@
   </Players>
   <Enemies>
     <!-- Test area enemies -->
-    <Enemy type="Goomba" posx="200" posy="30" />
+    <Enemy type="Goomba" posx="-480" posy="383" />
     <Enemy type="Goomba" posx="-448" posy="383" />
     <Enemy type="Goomba" posx="-512" posy="383" /> 
     <Enemy type="Koopa" posx="-576" posy="375" /> 
@@ -124,11 +124,10 @@
   </Tiles>
   <Items>
     <!-- Remove these later, items should only come from blocks -->
-    <Item type="Coin" posx="140" posy="100" />
-    <Item type="FireFlower" posx="70" posy="100" />
-    <Item type="GrowMushroom" posx="210" posy="100" />
-    <Item type="LifeMushroom" posx="280" posy="100" />
-    <Item type="Star" posx="350" posy="100" />
+    <Item type="Coin" posx="140" posy="300" />
+    <Item type="FireFlower" posx="70" posy="300" />
+    <Item type="GrowMushroom" posx="210" posy="300" />
+    <Item type="LifeMushroom" posx="280" posy="300" />
     <Item type="Star" posx="350" posy="300" />
   </Items>
 </Root>

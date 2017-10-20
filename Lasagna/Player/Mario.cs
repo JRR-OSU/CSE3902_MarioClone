@@ -11,9 +11,7 @@ namespace Lasagna
     {
         private MarioStateMachine stateMachine;
         private MarioCollisionHandler marioCollisionHandler;
-
-        private int spriteXPos;
-        private int spriteYPos;
+        
         private int[] orignalPos = new int[2];
 
         public Vector2 position;
@@ -33,7 +31,7 @@ namespace Lasagna
         public bool IsDead { get { return marioIsDead; } }
         public bool StarPowered { get { return stateMachine != null && stateMachine.StarPowered; } }
 
-        public Rectangle Bounds { get { return new Rectangle(spriteXPos, spriteYPos, GetCurrentSprite().Width, GetCurrentSprite().Height); } }
+        public Rectangle Bounds { get { return new Rectangle((int)position.X, -(int)position.Y, GetCurrentSprite().Width, GetCurrentSprite().Height); } }
 
 
         public Mario(int x, int y)
@@ -47,16 +45,16 @@ namespace Lasagna
             MarioEvents.OnCrouch += Crouch;
             MarioEvents.OnReset += Reset;
             MarioEvents.OnShootFire += MarioFireProjectile;
-            spriteXPos = x;
-            spriteYPos = y;
-            orignalPos[0] = spriteXPos;
-            orignalPos[1] = spriteYPos;
+            position.X = x;
+            position.Y = -y;
+            orignalPos[0] = (int)position.X;
+            orignalPos[1] = -(int)position.Y;
         }
 
         public void SetPosition(int x, int y)
         {
-            spriteXPos = x;
-            spriteYPos = y;
+            position.X = x;
+            position.Y = -y;
         }
         private ISprite GetCurrentSprite()
         {
@@ -199,35 +197,10 @@ namespace Lasagna
             else if (otherCollider is IItem)
                 marioCollisionHandler.OnCollisionResponse((IItem)otherCollider, side);
         }
-
-        public void KeepMarioScreenBounds()
-        {
-            ///TODO: Temp code added by tim to test camera
-            return;
-
-            if (spriteXPos < 0) // Restrict mario to screen bounds
-            {
-                spriteXPos = 0;
-            }
-            else if (spriteXPos > 760)
-            {
-                spriteXPos = 760;
-            }
-            if (spriteYPos < 0)
-            {
-                spriteYPos = 0;
-            }
-            else if (spriteYPos > 420)
-            {
-                spriteYPos = 420;
-            }
-
-            // Console.WriteLine(" " + spriteXPos + " " + spriteYPos);
-        }
-
+       
         public void Update(GameTime gameTime)
         {
-            SetPosition((int)position.X, (int)position.Y * -1);
+            //TODO: Don't need this? SetPosition((int)position.X, (int)position.Y * -1);
             if (Keyboard.GetState().GetPressedKeys().Length == 0) // Set idle if no key is pressed
             {
                 SetIdleState();
@@ -256,9 +229,7 @@ namespace Lasagna
             //   Console.WriteLine(position);
            // Console.WriteLine(velocity);
 
-            KeepMarioScreenBounds();
-
-            stateMachine.Update(gameTime, spriteXPos, spriteYPos);
+            stateMachine.Update(gameTime, (int)position.X, -(int)position.Y);
 
         }
 
