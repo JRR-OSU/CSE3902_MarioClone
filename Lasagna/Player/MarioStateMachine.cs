@@ -18,6 +18,8 @@ namespace Lasagna
         private MarioMovement marioMovement = MarioMovement.IdleRight;
         private ISprite currentSprite = MarioSpriteFactory.Instance.CreateSprite_MarioSmall_IdleRight();
 
+        private const float powerupTransitionLength = 2f;
+
         private bool canGrow = true;
 
         public bool isJumping = false;
@@ -26,7 +28,9 @@ namespace Lasagna
         private int jumpCounter = 0;
 
         public bool isTouchingGround;
-
+        
+        //TIM: If this is > 0, Mario can't move or be hurt. This is for when he first gets a powerup.
+        private float powerupTransitionTimeRemaining;
 
         private bool starPower = false;
         private int starDuration = 600;
@@ -76,6 +80,9 @@ namespace Lasagna
         {
             if (canGrow)
             {
+                //Play growing transition
+                //inPowerupTransition = true;
+
                 marioState = MarioState.Big;
                 currentSprite = bigStates[marioMovement];
             }
