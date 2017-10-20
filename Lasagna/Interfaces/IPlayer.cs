@@ -9,6 +9,7 @@ namespace Lasagna
         void Draw(SpriteBatch spriteBatch);
         void SetPosition(int x, int y);
         
+        bool isCollideGround { get; set; }
         bool IsDead { get; }
     }
 }

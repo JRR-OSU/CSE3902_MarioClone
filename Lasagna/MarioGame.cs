@@ -86,6 +86,10 @@ namespace Lasagna
 
         protected override void Update(GameTime gameTime)
         {
+            foreach (IPlayer player in players)
+                if (player != null)
+                    player.isCollideGround = false;
+
             CollisionDetection.Update(players.AsReadOnly(), enemies.AsReadOnly(), tiles.AsReadOnly(), items.AsReadOnly(), projectiles.AsReadOnly());
 
             keyControl.Update();
@@ -122,7 +126,7 @@ namespace Lasagna
                 if (item != null)
                     item.Update(gameTime);
             foreach (IPlayer player in players)
-                if (player != null)
+                 if (player != null)
                     player.Update(gameTime);
 
             if (mainCamera != null)

@@ -11,7 +11,7 @@ namespace Lasagna
     {
         private MarioStateMachine stateMachine;
         private MarioCollisionHandler marioCollisionHandler;
-        
+
         private int[] orignalPos = new int[2];
 
         public Vector2 position;
@@ -23,7 +23,10 @@ namespace Lasagna
         readonly Vector2 gravity = new Vector2(0, -300f);
         float time;
 
-        public bool ignoreGravity = false;
+        public bool ignoreGravity { get; set;}
+        private bool isJumping = false;
+
+        public bool isCollideGround { get; set; }
 
 
         private bool marioIsDead = false;
@@ -71,6 +74,7 @@ namespace Lasagna
 
         public void SetIdleState()
         {
+
             velocity.X = velocity.X / 1.2f;
             stateMachine.SetIdleState();
         }
@@ -135,10 +139,11 @@ namespace Lasagna
 
         public void Jump(object sender, EventArgs e)
         {
+            isJumping = true;
             if (!marioIsDead && !(Math.Abs(velocity.X) >= maxVelY))
             {
                 stateMachine.Jump();
-                ignoreGravity = false;
+                //ignoreGravity = false;
                 if (velocity.Y < 200 && position.Y * -1 > maxHeight && !isFalling)
                     velocity.Y += 75;
                 else
@@ -153,7 +158,7 @@ namespace Lasagna
 
         public void JumpEnemy()
         {
-            ignoreGravity = false;
+            //ignoreGravity = false;
             velocity.Y += 75;
         }
 
@@ -200,15 +205,35 @@ namespace Lasagna
        
         public void Update(GameTime gameTime)
         {
-            //TODO: Don't need this? SetPosition((int)position.X, (int)position.Y * -1);
-            if (Keyboard.GetState().GetPressedKeys().Length == 0) // Set idle if no key is pressed
+
+            if (isCollideGround)
             {
-                SetIdleState();
+                ignoreGravity = true;
+                isJumping = false;
+
             }
+            else
+            {
+                ignoreGravity = false;
+            }
+
+            if (ignoreGravity)
+            {
+                if (Keyboard.GetState().GetPressedKeys().Length == 0) // Set idle if no key is pressed
+                {
+                    SetIdleState();
+                }
+            }
+            //TODO: Don't need this? SetPosition((int)position.X, (int)position.Y * -1);
+
             time = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             //if (velocity.Y == 0)
             //   ignoreGravity = true;
+           // Console.WriteLine(isCollideGround);
+
+
+           
 
             if ((Math.Abs(velocity.Y) >= maxVelY))
             {
@@ -216,7 +241,7 @@ namespace Lasagna
             }
          //   Console.WriteLine(maxHeight);
        //     Console.WriteLine(position.Y);
-            if (ignoreGravity)
+            if (!isJumping)
             {
                 maxHeight = ((int)position.Y + Bounds.Height * 2) * -1;
             }

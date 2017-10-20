@@ -51,30 +51,27 @@ namespace Lasagna
             }
             else
             {
-               // Console.WriteLine(side);
                 switch (side)
                 {
                     case CollisionSide.Bottom:
-                        mario.velocity.Y = 0;
-                        mario.position = (new Vector2(mario.Bounds.X, -1*(tile.Bounds.Y - mario.Bounds.Height)));
-                        //mario.SetPosition(mario.Bounds.X, (tile.Bounds.Y - mario.Bounds.Height - 5));
-                        state.isCollideFloor = true;
-                        //mario.ignoreGravity = true;
+                        mario.isCollideGround = true;
+                        mario.SetPosition(mario.Bounds.X, ((tile.Bounds.Y - mario.Bounds.Height-2)));
                         mario.isFalling = false;
                         break;
                     case CollisionSide.Top:
-                        mario.SetPosition(mario.Bounds.X, (tile.Bounds.Y + tile.Bounds.Height + 5));
                         mario.velocity.Y = 0;
-                        state.isCollideUnder = true;
+                        mario.SetPosition(mario.Bounds.X, (tile.Bounds.Y + tile.Bounds.Height + 5));
                         mario.ignoreGravity = false;
                         break;
                     case CollisionSide.Left:
+                        //mario.velocity.X = 0;
                         mario.SetPosition((tile.Bounds.X + tile.Bounds.Width), mario.Bounds.Y);
-                        mario.velocity.X = 0;
+                      
                         break;
                     case CollisionSide.Right:
+                       //mario.velocity.X = 0;
                         mario.SetPosition((tile.Bounds.X - mario.Bounds.Width), mario.Bounds.Y);
-                        mario.velocity.X = 0;
+
                         break;
                 }
             }
@@ -85,23 +82,23 @@ namespace Lasagna
         {
             if (state.isStar() || (enemy is GoombaEnemy && enemy.Bounds.Height <= 16) || (enemy is KoopaEnemy && enemy.Bounds.Height <= 40))// if star or enemy is dead
             {
-                switch (side)
-                {
-                    case CollisionSide.Bottom:
-                        mario.SetPosition(mario.Bounds.X, (enemy.Bounds.Y - mario.Bounds.Height));
-                        state.isCollideFloor = true;
-                        state.EndJump();
-                        break;
-                    case CollisionSide.Top:
-                        mario.SetPosition(mario.Bounds.X, (enemy.Bounds.Y + enemy.Bounds.Height));
-                        break;
-                    case CollisionSide.Left:
-                        mario.SetPosition((enemy.Bounds.X + enemy.Bounds.Width) + 3, mario.Bounds.Y);
-                        break;
-                    case CollisionSide.Right:
-                        mario.SetPosition((enemy.Bounds.X - enemy.Bounds.Width) - 3, mario.Bounds.Y);
-                        break;
-                }
+                //switch (side)
+                //{
+                //    case CollisionSide.Bottom:
+                //        mario.SetPosition(mario.Bounds.X, (enemy.Bounds.Y - mario.Bounds.Height));
+                //        state.isCollideFloor = true;
+                //        state.EndJump();
+                //        break;
+                //    case CollisionSide.Top:
+                //        mario.SetPosition(mario.Bounds.X, (enemy.Bounds.Y + enemy.Bounds.Height));
+                //        break;
+                //    case CollisionSide.Left:
+                //        mario.SetPosition((enemy.Bounds.X + enemy.Bounds.Width) + 3, mario.Bounds.Y);
+                //        break;
+                //    case CollisionSide.Right:
+                //        mario.SetPosition((enemy.Bounds.X - enemy.Bounds.Width) - 3, mario.Bounds.Y);
+                //        break;
+                //}
             }
 
             else

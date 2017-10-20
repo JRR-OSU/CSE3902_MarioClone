@@ -25,7 +25,7 @@ namespace Lasagna
         public bool isJumping = false;
         public bool isCollideFloor { get; set; }
         public bool isCollideUnder { get; set; }
-        private int jumpCounter = 0;
+
 
         public bool isTouchingGround;
         
@@ -150,29 +150,29 @@ namespace Lasagna
 
         public void SetIdleState()
         {
-            if (!isJumping && isCollideFloor)
-            {
-                if (marioMovement == MarioMovement.RunRight || marioMovement == MarioMovement.JumpRight)
+            
+            
+                if (marioMovement == MarioMovement.RunRight || (marioMovement == MarioMovement.JumpRight && mario.isCollideGround))
                 {
                     marioMovement = MarioMovement.IdleRight;
                 }
-                else if (marioMovement == MarioMovement.RunLeft || marioMovement == MarioMovement.JumpLeft)
+                else if (marioMovement == MarioMovement.RunLeft || (marioMovement == MarioMovement.JumpLeft && mario.isCollideGround))
                 {
                     marioMovement = MarioMovement.IdleLeft;
                 }
                 SwitchCurrentSprite(marioMovement);
-            }
+            
         }
         public void MoveLeft()
         {
-            if(!isJumping || isCollideFloor)
+            if(!(marioMovement == MarioMovement.JumpLeft || marioMovement == MarioMovement.JumpRight))
                 marioMovement = MarioMovement.RunLeft;
             SwitchCurrentSprite(marioMovement);
         }
 
         public void MoveRight()
         {
-            if(!isJumping || isCollideFloor)
+            if(!(marioMovement == MarioMovement.JumpLeft || marioMovement == MarioMovement.JumpRight)) 
                 marioMovement = MarioMovement.RunRight;
             SwitchCurrentSprite(marioMovement);
         }
@@ -227,32 +227,6 @@ namespace Lasagna
             }
 
             SwitchCurrentSprite(marioMovement);
-            //if (isCollideUnder)
-            //{
-            //    Fall();
-            //    return;
-            //}
-            //if (jumpCounter < 20)
-            //{
-            //    mario.SetPosition(mario.Bounds.X, mario.Bounds.Y - 4);
-
-            //}
-            //else if (jumpCounter < 25)
-            //{
-            //    mario.SetPosition(mario.Bounds.X, mario.Bounds.Y - 2);
-
-            //}
-            //else if (jumpCounter < 30)
-            //{
-            //    mario.SetPosition(mario.Bounds.X, mario.Bounds.Y - 1);
-
-            //}
-            //else if (jumpCounter >= 30)
-            //{
-            //    Fall();
-            //}
-            //jumpCounter++;
-
 
         }
 
@@ -269,7 +243,7 @@ namespace Lasagna
 
         public void EndJump()
         {
-            jumpCounter = 0;
+
             isJumping = false;
             //SwitchCurrentSprite(marioMovement);
         }
@@ -343,16 +317,7 @@ namespace Lasagna
                 HandleStarPower();
             }
 
-            if (Keyboard.GetState().IsKeyDown(Keys.G))
-            {
-                Grow();
-            }
-             if (isJumping)
-            {
-                
-                isCollideFloor = false;
-            }
-            else if (isCollideFloor)
+            if (mario.isCollideGround)
             {
                 isJumping = false;
                 if (marioMovement == MarioMovement.JumpLeft)
