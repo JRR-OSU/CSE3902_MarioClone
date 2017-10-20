@@ -51,6 +51,7 @@ namespace Lasagna
                 ChangeState(EnemyState.Flipped);
                 isDead = true;
                 enemyMovement = EnemyMovement.Flipped;
+                isGravity = false;
             }
         }
 
@@ -61,6 +62,7 @@ namespace Lasagna
                 ChangeState(EnemyState.Flipped);
                 isDead = true;
                 enemyMovement = EnemyMovement.Flipped;
+                isGravity = false;
             }
         }
     }

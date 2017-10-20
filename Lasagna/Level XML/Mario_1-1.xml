@@ -5,11 +5,12 @@
   </Players>
   <Enemies>
     <!-- Test area enemies -->
-    <Enemy type="Goomba" posx="-480" posy="383" />
+    <Enemy type="Goomba" posx="200" posy="30" />
     <Enemy type="Goomba" posx="-448" posy="383" />
     <Enemy type="Goomba" posx="-512" posy="383" /> 
     <Enemy type="Koopa" posx="-576" posy="375" /> 
     <Enemy type="Koopa" posx="-544" posy="375" />
+    <Enemy type="Koopa" posx="200" posy="30" />
     
     <!-- Actual level -->
     <Enemy type="Goomba" posx="704" posy="383" />
@@ -128,5 +129,6 @@
     <Item type="GrowMushroom" posx="210" posy="100" />
     <Item type="LifeMushroom" posx="280" posy="100" />
     <Item type="Star" posx="350" posy="100" />
+    <Item type="Star" posx="350" posy="300" />
   </Items>
 </Root>

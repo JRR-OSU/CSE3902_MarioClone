@@ -38,6 +38,7 @@ namespace Lasagna
         {
             //TODO: Turn into shell here instead of calling base method
             ChangeState(EnemyState.Shell);
+            isDead = true;
         }
 
         protected override void OnCollisionResponse(IPlayer mario, CollisionSide side)
@@ -51,6 +52,7 @@ namespace Lasagna
                 ChangeState(EnemyState.Dead);
                 isDead = true;
                 enemyMovement = EnemyMovement.Flipped;
+                isGravity = false;
             }
         }
 
@@ -61,6 +63,7 @@ namespace Lasagna
                 ChangeState(EnemyState.Dead);
                 isDead = true;
                 enemyMovement = EnemyMovement.Flipped;
+                isGravity = false;
             }
         }
 

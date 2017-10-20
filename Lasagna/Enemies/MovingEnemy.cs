@@ -8,15 +8,18 @@ namespace Lasagna
     {
         private ISprite currentSprite;
         private EnemyState currentState;
-        private int posX;
-        private int posY;
         public enum EnemyMovement { IdleLeft, IdleRight, Flipped, Stomped };
         public EnemyMovement enemyMovement = EnemyMovement.IdleLeft;
         public bool isLeft = true;
         public bool isDead = false;
-        public bool isFall = false;
+        public bool isGravity = true;
         public bool isMoving = true;
-        private int[] orignalPos = new int[2];
+        private float[] orignalPos = new float[2];
+        private Vector2 velocity = new Vector2(0, 1);
+        private Vector2 fallingVelocity = new Vector2(0, (float)1.2);
+        private Vector2 fallingVelocityDecayRate = new Vector2((float).90, (float).90);
+        private Vector2 position;
+        private float yDifference;
 
         protected ISprite CurrentSprite
         {
@@ -28,15 +31,15 @@ namespace Lasagna
             get { return currentState; }
             set { currentState = value; }
         }
-        protected int PosX { get { return posX; } }
-        protected int PosY { get { return posY; } }
+        protected int PosX { get { return (int)position.X; } }
+        protected int PosY { get { return (int)position.Y; } }
 
         protected MovingEnemy(int spawnPosX, int spawnPosY)
         {
-            posX = spawnPosX;
-            posY = spawnPosY;
-            orignalPos[0] = posX;
-            orignalPos[1] = posY;
+            position.X = spawnPosX;
+            position.Y = spawnPosY;
+            orignalPos[0] = position.X;
+            orignalPos[1] = position.Y;
             MarioEvents.OnReset += ChangeToDefault;
         }
         public Rectangle Bounds
@@ -48,7 +51,7 @@ namespace Lasagna
                     returnValue = Rectangle.Empty;
                 }
                 else{
-                    returnValue = new Rectangle(posX, posY, CurrentSprite.Width, CurrentSprite.Height);
+                    returnValue = new Rectangle((int)position.X, (int)position.Y, CurrentSprite.Width, CurrentSprite.Height);
                 }
                 return returnValue;
             }
@@ -56,7 +59,7 @@ namespace Lasagna
         public bool IsSeen()
         {
             bool temp = true;
-            if (posX > 760 || posX < 0)
+            if (position.X > 760 || position.X < 0)
             {
                 temp = false;
                 isMoving = false;
@@ -67,8 +70,8 @@ namespace Lasagna
         }
         public void ReSet()
         {
-            posX = orignalPos[0];
-            posY = orignalPos[1];
+            position.X = orignalPos[0];
+            position.Y = orignalPos[1];
             isLeft = true;
             isDead = false;
             ChangeState(EnemyState.WalkRight);
@@ -76,9 +79,14 @@ namespace Lasagna
         public virtual void Update(GameTime gameTime)
         {
             if (currentSprite != null) {
+                if (enemyMovement.Equals(EnemyMovement.Flipped))
+                {
+                    DeathAnimation();
+                }
                 HandleHorizontalMovement();
-                HandleVerticalMovement();
-                currentSprite.Update(gameTime, posX, posY);
+                Fall(gameTime);
+                
+                currentSprite.Update(gameTime, (int)position.X, (int)position.Y);
             }
         }
 
@@ -105,10 +113,10 @@ namespace Lasagna
         {
             int heightDifference = oldSprite.Height - newSprite.Height;
             if (heightDifference != 0)
-                posY = posY + heightDifference;
+                position.Y = position.Y + heightDifference;
             int widthDifference = oldSprite.Width - newSprite.Width;
             if (widthDifference != 0)
-                posX = posX + widthDifference;
+                position.X = position.X + widthDifference;
         }
 
         public void OnCollisionResponse(ICollider otherCollider, CollisionSide side)
@@ -158,44 +166,59 @@ namespace Lasagna
 
         protected virtual void OnCollisionResponse(ITile tile, CollisionSide side)
         {
-            
+            if (side.Equals(CollisionSide.Bottom) && isGravity == true)
+            {
+                position.Y -= yDifference;
+            }
             if (side.Equals(CollisionSide.Right))
             {
                 ChangeState(EnemyState.WalkRight);
                 isLeft = true;
                 enemyMovement = EnemyMovement.IdleRight;
+                if (isGravity == true)
+                {
+                    position.Y -= (float)3.5;
+                }
             }
             else if (side.Equals(CollisionSide.Left))
             {
                 ChangeState(EnemyState.WalkLeft);
                 isLeft = false;
                 enemyMovement = EnemyMovement.IdleLeft;
+                if (isGravity == true)
+                {
+                    position.Y -= (float)3.5;
+                }
             }
         }
         private void HandleHorizontalMovement()
         {
-            if (isDead == true) {
-
-            }    
-            else if(isMoving == false)
+            if (isDead == false && isMoving == true)
             {
-
-            }
-            else if (isLeft == true)
-            {
-                posX--;
-            }
-            else
-            {
-                posX++;
+                if (isLeft == true)
+                {
+                    position.X--;
+                }
+                else
+                {
+                    position.X++;
+                }
             }
         }
-        private void HandleVerticalMovement()
+        private void Fall(GameTime gameTime)
         {
-            if(isFall == true)
+            if(isGravity == true)
             {
-                
+                yDifference = velocity.Y * ((float)gameTime.ElapsedGameTime.Milliseconds / 50);
+                position.Y += yDifference;
+                velocity.Y += fallingVelocity.Y;
+                velocity.Y *= fallingVelocityDecayRate.Y;
             }
+        }
+        private void DeathAnimation()
+        {
+            position.X++;
+            position.Y++;
         }
     }
 }
