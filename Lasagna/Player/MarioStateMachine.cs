@@ -340,7 +340,6 @@ namespace Lasagna
             {
                 Grow();
             }
-            Console.WriteLine(isCollideFloor);
              if (isJumping)
             {
                 
