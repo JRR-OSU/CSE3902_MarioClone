@@ -80,6 +80,8 @@ namespace Lasagna
 
         public void SetIdleState()
         {
+            if (stateMachine != null && stateMachine.IsTransitioning)
+                return;
 
             velocity.X = velocity.X / 1.2f;
             stateMachine.SetIdleState();
@@ -87,6 +89,9 @@ namespace Lasagna
 
         public void MarioFireProjectile(object sender, EventArgs e)
         {
+            if (stateMachine != null && stateMachine.IsTransitioning)
+                return;
+
             if (marioIsDead || stateMachine.CurrentState != MarioStateMachine.MarioState.Fire)
                 return;
 
@@ -111,6 +116,9 @@ namespace Lasagna
         
         public void MoveLeft(object sender, EventArgs e)
         {
+            if (stateMachine != null && stateMachine.IsTransitioning)
+                return;
+
             if (!marioIsDead && !(Math.Abs(velocity.X) >= maxVelX))
             {
                 velocity.X -= 10;
@@ -121,6 +129,9 @@ namespace Lasagna
 
         public void MoveRight(object sender, EventArgs e)
         {
+            if (stateMachine != null && stateMachine.IsTransitioning)
+                return;
+
             if (!marioIsDead && !(Math.Abs(velocity.X) >= maxVelX))
             {
                 velocity.X += 10;
@@ -131,6 +142,9 @@ namespace Lasagna
 
         public void Crouch(object sender, EventArgs e)
         {
+            if (stateMachine != null && stateMachine.IsTransitioning)
+                return;
+
             if (!marioIsDead)
             {
               //  spriteYPos += 3;
@@ -140,6 +154,9 @@ namespace Lasagna
 
         public void Jump(object sender, EventArgs e)
         {
+            if (stateMachine != null && stateMachine.IsTransitioning)
+                return;
+
             isJumping = true;
             if (!marioIsDead && !(Math.Abs(velocity.X) >= maxVelY))
             {
@@ -159,6 +176,9 @@ namespace Lasagna
 
         public void JumpEnemy()
         {
+            if (stateMachine != null && stateMachine.IsTransitioning)
+                return;
+
             //ignoreGravity = false;
             velocity.Y += 75;
         }
@@ -183,6 +203,9 @@ namespace Lasagna
 
         public void OnCollisionResponse(ICollider otherCollider, CollisionSide side)
         {
+            if (stateMachine != null && stateMachine.IsTransitioning)
+                return;
+
             if (otherCollider is IPlayer)
                 marioCollisionHandler.OnCollisionResponse((IPlayer)otherCollider, side);
             else if (otherCollider is IEnemy)
