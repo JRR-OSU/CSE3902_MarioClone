@@ -17,10 +17,10 @@ namespace Lasagna
         public Vector2 position;
         public Vector2 velocity;
         private int maxVelX = 150;
-        private int maxVelY = 200;
+        private int maxVelY = 400;
         public bool isFalling = false;
         private int maxHeight;
-        readonly Vector2 gravity = new Vector2(0, -300f);
+        readonly Vector2 gravity = new Vector2(0, -500f);
         float time;
 
         public bool ignoreGravity { get; set;}
@@ -163,7 +163,7 @@ namespace Lasagna
                 stateMachine.Jump();
                 //ignoreGravity = false;
                 if (velocity.Y < 200 && position.Y * -1 > maxHeight && !isFalling)
-                    velocity.Y += 75;
+                    velocity.Y += 125;
                 else
                 {
                     isFalling = true;
@@ -258,7 +258,7 @@ namespace Lasagna
                 //     Console.WriteLine(position.Y);
                 if (!isJumping)
                 {
-                    maxHeight = ((int)position.Y + Bounds.Height * 2) * -1;
+                    maxHeight = ((int)(position.Y + Bounds.Height * 2.50)) * -1;
                 }
 
                 if (!ignoreGravity && velocity.Y > -200)
