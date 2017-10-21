@@ -35,7 +35,7 @@ namespace Lasagna
         public bool StarPowered { get { return stateMachine != null && stateMachine.StarPowered; } }
 
         public Rectangle Bounds { get { return new Rectangle((int)position.X, -(int)position.Y, GetCurrentSprite().Width, GetCurrentSprite().Height); } }
-
+        public bool IsBlinking { get { return stateMachine != null && (stateMachine.IsTransitioning || stateMachine.IsBlinking); } }
 
         public Mario(int x, int y)
         {
@@ -52,6 +52,12 @@ namespace Lasagna
             position.Y = -y;
             orignalPos[0] = (int)position.X;
             orignalPos[1] = -(int)position.Y;
+        }
+
+        public void ForceMove (float x, float y)
+        {
+            position.X += x;
+            position.Y -= y;
         }
 
         public void SetPosition(int x, int y)
@@ -102,12 +108,7 @@ namespace Lasagna
                 || m == MarioStateMachine.MarioMovement.JumpRight 
                 || m == MarioStateMachine.MarioMovement.RunRight;
         }
-
-        public static void GetFireflower()
-        {
-            MarioStateMachine.GetFireflower();
-        }
-
+        
         public void MoveLeft(object sender, EventArgs e)
         {
             if (!marioIsDead && !(Math.Abs(velocity.X) >= maxVelX))
@@ -162,17 +163,6 @@ namespace Lasagna
             velocity.Y += 75;
         }
 
-
-        public void Grow(object sender, EventArgs e)
-        {
-            stateMachine.Grow();
-        }
-
-        public void Shrink(object sender, EventArgs e)
-        {
-            stateMachine.Shrink();
-        }
-
         public void Star()
         {
             stateMachine.Star();
@@ -205,54 +195,57 @@ namespace Lasagna
        
         public void Update(GameTime gameTime)
         {
-
-            if (isCollideGround)
+            if (!marioIsDead && (stateMachine == null || !stateMachine.IsTransitioning))
             {
-                ignoreGravity = true;
-                isJumping = false;
 
-            }
-            else
-            {
-                ignoreGravity = false;
-            }
-
-            if (ignoreGravity)
-            {
-                if (Keyboard.GetState().GetPressedKeys().Length == 0) // Set idle if no key is pressed
+                if (isCollideGround)
                 {
-                    SetIdleState();
+                    ignoreGravity = true;
+                    isJumping = false;
+
                 }
+                else
+                {
+                    ignoreGravity = false;
+                }
+
+                if (ignoreGravity)
+                {
+                    if (Keyboard.GetState().GetPressedKeys().Length == 0) // Set idle if no key is pressed
+                    {
+                        SetIdleState();
+                    }
+                }
+                //TODO: Don't need this? SetPosition((int)position.X, (int)position.Y * -1);
+
+                time = (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+                //if (velocity.Y == 0)
+                //   ignoreGravity = true;
+                // Console.WriteLine(isCollideGround);
+
+
+
+
+                if ((Math.Abs(velocity.Y) >= maxVelY))
+                {
+                    stateMachine.EndJump();
+                }
+                //   Console.WriteLine(maxHeight);
+                //     Console.WriteLine(position.Y);
+                if (!isJumping)
+                {
+                    maxHeight = ((int)position.Y + Bounds.Height * 2) * -1;
+                }
+
+                if (!ignoreGravity && velocity.Y > -200)
+                    velocity += gravity * time;
+                position += velocity * time;
             }
-            //TODO: Don't need this? SetPosition((int)position.X, (int)position.Y * -1);
-
-            time = (float)gameTime.ElapsedGameTime.TotalSeconds;
-
-            //if (velocity.Y == 0)
-            //   ignoreGravity = true;
-           // Console.WriteLine(isCollideGround);
-
-
-           
-
-            if ((Math.Abs(velocity.Y) >= maxVelY))
-            {
-                stateMachine.EndJump();
-            }
-         //   Console.WriteLine(maxHeight);
-       //     Console.WriteLine(position.Y);
-            if (!isJumping)
-            {
-                maxHeight = ((int)position.Y + Bounds.Height * 2) * -1;
-            }
-
-            if (!ignoreGravity && velocity.Y > -200)
-                velocity += gravity * time;
-            position += velocity * time;
 
 
             //   Console.WriteLine(position);
-           // Console.WriteLine(velocity);
+            // Console.WriteLine(velocity);
 
             stateMachine.Update(gameTime, (int)position.X, -(int)position.Y);
 

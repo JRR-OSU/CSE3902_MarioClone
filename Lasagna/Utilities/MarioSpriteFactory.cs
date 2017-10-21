@@ -5,11 +5,6 @@ namespace Lasagna
 {
     public class MarioSpriteFactory
     {
-        #region TEMP CODE TO DEMONSTRATE SPRITES
-        private Texture2D TEMP_marioStanding;
-        private Texture2D TEMP_marioRunning;
-        #endregion
-
         private Texture2D marioBigCrouchLeftSheet;
         private Texture2D marioBigCrouchRightSheet;
         private Texture2D marioBigIdleLeftSheet;
@@ -20,6 +15,8 @@ namespace Lasagna
         private Texture2D marioBigRunRightSheet;
         private Texture2D marioBigTurnLeftSheet;
         private Texture2D marioBigTurnRightSheet;
+        private Texture2D marioBigShrinkLeftSheet;
+        private Texture2D marioBigShrinkRightSheet;
         private Texture2D marioFireCrouchLeftSheet;
         private Texture2D marioFireCrouchRightSheet;
         private Texture2D marioFireIdleLeftSheet;
@@ -56,12 +53,7 @@ namespace Lasagna
         }
 
         public void LoadAllContent(ContentManager content)
-        {
-            #region TEMP CODE TO DEMONSTRATE SPRITES
-            TEMP_marioStanding = content.Load<Texture2D>("MarioSprites/Mario_Big_IdleLeft");
-            TEMP_marioRunning = content.Load<Texture2D>("MarioSprites/Mario_Fire_RunRight");
-            #endregion
-            
+        {            
             marioBigCrouchLeftSheet = content.Load<Texture2D>("MarioSprites/Mario_Big_CrouchLeft");
             marioBigCrouchRightSheet = content.Load<Texture2D>("MarioSprites/Mario_Big_CrouchRight");
             marioBigIdleLeftSheet = content.Load<Texture2D>("MarioSprites/Mario_Big_IdleLeft");
@@ -72,6 +64,8 @@ namespace Lasagna
             marioBigRunRightSheet = content.Load<Texture2D>("MarioSprites/Mario_Big_RunRight");
             marioBigTurnLeftSheet = content.Load<Texture2D>("MarioSprites/Mario_Big_TurnLeft");
             marioBigTurnRightSheet = content.Load<Texture2D>("MarioSprites/Mario_Big_TurnRight");
+            marioBigShrinkLeftSheet = content.Load<Texture2D>("MarioSprites/Mario_Big_ShrinkLeft");
+            marioBigShrinkRightSheet = content.Load<Texture2D>("MarioSprites/Mario_Big_ShrinkRight");
             marioFireCrouchLeftSheet = content.Load<Texture2D>("MarioSprites/Mario_Fire_CrouchLeft");
             marioFireCrouchRightSheet = content.Load<Texture2D>("MarioSprites/Mario_Fire_CrouchRight");
             marioFireIdleLeftSheet = content.Load<Texture2D>("MarioSprites/Mario_Fire_IdleLeft");
@@ -94,19 +88,7 @@ namespace Lasagna
             marioSmallTurnLeftSheet = content.Load<Texture2D>("MarioSprites/Mario_Small_TurnLeft");
             marioSmallTurnRightSheet = content.Load<Texture2D>("MarioSprites/Mario_Small_TurnRight");
         }
-
-        #region TEMP CODE TO DEMONSTRATE SPRITES
-        public NonAnimatedSprite CreateSprite_MarioStanding()
-        {
-            return new NonAnimatedSprite(TEMP_marioStanding, 32, 64);
-        }
-
-        public AnimatedSprite CreateSprite_MarioRunning()
-        {
-            return new AnimatedSprite(TEMP_marioRunning, 3, 1, 32, 64, 10);
-        }
-        #endregion
-        
+                
         public NonAnimatedSprite CreateSprite_MarioBig_CrouchLeft()
         {
             return new NonAnimatedSprite(marioBigCrouchLeftSheet, 32, 44);
@@ -155,6 +137,16 @@ namespace Lasagna
         public NonAnimatedSprite CreateSprite_MarioBig_TurnRight()
         {
             return new NonAnimatedSprite(marioBigTurnRightSheet, 32, 64);
+        }
+
+        public AnimatedSprite CreateSprite_MarioBig_ShrinkLeft()
+        {
+            return new AnimatedSprite(marioBigShrinkLeftSheet, 10, 1, 32, 64, 10);
+        }
+
+        public AnimatedSprite CreateSprite_MarioBig_ShrinkRight()
+        {
+            return new AnimatedSprite(marioBigShrinkRightSheet, 10, 1, 32, 64, 10);
         }
 
         public NonAnimatedSprite CreateSprite_MarioFire_CrouchLeft()
@@ -212,14 +204,14 @@ namespace Lasagna
             return new NonAnimatedSprite(marioSmallDieSheet, 28, 28);
         }
 
-        public NonAnimatedSprite CreateSprite_MarioSmall_GrowLeft()
+        public AnimatedSprite CreateSprite_MarioSmall_GrowLeft()
         {
-            return new NonAnimatedSprite(marioSmallGrowLeftSheet, 32, 48);
+            return new AnimatedSprite(marioSmallGrowLeftSheet, 10, 1, 32, 64, 10);
         }
 
-        public NonAnimatedSprite CreateSprite_MarioSmall_GrowRight()
+        public AnimatedSprite CreateSprite_MarioSmall_GrowRight()
         {
-            return new NonAnimatedSprite(marioSmallGrowRightSheet, 32, 48);
+            return new AnimatedSprite(marioSmallGrowRightSheet, 10, 1, 32, 64, 10);
         }
 
         public NonAnimatedSprite CreateSprite_MarioSmall_IdleLeft()

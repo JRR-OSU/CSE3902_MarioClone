@@ -13,12 +13,20 @@ namespace Lasagna
             //Players vs. Tiles, Enemies, Items, projectiles.
             foreach (IPlayer player in players)
             {
+                //If player is dead, exit.
+                if (player.IsDead)
+                    continue;
+
                 CheckAllCollisions<ITile>(player, player.Bounds, tiles);
+                //If this player is mario, and he's transitioning/blinking, we only check collisions for tiles
+                if (player is Mario && ((Mario)player).IsBlinking )
+                    continue;
+
                 CheckAllCollisions<IEnemy>(player, player.Bounds, enemies);
                 CheckAllCollisions<IItem>(player, player.Bounds, items);
                 CheckAllCollisions<IProjectile>(player, player.Bounds, projectiles);
             }
-            
+
             //Tiles are static, so don't need to check against themselves.
             //Tiles vs. Enemies, Items, projectiles.
             foreach (ITile tile in tiles)
@@ -73,7 +81,7 @@ namespace Lasagna
 
             if (r1.IsEmpty || r2.IsEmpty || !r1.Intersects(r2))
                 return false;
-            
+
             r1CollisionSide = GetSideOfCollision(r1, r2);
             r2CollisionSide = GetSideOfCollision(r2, r1);
 

@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 
 namespace Lasagna
 {
@@ -17,6 +16,8 @@ namespace Lasagna
         {
             screenXPos = startXPos;
             screenYPos = startYPos;
+            originXPos = startXPos;
+            originYPos = startYPos;
             MarioEvents.OnReset += Reset;
         }
 

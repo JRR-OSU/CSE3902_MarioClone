@@ -98,7 +98,7 @@ namespace Lasagna
 
             if (levelBackground != null)
                 levelBackground.Update(gameTime, 0, 0);
-
+            
             foreach (ITile tile in tiles)
                 if (tile != null)
                 {
@@ -129,7 +129,9 @@ namespace Lasagna
                  if (player != null)
                     player.Update(gameTime);
 
-            if (mainCamera != null)
+            bool anyDead = players != null && players.Find(o => o is Mario && ((Mario)o).IsDead) != null;
+
+            if (mainCamera != null && !anyDead)
                 mainCamera.Update(players, screenWidth, screenHeight);
 
             base.Update(gameTime);
