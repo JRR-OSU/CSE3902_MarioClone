@@ -40,18 +40,16 @@ namespace Lasagna
 
         protected override void OnCollisionResponse(IPlayer mario, CollisionSide side)
         {
-            if (side.Equals(CollisionSide.Top))
+            if (side.Equals(CollisionSide.Top) && isDead == false)
             {
                 ChangeState(EnemyState.Dead);
                 isDead = true;
-                enemyMovement = EnemyMovement.Stomped;
             }
-            else if((mario is Mario && ((Mario)mario).StarPowered))
+            else if((mario is Mario && ((Mario)mario).StarPowered) && isDead == false)
             {
                 ChangeState(EnemyState.Flipped);
                 isDead = true;
-                enemyMovement = EnemyMovement.Flipped;
-                isGravity = false;
+                isFlipped = true;
             }
         }
 
@@ -61,8 +59,7 @@ namespace Lasagna
             {
                 ChangeState(EnemyState.Flipped);
                 isDead = true;
-                enemyMovement = EnemyMovement.Flipped;
-                isGravity = false;
+                isFlipped = true;
             }
         }
     }

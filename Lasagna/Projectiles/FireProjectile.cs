@@ -45,13 +45,13 @@ namespace Lasagna
                 explodeTimeLeft -= (float)gameTime.ElapsedGameTime.TotalSeconds;
 
                 if (explodeTimeLeft < 0)
-                    ChangeState();
+                    DestroyShell();
             }
 
             base.Update(gameTime);
         }
 
-        public override void ChangeState()
+        public override void DestroyShell()
         {
             if (currentState == FireballStates.Idle)
             {
@@ -69,7 +69,7 @@ namespace Lasagna
         protected override void OnCollisionResponse(IEnemy Enemy, CollisionSide side)
         {
             if (currentState == FireballStates.Idle)
-                this.ChangeState();
+                this.DestroyShell();
         }
 
         protected override void OnCollisionResponse(ITile tile, CollisionSide side)
@@ -78,13 +78,13 @@ namespace Lasagna
             if (side == CollisionSide.Bottom)
                 movingUpTimeLeft = fireballBounceTime;
             else if (currentState == FireballStates.Idle)
-                ChangeState();
+                DestroyShell();
         }
 
         protected override void OnCollisionResponse(IItem Item, CollisionSide side)
         {
             if (currentState == FireballStates.Idle)
-                this.ChangeState();
+                this.DestroyShell();
         }
     }
 }

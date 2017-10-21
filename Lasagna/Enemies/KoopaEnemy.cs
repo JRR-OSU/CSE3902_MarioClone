@@ -37,22 +37,22 @@ namespace Lasagna
         public override void Damage()
         {
             //TODO: Turn into shell here instead of calling base method
-            ChangeState(EnemyState.Shell);
+            CurrentSprite = null;
+            MarioGame.Instance.RegisterProjectile(new KoopaShellProjectile(PosX, Bounds.Y + Bounds.Height / 2, true));
             isDead = true;
         }
 
         protected override void OnCollisionResponse(IPlayer mario, CollisionSide side)
         {
-            if (side.Equals(CollisionSide.Top))
+            if (side.Equals(CollisionSide.Top) && isDead == false)
             {
                 Damage();
             }
-            else if (mario is Mario && ((Mario)mario).StarPowered)
+            else if (mario is Mario && ((Mario)mario).StarPowered && isDead == false)
             {
                 ChangeState(EnemyState.Dead);
                 isDead = true;
-                enemyMovement = EnemyMovement.Flipped;
-                isGravity = false;
+                isFlipped = true;
             }
         }
 
@@ -62,8 +62,7 @@ namespace Lasagna
             {
                 ChangeState(EnemyState.Dead);
                 isDead = true;
-                enemyMovement = EnemyMovement.Flipped;
-                isGravity = false;
+                isFlipped = true;
             }
         }
 

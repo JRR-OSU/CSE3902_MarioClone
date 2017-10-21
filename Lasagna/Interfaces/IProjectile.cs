@@ -8,7 +8,7 @@ namespace Lasagna
     {
         void Update(GameTime gameTime);
         void Draw(SpriteBatch spriteBatch);
-        void ChangeState();
+        void DestroyShell();
         void Reset(object sender, EventArgs e);
     }
 }

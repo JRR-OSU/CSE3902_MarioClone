@@ -53,7 +53,7 @@ namespace Lasagna
                 currentSprite.Draw(spriteBatch);
         }
 
-        public abstract void ChangeState();
+        public abstract void DestroyShell();
 
         public void Reset(object sender, EventArgs e)
         {

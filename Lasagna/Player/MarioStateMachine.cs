@@ -257,7 +257,7 @@ namespace Lasagna
 
         public void JumpEnemy()
         {
-            jumpCounter = 0;
+            //jumpCounter = 0;
             Jump();
         }
         public void Star()
@@ -360,7 +360,7 @@ namespace Lasagna
             canGrow = true;
             starPower = false;
             isJumping = false;
-            jumpCounter = 0;
+            //jumpCounter = 0;
             marioState = MarioState.Small;
             marioMovement = MarioMovement.IdleRight;
             currentSprite = smallStates[marioMovement];

@@ -8,15 +8,15 @@ namespace Lasagna
     {
         private ISprite currentSprite;
         private EnemyState currentState;
-        public enum EnemyMovement { IdleLeft, IdleRight, Flipped, Stomped };
-        public EnemyMovement enemyMovement = EnemyMovement.IdleLeft;
+        //public enum EnemyMovement { IdleLeft, IdleRight, Flipped, Stomped };
+        //public EnemyMovement enemyMovement = EnemyMovement.IdleLeft;
         public bool isLeft = true;
         public bool isDead = false;
-        public bool isGravity = true;
         public bool isMoving = true;
+        public bool isFlipped = false;
         private float[] orignalPos = new float[2];
         private Vector2 velocity = new Vector2(0, 1);
-        private Vector2 fallingVelocity = new Vector2(0, (float)1.2);
+        private Vector2 fallingVelocity = new Vector2(0, (float)1.5);
         private Vector2 fallingVelocityDecayRate = new Vector2((float).90, (float).90);
         private Vector2 position;
         private float yDifference;
@@ -74,18 +74,19 @@ namespace Lasagna
             position.Y = orignalPos[1];
             isLeft = true;
             isDead = false;
+            isMoving = true;
+            isFlipped = false;
             ChangeState(EnemyState.WalkRight);
         }
         public virtual void Update(GameTime gameTime)
         {
             if (currentSprite != null) {
-                if (enemyMovement.Equals(EnemyMovement.Flipped))
+                if (isFlipped == true)
                 {
                     DeathAnimation();
                 }
                 HandleHorizontalMovement();
                 Fall(gameTime);
-                
                 currentSprite.Update(gameTime, (int)position.X, (int)position.Y);
             }
         }
@@ -154,41 +155,32 @@ namespace Lasagna
             {
                 ChangeState(EnemyState.WalkRight);
                 isLeft = true;
-                enemyMovement = EnemyMovement.IdleRight;
             }
             else if (side.Equals(CollisionSide.Left))
             {
                 ChangeState(EnemyState.WalkLeft);
                 isLeft = false;
-                enemyMovement = EnemyMovement.IdleLeft;
             }
         }
 
         protected virtual void OnCollisionResponse(ITile tile, CollisionSide side)
         {
-            if (side.Equals(CollisionSide.Bottom) && isGravity == true)
+            if (side.Equals(CollisionSide.Bottom) && isFlipped == false)
             {
                 position.Y -= yDifference;
+                velocity.Y = 1;
             }
-            if (side.Equals(CollisionSide.Right))
+            if (side.Equals(CollisionSide.Right) && isFlipped == false)
             {
                 ChangeState(EnemyState.WalkRight);
                 isLeft = true;
-                enemyMovement = EnemyMovement.IdleRight;
-                if (isGravity == true)
-                {
                     position.Y -= (float)3.5;
-                }
             }
-            else if (side.Equals(CollisionSide.Left))
+            else if (side.Equals(CollisionSide.Left) && isFlipped == false)
             {
                 ChangeState(EnemyState.WalkLeft);
                 isLeft = false;
-                enemyMovement = EnemyMovement.IdleLeft;
-                if (isGravity == true)
-                {
                     position.Y -= (float)3.5;
-                }
             }
         }
         private void HandleHorizontalMovement()
@@ -207,18 +199,17 @@ namespace Lasagna
         }
         private void Fall(GameTime gameTime)
         {
-            if(isGravity == true)
-            {
                 yDifference = velocity.Y * ((float)gameTime.ElapsedGameTime.Milliseconds / 50);
                 position.Y += yDifference;
                 velocity.Y += fallingVelocity.Y;
                 velocity.Y *= fallingVelocityDecayRate.Y;
-            }
+                if (velocity.Y > 12)
+                    velocity.Y = 12;
         }
         private void DeathAnimation()
         {
-            position.X++;
-            position.Y++;
+            position.X ++;
+            position.Y -= (float)2;
         }
     }
 }
