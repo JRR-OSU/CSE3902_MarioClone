@@ -36,9 +36,10 @@ namespace Lasagna
                 CheckAllCollisions<IProjectile>(tile, tile.Bounds, projectiles);
             }
 
-            //Enemies vs items, projectiles
+            //Enemies vs enemies, items, projectiles
             foreach (IEnemy enemy in enemies)
             {
+                CheckAllCollisions<IEnemy>(enemy, enemy.Bounds, enemies);
                 CheckAllCollisions<IItem>(enemy, enemy.Bounds, items);
                 CheckAllCollisions<IProjectile>(enemy, enemy.Bounds, projectiles);
             }
