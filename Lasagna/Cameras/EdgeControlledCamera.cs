@@ -11,6 +11,8 @@ namespace Lasagna
         private float screenYPos;
         private float originXPos;
         private float originYPos;
+        private float rightEdge;
+        private float bottomEdge;
 
         public EdgeControlledCamera (float startXPos, float startYPos)
         {
@@ -26,9 +28,10 @@ namespace Lasagna
         public void Update(List<IPlayer> players, float screenWidth, float screenHeight)
         {
             //Calculate screen edge positions
-            float rightEdge = screenXPos + (screenWidth / 2),
-                bottomEdge = screenYPos + screenHeight;
-            
+            rightEdge = screenXPos + screenWidth;
+            bottomEdge = screenYPos + screenHeight;
+            float horMiddle = screenXPos + (screenWidth / 2);
+
             foreach (IPlayer pl in players)
             {
                 Rectangle bounds = pl.Bounds;
@@ -36,8 +39,8 @@ namespace Lasagna
                 if (bounds.X < screenXPos)
                     pl.SetPosition((int)screenXPos, bounds.Y);
                 //Right center
-                else if (bounds.X + bounds.Width > rightEdge)
-                    screenXPos += (bounds.X + bounds.Width - rightEdge);
+                else if (bounds.X + bounds.Width > horMiddle)
+                    screenXPos += (bounds.X + bounds.Width - horMiddle);
                 //Top edge
                 if (bounds.Y < screenYPos)
                     screenYPos -= (screenYPos - bounds.Y);
@@ -54,6 +57,12 @@ namespace Lasagna
         {
             screenXPos = originXPos;
             screenYPos = originYPos;
+        }
+
+        public bool CanSeeCollider(ICollider col)
+        {
+            return col.Bounds.X + col.Bounds.Width >= screenXPos && col.Bounds.X <= rightEdge
+                && col.Bounds.Y + col.Bounds.Height >= screenYPos && col.Bounds.Y <= bottomEdge;
         }
     }
 }

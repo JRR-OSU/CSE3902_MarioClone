@@ -42,7 +42,7 @@ namespace Lasagna
             position.Y = spawnPosY;
             orignalPos[0] = position.X;
             orignalPos[1] = position.Y;
-            MarioEvents.OnReset += ChangeToDefault;
+            MarioEvents.OnReset += ReSet;
         }
         public Rectangle Bounds
         {
@@ -59,7 +59,7 @@ namespace Lasagna
             }
         }
        
-        public void ReSet()
+        public void ReSet(object sender, EventArgs e)
         {
             position.X = orignalPos[0];
             position.Y = orignalPos[1];
