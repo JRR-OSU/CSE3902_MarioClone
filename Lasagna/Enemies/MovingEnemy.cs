@@ -21,6 +21,7 @@ namespace Lasagna
         private Vector2 position;
         private float yDifference;
         private int deathTime = 0;
+        public bool isSeen;
 
         protected ISprite CurrentSprite
         {
@@ -57,18 +58,7 @@ namespace Lasagna
                 return returnValue;
             }
         }
-        public bool IsSeen()
-        {
-            bool temp = true;
-            if (position.X > 760 || position.X < 0)
-            {
-                temp = false;
-                isMoving = false;
-            }
-            else
-                isMoving = true;
-            return temp;
-        }
+       
         public void ReSet()
         {
             position.X = orignalPos[0];
@@ -88,6 +78,14 @@ namespace Lasagna
                 currentSprite = null;
             }
             if (currentSprite != null) {
+                if(isSeen == true)
+                {
+                    isMoving = true;
+                }
+                else
+                {
+                    isMoving = false;
+                }
                 if (isFlipped == true)
                 {
                     DeathAnimation();
