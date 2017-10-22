@@ -20,10 +20,12 @@ namespace Lasagna
         private int maxVelY = 400;
         public bool isFalling = false;
         private int maxHeight;
+        private int maxHeightRunning;
         readonly Vector2 gravity = new Vector2(0, -500f);
         float time;
 
         public bool ignoreGravity { get; set;}
+        public bool isRunning = false; 
         private bool isJumping = false;
 
         public bool isCollideGround { get; set; }
@@ -119,22 +121,44 @@ namespace Lasagna
             if (stateMachine != null && stateMachine.IsTransitioning)
                 return;
 
-            if (!marioIsDead && !(Math.Abs(velocity.X) >= maxVelX))
+            if (isRunning && !marioIsDead && !(Math.Abs(velocity.X) >= maxVelX + 100))
             {
                 velocity.X -= 10;
                 stateMachine.MoveLeft();
+                
             }
+            else if (!isRunning && !marioIsDead)
+            {
+                if((Math.Abs(velocity.X) >= maxVelX))
+                    velocity.X += 2;
+                else
+                    velocity.X -= 10;
+
+                stateMachine.MoveLeft();
+            }
+
            
         }
 
         public void MoveRight(object sender, EventArgs e)
         {
+            Console.WriteLine(velocity.X);
             if (stateMachine != null && stateMachine.IsTransitioning)
                 return;
 
-            if (!marioIsDead && !(Math.Abs(velocity.X) >= maxVelX))
+            if (isRunning && !marioIsDead && !(Math.Abs(velocity.X) >= maxVelX + 100))
             {
                 velocity.X += 10;
+                stateMachine.MoveRight();
+
+            }
+            else if (!isRunning && !marioIsDead)
+            {
+                if ((Math.Abs(velocity.X) >= maxVelX))
+                    velocity.X -= 2;
+                else
+                    velocity.X += 10;
+
                 stateMachine.MoveRight();
             }
 
@@ -172,6 +196,17 @@ namespace Lasagna
             }
 
 
+        }
+
+        private void CalcMaxHeight()
+        {
+            if (!isJumping)
+            {
+                if (!isRunning)
+                    maxHeight = ((int)(position.Y + Bounds.Height * 2.50)) * -1;
+                else
+                    maxHeight = ((int)(position.Y + Bounds.Height * 3.50)) * -1;
+            }
         }
 
         public void JumpEnemy()
@@ -218,6 +253,12 @@ namespace Lasagna
        
         public void Update(GameTime gameTime)
         {
+            if (Keyboard.GetState().IsKeyDown(Keys.LeftShift))
+            {
+                isRunning = true;
+            }
+            else
+                isRunning = false;
             if (!marioIsDead && (stateMachine == null || !stateMachine.IsTransitioning))
             {
 
@@ -248,6 +289,7 @@ namespace Lasagna
                 // Console.WriteLine(isCollideGround);
 
 
+                CalcMaxHeight();
 
 
                 if ((Math.Abs(velocity.Y) >= maxVelY))
@@ -256,10 +298,7 @@ namespace Lasagna
                 }
                 //   Console.WriteLine(maxHeight);
                 //     Console.WriteLine(position.Y);
-                if (!isJumping)
-                {
-                    maxHeight = ((int)(position.Y + Bounds.Height * 2.50)) * -1;
-                }
+
 
                 if (!ignoreGravity && velocity.Y > -200)
                     velocity += gravity * time;
