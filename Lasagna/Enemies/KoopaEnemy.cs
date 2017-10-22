@@ -36,9 +36,8 @@ namespace Lasagna
 
         public override void Damage()
         {
-            //TODO: Turn into shell here instead of calling base method
             CurrentSprite = null;
-            MarioGame.Instance.RegisterProjectile(new KoopaShellProjectile(PosX, Bounds.Y + Bounds.Height / 2, true));
+            MarioGame.Instance.RegisterProjectile(new KoopaShellProjectile(PosX, PosY, true));
             isDead = true;
         }
 

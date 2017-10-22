@@ -9,27 +9,34 @@ namespace Lasagna
         private enum ItemState
         {
             Idle,
+            CoinAnimaiotn,
+            Moving,
             Taken
         }
 
         //Change this later if items support states.
         private ISprite itemSprite;
-        private ItemState currentState;
-        private int posX;
-        private int posY;
+        private ItemState currentState = ItemState.Idle;
+        public Vector2 position;
+        private float velocity = 1;
+        private float fallingVelocity = (float)1.5;
+        private float fallingVelocityDecayRate = (float).9;
+        private float yDifference;
+        private int coinAnimateTime = 0;
+        private bool isLeft = false;
 
         protected ISprite ItemSprite
         {
             get { return itemSprite; }
             set { itemSprite = value; }
         }
-        protected int PosX { get { return posX; } }
-        protected int PosY { get { return posY; } }
+        protected int PosX { get { return (int)position.X; } }
+        protected int PosY { get { return (int)position.Y; } }
 
         protected BaseItem(int spawnPosX, int spawnPosY)
         {
-            posX = spawnPosX;
-            posY = spawnPosY;
+            position.X = spawnPosX;
+            position.Y = spawnPosY;
             currentState = ItemState.Idle;
             MarioEvents.OnReset += ChangeToDefault;
         }
@@ -41,14 +48,27 @@ namespace Lasagna
                 if (itemSprite == null || currentState == ItemState.Taken)
                     return Rectangle.Empty;
                 else
-                    return new Rectangle(posX, posY, itemSprite.Width, itemSprite.Height);
+                    return new Rectangle((int)position.X, (int)position.Y, itemSprite.Width, itemSprite.Height);
             }
         }
 
+
         public void Update(GameTime gameTime)
         {
+            if (currentState.Equals(ItemState.CoinAnimaiotn))
+            {    
+                HandleCoinAnimation();
+                Fall(gameTime);
+            }
             if (itemSprite != null && currentState != ItemState.Taken)
-                itemSprite.Update(gameTime, posX, posY);
+            {
+                if (currentState.Equals(ItemState.Moving))
+                {
+                    HandleHorizontalMovement();
+                    Fall(gameTime);
+                }
+                itemSprite.Update(gameTime, (int)position.X, (int)position.Y);
+            }
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -92,9 +112,13 @@ namespace Lasagna
             return;
         }
 
-        protected virtual void OnCollisionResponse(ITile tile, CollisionSide side)
+        private void OnCollisionResponse(ITile tile, CollisionSide side)
         {
-            return;
+            if (side.Equals(CollisionSide.Bottom) && currentState.Equals(ItemState.Moving))
+            {
+                position.Y -= yDifference;
+                velocity = 1;
+            }
         }
 
         ///TODO: Temp methods for sprint3
@@ -102,6 +126,44 @@ namespace Lasagna
         {
             if (currentState == ItemState.Taken)
                 currentState = ItemState.Idle;
+        }
+        public void Move()
+        {
+            currentState = ItemState.Moving;
+        }
+        public void StartCoinAnimation()
+        {
+            currentState = ItemState.CoinAnimaiotn;
+        }
+        private void Fall(GameTime gameTime)
+        {
+            yDifference = velocity * ((float)gameTime.ElapsedGameTime.Milliseconds / 50);
+            position.Y += yDifference;
+            velocity += fallingVelocity;
+            velocity *= fallingVelocityDecayRate;
+            if (velocity > 50)
+                velocity = 50;
+        }
+        private void HandleHorizontalMovement()
+        {
+            {
+                if (isLeft == true)
+                {
+                    position.X -= 2;
+                }
+                else
+                {
+                    position.X += 2;
+                }
+            }
+        }
+        private void HandleCoinAnimation()
+        {
+            position.Y -= 10;
+            velocity += 4;
+            coinAnimateTime++;
+            if (coinAnimateTime >= 40)
+                itemSprite = null;
         }
     }
 }

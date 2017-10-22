@@ -43,7 +43,7 @@ namespace Lasagna
         }
         public NonAnimatedSprite CreateSprite_Goomba_Flipped()
         {
-            return new NonAnimatedSprite(goombaFlippedSheet, 37, 45);
+            return new NonAnimatedSprite(goombaFlippedSheet, 35, 44);
         }
 
         public AnimatedSprite CreateSprite_Goomba_Walk()
@@ -57,7 +57,7 @@ namespace Lasagna
         }
         public NonAnimatedSprite CreateSprite_Koopa_Shell()
         {
-            return new NonAnimatedSprite(koopaShellSheet, 55, 40);
+            return new NonAnimatedSprite(koopaShellSheet, 30, 30);
         }
 
         public AnimatedSprite CreateSprite_Koopa_Walk()
@@ -66,7 +66,7 @@ namespace Lasagna
         }
         public AnimatedSprite CreateSprite_Koopa_Walk_Left()
         {
-            return new AnimatedSprite(koopaWalkRightSheet, 2, 1, 50, 50, 8);
+            return new AnimatedSprite(koopaWalkRightSheet, 2, 1, 32, 48, 8);
         }
     }
 }

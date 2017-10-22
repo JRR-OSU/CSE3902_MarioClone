@@ -15,11 +15,12 @@ namespace Lasagna
         public bool isMoving = true;
         public bool isFlipped = false;
         private float[] orignalPos = new float[2];
-        private Vector2 velocity = new Vector2(0, 1);
-        private Vector2 fallingVelocity = new Vector2(0, (float)1.5);
-        private Vector2 fallingVelocityDecayRate = new Vector2((float).90, (float).90);
+        private float velocity = 1;
+        private float fallingVelocity = (float)1.5;
+        private float fallingVelocityDecayRate = (float).9;
         private Vector2 position;
         private float yDifference;
+        private int deathTime = 0;
 
         protected ISprite CurrentSprite
         {
@@ -77,13 +78,23 @@ namespace Lasagna
             isMoving = true;
             isFlipped = false;
             ChangeState(EnemyState.WalkRight);
+            deathTime = 0;
+            fallingVelocity = (float)1.5;
         }
         public virtual void Update(GameTime gameTime)
         {
+            if (isFlipped == false && deathTime >= 20)
+            {
+                currentSprite = null;
+            }
             if (currentSprite != null) {
                 if (isFlipped == true)
                 {
                     DeathAnimation();
+                }
+                if (isDead == true)
+                {
+                    deathTime++;
                 }
                 HandleHorizontalMovement();
                 Fall(gameTime);
@@ -149,7 +160,7 @@ namespace Lasagna
             return;
         }
 
-        protected virtual void OnCollisionResponse(IEnemy otherEnemy, CollisionSide side)
+        protected virtual void OnCollisionResponse(IEnemy enemy, CollisionSide side)
         {
             if (side.Equals(CollisionSide.Right))
             {
@@ -168,7 +179,7 @@ namespace Lasagna
             if (side.Equals(CollisionSide.Bottom) && isFlipped == false)
             {
                 position.Y -= yDifference;
-                velocity.Y = 1;
+                velocity = 1;
             }
             if (side.Equals(CollisionSide.Right) && isFlipped == false)
             {
@@ -199,17 +210,18 @@ namespace Lasagna
         }
         private void Fall(GameTime gameTime)
         {
-                yDifference = velocity.Y * ((float)gameTime.ElapsedGameTime.Milliseconds / 50);
+                yDifference = velocity * ((float)gameTime.ElapsedGameTime.Milliseconds / 50);
                 position.Y += yDifference;
-                velocity.Y += fallingVelocity.Y;
-                velocity.Y *= fallingVelocityDecayRate.Y;
-                if (velocity.Y > 12)
-                    velocity.Y = 12;
+                velocity += fallingVelocity;
+                velocity *= fallingVelocityDecayRate;
+                if (velocity > 37)
+                    velocity = 37;
         }
         private void DeathAnimation()
         {
             position.X ++;
-            position.Y -= (float)2;
+            position.Y -= (float)7;
+            velocity += 2;
         }
     }
 }

@@ -70,6 +70,8 @@ namespace Lasagna
                 OnCollisionResponse((IItem)otherCollider, side);
             else if (otherCollider is ITile)
                 OnCollisionResponse((ITile)otherCollider, side);
+            else if (otherCollider is IProjectile)
+                OnCollisionResponse((IProjectile)otherCollider, side);
         }
 
         protected virtual void OnCollisionResponse(IEnemy Enemy, CollisionSide side)
@@ -86,6 +88,11 @@ namespace Lasagna
         {
             return;
         }
+        protected virtual void OnCollisionResponse(IProjectile projectile, CollisionSide side)
+        {
+            return;
+        }
+
 
         protected virtual void OnCollisionResponse(ITile tile, CollisionSide side)
         {

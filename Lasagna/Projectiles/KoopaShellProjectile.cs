@@ -11,8 +11,7 @@ namespace Lasagna
             Gone
         }
 
-        private float explodeTimeLeft;
-        private float movingUpTimeLeft;
+        private int hitCount = 0;
         private KoopaShellStates currentState = KoopaShellStates.Idle;
         private ISprite shellDefault = EnemySpriteFactory.Instance.CreateSprite_Koopa_Shell();
 
@@ -40,13 +39,11 @@ namespace Lasagna
 
         protected override void OnCollisionResponse(IEnemy Enemy, CollisionSide side)
         {
-            if (currentState == KoopaShellStates.Sliding)
-                this.DestroyShell();
+            return;
         }
 
         protected override void OnCollisionResponse(ITile tile, CollisionSide side)
         {
-            
                 this.DestroyShell();
         }
 
@@ -56,7 +53,14 @@ namespace Lasagna
         }
         protected override void OnCollisionResponse(IPlayer player, CollisionSide side)
         {
-            currentState = KoopaShellStates.Sliding;
+            hitCount++;
+            if(hitCount >= 2)
+                currentState = KoopaShellStates.Sliding;
+        }
+        protected override void OnCollisionResponse(IProjectile projectile, CollisionSide side)
+        {
+            if (projectile is KoopaShellProjectile)
+                currentState = KoopaShellStates.Idle;
         }
     }
 }
