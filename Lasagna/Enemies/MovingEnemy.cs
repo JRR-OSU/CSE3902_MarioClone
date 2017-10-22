@@ -21,6 +21,7 @@ namespace Lasagna
         private Vector2 position;
         private float yDifference;
         private int deathTime = 0;
+        public bool isSeen;
 
         protected ISprite CurrentSprite
         {
@@ -41,7 +42,7 @@ namespace Lasagna
             position.Y = spawnPosY;
             orignalPos[0] = position.X;
             orignalPos[1] = position.Y;
-            MarioEvents.OnReset += ChangeToDefault;
+            MarioEvents.OnReset += ReSet;
         }
         public Rectangle Bounds
         {
@@ -57,19 +58,8 @@ namespace Lasagna
                 return returnValue;
             }
         }
-        public bool IsSeen()
-        {
-            bool temp = true;
-            if (position.X > 760 || position.X < 0)
-            {
-                temp = false;
-                isMoving = false;
-            }
-            else
-                isMoving = true;
-            return temp;
-        }
-        public void ReSet()
+       
+        public void ReSet(object sender, EventArgs e)
         {
             position.X = orignalPos[0];
             position.Y = orignalPos[1];
@@ -88,6 +78,14 @@ namespace Lasagna
                 currentSprite = null;
             }
             if (currentSprite != null) {
+                if(isSeen == true)
+                {
+                    isMoving = true;
+                }
+                else
+                {
+                    isMoving = false;
+                }
                 if (isFlipped == true)
                 {
                     DeathAnimation();

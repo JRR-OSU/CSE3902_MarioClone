@@ -5,9 +5,8 @@
   </Players>
   <Enemies>
     <!-- Test area enemies -->
-    <Enemy type="Goomba" posx="-533" posy="375" />
-    <Enemy type="Goomba" posx="-520" posy="375" />
-    <Enemy type="Goomba" posx="-510" posy="375" />
+    <Enemy type="Koopa" posx="-533" posy="375" />
+    
     <!-- Actual level -->
     <Enemy type="Goomba" posx="704" posy="383" />
     <Enemy type="Goomba" posx="1312" posy="383" />

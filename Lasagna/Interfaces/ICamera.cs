@@ -9,5 +9,6 @@ namespace Lasagna
 
         void Update(List<IPlayer> players, float screenWidth, float screenHeight);
         void Reset(object sender, EventArgs e);
+        bool CanSeeCollider(ICollider col);
     }
 }

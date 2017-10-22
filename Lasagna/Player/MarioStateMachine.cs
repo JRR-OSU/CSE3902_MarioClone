@@ -133,6 +133,7 @@ namespace Lasagna
                 //Play growing transition
                 stateTransitionTimeRemaining = currentSprite.ClipLength;
             }
+            canGrow = false;
         }
 
         public void Shrink()

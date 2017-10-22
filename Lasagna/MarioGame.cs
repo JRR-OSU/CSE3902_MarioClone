@@ -73,7 +73,7 @@ namespace Lasagna
             MarioSpriteFactory.Instance.LoadAllContent(Content);
             ProjectileSpriteFactory.Instance.LoadAllContent(Content);
             TileSpriteFactory.Instance.LoadAllContent(Content);
-            BackgroundSpriteFactory.Instance.LoadAllContent(Content, GraphicsDevice.Viewport.Height/232*3392, GraphicsDevice.Viewport.Height);
+            BackgroundSpriteFactory.Instance.LoadAllContent(Content, GraphicsDevice.Viewport.Height / 232 * 3392, GraphicsDevice.Viewport.Height);
 
             LevelCreator.Instance.LoadLevelFromXML(Environment.CurrentDirectory + "\\Level XML\\Mario_1-1.xml", out levelBackground, out players, out enemies, out tiles, out items);
 
@@ -98,7 +98,7 @@ namespace Lasagna
 
             if (levelBackground != null)
                 levelBackground.Update(gameTime, 0, 0);
-            
+
             foreach (ITile tile in tiles)
                 if (tile != null)
                 {
@@ -120,13 +120,21 @@ namespace Lasagna
                 if (projectile != null)
                     projectile.Update(gameTime);
             foreach (IEnemy enemy in enemies)
+            {
                 if (enemy != null)
+                {
+                    //If this is moving enemy, set isSeen field
+                    if (enemy is MovingEnemy)
+                        ((MovingEnemy)enemy).isSeen = mainCamera.CanSeeCollider(enemy);
+
                     enemy.Update(gameTime);
+                }
+            }
             foreach (IItem item in items)
                 if (item != null)
                     item.Update(gameTime);
             foreach (IPlayer player in players)
-                 if (player != null)
+                if (player != null)
                     player.Update(gameTime);
 
             bool anyDead = players != null && players.Find(o => o is Mario && ((Mario)o).IsDead) != null;
