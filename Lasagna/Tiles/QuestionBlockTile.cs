@@ -11,7 +11,10 @@ namespace Lasagna
         }
 
         private BlockState currentState;
-        private IItem item;
+        public IItem item;
+        private int timer = 0;
+        private int timeLimit = 50;
+        private bool beingCollided = false;
         private ISprite unused = TileSpriteFactory.Instance.CreateSprite_QuestionBlock();
         private ISprite used = TileSpriteFactory.Instance.CreateSprite_ItemBlockUsed();
 
@@ -52,7 +55,19 @@ namespace Lasagna
             {
                 this.ChangeState();
                 this.item.Spawn();
+                this.beingCollided = true;
+                while (timer < timeLimit)
+                {
+                    timer += base.gameTime.ElapsedGameTime.Milliseconds;
+                }
+                this.beingCollided = false;
+                timer = 0;
             }
+        }
+      
+        public bool CheckCollision()
+        {
+            return beingCollided;
         }
         public void Reset()
         {

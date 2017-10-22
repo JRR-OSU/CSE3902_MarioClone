@@ -14,9 +14,13 @@ namespace Lasagna
             Used
         }
         private int brickCount = 1;
+        private int originalCount = 1;
         private bool hasCount = false;
+        private int timer = 0;
+        private int timeLimit = 50;
+        private bool beingCollided = false;
         private BlockState currentState;
-        private IItem item;
+        public IItem item;
         private ISprite idleSprite = TileSpriteFactory.Instance.CreateSprite_BreakableBrick();
         private ISprite used = TileSpriteFactory.Instance.CreateSprite_ItemBlockUsed();
         //private ISprite breakingSprite; //Reserved for breaking tile sprite.
@@ -52,6 +56,7 @@ namespace Lasagna
             currentState = BlockState.Idle;
             this.item = item;
             brickCount = brickcount;
+            originalCount = brickcount;
             if (this.brickCount > 1)
             {
                 this.hasCount = true;
@@ -98,10 +103,10 @@ namespace Lasagna
                 {
                     CurrentSprite = used;
                     currentState = BlockState.Used;
+                    this.brickCount = this.originalCount;
                 }
             }
         }
-
         protected override void OnCollisionResponse(IPlayer Mario, CollisionSide side)
         {
             if (this.currentState.Equals(BlockState.Idle) && side.Equals(CollisionSide.Bottom))
@@ -114,7 +119,18 @@ namespace Lasagna
                     this.brickCount--;
                 }
                 this.item.Spawn();
+                this.beingCollided = true;
+                while (timer < timeLimit)
+                {
+                    timer += base.gameTime.ElapsedGameTime.Milliseconds;
+                }
+                this.beingCollided = false;
+                timer = 0;
             }
+        }
+        public bool CheckCollision()
+        {
+            return beingCollided;
         }
         public void Reset()
         {
@@ -123,7 +139,7 @@ namespace Lasagna
         ///TODO: Temp methods for sprint3
         public void ChangeToDefault(object sender, EventArgs e)
         {
-            if (currentState == BlockState.Broken)
+            if (currentState == BlockState.Broken || currentState == BlockState.Used)
                 ChangeState();
         }
     }

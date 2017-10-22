@@ -8,6 +8,7 @@ namespace Lasagna
         private ISprite currentSprite;
         private int posX;
         private int posY;
+        protected GameTime gameTime;
         public virtual Rectangle Bounds { get { return new Rectangle(posX, posY, CurrentSprite.Width, CurrentSprite.Height); } }
         protected ISprite CurrentSprite
         {
@@ -24,17 +25,31 @@ namespace Lasagna
         }
         public virtual void Update(GameTime gameTime)
         {
+            this.gameTime = gameTime;
             if (currentSprite != null)
                 currentSprite.Update(gameTime, posX, posY);
         }
         public virtual void Draw(SpriteBatch spriteBatch)
         {
             if (currentSprite != null)
+            {
                 currentSprite.Draw(spriteBatch);
+            }
+            if (currentSprite is BreakableBrickTile)
+            {
+                ((BreakableBrickTile)currentSprite).item.Draw(spriteBatch);
+            }
+            else if (currentSprite is InvisibleItemBlockTile)
+            {
+                ((InvisibleItemBlockTile)currentSprite).item.Draw(spriteBatch);
+            }
+            else if (currentSprite is QuestionBlockTile)
+            {
+                ((QuestionBlockTile)currentSprite).item.Draw(spriteBatch);
+            }
         }
 
         public abstract void ChangeState();
-
         public void OnCollisionResponse(ICollider otherCollider, CollisionSide side)
         {
             if (otherCollider is IPlayer)

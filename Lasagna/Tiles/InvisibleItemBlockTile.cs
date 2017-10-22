@@ -13,7 +13,7 @@ namespace Lasagna
         }
 
         private BlockState currentState;
-        private IItem item;
+        public IItem item;
         private ISprite visibleSprite = TileSpriteFactory.Instance.CreateSprite_ItemBlockUsed();
         private bool CollidedWithThreeSides = false;
 

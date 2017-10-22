@@ -18,12 +18,15 @@ namespace Lasagna
         private ISprite itemSprite;
         private ItemState currentState = ItemState.Idle;
         public Vector2 position;
-        private bool isSpawned = false;
+        private GameTime gameTime;
         private bool isInBlock = false;
         private float velocity = 1;
+        private float moveUpVelocity = 1;
         private float fallingVelocity = (float)1.5;
         private float fallingVelocityDecayRate = (float).9;
         private float yDifference;
+        private int originalX;
+        private int originalY;
         private int coinAnimateTime = 0;
         private bool isLeft = false;
 
@@ -39,6 +42,8 @@ namespace Lasagna
         {
             position.X = spawnPosX;
             position.Y = spawnPosY;
+            originalX = spawnPosX;
+            originalY = spawnPosY;
             currentState = ItemState.Idle;
             MarioEvents.OnReset += ChangeToDefault;
         }
@@ -64,6 +69,7 @@ namespace Lasagna
 
         public void Update(GameTime gameTime)
         {
+            this.gameTime = gameTime;
             if (currentState.Equals(ItemState.CoinAnimaiotn))
             {    
                 HandleCoinAnimation();
@@ -134,11 +140,32 @@ namespace Lasagna
         public void ChangeToDefault(object sender, EventArgs e)
         {
             if (currentState == ItemState.Taken)
+            {
                 currentState = ItemState.Idle;
+                position.X = originalX;
+                position.Y = originalY;
+                this.isInBlock = false;
+            }
         }
         public virtual void Spawn()
         {
-            return;
+            if (itemSprite is CoinItem)
+            {
+                this.isInBlock = true;
+                ((CoinItem)itemSprite).StartCoinAnimation();
+                this.isInBlock = false;
+            }
+            else
+            {
+                this.isInBlock = true;
+                yDifference = moveUpVelocity * ((float)gameTime.ElapsedGameTime.Milliseconds / 50);
+                while (position.Y + this.itemSprite.Height > originalY)
+                {
+                    position.Y -= yDifference;
+                }
+                ((BaseItem)itemSprite).Move();
+                this.isInBlock = false;
+            }
         }
         public void Move()
         {
