@@ -18,6 +18,8 @@ namespace Lasagna
         private ISprite itemSprite;
         private ItemState currentState = ItemState.Idle;
         public Vector2 position;
+        private bool isSpawned = false;
+        private bool isInBlock = false;
         private float velocity = 1;
         private float fallingVelocity = (float)1.5;
         private float fallingVelocityDecayRate = (float).9;
@@ -40,7 +42,14 @@ namespace Lasagna
             currentState = ItemState.Idle;
             MarioEvents.OnReset += ChangeToDefault;
         }
-
+        protected BaseItem(int spawnPosX, int spawnPosY, bool inBlock)
+        {
+            position.X = spawnPosX;
+            position.Y = spawnPosY;
+            this.isInBlock = inBlock;
+            currentState = ItemState.Idle;
+            MarioEvents.OnReset += ChangeToDefault;
+        }
         public Rectangle Bounds
         {
             get
@@ -114,7 +123,7 @@ namespace Lasagna
 
         private void OnCollisionResponse(ITile tile, CollisionSide side)
         {
-            if (side.Equals(CollisionSide.Bottom) && currentState.Equals(ItemState.Moving))
+            if (!isInBlock && side.Equals(CollisionSide.Bottom) && currentState.Equals(ItemState.Moving))
             {
                 position.Y -= yDifference;
                 velocity = 1;
@@ -126,6 +135,10 @@ namespace Lasagna
         {
             if (currentState == ItemState.Taken)
                 currentState = ItemState.Idle;
+        }
+        public virtual void Spawn()
+        {
+            return;
         }
         public void Move()
         {

@@ -10,11 +10,15 @@ namespace Lasagna
         {
             Idle,
             Breaking,
-            Broken
+            Broken,
+            Used
         }
-
+        private int brickCount = 1;
+        private bool hasCount = false;
         private BlockState currentState;
+        private IItem item;
         private ISprite idleSprite = TileSpriteFactory.Instance.CreateSprite_BreakableBrick();
+        private ISprite used = TileSpriteFactory.Instance.CreateSprite_ItemBlockUsed();
         //private ISprite breakingSprite; //Reserved for breaking tile sprite.
         public override Rectangle Bounds
         {
@@ -41,6 +45,20 @@ namespace Lasagna
             MarioEvents.OnReset += ChangeToDefault;
         }
 
+        public BreakableBrickTile(int spawnXPos, int spawnYPos, IItem item, int brickcount)
+            : base(spawnXPos, spawnYPos)
+        {
+            CurrentSprite = idleSprite;
+            currentState = BlockState.Idle;
+            this.item = item;
+            brickCount = brickcount;
+            if (this.brickCount > 1)
+            {
+                this.hasCount = true;
+            }
+            MarioEvents.OnReset += ChangeToDefault;
+        }
+
         public override void Update(GameTime gameTime)
         {
             //Only call base function if we're visible. Else draw nothing.
@@ -59,23 +77,49 @@ namespace Lasagna
         {
             ///TODO: Implement breaking transition here
             //Toggles us between used and unused
-            if (currentState != BlockState.Idle)
+            if (!hasCount)
             {
-                CurrentSprite = idleSprite;
-                currentState = BlockState.Idle;
+                if (currentState != BlockState.Idle)
+                {
+                    CurrentSprite = idleSprite;
+                    currentState = BlockState.Idle;
+                }
+                else
+                    currentState = BlockState.Broken;
             }
             else
-                currentState = BlockState.Broken;
+            {
+                if (currentState != BlockState.Idle)
+                {
+                    CurrentSprite = idleSprite;
+                    currentState = BlockState.Idle;
+                }
+                else
+                {
+                    CurrentSprite = used;
+                    currentState = BlockState.Used;
+                }
+            }
         }
 
         protected override void OnCollisionResponse(IPlayer Mario, CollisionSide side)
         {
             if (this.currentState.Equals(BlockState.Idle) && side.Equals(CollisionSide.Bottom))
             {
-                this.ChangeState();
+                if (this.brickCount == 1) { 
+                    this.ChangeState();
+                }
+                else
+                {
+                    this.brickCount--;
+                }
+                this.item.Spawn();
             }
         }
-
+        public void Reset()
+        {
+            MarioEvents.OnReset += ChangeToDefault;
+        }
         ///TODO: Temp methods for sprint3
         public void ChangeToDefault(object sender, EventArgs e)
         {

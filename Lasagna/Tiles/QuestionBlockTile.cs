@@ -11,6 +11,7 @@ namespace Lasagna
         }
 
         private BlockState currentState;
+        private IItem item;
         private ISprite unused = TileSpriteFactory.Instance.CreateSprite_QuestionBlock();
         private ISprite used = TileSpriteFactory.Instance.CreateSprite_ItemBlockUsed();
 
@@ -19,6 +20,14 @@ namespace Lasagna
         {
             CurrentSprite = unused;
             currentState = BlockState.Idle;
+            MarioEvents.OnReset += ChangeToDefault;
+        }
+        public QuestionBlockTile(int spawnXPos, int spawnYPos, IItem item)
+            : base(spawnXPos, spawnYPos)
+        {
+            CurrentSprite = unused;
+            currentState = BlockState.Idle;
+            this.item = item;
             MarioEvents.OnReset += ChangeToDefault;
         }
 
@@ -42,9 +51,13 @@ namespace Lasagna
             if (this.currentState.Equals(BlockState.Idle) && side.Equals(CollisionSide.Bottom))
             {
                 this.ChangeState();
+                this.item.Spawn();
             }
         }
-
+        public void Reset()
+        {
+            MarioEvents.OnReset += ChangeToDefault;
+        }
         ///TODO: Temp methods for sprint3
         private void ChangeToDefault(object sender, EventArgs e)
         {

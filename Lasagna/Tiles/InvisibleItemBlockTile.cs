@@ -13,6 +13,7 @@ namespace Lasagna
         }
 
         private BlockState currentState;
+        private IItem item;
         private ISprite visibleSprite = TileSpriteFactory.Instance.CreateSprite_ItemBlockUsed();
         private bool CollidedWithThreeSides = false;
 
@@ -30,7 +31,14 @@ namespace Lasagna
             currentState = BlockState.Invisible;
             MarioEvents.OnReset += ChangeToInvisible;
         }
-
+        public InvisibleItemBlockTile(int spawnXPos, int spawnYPos, IItem item)
+            : base(spawnXPos, spawnYPos)
+        {
+            CurrentSprite = visibleSprite;
+            currentState = BlockState.Invisible;
+            this.item = item;
+            MarioEvents.OnReset += ChangeToInvisible;
+        }
         public void Update(ICollider Mario, GameTime gameTime)
         {
             //Only call base function if we're visible. Else draw nothing.
@@ -65,7 +73,10 @@ namespace Lasagna
             }
 
         }
-
+        public void Reset()
+        {
+            MarioEvents.OnReset += ChangeToInvisible;
+        }
         protected override void OnCollisionResponse(IPlayer Mario, CollisionSide side)
         {
             //If the Mario hit the invisible block from top, left and right sides, toggle the collision status to true.
@@ -79,6 +90,7 @@ namespace Lasagna
                 this.CollidedWithThreeSides == false)
             {
                 this.ChangeState();
+                this.item.Spawn();
             }
         }
 
