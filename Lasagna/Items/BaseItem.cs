@@ -83,6 +83,27 @@ namespace Lasagna
                     Fall(gameTime);
                 }
                 itemSprite.Update(gameTime, (int)position.X, (int)position.Y);
+                if (this.isInBlock)
+                {
+                    if (itemSprite is CoinItem)
+                    {
+                        ((CoinItem)itemSprite).StartCoinAnimation();
+                        this.isInBlock = false;
+                    }
+                    else
+                    {
+                        yDifference = moveUpVelocity * ((float)gameTime.ElapsedGameTime.Milliseconds / 50);
+                        if (position.Y + this.itemSprite.Height > originalY)
+                        {
+                            position.Y -= yDifference;
+                        }
+                        else
+                        {
+                            ((BaseItem)itemSprite).Move();
+                            this.isInBlock = false;
+                        }
+                    }
+                }
             }
         }
 
@@ -149,23 +170,7 @@ namespace Lasagna
         }
         public virtual void Spawn()
         {
-            if (itemSprite is CoinItem)
-            {
-                this.isInBlock = true;
-                ((CoinItem)itemSprite).StartCoinAnimation();
-                this.isInBlock = false;
-            }
-            else
-            {
-                this.isInBlock = true;
-                yDifference = moveUpVelocity * ((float)gameTime.ElapsedGameTime.Milliseconds / 50);
-                while (position.Y + this.itemSprite.Height > originalY)
-                {
-                    position.Y -= yDifference;
-                }
-                ((BaseItem)itemSprite).Move();
-                this.isInBlock = false;
-            }
+            this.isInBlock = true;
         }
         public void Move()
         {
