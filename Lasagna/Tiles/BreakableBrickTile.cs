@@ -48,14 +48,14 @@ namespace Lasagna
             MarioEvents.OnReset += ChangeToDefault;
         }
 
-        public BreakableBrickTile(int spawnXPos, int spawnYPos, IItem item, int brickcount)
+        public BreakableBrickTile(int spawnXPos, int spawnYPos, IItem newItem, int newBrickCount)
             : base(spawnXPos, spawnYPos)
         {
             CurrentSprite = idleSprite;
             currentState = BlockState.Idle;
-            this.item = item;
-            brickCount = brickcount;
-            originalCount = brickcount;
+            this.item = newItem;
+            brickCount = newBrickCount;
+            originalCount = newBrickCount;
             if (this.brickCount > 1)
             {
                 this.hasCount = true;

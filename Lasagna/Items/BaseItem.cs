@@ -71,7 +71,7 @@ namespace Lasagna
         {
             this.gameTime = gameTime;
             if (currentState.Equals(ItemState.CoinAnimaiotn))
-            {    
+            {
                 HandleCoinAnimation();
                 Fall(gameTime);
             }
@@ -85,9 +85,9 @@ namespace Lasagna
                 itemSprite.Update(gameTime, (int)position.X, (int)position.Y);
                 if (this.isInBlock)
                 {
-                    if (itemSprite is CoinItem)
+                    if (this is CoinItem)
                     {
-                        ((CoinItem)itemSprite).StartCoinAnimation();
+                        ((CoinItem)this).StartCoinAnimation();
                         this.isInBlock = false;
                     }
                     else
@@ -99,7 +99,7 @@ namespace Lasagna
                         }
                         else
                         {
-                            ((BaseItem)itemSprite).Move();
+                            this.Move();
                             this.isInBlock = false;
                         }
                     }

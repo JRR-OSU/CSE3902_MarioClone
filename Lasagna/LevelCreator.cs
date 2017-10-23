@@ -164,7 +164,11 @@ namespace Lasagna
                     }
                 }
                 else if (reader.LocalName == "Items")
-                    RetrieveAllChildElementsFromReader<IItem>(ref reader, "Item", TryCreateItemFromEnum, out items);
+                {
+                    List<IItem> newItems;
+                    RetrieveAllChildElementsFromReader<IItem>(ref reader, "Item", TryCreateItemFromEnum, out newItems);
+                    items.AddRange(newItems);
+                }
                 else
                     Debug.WriteLine("Warning: \"" + filepath + "\" level XML file has element of unknown type: " + reader.LocalName);
             }
@@ -270,7 +274,7 @@ namespace Lasagna
             else if (t == TileType.Brick || t == TileType.InvisibleBlock || t == TileType.QuestionBlock)
             {
                 int.TryParse(reader.GetAttribute("coins"), out heightOrCoinCount);
-                heightOrCoinCount = Math.Max(0, heightOrCoinCount);
+                heightOrCoinCount = Math.Max(1, heightOrCoinCount);
                 if (TryCreateItemFromEnum(reader.GetAttribute("item"), posX, posY, out blockItem))
                     items.Add(blockItem);
 
