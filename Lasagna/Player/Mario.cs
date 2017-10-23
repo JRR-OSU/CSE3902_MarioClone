@@ -84,6 +84,7 @@ namespace Lasagna
         {
             position.X = orignalPos[0];
             position.Y = -1 * orignalPos[1];
+            velocity = Vector2.Zero;
             marioIsDead = false;
             stateMachine.Reset();
         }
