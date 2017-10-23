@@ -25,8 +25,8 @@ namespace Lasagna
         readonly Vector2 gravity = new Vector2(0, -500f);
         float time;
 
-        public bool ignoreGravity { get; set;}
-        public bool isRunning = false; 
+        public bool ignoreGravity { get; set; }
+        public bool isRunning = false;
         private bool isJumping = false;
         private bool jumpDelay = false;
         private int jumpHeld = 0;
@@ -46,6 +46,7 @@ namespace Lasagna
 
         public Rectangle Bounds { get { return new Rectangle((int)position.X, -(int)position.Y, GetCurrentSprite().Width, GetCurrentSprite().Height); } }
         public bool IsBlinking { get { return stateMachine != null && (stateMachine.IsTransitioning || stateMachine.IsBlinking); } }
+        public MarioStateMachine.MarioState CurrentState { get { return (stateMachine != null) ? stateMachine.CurrentState : MarioStateMachine.MarioState.Small; } }
 
         public Mario(int x, int y)
         {
