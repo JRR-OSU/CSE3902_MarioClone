@@ -220,17 +220,24 @@ namespace Lasagna
         {
             if (marioMovement == MarioMovement.JumpRight && !(marioMovement == MarioMovement.TurnRight))
             {
-                if(mario.isRunning || mario.moveRight)
+                if(mario.isRunning || mario.marioMovingRight)
                     marioMovement = MarioMovement.RunRight;
                 else
                     marioMovement = MarioMovement.IdleRight;
             }
             else if (marioMovement == MarioMovement.JumpLeft && !(marioMovement == MarioMovement.TurnLeft))
             {
-                if (mario.isRunning || mario.moveLeft)
+                if (mario.isRunning || mario.marioMovingLeft)
                     marioMovement = MarioMovement.RunLeft;
                 else
                     marioMovement = MarioMovement.IdleLeft;
+            }
+            else if (!(marioMovement == MarioMovement.TurnRight) && !(marioMovement == MarioMovement.TurnLeft))
+            {
+                if (marioMovement == MarioMovement.RunRight && mario.marioMovingLeft)
+                    marioMovement = MarioMovement.RunLeft;
+               else if (marioMovement == MarioMovement.RunLeft && mario.marioMovingRight)
+                    marioMovement = MarioMovement.RunRight;
             }
             SwitchCurrentSprite(marioMovement);
 
@@ -239,7 +246,7 @@ namespace Lasagna
         {
             if ((marioMovement == MarioMovement.JumpLeft || marioMovement == MarioMovement.JumpRight))
                 return;
-            else if (marioMovement == MarioMovement.RunRight && mario.isRunning)
+            else if (marioMovement == MarioMovement.RunRight )
             {
                 marioMovement = MarioMovement.TurnLeft;
                 turnFrames++;
@@ -255,7 +262,7 @@ namespace Lasagna
         {
             if ((marioMovement == MarioMovement.JumpLeft || marioMovement == MarioMovement.JumpRight))
                 return;
-            else if (marioMovement == MarioMovement.RunLeft && mario.isRunning)
+            else if (marioMovement == MarioMovement.RunLeft)
             {
                 marioMovement = MarioMovement.TurnRight;
                 turnFrames++;

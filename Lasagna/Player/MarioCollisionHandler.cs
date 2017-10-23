@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -51,15 +52,18 @@ namespace Lasagna
             }
             else
             {
-                Console.WriteLine(side);
-                Console.WriteLine();
+
                 switch (side)
                 {
                     case CollisionSide.Bottom:
-                        if (!mario.isCollideGround)
+                        state.SetGroundedState();
+
+                        if (!(tile is FloorBlockTile))
                         {
-                            state.SetGroundedState();
+                            mario.ignoreGravity = false;
                         }
+                        else
+                            mario.ignoreGravity = true;
                         mario.isCollideGround = true;
 
                         mario.CalcMaxHeight(tile.Bounds.Y, tile.Bounds.Height);
@@ -73,12 +77,12 @@ namespace Lasagna
                         mario.ignoreGravity = false;
                         break;
                     case CollisionSide.Left:
-                        //mario.velocity.X = 0;
+                        mario.velocity.X = 0;
                         mario.SetPosition((tile.Bounds.X + tile.Bounds.Width), mario.Bounds.Y);
                       
                         break;
                     case CollisionSide.Right:
-                       //mario.velocity.X = 0;
+                       mario.velocity.X = 0;
                         mario.SetPosition((tile.Bounds.X - mario.Bounds.Width), mario.Bounds.Y);
 
                         break;
