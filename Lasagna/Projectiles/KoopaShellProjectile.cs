@@ -13,6 +13,7 @@ namespace Lasagna
         }
 
         private int hitCount = 0;
+        private int slidingTime = 0;
         private KoopaShellStates currentState = KoopaShellStates.Idle;
         private ISprite shellDefault = EnemySpriteFactory.Instance.CreateSprite_Koopa_Shell();
 
@@ -24,6 +25,10 @@ namespace Lasagna
 
         public override void Update(GameTime gameTime)
         {
+            if (slidingTime >= 1000)
+            {
+                DestroyShell();
+            }
             if (currentState == KoopaShellStates.SlidingRight)
             {
                 posX += (float)(gameTime.ElapsedGameTime.TotalSeconds * horizontalMoveSpeed) * (MovingRight ? 1 : -1);
@@ -32,6 +37,7 @@ namespace Lasagna
             {
                 posX -= (float)(gameTime.ElapsedGameTime.TotalSeconds * horizontalMoveSpeed) * (MovingRight ? 1 : -1);
             }
+            slidingTime ++;
             base.Update(gameTime);
         }
 
@@ -72,8 +78,15 @@ namespace Lasagna
             {
                 hitCount++;
             }
-            if(hitCount >= 2)
+            if (hitCount >= 2)
+            {
                 currentState = KoopaShellStates.SlidingRight;
+            }
+            if (hitCount >= 2 && (side.Equals(CollisionSide.Left) || side.Equals(CollisionSide.Right)) && 
+                (currentState.Equals(KoopaShellStates.SlidingLeft) || currentState.Equals(KoopaShellStates.SlidingRight)))
+            {
+                ((Mario)player).Die();
+            }
         }
         protected override void OnCollisionResponse(IProjectile projectile, CollisionSide side)
         {
