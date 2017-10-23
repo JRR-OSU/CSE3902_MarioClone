@@ -16,6 +16,7 @@ namespace Lasagna
 
         public Vector2 position;
         public Vector2 velocity;
+        private Vector2 jumpVel;
         private int maxVelX = 150;
         private int maxVelY = 400;
         public bool isFalling = false;
@@ -27,13 +28,18 @@ namespace Lasagna
         public bool ignoreGravity { get; set;}
         public bool isRunning = false; 
         private bool isJumping = false;
+        private bool jumpDelay = false;
+        private int jumpHeld = 0;
+        private int jumpDelayCount = 0;
+        private bool canJump = true;
 
         public bool isCollideGround { get; set; }
 
 
         private bool marioIsDead = false;
-        public bool moveLeft;
-        public bool moveRight;
+
+        public bool marioMovingLeft;
+        public bool marioMovingRight;
 
         public bool IsDead { get { return marioIsDead; } }
         public bool StarPowered { get { return stateMachine != null && stateMachine.StarPowered; } }
@@ -120,18 +126,18 @@ namespace Lasagna
         
         public void MoveLeft(object sender, EventArgs e)
         {
-            moveLeft = true;           
+            marioMovingLeft = true;           
         }
 
         public void MoveRight(object sender, EventArgs e)
         {
-            moveRight = true;
+            marioMovingRight = true;
         }
 
 
-        public void MoveLeft()
+        public void MarioMoveLeft()
         {
-            if (stateMachine != null && stateMachine.IsTransitioning || moveRight)
+            if (stateMachine != null && stateMachine.IsTransitioning || marioMovingRight)
                 return;
 
             if (isRunning && !marioIsDead && !(Math.Abs(velocity.X) >= maxVelX + 100))
@@ -141,7 +147,7 @@ namespace Lasagna
             }
             else if (!isRunning && !marioIsDead)
             {
-                if ((Math.Abs(velocity.X) >= maxVelX) &&!moveRight)
+                if ((Math.Abs(velocity.X) >= maxVelX) &&!marioMovingRight)
                     velocity.X += 2;
                 else
                     velocity.X -= 10;
@@ -151,9 +157,9 @@ namespace Lasagna
 
         }
 
-        public void MoveRight()
+        public void MarioMoveRight()
         {
-            if (stateMachine != null && stateMachine.IsTransitioning || moveLeft)
+            if (stateMachine != null && stateMachine.IsTransitioning || marioMovingLeft)
                 return;
 
             if (isRunning && !marioIsDead && !(Math.Abs(velocity.X) >= maxVelX + 100))
@@ -164,7 +170,7 @@ namespace Lasagna
             }
             else if (!isRunning && !marioIsDead)
             {
-                if ((Math.Abs(velocity.X) >= maxVelX) && !moveLeft)
+                if ((Math.Abs(velocity.X) >= maxVelX) && !marioMovingLeft)
                     velocity.X -= 2;
                 else
                     velocity.X += 10;
@@ -187,16 +193,15 @@ namespace Lasagna
 
         public void Jump(object sender, EventArgs e)
         {
-            if (stateMachine != null && stateMachine.IsTransitioning)
+            if (stateMachine != null && stateMachine.IsTransitioning || !canJump) 
                 return;
-
             isJumping = true;
             if (!marioIsDead && !(Math.Abs(velocity.Y) >= maxVelY))
             {
                 stateMachine.Jump();
                 //ignoreGravity = false;
-                if (velocity.Y < 200 && (position.Y * -1 > maxHeight) && !isFalling)
-                    velocity.Y += 125;
+                if (velocity.Y < 275 && (position.Y * -1 > maxHeight) && !isFalling)
+                    velocity.Y += 75;
                 else
                 {
                     isFalling = true;
@@ -206,23 +211,51 @@ namespace Lasagna
 
         }
 
+        public void HandleJump()
+        {
+            int ceiling = 0;
+            if (jumpHeld < 15)
+                ceiling = jumpHeld * 2;
+            if (!marioIsDead && !(Math.Abs(velocity.Y) >= maxVelY))
+            {
+                stateMachine.Jump();
+
+                if (velocity.Y < 350 && !isFalling)
+                    velocity.Y += 205;
+
+                else
+                {
+                    isFalling = true;
+                }
+
+            }
+        }
+
         public void CalcMaxHeight(int tileY, int tileHeight)
         {
             if (!isJumping)
             {
                 if (!isRunning)
-                    maxHeight = (int)(((tileHeight - tileY)+ (Bounds.Height * 2.50)));
+                    maxHeight = (int)(((tileY-tileHeight) - Bounds.Height *3.0));
                 else
-                    maxHeight = (int)(((tileHeight - tileY) + (Bounds.Height * 3.50)));
+                    maxHeight = (int)(((tileY - tileHeight) - Bounds.Height * 4.0));
             }
         }
 
-        public void JumpEnemy()
+        public void StartJumpDelay()
         {
-            if (stateMachine != null && stateMachine.IsTransitioning)
-                return;
-            //ignoreGravity = false;
-            velocity.Y += 75;
+            jumpDelay = true;
+        }
+
+        public void HandleJumpDelay()
+        {
+            if (jumpDelayCount != 2)
+                jumpDelayCount++;
+            else
+            {
+                jumpDelayCount = 0;
+                jumpDelay = false;
+            }
         }
 
         public void Star()
@@ -260,22 +293,21 @@ namespace Lasagna
        
         private void SetPhysicsBools()
         {
-            if (isCollideGround)
+            if (isCollideGround || velocity.Y == 0)
             {
-                ignoreGravity = true;
+                jumpHeld = 0;
+
                 isJumping = false;
-            }
-            else
-            {
-                ignoreGravity = false;
-            }
-            if (ignoreGravity)
-            {
                 if (Keyboard.GetState().GetPressedKeys().Length == 0) // Set idle if no key is pressed
                 {
                     SetIdleState();
                 }
+
             }
+            else if (isJumping == true)
+                ignoreGravity = false;
+
+
         }
         public void UpdatePhysics(GameTime gameTime)
         {
@@ -286,11 +318,13 @@ namespace Lasagna
                 {
                     stateMachine.EndJump();
                 }
-                if ((moveLeft && velocity.X > 0) || (moveRight && velocity.X < 0))
+                if ((marioMovingLeft && velocity.X > 0) || (marioMovingRight && velocity.X < 0))
                     velocity.X = velocity.X / 1.2f;
 
                 if (!ignoreGravity && velocity.Y > -200)
                     velocity += gravity * time;
+                else if (ignoreGravity)
+                    velocity.Y = 0;
                 position += velocity * time;
             }
         }
@@ -298,25 +332,46 @@ namespace Lasagna
 
         public void Update(GameTime gameTime)
         {
-            if (moveLeft)
-                MoveLeft();
-            else if (moveRight)
-                MoveRight();
+            //isJumping = false;
 
-            if (Keyboard.GetState().IsKeyDown(Keys.LeftShift) && !moveRight && !moveLeft)
+            //if (((jumpVel.Y - velocity.Y) > 0) && isJumping)
+            //    isFalling = true;
+            //else
+            //    isFalling = false;
+            Console.WriteLine(isJumping);
+            if (isJumping && !(Keyboard.GetState().IsKeyDown(Keys.W) || Keyboard.GetState().IsKeyDown(Keys.Up)))
+                canJump = false;
+            else if(!isJumping)
+                canJump = true;
+            if (marioMovingLeft)
+                MarioMoveLeft();
+            else if (marioMovingRight)
+                MarioMoveRight();
+
+            //if (isJumping)
+         //   {
+
+           // }
+            if (jumpDelay)
+                HandleJumpDelay();
+
+            if (Keyboard.GetState().IsKeyDown(Keys.LeftShift) && !marioMovingRight && !marioMovingLeft)
             {
                 isRunning = false;
                 SetIdleState();
             }
-            else if (Keyboard.GetState().IsKeyDown(Keys.LeftShift) &&  (moveRight ||  moveLeft))
+            else if (Keyboard.GetState().IsKeyDown(Keys.LeftShift) &&  (marioMovingRight ||  marioMovingLeft))
                 isRunning = true;
             else
                 isRunning = false;
 
             UpdatePhysics(gameTime);
             stateMachine.Update(gameTime, (int)position.X, -(int)position.Y);
-            moveLeft = false;
-            moveRight = false;
+            marioMovingLeft = false;
+            marioMovingRight = false;
+            isCollideGround = false;
+            jumpVel = Vector2.Zero;
+
         }
 
         public void Draw(SpriteBatch spriteBatch)
