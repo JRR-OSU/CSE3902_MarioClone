@@ -20,6 +20,7 @@ namespace Lasagna
         public Vector2 position;
         private GameTime gameTime;
         private bool isInBlock = false;
+        private bool isInvisible = false;
         private float velocity = 1;
         private float moveUpVelocity = 1;
         private float fallingVelocity = (float)1.5;
@@ -82,7 +83,6 @@ namespace Lasagna
                     HandleHorizontalMovement();
                     Fall(gameTime);
                 }
-                itemSprite.Update(gameTime, (int)position.X, (int)position.Y);
                 if (this.isInBlock)
                 {
                     if (this is CoinItem)
@@ -92,6 +92,7 @@ namespace Lasagna
                     }
                     else
                     {
+                        this.isInvisible = false;
                         yDifference = moveUpVelocity * ((float)gameTime.ElapsedGameTime.Milliseconds / 50);
                         if (position.Y + this.itemSprite.Height > originalY)
                         {
@@ -104,15 +105,19 @@ namespace Lasagna
                         }
                     }
                 }
+                itemSprite.Update(gameTime, (int)position.X, (int)position.Y);
             }
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            if (itemSprite != null && currentState != ItemState.Taken)
+            if (itemSprite != null && currentState != ItemState.Taken && !this.isInvisible)
                 itemSprite.Draw(spriteBatch);
         }
-
+        public void ChangeToInvisible()
+        {
+            this.isInvisible = true;
+        }
         public void OnCollisionResponse(ICollider otherCollider, CollisionSide side)
         {
             if (otherCollider is IPlayer)
@@ -174,7 +179,10 @@ namespace Lasagna
         }
         public void Move()
         {
-            currentState = ItemState.Moving;
+            if (!(this is FireFlowerItem))
+            {
+                currentState = ItemState.Moving;
+            }
         }
         public void StartCoinAnimation()
         {

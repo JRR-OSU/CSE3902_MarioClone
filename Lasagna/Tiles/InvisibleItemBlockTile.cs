@@ -37,6 +37,10 @@ namespace Lasagna
             CurrentSprite = visibleSprite;
             currentState = BlockState.Invisible;
             this.item = item;
+            if (item != null)
+            {
+                ((BaseItem)this.item).ChangeToInvisible();
+            }
             MarioEvents.OnReset += ChangeToInvisible;
         }
         public void Update(ICollider Mario, GameTime gameTime)
