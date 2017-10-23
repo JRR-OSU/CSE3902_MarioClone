@@ -32,12 +32,13 @@ namespace Lasagna
             if (currentState == KoopaShellStates.SlidingRight)
             {
                 posX += (float)(gameTime.ElapsedGameTime.TotalSeconds * horizontalMoveSpeed) * (MovingRight ? 1 : -1);
+                slidingTime++;
             }
             else if (currentState == KoopaShellStates.SlidingLeft)
             {
                 posX -= (float)(gameTime.ElapsedGameTime.TotalSeconds * horizontalMoveSpeed) * (MovingRight ? 1 : -1);
+                slidingTime++;
             }
-            slidingTime ++;
             base.Update(gameTime);
         }
 
