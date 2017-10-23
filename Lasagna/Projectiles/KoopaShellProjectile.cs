@@ -83,11 +83,6 @@ namespace Lasagna
             {
                 currentState = KoopaShellStates.SlidingRight;
             }
-            if (hitCount >= 2 && (side.Equals(CollisionSide.Left) || side.Equals(CollisionSide.Right)) && 
-                (currentState.Equals(KoopaShellStates.SlidingLeft) || currentState.Equals(KoopaShellStates.SlidingRight)))
-            {
-                ((Mario)player).Die();
-            }
         }
         protected override void OnCollisionResponse(IProjectile projectile, CollisionSide side)
         {
