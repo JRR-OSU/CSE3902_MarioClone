@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace Lasagna
@@ -68,7 +67,7 @@ namespace Lasagna
 
             foreach (ICollider col in targetColliders)
             {
-                if (CheckCollision(sourceRect, col.Bounds, out sourceSide, out targetSide))
+                if (sourceCollider != col && CheckCollision(sourceRect, col.Bounds, out sourceSide, out targetSide))
                 {
                     sourceCollider.OnCollisionResponse(col, sourceSide);
                     col.OnCollisionResponse(sourceCollider, targetSide);

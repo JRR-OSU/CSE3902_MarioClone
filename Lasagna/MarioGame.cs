@@ -35,7 +35,7 @@ namespace Lasagna
 
         private SpriteBatch spriteBatch;
         private KeyboardController keyControl;
-        private MouseController mouseControl;
+        //private MouseController mouseControl;
         private ISprite levelBackground;
         private ICamera mainCamera;
         private List<ITile> tiles = new List<ITile>();
@@ -57,7 +57,7 @@ namespace Lasagna
             screenHeight = GraphicsDevice.Viewport.Height;
 
             keyControl = new KeyboardController();
-            mouseControl = new MouseController();
+           // mouseControl = new MouseController();
 
             //Subscribe to events
             MarioEvents.OnQuit += OnQuit;
@@ -93,8 +93,8 @@ namespace Lasagna
             CollisionDetection.Update(players.AsReadOnly(), enemies.AsReadOnly(), tiles.AsReadOnly(), items.AsReadOnly(), projectiles.AsReadOnly());
 
             keyControl.Update();
-            if (players != null && players.Count > 0)
-                mouseControl.Update(players[0], enemies.AsReadOnly(), tiles.AsReadOnly());
+            //if (players != null && players.Count > 0)
+             //   mouseControl.Update(players[0], enemies.AsReadOnly(), tiles.AsReadOnly());
 
             if (levelBackground != null)
                 levelBackground.Update(gameTime, 0, 0);

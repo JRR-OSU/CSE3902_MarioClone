@@ -1,0 +1,9 @@
+﻿Tim Williams
+10/23/2017
+Sprint4
+Mario.cs
+Jon Reed
+
+Avoid commented out code, and try to reduce logic branching.
+Lots of unused methods, clean those up and see what all you really need. 
+Definitely lower the amount of if statements, seems like there's a lot of unecessary branching logic.
