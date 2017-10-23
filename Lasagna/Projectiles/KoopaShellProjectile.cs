@@ -7,7 +7,8 @@ namespace Lasagna
         private enum KoopaShellStates
         {
             Idle,
-            Sliding,
+            SlidingRight,
+            SlidingLeft,
             Gone
         }
 
@@ -23,11 +24,14 @@ namespace Lasagna
 
         public override void Update(GameTime gameTime)
         {
-            if (currentState == KoopaShellStates.Sliding)
+            if (currentState == KoopaShellStates.SlidingRight)
             {
                 posX += (float)(gameTime.ElapsedGameTime.TotalSeconds * horizontalMoveSpeed) * (MovingRight ? 1 : -1);
             }
-
+            else if (currentState == KoopaShellStates.SlidingLeft)
+            {
+                posX -= (float)(gameTime.ElapsedGameTime.TotalSeconds * horizontalMoveSpeed) * (MovingRight ? 1 : -1);
+            }
             base.Update(gameTime);
         }
 
@@ -44,7 +48,18 @@ namespace Lasagna
 
         protected override void OnCollisionResponse(ITile tile, CollisionSide side)
         {
+            if (side.Equals(CollisionSide.Right))
+            {
+                this.currentState = KoopaShellStates.SlidingLeft;
+            }
+            else if (side.Equals(CollisionSide.Left))
+            {
+                this.currentState = KoopaShellStates.SlidingRight;
+            }
+            else
+            {
                 this.DestroyShell();
+            }
         }
 
         protected override void OnCollisionResponse(IItem Item, CollisionSide side)
@@ -58,7 +73,7 @@ namespace Lasagna
                 hitCount++;
             }
             if(hitCount >= 2)
-                currentState = KoopaShellStates.Sliding;
+                currentState = KoopaShellStates.SlidingRight;
         }
         protected override void OnCollisionResponse(IProjectile projectile, CollisionSide side)
         {
