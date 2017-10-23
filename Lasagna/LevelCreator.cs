@@ -13,7 +13,7 @@ namespace Lasagna
         private readonly Dictionary<LevelType, ISprite> levelBackdrops = new Dictionary<LevelType, ISprite>(CreateLevelTypesDictionary());
         private readonly Dictionary<PlayerType, Func<int, int, IPlayer>> playerTypes = new Dictionary<PlayerType, Func<int, int, IPlayer>>(CreatePlayerTypesDictionary());
         private readonly Dictionary<EnemyType, Func<int, int, IEnemy>> enemyTypes = new Dictionary<EnemyType, Func<int, int, IEnemy>>(CreateEnemyTypesDictionary());
-        private readonly Dictionary<TileType, Func<int, int, int, string, ITile>> tileTypes = new Dictionary<TileType, Func<int, int, int, string, ITile>>(CreateTileTypesDictionary());
+        private readonly Dictionary<TileType, Func<int, int, int, string, IItem, ITile>> tileTypes = new Dictionary<TileType, Func<int, int, int, string, IItem, ITile>>(CreateTileTypesDictionary());
         private readonly Dictionary<ItemType, Func<int, int, IItem>> itemTypes = new Dictionary<ItemType, Func<int, int, IItem>>(CreateItemTypesDictionary());
 
         private static Dictionary<LevelType, ISprite> CreateLevelTypesDictionary()
@@ -46,17 +46,17 @@ namespace Lasagna
             return newDictionary;
         }
 
-        private static Dictionary<TileType, Func<int, int, int, string, ITile>> CreateTileTypesDictionary()
+        private static Dictionary<TileType, Func<int, int, int, string, IItem, ITile>> CreateTileTypesDictionary()
         {
-            Dictionary<TileType, Func<int, int, int, string, ITile>> newDictionary = new Dictionary<TileType, Func<int, int, int, string, ITile>>()
+            Dictionary<TileType, Func<int, int, int, string, IItem, ITile>> newDictionary = new Dictionary<TileType, Func<int, int, int, string, IItem, ITile>>()
             {
-                { TileType.Brick, (int posX, int posY, int notUsed1, string notUsed2) => new BreakableBrickTile(posX, posY)},
-                { TileType.Flag, (int posX, int posY, int notUsed1, string notUsed2) => new FlagPoleTile(posX, posY)},
-                { TileType.Floor, (int posX, int posY, int notUsed1, string notUsed2) => new FloorBlockTile(posX, posY)},
-                { TileType.InvisibleBlock, (int posX, int posY, int notUsed1, string notUsed2) => new InvisibleItemBlockTile(posX, posY)},
-                { TileType.QuestionBlock, (int posX, int posY, int notUsed1, string notUsed2) => new QuestionBlockTile(posX, posY)},
-                { TileType.UnbreakableBlock, (int posX, int posY, int notUsed1, string notUsed2) => new UnbreakableBlockTile(posX, posY)},
-                { TileType.Pipe, (int posX, int posY, int height, string warpDest) => new WarpPipeTile(posX, posY, height)}
+                { TileType.Brick, (int posX, int posY, int coinCount, string notUsed2, IItem blockItem) => new BreakableBrickTile(posX, posY, blockItem, coinCount)},
+                { TileType.Flag, (int posX, int posY, int notUsed1, string notUsed2, IItem notUsed3) => new FlagPoleTile(posX, posY)},
+                { TileType.Floor, (int posX, int posY, int notUsed1, string notUsed2, IItem notUsed3) => new FloorBlockTile(posX, posY)},
+                { TileType.InvisibleBlock, (int posX, int posY, int notUsed1, string notUsed2, IItem blockItem) => new InvisibleItemBlockTile(posX, posY, blockItem)},
+                { TileType.QuestionBlock, (int posX, int posY, int notUsed1, string notUsed2, IItem blockItem) => new QuestionBlockTile(posX, posY, blockItem)},
+                { TileType.UnbreakableBlock, (int posX, int posY, int notUsed1, string notUsed2, IItem notUsed3) => new UnbreakableBlockTile(posX, posY)},
+                { TileType.Pipe, (int posX, int posY, int height, string warpDest, IItem notUsed3) => new WarpPipeTile(posX, posY, height)}
             };
 
             return newDictionary;
@@ -249,21 +249,31 @@ namespace Lasagna
                 return false;
             }
 
-            int height = -1;
+            IItem blockItem = null;
+            int heightOrCoinCount = -1;
             string warpDest = "";
 
             //If this is pipe, get optional params from reader
             if (t == TileType.Pipe)
             {
-                int.TryParse(reader.GetAttribute("height"), out height);
-                height = Math.Max(0, height);
+                int.TryParse(reader.GetAttribute("height"), out heightOrCoinCount);
+                heightOrCoinCount = Math.Max(0, heightOrCoinCount);
                 warpDest = reader.GetAttribute("warpDest");
 
-                tiles.Add(tileTypes[t].Invoke(posX, posY, height, warpDest));
+                tiles.Add(tileTypes[t].Invoke(posX, posY, heightOrCoinCount, warpDest, blockItem));
+            }
+            //If this is question, invisible, or brick block, optional params from reader
+            else if (t == TileType.Brick || t == TileType.InvisibleBlock || t == TileType.QuestionBlock)
+            {
+                int.TryParse(reader.GetAttribute("coins"), out heightOrCoinCount);
+                heightOrCoinCount = Math.Max(0, heightOrCoinCount);
+                TryCreateItemFromEnum(reader.GetAttribute("item"), posX, posY, out blockItem);
+
+                tiles.Add(tileTypes[t].Invoke(posX, posY, heightOrCoinCount, warpDest, blockItem));
             }
             //Else create generic tile
             else
-                tiles.Add(tileTypes[t].Invoke(posX, posY, -1, ""));
+                tiles.Add(tileTypes[t].Invoke(posX, posY, -1, "", blockItem));
 
             //If this element has a repeat field, and it has a valid integer, repeat this tile according to the field.
             //Each repeated tile is spawned to the right of the base tile.
@@ -285,16 +295,15 @@ namespace Lasagna
 
                 //Spawn each subsequent tile
                 for (int i = 1; i <= rTimes; i++)
-                    tiles.Add(tileTypes[t].Invoke(posX + (rSpace * i), posY, height, warpDest));
+                    tiles.Add(tileTypes[t].Invoke(posX + (rSpace * i), posY, heightOrCoinCount, warpDest, blockItem));
             }
 
             return true;
         }
-
-        private bool TryCreateItemFromEnum(string iType, int posX, int posY, out List<IItem> items)
+        private bool TryCreateItemFromEnum(string iType, int posX, int posY, out IItem item)
         {
-            items = new List<IItem>();
             ItemType t;
+            item = null;
 
             //If passed null parameter, or can't cast to type, or we don't have a delegate for type, exit.
             if (string.IsNullOrEmpty(iType) || !Enum.TryParse(iType, out t) || !itemTypes.ContainsKey(t))
@@ -303,7 +312,19 @@ namespace Lasagna
                 return false;
             }
 
-            items.Add(itemTypes[t].Invoke(posX, posY));
+            item = itemTypes[t].Invoke(posX, posY);
+            return true;
+        }
+
+        private bool TryCreateItemFromEnum(string iType, int posX, int posY, out List<IItem> items)
+        {
+            items = new List<IItem>();
+            IItem item;
+
+            if (!TryCreateItemFromEnum(iType, posX, posY, out item))
+                return false;
+
+            items.Add(item);
             return true;
         }
     }
