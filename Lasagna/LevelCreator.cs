@@ -302,7 +302,7 @@ namespace Lasagna
                 for (int i = 1; i <= rTimes; i++)
                 {
                     IItem newItem = null;
-                    if (blockItem != null && TryCreateItemFromEnum(reader.GetAttribute("item"), posX, posY, out newItem))
+                    if (blockItem != null && TryCreateItemFromEnum(reader.GetAttribute("item"), posX + (rSpace * i), posY, out newItem))
                         items.Add(newItem);
 
                     tiles.Add(tileTypes[t].Invoke(posX + (rSpace * i), posY, heightOrCoinCount, warpDest, newItem));
