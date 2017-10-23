@@ -7,13 +7,13 @@ namespace Lasagna
         private enum KoopaShellStates
         {
             Idle,
-            SlidingRight,
-            SlidingLeft,
+            Sliding,
             Gone
         }
 
         private int hitCount = 0;
         private int slidingTime = 0;
+        private bool isMovingRight = true;
         private KoopaShellStates currentState = KoopaShellStates.Idle;
         private ISprite shellDefault = EnemySpriteFactory.Instance.CreateSprite_Koopa_Shell();
 
@@ -25,20 +25,18 @@ namespace Lasagna
 
         public override void Update(GameTime gameTime)
         {
-            if (slidingTime >= 1000)
+            if (slidingTime >= 100)
+                CurrentSprite = null;
+            if (currentState == KoopaShellStates.Sliding)
             {
-                DestroyShell();
-            }
-            if (currentState == KoopaShellStates.SlidingRight)
-            {
-                posX += (float)(gameTime.ElapsedGameTime.TotalSeconds * horizontalMoveSpeed) * (MovingRight ? 1 : -1);
+                if (isMovingRight == true)
+                    posX += (float)(gameTime.ElapsedGameTime.TotalSeconds * horizontalMoveSpeed) * (MovingRight ? 1 : -1);
+                else
+                    posX -= (float)(gameTime.ElapsedGameTime.TotalSeconds * horizontalMoveSpeed) * (MovingRight ? 1 : -1);
+
                 slidingTime++;
             }
-            else if (currentState == KoopaShellStates.SlidingLeft)
-            {
-                posX -= (float)(gameTime.ElapsedGameTime.TotalSeconds * horizontalMoveSpeed) * (MovingRight ? 1 : -1);
-                slidingTime++;
-            }
+
             base.Update(gameTime);
         }
 
@@ -56,22 +54,14 @@ namespace Lasagna
         protected override void OnCollisionResponse(ITile tile, CollisionSide side)
         {
             if (side.Equals(CollisionSide.Right))
-            {
-                this.currentState = KoopaShellStates.SlidingLeft;
-            }
+                isMovingRight = false;
             else if (side.Equals(CollisionSide.Left))
-            {
-                this.currentState = KoopaShellStates.SlidingRight;
-            }
-            else
-            {
-                this.DestroyShell();
-            }
+                isMovingRight = true;
         }
 
         protected override void OnCollisionResponse(IItem Item, CollisionSide side)
         {
-                this.DestroyShell();
+            return;
         }
         protected override void OnCollisionResponse(IPlayer player, CollisionSide side)
         {
@@ -80,9 +70,7 @@ namespace Lasagna
                 hitCount++;
             }
             if (hitCount >= 2)
-            {
-                currentState = KoopaShellStates.SlidingRight;
-            }
+                currentState = KoopaShellStates.Sliding;
         }
         protected override void OnCollisionResponse(IProjectile projectile, CollisionSide side)
         {

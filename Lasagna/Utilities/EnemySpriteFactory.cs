@@ -57,7 +57,7 @@ namespace Lasagna
         }
         public NonAnimatedSprite CreateSprite_Koopa_Shell()
         {
-            return new NonAnimatedSprite(koopaShellSheet, 45, 40);
+            return new NonAnimatedSprite(koopaShellSheet, 40, 30);
         }
 
         public AnimatedSprite CreateSprite_Koopa_Walk()

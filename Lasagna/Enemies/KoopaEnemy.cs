@@ -37,7 +37,7 @@ namespace Lasagna
         public override void Damage()
         {
             CurrentSprite = null;
-            MarioGame.Instance.RegisterProjectile(new KoopaShellProjectile(PosX, PosY + 4, true));
+            MarioGame.Instance.RegisterProjectile(new KoopaShellProjectile(PosX, PosY + 15, true));
             isDead = true;
         }
 
