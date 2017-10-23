@@ -339,7 +339,7 @@ namespace Lasagna
             //    isFalling = true;
             //else
             //    isFalling = false;
-            Console.WriteLine(isJumping);
+   
             if (isJumping && !(Keyboard.GetState().IsKeyDown(Keys.W) || Keyboard.GetState().IsKeyDown(Keys.Up)))
                 canJump = false;
             else if(!isJumping)
