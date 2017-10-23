@@ -18,10 +18,15 @@ namespace Lasagna
         private ISprite itemSprite;
         private ItemState currentState = ItemState.Idle;
         public Vector2 position;
+        private GameTime gameTime;
+        private bool isInBlock = false;
         private float velocity = 1;
+        private float moveUpVelocity = 1;
         private float fallingVelocity = (float)1.5;
         private float fallingVelocityDecayRate = (float).9;
         private float yDifference;
+        private int originalX;
+        private int originalY;
         private int coinAnimateTime = 0;
         private bool isLeft = false;
 
@@ -37,10 +42,19 @@ namespace Lasagna
         {
             position.X = spawnPosX;
             position.Y = spawnPosY;
+            originalX = spawnPosX;
+            originalY = spawnPosY;
             currentState = ItemState.Idle;
             MarioEvents.OnReset += ChangeToDefault;
         }
-
+        protected BaseItem(int spawnPosX, int spawnPosY, bool inBlock)
+        {
+            position.X = spawnPosX;
+            position.Y = spawnPosY;
+            this.isInBlock = inBlock;
+            currentState = ItemState.Idle;
+            MarioEvents.OnReset += ChangeToDefault;
+        }
         public Rectangle Bounds
         {
             get
@@ -55,6 +69,7 @@ namespace Lasagna
 
         public void Update(GameTime gameTime)
         {
+            this.gameTime = gameTime;
             if (currentState.Equals(ItemState.CoinAnimaiotn))
             {    
                 HandleCoinAnimation();
@@ -114,7 +129,7 @@ namespace Lasagna
 
         private void OnCollisionResponse(ITile tile, CollisionSide side)
         {
-            if (side.Equals(CollisionSide.Bottom) && currentState.Equals(ItemState.Moving))
+            if (!isInBlock && side.Equals(CollisionSide.Bottom) && currentState.Equals(ItemState.Moving))
             {
                 position.Y -= yDifference;
                 velocity = 1;
@@ -125,7 +140,32 @@ namespace Lasagna
         public void ChangeToDefault(object sender, EventArgs e)
         {
             if (currentState == ItemState.Taken)
+            {
                 currentState = ItemState.Idle;
+                position.X = originalX;
+                position.Y = originalY;
+                this.isInBlock = false;
+            }
+        }
+        public virtual void Spawn()
+        {
+            if (itemSprite is CoinItem)
+            {
+                this.isInBlock = true;
+                ((CoinItem)itemSprite).StartCoinAnimation();
+                this.isInBlock = false;
+            }
+            else
+            {
+                this.isInBlock = true;
+                yDifference = moveUpVelocity * ((float)gameTime.ElapsedGameTime.Milliseconds / 50);
+                while (position.Y + this.itemSprite.Height > originalY)
+                {
+                    position.Y -= yDifference;
+                }
+                ((BaseItem)itemSprite).Move();
+                this.isInBlock = false;
+            }
         }
         public void Move()
         {
