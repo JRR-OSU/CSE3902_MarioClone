@@ -118,14 +118,17 @@ namespace Lasagna
                 {
                     this.brickCount--;
                 }
-                this.item.Spawn();
-                this.beingCollided = true;
-                while (timer < timeLimit)
+                if (item != null)
                 {
-                    timer += base.gameTime.ElapsedGameTime.Milliseconds;
+                    this.item.Spawn();
+                    this.beingCollided = true;
+                    while (timer < timeLimit)
+                    {
+                        timer += base.gametime.ElapsedGameTime.Milliseconds;
+                    }
+                    this.beingCollided = false;
+                    timer = 0;
                 }
-                this.beingCollided = false;
-                timer = 0;
             }
         }
         public bool CheckCollision()

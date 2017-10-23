@@ -8,7 +8,7 @@ namespace Lasagna
         private ISprite currentSprite;
         private int posX;
         private int posY;
-        protected GameTime gameTime;
+        protected GameTime gametime;
         public virtual Rectangle Bounds { get { return new Rectangle(posX, posY, CurrentSprite.Width, CurrentSprite.Height); } }
         protected ISprite CurrentSprite
         {
@@ -25,7 +25,7 @@ namespace Lasagna
         }
         public virtual void Update(GameTime gameTime)
         {
-            this.gameTime = gameTime;
+            this.gametime = gameTime;
             if (currentSprite != null)
                 currentSprite.Update(gameTime, posX, posY);
         }

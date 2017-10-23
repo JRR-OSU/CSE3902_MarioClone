@@ -90,7 +90,10 @@ namespace Lasagna
                 this.CollidedWithThreeSides == false)
             {
                 this.ChangeState();
-                this.item.Spawn();
+                if (item != null)
+                {
+                    this.item.Spawn();
+                }
             }
         }
 

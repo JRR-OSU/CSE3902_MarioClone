@@ -54,14 +54,17 @@ namespace Lasagna
             if (this.currentState.Equals(BlockState.Idle) && side.Equals(CollisionSide.Bottom))
             {
                 this.ChangeState();
-                this.item.Spawn();
                 this.beingCollided = true;
-                while (timer < timeLimit)
+                if (item != null)
                 {
-                    timer += base.gameTime.ElapsedGameTime.Milliseconds;
+                    this.item.Spawn();
+                    while (timer < timeLimit)
+                    {
+                        timer += base.gametime.ElapsedGameTime.Milliseconds;
+                    }
+                    this.beingCollided = false;
+                    timer = 0;
                 }
-                this.beingCollided = false;
-                timer = 0;
             }
         }
       
