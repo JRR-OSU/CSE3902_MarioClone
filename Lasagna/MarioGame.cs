@@ -152,15 +152,15 @@ namespace Lasagna
             if (levelBackground != null)
                 levelBackground.Draw(spriteBatch);
 
+            foreach (IItem item in items)
+                if (item != null)
+                    item.Draw(spriteBatch);
             foreach (ITile tile in tiles)
                 if (tile != null)
                     tile.Draw(spriteBatch);
             foreach (IEnemy enemy in enemies)
                 if (enemy != null)
                     enemy.Draw(spriteBatch);
-            foreach (IItem item in items)
-                if (item != null)
-                    item.Draw(spriteBatch);
             foreach (IProjectile projectile in projectiles)
                 if (projectile != null)
                     projectile.Draw(spriteBatch);

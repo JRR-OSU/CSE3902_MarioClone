@@ -141,12 +141,14 @@ namespace Lasagna
 
                     //Add first tile element
                     List<ITile> newTiles = new List<ITile>();
+                    List<IItem> newItems = new List<IItem>();
                     int posX, posY;
                     if (int.TryParse(reader.GetAttribute("posx"), out posX)
                         && int.TryParse(reader.GetAttribute("posy"), out posY)
-                        && TryCreateTileFromEnum(reader, reader.GetAttribute("type"), reader.GetAttribute("repeat"), reader.GetAttribute("repeatspace"), posX, posY, out newTiles))
+                        && TryCreateTileFromEnum(reader, reader.GetAttribute("type"), reader.GetAttribute("repeat"), reader.GetAttribute("repeatspace"), posX, posY, out newTiles, out newItems))
                     {
                         tiles.AddRange(newTiles);
+                        items.AddRange(newItems);
                     }
 
                     //Add all subsequent elements
@@ -154,9 +156,10 @@ namespace Lasagna
                     {
                         if (int.TryParse(reader.GetAttribute("posx"), out posX)
                            && int.TryParse(reader.GetAttribute("posy"), out posY)
-                           && TryCreateTileFromEnum(reader, reader.GetAttribute("type"), reader.GetAttribute("repeat"), reader.GetAttribute("repeatspace"), posX, posY, out newTiles))
+                           && TryCreateTileFromEnum(reader, reader.GetAttribute("type"), reader.GetAttribute("repeat"), reader.GetAttribute("repeatspace"), posX, posY, out newTiles, out newItems))
                         {
                             tiles.AddRange(newTiles);
+                            items.AddRange(newItems);
                         }
                     }
                 }
@@ -237,9 +240,10 @@ namespace Lasagna
             return true;
         }
 
-        private bool TryCreateTileFromEnum(XmlReader reader, string tType, string repeatTimes, string repeatSpace, int posX, int posY, out List<ITile> tiles)
+        private bool TryCreateTileFromEnum(XmlReader reader, string tType, string repeatTimes, string repeatSpace, int posX, int posY, out List<ITile> tiles, out List<IItem> items)
         {
             tiles = new List<ITile>();
+            items = new List<IItem>();
             TileType t;
 
             //If passed null parameter, or can't cast to type, or we don't have a delegate for type, exit.
@@ -267,7 +271,8 @@ namespace Lasagna
             {
                 int.TryParse(reader.GetAttribute("coins"), out heightOrCoinCount);
                 heightOrCoinCount = Math.Max(0, heightOrCoinCount);
-                TryCreateItemFromEnum(reader.GetAttribute("item"), posX, posY, out blockItem);
+                if (TryCreateItemFromEnum(reader.GetAttribute("item"), posX, posY, out blockItem))
+                    items.Add(blockItem);
 
                 tiles.Add(tileTypes[t].Invoke(posX, posY, heightOrCoinCount, warpDest, blockItem));
             }
@@ -295,7 +300,13 @@ namespace Lasagna
 
                 //Spawn each subsequent tile
                 for (int i = 1; i <= rTimes; i++)
-                    tiles.Add(tileTypes[t].Invoke(posX + (rSpace * i), posY, heightOrCoinCount, warpDest, blockItem));
+                {
+                    IItem newItem = null;
+                    if (blockItem != null && TryCreateItemFromEnum(reader.GetAttribute("item"), posX, posY, out newItem))
+                        items.Add(newItem);
+
+                    tiles.Add(tileTypes[t].Invoke(posX + (rSpace * i), posY, heightOrCoinCount, warpDest, newItem));
+                }
             }
 
             return true;
