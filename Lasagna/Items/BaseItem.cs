@@ -33,11 +33,18 @@ namespace Lasagna
         private bool isLeft = false;
         private int MovingTime = 0;
         private int moveUpDifference = 150;
+        private ISprite originalSprite;
 
         protected ISprite ItemSprite
         {
             get { return itemSprite; }
-            set { itemSprite = value; }
+            set
+            {
+                if (originalSprite == null)
+                    originalSprite = value;
+
+                itemSprite = value;
+            }
         }
         protected int PosX { get { return (int)position.X; } }
         protected int PosY { get { return (int)position.Y; } }
@@ -49,16 +56,9 @@ namespace Lasagna
             originalX = spawnPosX;
             originalY = spawnPosY;
             currentState = ItemState.Idle;
-            MarioEvents.OnReset += ChangeToDefault;
+            MarioEvents.OnReset += ReSet;
         }
-        protected BaseItem(int spawnPosX, int spawnPosY, bool inBlock)
-        {
-            position.X = spawnPosX;
-            position.Y = spawnPosY;
-            this.isInBlock = inBlock;
-            currentState = ItemState.Idle;
-            MarioEvents.OnReset += ChangeToDefault;
-        }
+
         public Rectangle Bounds
         {
             get
@@ -132,7 +132,7 @@ namespace Lasagna
             currentState = ItemState.Idle;
             position.X = originalX;
             position.Y = originalY;
-            isLeft = true;
+            isLeft = false;
             fallingVelocity = (float)1.5;
             MovingTime = 0;
             coinAnimateTime = 0;
@@ -196,17 +196,7 @@ namespace Lasagna
 
         }
 
-        ///TODO: Temp methods for sprint3
-        public void ChangeToDefault(object sender, EventArgs e)
-        {
-            if (currentState == ItemState.Taken)
-            {
-                currentState = ItemState.Idle;
-                position.X = originalX;
-                position.Y = originalY;
-                this.isInBlock = false;
-            }
-        }
+
         public virtual void Spawn()
         {
             this.isInBlock = true;
@@ -217,7 +207,7 @@ namespace Lasagna
             {
                 currentState = ItemState.Moving;
             }
-            if(this is StarItem)
+            if (this is StarItem)
             {
                 currentState = ItemState.MovingStar;
             }
