@@ -66,14 +66,14 @@ namespace Lasagna
 
         public override void Update(GameTime gameTime)
         {
-            //Only call base function if we're visible. Else draw nothing.
+            //Only call base function if we're in default state. Else draw nothing.
             if (currentState != BlockState.Broken)
                 base.Update(gameTime);
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            //Only call base function if we're visible. Else draw nothing.
+            //Only call base function if we're in default state. Else draw nothing.
             if (currentState != BlockState.Broken)
                 base.Draw(spriteBatch);
         }

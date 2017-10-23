@@ -35,18 +35,6 @@ namespace Lasagna
             {
                 currentSprite.Draw(spriteBatch);
             }
-            if (currentSprite is BreakableBrickTile)
-            {
-                ((BreakableBrickTile)currentSprite).item.Draw(spriteBatch);
-            }
-            else if (currentSprite is InvisibleItemBlockTile)
-            {
-                ((InvisibleItemBlockTile)currentSprite).item.Draw(spriteBatch);
-            }
-            else if (currentSprite is QuestionBlockTile)
-            {
-                ((QuestionBlockTile)currentSprite).item.Draw(spriteBatch);
-            }
         }
 
         public abstract void ChangeState();
