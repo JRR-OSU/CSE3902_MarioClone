@@ -6,6 +6,8 @@ using System.Collections.ObjectModel;
 
 namespace Lasagna
 {
+    ///DEPRECATED: Currently not supported
+    /*
     //This doesn't inherit from IController because it is so vastly different from other controllers.
     public class MouseController
     {
@@ -35,5 +37,5 @@ namespace Lasagna
         {
             enabled = !enabled;
         }
-    }
+    }*/
 }

@@ -13,7 +13,7 @@ namespace Lasagna
             {
                 { new [] { Keys.Q }, Quit },
                 { new [] { Keys.R }, Reset },
-                { new [] { Keys.M }, ToggleMouseController },
+                //{ new [] { Keys.M }, ToggleMouseController },
                 { new [] { Keys.X }, ShootFire }
             };
 
@@ -88,10 +88,10 @@ namespace Lasagna
             MarioEvents.Crouch(this, EventArgs.Empty);
         }
 
-        public  void ToggleMouseController()
+        /*public  void ToggleMouseController()
         {
             MarioEvents.ToggleMouseController(this, EventArgs.Empty);
-        }
+        }*/
 
         public void ShootFire()
         {

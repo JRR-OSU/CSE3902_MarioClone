@@ -1,0 +1,10 @@
+﻿Tim Williams
+10/23/2017
+Sprint4
+Mario.cs
+Jon Reed
+10 minutes
+
+Methods and fields are fairly clearly named. 
+Though there are a large number of methods which can be a bit confusing, also there are a large number of lines of code.
+Maybe try to figure out reducing branching and lines of code?
