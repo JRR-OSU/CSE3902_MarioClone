@@ -8,8 +8,8 @@ namespace Lasagna
     {
         private ISprite currentSprite;
         private EnemyState currentState;
-        //public enum EnemyMovement { IdleLeft, IdleRight, Flipped, Stomped };
-        //public EnemyMovement enemyMovement = EnemyMovement.IdleLeft;
+        //public enum EnemyHealth { Normal, Flipped, Stomped };
+        //public EnemyHealth enemyHealth = EnemyHealth.Normal;
         public bool isLeft = true;
         public bool isDead = false;
         public bool isMoving = true;
