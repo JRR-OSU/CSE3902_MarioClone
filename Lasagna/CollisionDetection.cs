@@ -43,6 +43,10 @@ namespace Lasagna
                 CheckAllCollisions<IItem>(enemy, enemy.Bounds, items);
                 CheckAllCollisions<IProjectile>(enemy, enemy.Bounds, projectiles);
             }
+
+            //Projectiles vs projectiles
+            foreach (IProjectile proj in projectiles)
+                CheckAllCollisions<IProjectile>(proj, proj.Bounds, projectiles);
         }
 
         public static bool CheckRectForCollisions(ICollider sourceCollider, Rectangle rect, ReadOnlyCollection<IEnemy> enemies, ReadOnlyCollection<ITile> tiles)
