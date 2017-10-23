@@ -11,6 +11,7 @@ namespace Lasagna
             Idle,
             CoinAnimaiotn,
             Moving,
+            MovingStar,
             Taken
         }
 
@@ -30,6 +31,8 @@ namespace Lasagna
         private int originalY;
         private int coinAnimateTime = 0;
         private bool isLeft = false;
+        private int MovingTime = 0;
+        private int moveUpDifference = 150;
 
         protected ISprite ItemSprite
         {
@@ -76,9 +79,18 @@ namespace Lasagna
                 HandleCoinAnimation();
                 Fall(gameTime);
             }
+            if (currentState.Equals(ItemState.Moving) || currentState.Equals(ItemState.MovingStar))
+            {
+                MovingTime++;
+            }
+            if (MovingTime >= 300)
+            {
+                itemSprite = null;
+            }
+
             if (itemSprite != null && currentState != ItemState.Taken)
             {
-                if (currentState.Equals(ItemState.Moving))
+                if (currentState.Equals(ItemState.Moving) || currentState.Equals(ItemState.MovingStar))
                 {
                     HandleHorizontalMovement();
                     Fall(gameTime);
@@ -114,6 +126,20 @@ namespace Lasagna
             if (itemSprite != null && currentState != ItemState.Taken && !this.isInvisible)
                 itemSprite.Draw(spriteBatch);
         }
+
+        public void ReSet(object sender, EventArgs e)
+        {
+            currentState = ItemState.Idle;
+            position.X = originalX;
+            position.Y = originalY;
+            isLeft = true;
+            fallingVelocity = (float)1.5;
+            MovingTime = 0;
+            coinAnimateTime = 0;
+            isInBlock = false;
+            moveUpVelocity = 1;
+        }
+
         public void ChangeToInvisible()
         {
             this.isInvisible = true;
@@ -160,6 +186,14 @@ namespace Lasagna
                 position.Y -= yDifference;
                 velocity = 1;
             }
+            if (currentState.Equals(ItemState.MovingStar))
+            {
+                position.X += 2;
+                position.Y -= yDifference;
+                position.Y -= moveUpDifference * (float).5;
+                velocity = 1;
+            }
+
         }
 
         ///TODO: Temp methods for sprint3
@@ -182,6 +216,10 @@ namespace Lasagna
             if (!(this is FireFlowerItem))
             {
                 currentState = ItemState.Moving;
+            }
+            if(this is StarItem)
+            {
+                currentState = ItemState.MovingStar;
             }
         }
         public void StartCoinAnimation()

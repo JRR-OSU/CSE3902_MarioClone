@@ -15,6 +15,15 @@ namespace Lasagna
         private int slidingTime = 0;
         private bool isMovingRight = true;
         private KoopaShellStates currentState = KoopaShellStates.Idle;
+        private bool isShellKicked = false;
+
+        public bool IsShellKicked {
+            get
+            {
+                return isShellKicked;
+            }
+        }
+
         private ISprite shellDefault = EnemySpriteFactory.Instance.CreateSprite_Koopa_Shell();
 
         public KoopaShellProjectile(int spawnPosX, int spawnPosY, bool startMovingRight)
@@ -70,7 +79,10 @@ namespace Lasagna
                 hitCount++;
             }
             if (hitCount >= 2)
+            {
                 currentState = KoopaShellStates.Sliding;
+                isShellKicked = true;
+            }
         }
         protected override void OnCollisionResponse(IProjectile projectile, CollisionSide side)
         {

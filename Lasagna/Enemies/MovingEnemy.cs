@@ -8,12 +8,10 @@ namespace Lasagna
     {
         private ISprite currentSprite;
         private EnemyState currentState;
-        //public enum EnemyHealth { Normal, Flipped, Stomped };
-        //public EnemyHealth enemyHealth = EnemyHealth.Normal;
+        public enum EnemyHealth { Normal, Flipped, Stomped };
+        public EnemyHealth enemyHealth = EnemyHealth.Normal;
         public bool isLeft = true;
-        public bool isDead = false;
         public bool isMoving = true;
-        public bool isFlipped = false;
         private float[] orignalPos = new float[2];
         private float velocity = 1;
         private float fallingVelocity = (float)1.5;
@@ -22,6 +20,7 @@ namespace Lasagna
         private float yDifference;
         private int deathTime = 0;
         public bool isSeen;
+        public bool isShellKicked;
 
         protected ISprite CurrentSprite
         {
@@ -61,19 +60,18 @@ namespace Lasagna
        
         public void ReSet(object sender, EventArgs e)
         {
+            enemyHealth = EnemyHealth.Normal;
             position.X = orignalPos[0];
             position.Y = orignalPos[1];
             isLeft = true;
-            isDead = false;
             isMoving = true;
-            isFlipped = false;
             ChangeState(EnemyState.WalkRight);
             deathTime = 0;
             fallingVelocity = (float)1.5;
         }
         public virtual void Update(GameTime gameTime)
         {
-            if (isFlipped == false && deathTime >= 20)
+            if (enemyHealth != EnemyHealth.Flipped && deathTime >= 20)
             {
                 currentSprite = null;
             }
@@ -86,11 +84,12 @@ namespace Lasagna
                 {
                     isMoving = false;
                 }
-                if (isFlipped == true)
+
+                if (enemyHealth == EnemyHealth.Flipped)
                 {
                     DeathAnimation();
                 }
-                if (isDead == true)
+                if (enemyHealth != EnemyHealth.Normal)
                 {
                     deathTime++;
                 }
@@ -143,6 +142,10 @@ namespace Lasagna
                 OnCollisionResponse((IProjectile)otherCollider, side);
         }
 
+        protected virtual void Revive()
+        {
+            return;
+        }
         protected virtual void OnCollisionResponse(IPlayer mario, CollisionSide side)
         {
             return;
@@ -174,18 +177,18 @@ namespace Lasagna
 
         protected virtual void OnCollisionResponse(ITile tile, CollisionSide side)
         {
-            if (side.Equals(CollisionSide.Bottom) && isFlipped == false)
+            if (side.Equals(CollisionSide.Bottom) && enemyHealth != EnemyHealth.Flipped)
             {
                 position.Y -= yDifference;
                 velocity = 1;
             }
-            if (side.Equals(CollisionSide.Right) && isFlipped == false)
+            if (side.Equals(CollisionSide.Right) && enemyHealth != EnemyHealth.Flipped)
             {
                 ChangeState(EnemyState.WalkRight);
                 isLeft = true;
                     position.Y -= (float)3.5;
             }
-            else if (side.Equals(CollisionSide.Left) && isFlipped == false)
+            else if (side.Equals(CollisionSide.Left) && enemyHealth != EnemyHealth.Flipped)
             {
                 ChangeState(EnemyState.WalkLeft);
                 isLeft = false;
@@ -194,7 +197,7 @@ namespace Lasagna
         }
         private void HandleHorizontalMovement()
         {
-            if (isDead == false && isMoving == true)
+            if (enemyHealth == EnemyHealth.Normal && isMoving == true)
             {
                 if (isLeft == true)
                 {
