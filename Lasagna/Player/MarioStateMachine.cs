@@ -13,7 +13,7 @@ namespace Lasagna
     {
         private Mario mario;
         public enum MarioState { Small, Big, Fire };
-        public enum MarioMovement { CrouchRight, CrouchLeft, IdleLeft, IdleRight, RunLeft, RunRight, JumpLeft, JumpRight, GrowLeft, GrowRight, ShrinkLeft, ShrinkRight, Die };
+        public enum MarioMovement { CrouchRight, CrouchLeft, IdleLeft, IdleRight, RunLeft, RunRight, TurnLeft, TurnRight, JumpLeft, JumpRight, GrowLeft, GrowRight, ShrinkLeft, ShrinkRight, Die };
         private MarioState marioState = MarioState.Small;
         private MarioMovement marioMovement = MarioMovement.IdleRight;
         private ISprite currentSprite = MarioSpriteFactory.Instance.CreateSprite_MarioSmall_IdleRight();
@@ -70,6 +70,8 @@ namespace Lasagna
         private int starCounter = 0;
         private int frameCount = 0;
 
+        private int turnFrames = 0;
+
         public bool StarPowered { get { return starPower; } }
         public bool IsTransitioning { get { return stateTransitionTimeRemaining > 0; } }
         public bool IsBlinking { get { return blinkTimeRemaining > 0; } }
@@ -86,6 +88,8 @@ namespace Lasagna
             smallStates.Add(MarioMovement.IdleRight, MarioSpriteFactory.Instance.CreateSprite_MarioSmall_IdleRight());
             smallStates.Add(MarioMovement.RunLeft, MarioSpriteFactory.Instance.CreateSprite_MarioSmall_RunLeft());
             smallStates.Add(MarioMovement.RunRight, MarioSpriteFactory.Instance.CreateSprite_MarioSmall_RunRight());
+            smallStates.Add(MarioMovement.TurnLeft, MarioSpriteFactory.Instance.CreateSprite_MarioSmall_TurnLeft());
+            smallStates.Add(MarioMovement.TurnRight, MarioSpriteFactory.Instance.CreateSprite_MarioSmall_TurnRight());
             smallStates.Add(MarioMovement.JumpLeft, MarioSpriteFactory.Instance.CreateSprite_MarioSmall_JumpLeft());
             smallStates.Add(MarioMovement.JumpRight, MarioSpriteFactory.Instance.CreateSprite_MarioSmall_JumpRight());
             smallStates.Add(MarioMovement.Die, MarioSpriteFactory.Instance.CreateSprite_MarioSmall_Die());
@@ -98,6 +102,8 @@ namespace Lasagna
             bigStates.Add(MarioMovement.IdleRight, MarioSpriteFactory.Instance.CreateSprite_MarioBig_IdleRight());
             bigStates.Add(MarioMovement.RunLeft, MarioSpriteFactory.Instance.CreateSprite_MarioBig_RunLeft());
             bigStates.Add(MarioMovement.RunRight, MarioSpriteFactory.Instance.CreateSprite_MarioBig_RunRight());
+            bigStates.Add(MarioMovement.TurnLeft, MarioSpriteFactory.Instance.CreateSprite_MarioBig_TurnLeft());
+            bigStates.Add(MarioMovement.TurnRight, MarioSpriteFactory.Instance.CreateSprite_MarioBig_TurnRight());
             bigStates.Add(MarioMovement.JumpLeft, MarioSpriteFactory.Instance.CreateSprite_MarioBig_JumpLeft());
             bigStates.Add(MarioMovement.JumpRight, MarioSpriteFactory.Instance.CreateSprite_MarioBig_JumpRight());
             bigStates.Add(MarioMovement.GrowLeft, MarioSpriteFactory.Instance.CreateSprite_MarioSmall_GrowLeft());
@@ -109,6 +115,8 @@ namespace Lasagna
             fireStates.Add(MarioMovement.IdleRight, MarioSpriteFactory.Instance.CreateSprite_MarioFire_IdleRight());
             fireStates.Add(MarioMovement.RunLeft, MarioSpriteFactory.Instance.CreateSprite_MarioFire_RunLeft());
             fireStates.Add(MarioMovement.RunRight, MarioSpriteFactory.Instance.CreateSprite_MarioFire_RunRight());
+            fireStates.Add(MarioMovement.TurnLeft, MarioSpriteFactory.Instance.CreateSprite_MarioFire_TurnLeft());
+            fireStates.Add(MarioMovement.TurnRight, MarioSpriteFactory.Instance.CreateSprite_MarioFire_TurnRight());
             fireStates.Add(MarioMovement.JumpLeft, MarioSpriteFactory.Instance.CreateSprite_MarioFire_JumpLeft());
             fireStates.Add(MarioMovement.JumpRight, MarioSpriteFactory.Instance.CreateSprite_MarioFire_JumpRight());
 
@@ -196,8 +204,6 @@ namespace Lasagna
 
         public void SetIdleState()
         {
-
-
             if (marioMovement == MarioMovement.RunRight || (marioMovement == MarioMovement.JumpRight && mario.isCollideGround))
             {
                 marioMovement = MarioMovement.IdleRight;
@@ -209,41 +215,89 @@ namespace Lasagna
             SwitchCurrentSprite(marioMovement);
 
         }
+
+        public void SetGroundedState()
+        {
+            if (marioMovement == MarioMovement.JumpRight && !(marioMovement == MarioMovement.TurnRight))
+            {
+                if(mario.isRunning || mario.moveRight)
+                    marioMovement = MarioMovement.RunRight;
+                else
+                    marioMovement = MarioMovement.IdleRight;
+            }
+            else if (marioMovement == MarioMovement.JumpLeft && !(marioMovement == MarioMovement.TurnLeft))
+            {
+                if (mario.isRunning || mario.moveLeft)
+                    marioMovement = MarioMovement.RunLeft;
+                else
+                    marioMovement = MarioMovement.IdleLeft;
+            }
+            SwitchCurrentSprite(marioMovement);
+
+        }
         public void MoveLeft()
         {
-            if (!(marioMovement == MarioMovement.JumpLeft || marioMovement == MarioMovement.JumpRight))
+            if ((marioMovement == MarioMovement.JumpLeft || marioMovement == MarioMovement.JumpRight))
+                return;
+            else if (marioMovement == MarioMovement.RunRight && mario.isRunning)
+            {
+                marioMovement = MarioMovement.TurnLeft;
+                turnFrames++;
+            }
+            else if (turnFrames == 0)
+            {
                 marioMovement = MarioMovement.RunLeft;
+            }
             SwitchCurrentSprite(marioMovement);
         }
 
         public void MoveRight()
         {
-            if (!(marioMovement == MarioMovement.JumpLeft || marioMovement == MarioMovement.JumpRight))
+            if ((marioMovement == MarioMovement.JumpLeft || marioMovement == MarioMovement.JumpRight))
+                return;
+            else if (marioMovement == MarioMovement.RunLeft && mario.isRunning)
+            {
+                marioMovement = MarioMovement.TurnRight;
+                turnFrames++;
+            }
+            else if (turnFrames == 0)
+            {
                 marioMovement = MarioMovement.RunRight;
+            }
             SwitchCurrentSprite(marioMovement);
         }
+
+
+        private void HandleTurnFrames()
+        {
+            if (marioMovement == MarioMovement.TurnLeft || marioMovement == MarioMovement.TurnRight)
+            {
+                turnFrames++; 
+            }
+            if (turnFrames > 10)
+            {
+                turnFrames=0;
+                if (marioMovement == MarioMovement.TurnLeft)
+                    marioMovement = MarioMovement.RunLeft;
+                else if (marioMovement == MarioMovement.TurnRight)
+                    marioMovement = MarioMovement.RunRight;
+                SwitchCurrentSprite(marioMovement);
+            }
+        }
+
         public void HandleCrouch() // Crouching has commented code as we removed this functionality until physics are implemented properly
         {
-            if ((marioMovement == MarioMovement.RunLeft || marioMovement == MarioMovement.IdleLeft) && marioState != MarioState.Small)
+            if ((marioMovement == MarioMovement.RunLeft || marioMovement == MarioMovement.IdleLeft) && marioState != MarioState.Small &&!(isJumping))
             {
-                //marioMovement = MarioMovement.CrouchLeft;
+                marioMovement = MarioMovement.CrouchLeft;
                 return;
             }
-            else if ((marioMovement == MarioMovement.RunRight || marioMovement == MarioMovement.IdleRight) && marioState != MarioState.Small)
+            else if ((marioMovement == MarioMovement.RunRight || marioMovement == MarioMovement.IdleRight) && marioState != MarioState.Small && !(isJumping))
             {
-                //marioMovement = MarioMovement.CrouchRight;
+                marioMovement = MarioMovement.CrouchRight;
                 return;
             }
-            switch (marioMovement)
-            {
-                case MarioMovement.JumpLeft:
-                    marioMovement = MarioMovement.IdleLeft;
-                    break;
-                case MarioMovement.JumpRight:
-                    marioMovement = MarioMovement.IdleRight;
-                    break;
 
-            }
         }
         public void Crouch()
         {
@@ -456,6 +510,10 @@ namespace Lasagna
             }
             else
                 HandleDeathAnimation(gameTime);
+
+            HandleTurnFrames();
+
+
 
             currentSprite.Update(gameTime, spriteXPos, spriteYPos);
         }

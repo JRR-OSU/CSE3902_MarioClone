@@ -51,11 +51,20 @@ namespace Lasagna
             }
             else
             {
+                Console.WriteLine(side);
+                Console.WriteLine();
                 switch (side)
                 {
                     case CollisionSide.Bottom:
+                        if (!mario.isCollideGround)
+                        {
+                            state.SetGroundedState();
+                        }
                         mario.isCollideGround = true;
+
+                        mario.CalcMaxHeight(tile.Bounds.Y, tile.Bounds.Height);
                         mario.SetPosition(mario.Bounds.X, ((tile.Bounds.Y - mario.Bounds.Height-2)));
+
                         mario.isFalling = false;
                         break;
                     case CollisionSide.Top:
