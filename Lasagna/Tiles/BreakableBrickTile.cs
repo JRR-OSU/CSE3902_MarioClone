@@ -13,9 +13,9 @@ namespace Lasagna
             Broken,
             Used
         }
-        private int brickCount = 1;
-        private int originalCount = 1;
-        private bool hasCount = false;
+        private int brickCount = 0;
+        private int originalCount = 0;
+        private bool hasItem = false;
         private bool beingCollided = false;
         private BlockState currentState;
         public IItem item;
@@ -56,9 +56,9 @@ namespace Lasagna
             this.item = newItem;
             brickCount = newBrickCount;
             originalCount = newBrickCount;
-            if (this.brickCount > 1)
+            if (this.brickCount >= 1)
             {
-                this.hasCount = true;
+                this.hasItem = true;
             }
             MarioEvents.OnReset += ChangeToDefault;
         }
@@ -95,7 +95,7 @@ namespace Lasagna
         {
             ///TODO: Implement breaking transition here
             //Toggles us between used and unused
-            if (!hasCount)
+            if (!hasItem)
             {
                 if (currentState != BlockState.Idle)
                 {
