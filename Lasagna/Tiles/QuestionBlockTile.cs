@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 
 namespace Lasagna
 {
@@ -12,8 +13,6 @@ namespace Lasagna
 
         private BlockState currentState;
         public IItem item;
-        private int timer = 0;
-        private int timeLimit = 50;
         private bool beingCollided = false;
         private ISprite unused = TileSpriteFactory.Instance.CreateSprite_QuestionBlock();
         private ISprite used = TileSpriteFactory.Instance.CreateSprite_ItemBlockUsed();
@@ -32,6 +31,18 @@ namespace Lasagna
             currentState = BlockState.Idle;
             this.item = item;
             MarioEvents.OnReset += ChangeToDefault;
+        }
+        public void Update(IPlayer Mario, GameTime gameTime)
+        {
+            //Only call base function if we're in default state. Else draw nothing.
+            if (currentState != BlockState.Used)
+            {
+                base.Update(gameTime);
+            }
+            if (Mario.Bounds.Y > this.CurrentSprite.Height + base.PosY)
+            {
+                this.beingCollided = false;
+            }
         }
 
         public override void ChangeState()
@@ -58,12 +69,6 @@ namespace Lasagna
                 if (item != null)
                 {
                     this.item.Spawn();
-                    while (timer < timeLimit)
-                    {
-                        timer += base.gametime.ElapsedGameTime.Milliseconds;
-                    }
-                    this.beingCollided = false;
-                    timer = 0;
                 }
             }
         }

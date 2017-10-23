@@ -102,7 +102,7 @@ namespace Lasagna
             foreach (ITile tile in tiles)
                 if (tile != null)
                 {
-                    if (!(tile is InvisibleItemBlockTile))
+                    if (!(tile is InvisibleItemBlockTile) || !(tile is QuestionBlockTile) || !(tile is BreakableBrickTile))
                     {
                         tile.Update(gameTime);
                     }
@@ -112,7 +112,18 @@ namespace Lasagna
                         foreach (IPlayer player in players)
                             if (player != null)
                             {
-                                ((InvisibleItemBlockTile)tile).Update(player, gameTime);
+                                if (tile is InvisibleItemBlockTile)
+                                {
+                                    ((InvisibleItemBlockTile)tile).Update(player, gameTime);
+                                }
+                                else if (tile is QuestionBlockTile)
+                                {
+                                    ((QuestionBlockTile)tile).Update(player, gameTime);
+                                }
+                                else if (tile is BreakableBrickTile)
+                                {
+                                    ((BreakableBrickTile)tile).Update(player, gameTime);
+                                }
                             }
                     }
                 }

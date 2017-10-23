@@ -16,11 +16,10 @@ namespace Lasagna
         private int brickCount = 1;
         private int originalCount = 1;
         private bool hasCount = false;
-        private int timer = 0;
-        private int timeLimit = 50;
         private bool beingCollided = false;
         private BlockState currentState;
         public IItem item;
+        private ISprite[] brickPieceSprites;
         private ISprite idleSprite = TileSpriteFactory.Instance.CreateSprite_BreakableBrick();
         private ISprite used = TileSpriteFactory.Instance.CreateSprite_ItemBlockUsed();
         //private ISprite breakingSprite; //Reserved for breaking tile sprite.
@@ -64,11 +63,17 @@ namespace Lasagna
             MarioEvents.OnReset += ChangeToDefault;
         }
 
-        public override void Update(GameTime gameTime)
+        public void Update(IPlayer Mario, GameTime gameTime)
         {
             //Only call base function if we're in default state. Else draw nothing.
             if (currentState != BlockState.Broken)
+            {
                 base.Update(gameTime);
+            }
+            if (Mario.Bounds.Y > this.CurrentSprite.Height + base.PosY)
+            {
+                this.beingCollided = false;
+            }
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -77,7 +82,15 @@ namespace Lasagna
             if (currentState != BlockState.Broken)
                 base.Draw(spriteBatch);
         }
-
+        public void Breaking()
+        {
+            brickPieceSprites = new ISprite[4];
+            for (int i = 0; i < 4; i += 2)
+            {
+                brickPieceSprites[i] = TileSpriteFactory.Instance.CreateSprite_BrickPieceLeft();
+                brickPieceSprites[i + 1] = TileSpriteFactory.Instance.CreateSprite_BrickPieceRight();
+            }
+        }
         public override void ChangeState()
         {
             ///TODO: Implement breaking transition here
@@ -118,16 +131,10 @@ namespace Lasagna
                 {
                     this.brickCount--;
                 }
+                this.beingCollided = true;
                 if (item != null)
                 {
                     this.item.Spawn();
-                    this.beingCollided = true;
-                    while (timer < timeLimit)
-                    {
-                        timer += base.gametime.ElapsedGameTime.Milliseconds;
-                    }
-                    this.beingCollided = false;
-                    timer = 0;
                 }
             }
         }
