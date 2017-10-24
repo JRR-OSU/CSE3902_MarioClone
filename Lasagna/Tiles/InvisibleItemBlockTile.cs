@@ -31,12 +31,14 @@ namespace Lasagna
             currentState = BlockState.Invisible;
             MarioEvents.OnReset += ChangeToInvisible;
         }
-        public InvisibleItemBlockTile(int spawnXPos, int spawnYPos, IItem item)
+        public InvisibleItemBlockTile(int spawnXPos, int spawnYPos, IItem[] items)
             : base(spawnXPos, spawnYPos)
         {
             CurrentSprite = visibleSprite;
             currentState = BlockState.Invisible;
-            this.item = item;
+            if (items != null && items.Length > 0)
+                this.item = items[0];
+
             if (item != null)
             {
                 ((BaseItem)this.item).ChangeToInvisible();
@@ -46,7 +48,8 @@ namespace Lasagna
         public void Update(ICollider Mario, GameTime gameTime)
         {
             //Only call base function if we're visible. Else draw nothing.
-            if (currentState != BlockState.Invisible) { 
+            if (currentState != BlockState.Invisible)
+            {
                 base.Update(gameTime);
             }
             //Once the Mario is lower than the block, toggle the collision status back.
@@ -90,7 +93,7 @@ namespace Lasagna
                 this.CollidedWithThreeSides = true;
             }
             //If the Mario hit the invisible block from the bottom, then change the state of the block.
-            if (this.currentState.Equals(BlockState.Invisible) && side.Equals(CollisionSide.Bottom) && 
+            if (this.currentState.Equals(BlockState.Invisible) && side.Equals(CollisionSide.Bottom) &&
                 this.CollidedWithThreeSides == false)
             {
                 this.ChangeState();

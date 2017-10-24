@@ -117,12 +117,4 @@
     <Tile type="UnbreakableBlock" repeat="0" repeatspace="0" posx="6336" posy="383" />  
     <Tile type="Flag" repeat="0" repeatspace="0" posx="6344" posy="79" />
   </Tiles>
-  <Items>
-    <!-- Remove these later, items should only come from blocks -->
-    <Item type="FireFlower" posx="-760" posy="300" />
-    <Item type="GrowMushroom" posx="210" posy="300" />
-    <Item type="LifeMushroom" posx="280" posy="300" />
-    <Item type="Star" posx="350" posy="300" />
-    <Item type="Star" posx="-800" posy="300" />
-  </Items>
 </Root>
