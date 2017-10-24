@@ -18,7 +18,7 @@ namespace Lasagna
         private bool hasItem = false;
         private bool beingCollided = false;
         private BlockState currentState;
-        public IItem item;
+        public IItem[] items;
         private ISprite[] brickPieceSprites;
         private ISprite idleSprite = TileSpriteFactory.Instance.CreateSprite_BreakableBrick();
         private ISprite used = TileSpriteFactory.Instance.CreateSprite_ItemBlockUsed();
@@ -39,27 +39,18 @@ namespace Lasagna
                 return properties;
             }
         }
-
-        public BreakableBrickTile(int spawnXPos, int spawnYPos)
+        
+        public BreakableBrickTile(int spawnXPos, int spawnYPos, IItem[] newItems)
             : base(spawnXPos, spawnYPos)
         {
             CurrentSprite = idleSprite;
             currentState = BlockState.Idle;
-            MarioEvents.OnReset += ChangeToDefault;
-        }
-
-        public BreakableBrickTile(int spawnXPos, int spawnYPos, IItem newItem, int newBrickCount)
-            : base(spawnXPos, spawnYPos)
-        {
-            CurrentSprite = idleSprite;
-            currentState = BlockState.Idle;
-            this.item = newItem;
-            brickCount = newBrickCount;
-            originalCount = newBrickCount;
+            items = newItems;
+            brickCount = newItems.Length;
+            originalCount = newItems.Length;
             if (this.brickCount >= 1)
-            {
                 this.hasItem = true;
-            }
+
             MarioEvents.OnReset += ChangeToDefault;
         }
 
@@ -132,19 +123,16 @@ namespace Lasagna
                     this.brickCount--;
                 }
                 this.beingCollided = true;
-                if (item != null)
+                int curItem = items.Length - brickCount;
+                if (items != null && curItem >= 0 && curItem < items.Length)
                 {
-                    this.item.Spawn();
+                    items[curItem].Spawn();
                 }
             }
         }
         public bool CheckCollision()
         {
             return beingCollided;
-        }
-        public void Reset()
-        {
-            MarioEvents.OnReset += ChangeToDefault;
         }
         ///TODO: Temp methods for sprint3
         public void ChangeToDefault(object sender, EventArgs e)
