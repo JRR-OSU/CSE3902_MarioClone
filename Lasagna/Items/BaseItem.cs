@@ -129,6 +129,7 @@ namespace Lasagna
 
         public void ReSet(object sender, EventArgs e)
         {
+            itemSprite = originalSprite;
             currentState = ItemState.Idle;
             position.X = originalX;
             position.Y = originalY;
