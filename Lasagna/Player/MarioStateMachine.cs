@@ -136,7 +136,12 @@ namespace Lasagna
                 marioState = MarioState.Big;
                 //If facing left, set movement to be transition left.
                 marioMovement = (MarioFacingLeft()) ? MarioMovement.GrowLeft : MarioMovement.GrowRight;
+                ISprite oldSprite = currentSprite;
                 UpdateSprite();
+
+                //Move us up since small sprite is smaller than big sprite
+                if (oldSprite != null && currentSprite != null)
+                    mario.ForceMove(0, -Math.Abs(currentSprite.Height - oldSprite.Height));
 
                 //Play growing transition
                 stateTransitionTimeRemaining = currentSprite.ClipLength;

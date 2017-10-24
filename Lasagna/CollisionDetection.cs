@@ -17,8 +17,9 @@ namespace Lasagna
                     continue;
 
                 CheckAllCollisions<ITile>(player, player.Bounds, tiles);
+
                 //If this player is mario, and he's transitioning/blinking, we only check collisions for tiles
-                if (player is Mario && ((Mario)player).IsBlinking )
+                if (player is Mario && ((Mario)player).IsBlinking)
                     continue;
 
                 CheckAllCollisions<IEnemy>(player, player.Bounds, enemies);
@@ -67,17 +68,39 @@ namespace Lasagna
                 return false;
 
             bool collided = false;
-            CollisionSide sourceSide, targetSide;
+            /*float biggestCollisionLength = 0;
+            ICollider targetCollider = null;
+            CollisionSide biggestSourceSide = CollisionSide.None, biggestTargetSide = CollisionSide.None;*/
 
+            //Find biggest collision intersection
             foreach (ICollider col in targetColliders)
             {
+                CollisionSide sourceSide, targetSide;
                 if (sourceCollider != col && CheckCollision(sourceRect, col.Bounds, out sourceSide, out targetSide))
                 {
                     sourceCollider.OnCollisionResponse(col, sourceSide);
                     col.OnCollisionResponse(sourceCollider, targetSide);
                     collided = true;
+
+                    /*Rectangle overlap = Rectangle.Intersect(sourceRect, col.Bounds);
+                    Vector2 colSize = new Vector2(overlap.X, overlap.Y);
+                    if (colSize.Length() > biggestCollisionLength)
+                    {
+                        biggestCollisionLength = colSize.Length();
+                        targetCollider = col;
+                        biggestSourceSide = sourceSide;
+                        biggestTargetSide = targetSide;
+                    }*/
                 }
             }
+
+            //Only apply collision response for biggest collision intersection this frame
+            /*if (collided && targetCollider != null 
+                && biggestSourceSide != CollisionSide.None && biggestTargetSide != CollisionSide.None)
+            {
+                sourceCollider.OnCollisionResponse(targetCollider, biggestSourceSide);
+                targetCollider.OnCollisionResponse(sourceCollider, biggestTargetSide);
+            }*/
 
             return collided;
         }
