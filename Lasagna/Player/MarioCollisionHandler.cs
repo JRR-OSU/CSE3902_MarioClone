@@ -48,11 +48,6 @@ namespace Lasagna
         {
             if (!(projectile is KoopaShellProjectile))
                 return;
-            // if koopashell
-            // dont move through it
-            // jump if on top of it
-            // if koopashell is moving, damage mario
-            //isShellKicked - then shell is sliding
 
             switch (side)
             {
@@ -63,16 +58,19 @@ namespace Lasagna
                     // Jump effect if landing on top of an enemy
                     break;
                 case CollisionSide.Top:
-                    state.DamageMario();
+                    if(((KoopaShellProjectile)projectile).IsShellKicked)
+                        state.DamageMario();
                     mario.SetPosition(mario.Bounds.X, (mario.Bounds.Y + mario.Bounds.Height));
                     break;
                 case CollisionSide.Left:
-                    state.DamageMario();
-                    mario.SetPosition(mario.Bounds.X + mario.Bounds.Width / 2, mario.Bounds.Y);
+                    if (((KoopaShellProjectile)projectile).IsShellKicked)
+                        state.DamageMario();
+                    mario.SetPosition(((KoopaShellProjectile)projectile).Bounds.X + mario.Bounds.Width, mario.Bounds.Y);
                     break;
                 case CollisionSide.Right:
-                    state.DamageMario();
-                    mario.SetPosition(mario.Bounds.X - mario.Bounds.Width / 2, mario.Bounds.Y);
+                    if (((KoopaShellProjectile)projectile).IsShellKicked)
+                        state.DamageMario();
+                    mario.SetPosition(((KoopaShellProjectile)projectile).Bounds.X - mario.Bounds.Width, mario.Bounds.Y);
                     break;
             }
 
