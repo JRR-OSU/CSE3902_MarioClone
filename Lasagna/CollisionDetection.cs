@@ -30,6 +30,10 @@ namespace Lasagna
             //Tiles vs. Enemies, Items, projectiles.
             foreach (ITile tile in tiles)
             {
+                //Invisible block don't check if invisible
+                if (tile is InvisibleItemBlockTile && !((InvisibleItemBlockTile)tile).IsVisible)
+                    continue;
+
                 CheckAllCollisions<IEnemy>(tile, tile.Bounds, enemies);
                 CheckAllCollisions<IItem>(tile, tile.Bounds, items);
                 CheckAllCollisions<IProjectile>(tile, tile.Bounds, projectiles);
