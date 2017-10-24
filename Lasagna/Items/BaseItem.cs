@@ -83,7 +83,7 @@ namespace Lasagna
             {
                 MovingTime++;
             }
-            if (MovingTime >= 300)
+            if (MovingTime >= 2000)
             {
                 itemSprite = null;
             }
@@ -134,6 +134,7 @@ namespace Lasagna
             position.Y = originalY;
             isLeft = false;
             fallingVelocity = (float)1.5;
+            velocity = 1;
             MovingTime = 0;
             coinAnimateTime = 0;
             isInBlock = false;
@@ -181,14 +182,25 @@ namespace Lasagna
 
         private void OnCollisionResponse(ITile tile, CollisionSide side)
         {
+            if (!isInBlock && (currentState == ItemState.Moving || currentState == ItemState.MovingStar))
+            {
+                if (side == CollisionSide.Left)
+                    isLeft = false;
+                else if (side == CollisionSide.Right)
+                    isLeft = true;
+            }
+
             if (!isInBlock && side.Equals(CollisionSide.Bottom) && currentState.Equals(ItemState.Moving))
             {
                 position.Y -= yDifference;
                 velocity = 1;
             }
-            if (currentState.Equals(ItemState.MovingStar) && (side == CollisionSide.Bottom || side == CollisionSide.Bottom))
+            if (currentState.Equals(ItemState.MovingStar) && (side == CollisionSide.Bottom || side == CollisionSide.Top))
             {
-                velocity = velocity* -1;
+                if (velocity > 0 && side == CollisionSide.Bottom)
+                    velocity = velocity * -1;
+                else if (velocity < 0 && side == CollisionSide.Top)
+                    velocity = velocity * -1;
                 //position.X += 2;
                 //position.Y += yDifference;
                 //position.Y += moveUpDifference * (float).5;
@@ -223,7 +235,7 @@ namespace Lasagna
             position.Y += yDifference;
             velocity += fallingVelocity;
             velocity -= fallingVelocityDecayRate;
-            
+
         }
         private void HandleHorizontalMovement()
         {
