@@ -109,8 +109,8 @@ namespace Lasagna
                 side = CollisionSide.None;
             else
             {
-                float yWidth = avgWidth * yDirection;
-                float xHeight = avgHeight * xDirection;
+                float yWidth = avgHeight * yDirection;
+                float xHeight = avgWidth * xDirection;
 
                 if (yWidth > xHeight)
                     side = (yWidth > -xHeight) ? CollisionSide.Top : CollisionSide.Right;
