@@ -18,7 +18,7 @@ namespace Lasagna
 
                 CheckAllCollisions<ITile>(player, player.Bounds, tiles);
                 //If this player is mario, and he's transitioning/blinking, we only check collisions for tiles
-                if (player is Mario && ((Mario)player).IsBlinking )
+                if (player is Mario && ((Mario)player).IsBlinking)
                     continue;
 
                 CheckAllCollisions<IEnemy>(player, player.Bounds, enemies);
@@ -100,23 +100,36 @@ namespace Lasagna
         {
             CollisionSide side;
 
-            float avgWidth = 0.5f * (sourceRect.Width + targetRect.Width);
-            float avgHeight = 0.5f * (sourceRect.Height + targetRect.Height);
-            float xDirection = sourceRect.Center.X - targetRect.Center.X;
-            float yDirection = sourceRect.Center.Y - targetRect.Center.Y;
+             float avgWidth = 0.5f * (sourceRect.Width + targetRect.Width);
+             float avgHeight = 0.5f * (sourceRect.Height + targetRect.Height);
+             float xDirection = sourceRect.Center.X - targetRect.Center.X;
+             float yDirection = sourceRect.Center.Y - targetRect.Center.Y;
 
-            if (targetRect.IsEmpty || sourceRect.IsEmpty || Math.Abs(xDirection) > avgWidth || Math.Abs(yDirection) > avgHeight)
+             if (targetRect.IsEmpty || sourceRect.IsEmpty || Math.Abs(xDirection) > avgWidth || Math.Abs(yDirection) > avgHeight)
+                 side = CollisionSide.None;
+             else
+             {
+                 float yWidth = avgWidth * yDirection;
+                 float xHeight = avgHeight * xDirection;
+
+                 if (yWidth > xHeight)
+                     side = (yWidth > -xHeight) ? CollisionSide.Top : CollisionSide.Right;
+                 else
+                     side = (yWidth > -xHeight) ? CollisionSide.Left : CollisionSide.Bottom;
+             }
+
+            /*if (targetRect.IsEmpty || sourceRect.IsEmpty || !sourceRect.Intersects(targetRect))
                 side = CollisionSide.None;
             else
             {
-                float yWidth = avgHeight * yDirection;
-                float xHeight = avgWidth * xDirection;
+                if (sourceRect.Left > targetRect.Left)
+                {
+                    if (sourceRect.Top > targetRect.Top)
+                    {
 
-                if (yWidth > xHeight)
-                    side = (yWidth > -xHeight) ? CollisionSide.Top : CollisionSide.Right;
-                else
-                    side = (yWidth > -xHeight) ? CollisionSide.Left : CollisionSide.Bottom;
-            }
+                    }
+                }
+            }*/
 
             return side;
         }
