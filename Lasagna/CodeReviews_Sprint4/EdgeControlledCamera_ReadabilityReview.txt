@@ -1,0 +1,12 @@
+﻿Zeyu Li
+10/23/2017
+Sprint 4
+EdgeControlledCamera.cs
+Timothy Williams
+5 minutes
+
+The code is good. Every method headers and variables are well defined. It is easy to
+see how the function works just by looking at the method headers. For instance, the
+Update method will ensure that the camera will always make sure that the center of
+the camera is at the center of the screen. The structure of the code is also very
+clear.
