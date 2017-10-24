@@ -34,7 +34,7 @@ namespace Lasagna
 
         public override void Update(GameTime gameTime)
         {
-            if (slidingTime >= 100)
+            if (slidingTime >= 500)
                 CurrentSprite = null;
             if (currentState == KoopaShellStates.Sliding)
             {
