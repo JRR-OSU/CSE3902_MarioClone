@@ -74,6 +74,14 @@ namespace Lasagna
         }
         protected override void OnCollisionResponse(IPlayer player, CollisionSide side)
         {
+            if (currentState != KoopaShellStates.Sliding)
+            {
+                if (side.Equals(CollisionSide.Right))
+                    isMovingRight = false;
+                else if (side.Equals(CollisionSide.Left))
+                    isMovingRight = true;
+            }
+
             if (side.Equals(CollisionSide.Top))
             {
                 hitCount++;
