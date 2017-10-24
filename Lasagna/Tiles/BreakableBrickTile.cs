@@ -116,7 +116,7 @@ namespace Lasagna
 
         private void HandleBreakingBlock(SpriteBatch spriteBatch)
         {
-            if (bumpingTimer < 30)
+            if (bumpingTimer < 20)
             {
 
                 for (int i = 0; i < 4; i++)
@@ -127,16 +127,15 @@ namespace Lasagna
                     {
                         case 0:
                             temp.X -= 3;
-                            temp.Y += 2;
+                            temp.Y -= 2;
                             break;
                         case 1:
                             temp.X += 3;
-                            temp.Y += 2;
+                            temp.Y -= 2;
                             break;
                         case 2:
                             temp.X -= 3;
                             temp.Y += 2;
-                            // Jump effect if landing on top of an enemy
                             break;
                         case 3:
                             temp.X += 3;
@@ -154,10 +153,11 @@ namespace Lasagna
 
                 bumpingTimer++;
             }
-            else if (bumpingTimer >= 30)
+            else if (bumpingTimer >= 20)
             {
                 //currentState = BlockState.Broken;
                 bumpingTimer = 0;
+                isBreaking = false;
             }
         }
         public ISprite[] Breaking()
@@ -217,7 +217,6 @@ namespace Lasagna
                     items[curItem].Spawn();
                 }
 
-                Console.WriteLine(this.items);
                 if (this.items.Length == 0)
                 {
                     if (((Mario)Mario).CurrentState == MarioStateMachine.MarioState.Big || ((Mario)Mario).CurrentState == MarioStateMachine.MarioState.Fire)
