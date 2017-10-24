@@ -1,0 +1,9 @@
+﻿Yiwei Zhang
+10/23/2017
+Sprint4
+QuestionBlockTile.cs
+Zeyu Li
+10 minutes
+
+Fields and methods are properly named according to their functionality.
+The overall structure does not change much comparing to the previous sprint.

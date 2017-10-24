@@ -29,7 +29,6 @@ namespace Lasagna
         public bool isRunning = false;
         private bool isJumping = false;
         private bool jumpDelay = false;
-        private int jumpHeld = 0;
         private int jumpDelayCount = 0;
         private bool canJump = true;
 
@@ -168,7 +167,6 @@ namespace Lasagna
             {
                 velocity.X += 10;
                 stateMachine.MoveRight();
-
             }
             else if (!isRunning && !marioIsDead)
             {
@@ -201,7 +199,6 @@ namespace Lasagna
             if (!marioIsDead && !(Math.Abs(velocity.Y) >= maxVelY))
             {
                 stateMachine.Jump();
-                //ignoreGravity = false;
                 if (velocity.Y < 275 && (position.Y * -1 > maxHeight) && !isFalling)
                     velocity.Y += 75;
                 else
@@ -210,21 +207,15 @@ namespace Lasagna
                 }
 
             }
-
         }
 
         public void HandleJump()
         {
-            int ceiling = 0;
-            if (jumpHeld < 15)
-                ceiling = jumpHeld * 2;
             if (!marioIsDead && !(Math.Abs(velocity.Y) >= maxVelY))
             {
                 stateMachine.Jump();
-
                 if (velocity.Y < 350 && !isFalling)
                     velocity.Y += 205;
-
                 else
                 {
                     isFalling = true;
@@ -291,25 +282,20 @@ namespace Lasagna
                 marioCollisionHandler.OnCollisionResponse((ITile)otherCollider, side);
             else if (otherCollider is IItem)
                 marioCollisionHandler.OnCollisionResponse((IItem)otherCollider, side);
+            else if (otherCollider is IProjectile)
+                marioCollisionHandler.OnCollisionResponse((IProjectile)otherCollider, side);
         }
        
         private void SetPhysicsBools()
         {
             if (isCollideGround || velocity.Y == 0)
             {
-                jumpHeld = 0;
-
                 isJumping = false;
                 if (Keyboard.GetState().GetPressedKeys().Length == 0) // Set idle if no key is pressed
-                {
                     SetIdleState();
-                }
-
             }
             else if (isJumping == true)
                 ignoreGravity = false;
-
-
         }
         public void UpdatePhysics(GameTime gameTime)
         {
@@ -334,28 +320,14 @@ namespace Lasagna
 
         public void Update(GameTime gameTime)
         {
+            HandleJumpBools();
 
-            if (isJumping && !(Keyboard.GetState().IsKeyDown(Keys.W) || Keyboard.GetState().IsKeyDown(Keys.Up)))
-                canJump = false;
-            else if(!isJumping)
-                canJump = true;
-            if (marioMovingLeft)
-                MarioMoveLeft();
-            else if (marioMovingRight)
-                MarioMoveRight();
+            HandleMovement();
 
             if (jumpDelay)
                 HandleJumpDelay();
 
-            if (Keyboard.GetState().IsKeyDown(Keys.LeftShift) && !marioMovingRight && !marioMovingLeft)
-            {
-                isRunning = false;
-                SetIdleState();
-            }
-            else if (Keyboard.GetState().IsKeyDown(Keys.LeftShift) &&  (marioMovingRight ||  marioMovingLeft))
-                isRunning = true;
-            else
-                isRunning = false;
+            HandleRunning();
 
             UpdatePhysics(gameTime);
             stateMachine.Update(gameTime, (int)position.X, -(int)position.Y);
@@ -364,6 +336,35 @@ namespace Lasagna
             isCollideGround = false;
             jumpVel = Vector2.Zero;
 
+        }
+
+        private void HandleJumpBools()
+        {
+            if (isJumping && !(Keyboard.GetState().IsKeyDown(Keys.W) || Keyboard.GetState().IsKeyDown(Keys.Up)))
+                canJump = false;
+            else if (!isJumping)
+                canJump = true;
+        }
+
+        private void HandleRunning()
+        {
+            if (Keyboard.GetState().IsKeyDown(Keys.LeftShift) && !marioMovingRight && !marioMovingLeft)
+            {
+                isRunning = false;
+                SetIdleState();
+            }
+            else if (Keyboard.GetState().IsKeyDown(Keys.LeftShift) && (marioMovingRight || marioMovingLeft))
+                isRunning = true;
+            else
+                isRunning = false;
+        }
+
+        private void HandleMovement()
+        {
+            if (marioMovingLeft)
+                MarioMoveLeft();
+            else if (marioMovingRight)
+                MarioMoveRight();
         }
 
         public void Draw(SpriteBatch spriteBatch)
