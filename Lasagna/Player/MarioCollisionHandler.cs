@@ -43,6 +43,40 @@ namespace Lasagna
             }
 
         }
+
+        public void OnCollisionResponse(IProjectile projectile, CollisionSide side)
+        {
+            if (!(projectile is KoopaShellProjectile))
+                return;
+            // if koopashell
+            // dont move through it
+            // jump if on top of it
+            // if koopashell is moving, damage mario
+            //isShellKicked - then shell is sliding
+
+            switch (side)
+            {
+                case CollisionSide.Bottom:
+                    mario.velocity.Y = 0;
+                    mario.velocity.Y += 150;
+                    state.HandleJump();
+                    // Jump effect if landing on top of an enemy
+                    break;
+                case CollisionSide.Top:
+                    state.DamageMario();
+                    mario.SetPosition(mario.Bounds.X, (mario.Bounds.Y + mario.Bounds.Height));
+                    break;
+                case CollisionSide.Left:
+                    state.DamageMario();
+                    mario.SetPosition(mario.Bounds.X + mario.Bounds.Width / 2, mario.Bounds.Y);
+                    break;
+                case CollisionSide.Right:
+                    state.DamageMario();
+                    mario.SetPosition(mario.Bounds.X - mario.Bounds.Width / 2, mario.Bounds.Y);
+                    break;
+            }
+
+        }
         public void OnCollisionResponse(ITile tile, CollisionSide side)
         {
             //If the Mario hits the invisible block from the top, left and right sides of the block, do nothing.
