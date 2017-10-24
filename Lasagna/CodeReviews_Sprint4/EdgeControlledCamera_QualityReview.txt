@@ -1,0 +1,12 @@
+﻿Zeyu Li
+10/23/2017
+Sprint 4
+EdgeControlledCamera.cs
+Timothy Williams
+
+The code is definitely in high quality. Some lines of codes that difficult to understand
+are accompanied with the comments. The code has a clear structure, looks clean and tidy.
+
+Again, I think I am not able to make further improvements to this code. I do not have
+experience in writing camera code. In my perspective, the camera is implemented in the 
+simplest way, there is no extra part. I will continue to learn from Tim's code.
