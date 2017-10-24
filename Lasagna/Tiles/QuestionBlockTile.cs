@@ -24,12 +24,13 @@ namespace Lasagna
             currentState = BlockState.Idle;
             MarioEvents.OnReset += ChangeToDefault;
         }
-        public QuestionBlockTile(int spawnXPos, int spawnYPos, IItem item)
+        public QuestionBlockTile(int spawnXPos, int spawnYPos, IItem[] items)
             : base(spawnXPos, spawnYPos)
         {
             CurrentSprite = unused;
             currentState = BlockState.Idle;
-            this.item = item;
+            if (items != null && items.Length > 0)
+                this.item = items[0];
             MarioEvents.OnReset += ChangeToDefault;
         }
         public void Update(IPlayer Mario, GameTime gameTime)
@@ -72,7 +73,7 @@ namespace Lasagna
                 }
             }
         }
-      
+
         public bool CheckCollision()
         {
             return beingCollided;

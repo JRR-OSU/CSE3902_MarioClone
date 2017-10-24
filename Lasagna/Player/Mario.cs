@@ -334,13 +334,7 @@ namespace Lasagna
 
         public void Update(GameTime gameTime)
         {
-            //isJumping = false;
 
-            //if (((jumpVel.Y - velocity.Y) > 0) && isJumping)
-            //    isFalling = true;
-            //else
-            //    isFalling = false;
-   
             if (isJumping && !(Keyboard.GetState().IsKeyDown(Keys.W) || Keyboard.GetState().IsKeyDown(Keys.Up)))
                 canJump = false;
             else if(!isJumping)
@@ -350,10 +344,6 @@ namespace Lasagna
             else if (marioMovingRight)
                 MarioMoveRight();
 
-            //if (isJumping)
-         //   {
-
-           // }
             if (jumpDelay)
                 HandleJumpDelay();
 

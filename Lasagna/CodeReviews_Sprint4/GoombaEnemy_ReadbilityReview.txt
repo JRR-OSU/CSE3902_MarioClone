@@ -1,0 +1,10 @@
+﻿Jon Reed
+10/23/2017
+Sprint 4
+GoombaEnemy.cs
+Yiwei Zhang
+5 minutes
+
+The code is extremely readable with only minor additions since the last sprint. 
+Although features such as collision detection have been added,
+the code remains completely readable and simple to understand.

@@ -186,12 +186,13 @@ namespace Lasagna
                 position.Y -= yDifference;
                 velocity = 1;
             }
-            if (currentState.Equals(ItemState.MovingStar))
+            if (currentState.Equals(ItemState.MovingStar) && (side == CollisionSide.Bottom || side == CollisionSide.Bottom))
             {
-                position.X += 2;
-                position.Y -= yDifference;
-                position.Y -= moveUpDifference * (float).5;
-                velocity = 1;
+                velocity = velocity* -1;
+                //position.X += 2;
+                //position.Y += yDifference;
+                //position.Y += moveUpDifference * (float).5;
+                //velocity = 1;
             }
 
         }
@@ -221,9 +222,8 @@ namespace Lasagna
             yDifference = velocity * ((float)gameTime.ElapsedGameTime.Milliseconds / 50);
             position.Y += yDifference;
             velocity += fallingVelocity;
-            velocity *= fallingVelocityDecayRate;
-            if (velocity > 50)
-                velocity = 50;
+            velocity -= fallingVelocityDecayRate;
+            
         }
         private void HandleHorizontalMovement()
         {
