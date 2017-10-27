@@ -101,5 +101,20 @@ namespace Lasagna
             else if (side == CollisionSide.Right)
                 movingRight = false;
         }
+
+        protected void CorrectPosition(CollisionSide side, ICollider target)
+        {
+            if (side == CollisionSide.None || target == null)
+                return;
+
+            if (side == CollisionSide.Left)
+                posX = target.Bounds.X + target.Bounds.Width;
+            else if (side == CollisionSide.Right)
+                posX = target.Bounds.X - this.Bounds.Width;
+            else if (side == CollisionSide.Top)
+                posY = target.Bounds.Y + target.Bounds.Height;
+            else if (side == CollisionSide.Bottom)
+                posY = target.Bounds.Y - this.Bounds.Height;
+        }
     }
 }

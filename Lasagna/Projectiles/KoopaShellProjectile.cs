@@ -61,6 +61,8 @@ namespace Lasagna
                 isMovingRight = false;
             else if (side.Equals(CollisionSide.Left))
                 isMovingRight = true;
+
+            CorrectPosition(side, tile);
         }
 
         protected override void OnCollisionResponse(IItem Item, CollisionSide side)
@@ -75,10 +77,12 @@ namespace Lasagna
                     isMovingRight = false;
                 else if (side.Equals(CollisionSide.Left))
                     isMovingRight = true;
+
+                CorrectPosition(side, player);
             }
 
             hitCount++;
-            if (hitCount >= 2)
+            if (hitCount >= 1)
             {
                 currentState = KoopaShellStates.Sliding;
                 IsShellKicked = true;

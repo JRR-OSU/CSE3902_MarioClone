@@ -183,7 +183,7 @@ namespace Lasagna
 
         private void OnCollisionResponse(ITile tile, CollisionSide side)
         {
-            if (isInBlock)
+            if (isInBlock || currentState == ItemState.Idle)
                 return;
 
             if (currentState == ItemState.Moving || currentState == ItemState.MovingStar)

@@ -79,6 +79,8 @@ namespace Lasagna
                 movingUpTimeLeft = fireballBounceTime;
             else if (currentState == FireballStates.Idle)
                 DestroyShell();
+
+            CorrectPosition(side, tile);
         }
 
         protected override void OnCollisionResponse(IItem Item, CollisionSide side)
