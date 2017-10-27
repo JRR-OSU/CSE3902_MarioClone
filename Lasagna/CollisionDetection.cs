@@ -68,9 +68,9 @@ namespace Lasagna
                 return false;
 
             bool collided = false;
-            /*float biggestCollisionLength = 0;
+            float biggestCollisionLength = 0;
             ICollider targetCollider = null;
-            CollisionSide biggestSourceSide = CollisionSide.None, biggestTargetSide = CollisionSide.None;*/
+            CollisionSide biggestSourceSide = CollisionSide.None, biggestTargetSide = CollisionSide.None;
 
             //Find biggest collision intersection
             foreach (ICollider col in targetColliders)
@@ -78,33 +78,31 @@ namespace Lasagna
                 CollisionSide sourceSide, targetSide;
                 if (sourceCollider != col && CheckCollision(sourceRect, col.Bounds, out sourceSide, out targetSide))
                 {
-                    sourceCollider.OnCollisionResponse(col, sourceSide);
-                    col.OnCollisionResponse(sourceCollider, targetSide);
                     collided = true;
 
-                    /*Rectangle overlap = Rectangle.Intersect(sourceRect, col.Bounds);
-                    Vector2 colSize = new Vector2(overlap.X, overlap.Y);
-                    if (colSize.Length() > biggestCollisionLength)
+                    Rectangle overlap = Rectangle.Intersect(sourceRect, col.Bounds);
+                    float colSize = overlap.Width * overlap.Height;
+                    if (colSize > biggestCollisionLength)
                     {
-                        biggestCollisionLength = colSize.Length();
+                        biggestCollisionLength = colSize;
                         targetCollider = col;
                         biggestSourceSide = sourceSide;
                         biggestTargetSide = targetSide;
-                    }*/
+                    }
                 }
             }
 
-            //Only apply collision response for biggest collision intersection this frame
-            /*if (collided && targetCollider != null 
+            //Only apply collision response for the collider which we collided most with this frame
+            if (collided && targetCollider != null 
                 && biggestSourceSide != CollisionSide.None && biggestTargetSide != CollisionSide.None)
             {
                 sourceCollider.OnCollisionResponse(targetCollider, biggestSourceSide);
                 targetCollider.OnCollisionResponse(sourceCollider, biggestTargetSide);
-            }*/
+            }
 
             return collided;
         }
-
+        
         private static bool CheckCollision(Rectangle r1, Rectangle r2, out CollisionSide r1CollisionSide, out CollisionSide r2CollisionSide)
         {
             r1CollisionSide = CollisionSide.None;

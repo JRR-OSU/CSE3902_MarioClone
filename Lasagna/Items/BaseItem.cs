@@ -183,7 +183,10 @@ namespace Lasagna
 
         private void OnCollisionResponse(ITile tile, CollisionSide side)
         {
-            if (!isInBlock && (currentState == ItemState.Moving || currentState == ItemState.MovingStar))
+            if (isInBlock)
+                return;
+
+            if (currentState == ItemState.Moving || currentState == ItemState.MovingStar)
             {
                 if (side == CollisionSide.Left)
                     isLeft = false;
@@ -191,23 +194,36 @@ namespace Lasagna
                     isLeft = true;
             }
 
-            if (!isInBlock && side.Equals(CollisionSide.Bottom) && currentState.Equals(ItemState.Moving))
+            if (currentState.Equals(ItemState.Moving) && side.Equals(CollisionSide.Bottom))
             {
                 position.Y -= yDifference;
                 velocity = 1;
             }
-            if (currentState.Equals(ItemState.MovingStar) && (side == CollisionSide.Bottom || side == CollisionSide.Top))
+            else if (currentState.Equals(ItemState.MovingStar))
             {
                 if (velocity > 0 && side == CollisionSide.Bottom)
                     velocity = velocity * -1;
                 else if (velocity < 0 && side == CollisionSide.Top)
                     velocity = velocity * -1;
-                //position.X += 2;
-                //position.Y += yDifference;
-                //position.Y += moveUpDifference * (float).5;
-                //velocity = 1;
             }
 
+            CorrectPosition(side, tile);
+        }
+
+        //This should be called whenever there is a collision, it resolves this item's new position.
+        private void CorrectPosition(CollisionSide side, ICollider target)
+        {
+            if (side == CollisionSide.None || target == null)
+                return;
+
+            if (side == CollisionSide.Left)
+                position.X = target.Bounds.X + target.Bounds.Width;
+            else if (side == CollisionSide.Right)
+                position.X = target.Bounds.X - this.Bounds.Width;
+            else if (side == CollisionSide.Top)
+                position.Y = target.Bounds.Y + target.Bounds.Height;
+            else if (side == CollisionSide.Bottom)
+                position.Y = target.Bounds.Y - this.Bounds.Height;
         }
 
 
