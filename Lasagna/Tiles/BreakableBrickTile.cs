@@ -19,7 +19,7 @@ namespace Lasagna
         private int originalCount = 0;
         private int bumpingTimer = 0;
         private bool isBreaking = false;
-       private List<ISprite> breakingBricks = new List<ISprite>();
+        private List<ISprite> breakingBricks = new List<ISprite>();
         private List<Vector2> positions = new List<Vector2>();
         private Vector2 temp;
         // private Dictionary<List<int>, ISprite  > breakingBricks =

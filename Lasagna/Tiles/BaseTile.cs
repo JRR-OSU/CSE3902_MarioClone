@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 
 namespace Lasagna
 {
@@ -38,7 +39,6 @@ namespace Lasagna
                 currentSprite.Draw(spriteBatch);
             }
         }
-
         public abstract void ChangeState();
         public void OnCollisionResponse(ICollider otherCollider, CollisionSide side)
         {
