@@ -17,6 +17,7 @@ namespace Lasagna
         private ISprite unused = TileSpriteFactory.Instance.CreateSprite_QuestionBlock();
         private ISprite used = TileSpriteFactory.Instance.CreateSprite_ItemBlockUsed();
 
+        public override bool IsChangingState { get { return beingCollided; } }
         public QuestionBlockTile(int spawnXPos, int spawnYPos)
             : base(spawnXPos, spawnYPos)
         {
@@ -74,10 +75,6 @@ namespace Lasagna
             }
         }
 
-        public bool CheckCollision()
-        {
-            return beingCollided;
-        }
         public void Reset()
         {
             MarioEvents.OnReset += ChangeToDefault;

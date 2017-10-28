@@ -18,6 +18,7 @@ namespace Lasagna
         private bool CollidedWithThreeSides = false;
 
         public bool MarioCollidedWithThreeSides() { return this.CollidedWithThreeSides; }
+        public override bool IsChangingState { get; set; }
 
         public bool IsVisible
         {

@@ -49,7 +49,8 @@ namespace Lasagna
                 return properties;
             }
         }
-        
+        public override bool IsChangingState { get { return beingCollided; } }
+
         public BreakableBrickTile(int spawnXPos, int spawnYPos, IItem[] newItems)
             : base(spawnXPos, spawnYPos)
         {
@@ -72,10 +73,10 @@ namespace Lasagna
                 base.Update(gameTime);
             }
 
-            if (Mario.Bounds.Y > this.CurrentSprite.Height + base.PosY)
-            {
-                this.beingCollided = false;
-            }
+            //if (Mario.Bounds.Y > this.CurrentSprite.Height + base.PosY)
+            //{
+              //  this.beingCollided = false;
+            //}
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -105,6 +106,7 @@ namespace Lasagna
             }
             else if(currentState == BlockState.Breaking)
             {
+                beingCollided = true;
                 isBreaking = true;
                 currentState = BlockState.Broken;
                 
@@ -157,6 +159,7 @@ namespace Lasagna
             {
                 //currentState = BlockState.Broken;
                 bumpingTimer = 0;
+                beingCollided = false;
                 isBreaking = false;
             }
         }
@@ -245,10 +248,7 @@ namespace Lasagna
                 
             }
         }
-        public bool CheckCollision()
-        {
-            return beingCollided;
-        }
+
         ///TODO: Temp methods for sprint3
         public void ChangeToDefault(object sender, EventArgs e)
         {

@@ -6,6 +6,7 @@
   <Enemies>
     <!-- Test area enemies -->
     <Enemy type="Koopa" posx="-533" posy="375" />
+    <Enemy type="Koopa" posx="-730" posy="230" />
     
     <!-- Actual level -->
     <Enemy type="Goomba" posx="704" posy="383" />
@@ -34,6 +35,9 @@
     <Tile type="Brick" repeat="0" repeatspace="0" posx="-224" posy="287" item="" coins="" />
     <Tile type="Brick" repeat="0" repeatspace="0" posx="-192" posy="287" item="Coin" coins="5" />
     <Tile type="Brick" repeat="0" repeatspace="0" posx="-160" posy="287" item="GrowMushroom" coins="" />
+    <Tile type="Brick" repeat="0" repeatspace="0" posx="-800" posy="287" item="" coins="" />
+    <Tile type="Brick" repeat="0" repeatspace="0" posx="-770" posy="287" item="" coins="" />
+    <Tile type="Brick" repeat="0" repeatspace="0" posx="-750" posy="287" item="" coins="" />
     
     <Tile type="InvisibleBlock" repeat="0" repeatspace="0" posx="-128" posy="287" item="" />
     <Tile type="InvisibleBlock" repeat="0" repeatspace="0" posx="-96" posy="287" item="LifeMushroom" />

@@ -18,6 +18,7 @@ namespace Lasagna
         private int posY;
         private int flagOffsetX;
         private int flagOffsetY;
+        public bool IsChangingState { get; set; }
         public Rectangle Bounds { get { return new Rectangle(this.posX, this.posY, this.flagPoleSprite.Width, this.flagPoleSprite.Height); } }
 
         public FlagPoleTile(int spawnPosX, int spawnPosY)
