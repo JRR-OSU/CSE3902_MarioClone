@@ -14,6 +14,7 @@ namespace Lasagna
         protected float posX;
         protected float posY;
         private bool movingRight;
+        
 
         public Rectangle Bounds
         {

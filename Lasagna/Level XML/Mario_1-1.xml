@@ -6,7 +6,7 @@
   <Enemies>
     <!-- Test area enemies -->
     <Enemy type="Koopa" posx="-533" posy="375" />
-    <Enemy type="Koopa" posx="-730" posy="230" />
+    <Enemy type="Goomba" posx="-730" posy="230" />
     
     <!-- Actual level -->
     <Enemy type="Goomba" posx="704" posy="383" />

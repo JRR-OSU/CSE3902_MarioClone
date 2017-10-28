@@ -20,6 +20,7 @@ namespace Lasagna
         private ISprite fireballDefault = ProjectileSpriteFactory.Instance.CreateSprite_Fireball_Default();
         private ISprite fireballExplode = ProjectileSpriteFactory.Instance.CreateSprite_Fireball_Explode();
 
+        
         public FireProjectile(int spawnPosX, int spawnPosY, bool startMovingRight)
             : base(spawnPosX, spawnPosY, startMovingRight)
         {

@@ -10,5 +10,6 @@ namespace Lasagna
         void Draw(SpriteBatch spriteBatch);
         void DestroyShell();
         void Reset(object sender, EventArgs e);
+        
     }
 }

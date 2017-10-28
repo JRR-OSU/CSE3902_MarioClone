@@ -62,11 +62,5 @@ namespace Lasagna
                 enemyHealth = EnemyHealth.Flipped;
             }
         }
-        protected override void Revive()
-        {
-            enemyHealth = EnemyHealth.Normal;
-            CurrentSprite = koopaStates[EnemyState.Idle_Left];
-        }
-
     }
 }

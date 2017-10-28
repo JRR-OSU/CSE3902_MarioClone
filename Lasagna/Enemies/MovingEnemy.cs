@@ -12,6 +12,7 @@ namespace Lasagna
         public EnemyHealth enemyHealth = EnemyHealth.Normal;
         public bool isLeft = true;
         public bool isMoving = true;
+        public bool isSeen;
         private float[] orignalPos = new float[2];
         private float velocity = 1;
         private float fallingVelocity = (float)1.5;
@@ -19,8 +20,7 @@ namespace Lasagna
         private Vector2 position;
         private float yDifference;
         private int deathTime = 0;
-        public bool isSeen;
-        public bool isShellKicked;
+        
 
         protected ISprite CurrentSprite
         {
@@ -143,10 +143,6 @@ namespace Lasagna
                 OnCollisionResponse((IProjectile)otherCollider, side);
         }
 
-        protected virtual void Revive()
-        {
-            return;
-        }
         protected virtual void OnCollisionResponse(IPlayer mario, CollisionSide side)
         {
             return;
@@ -182,12 +178,18 @@ namespace Lasagna
             {
                 if(tile is BreakableBrickTile && ((BreakableBrickTile)tile).IsChangingState)
                 {
-                    ChangeState(EnemyState.Dead);
+                    if (this is KoopaEnemy)
+                        ChangeState(EnemyState.Dead);
+                    else
+                        ChangeState(EnemyState.Flipped);
                     enemyHealth = EnemyHealth.Flipped;
                 }
                 else if(tile is QuestionBlockTile && ((QuestionBlockTile)tile).IsChangingState)
                 {
-                    ChangeState(EnemyState.Dead);
+                    if (this is KoopaEnemy)
+                        ChangeState(EnemyState.Dead);
+                    else
+                        ChangeState(EnemyState.Flipped);
                     enemyHealth = EnemyHealth.Flipped;
                 }
                     position.Y -= yDifference;
