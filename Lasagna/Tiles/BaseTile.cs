@@ -10,6 +10,7 @@ namespace Lasagna
         private int posX;
         private int posY;
         protected GameTime gametime;
+        public virtual bool IsChangingState { get; set; }
         public virtual Rectangle Bounds { get { return new Rectangle(posX, posY, CurrentSprite.Width, CurrentSprite.Height); } }
         protected ISprite CurrentSprite
         {

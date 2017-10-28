@@ -7,6 +7,7 @@
         {
             CurrentSprite = TileSpriteFactory.Instance.CreateSprite_Floor();
         }
+        public override bool IsChangingState { get; set; }
 
         //Not needed currently
         public override void ChangeState() {}

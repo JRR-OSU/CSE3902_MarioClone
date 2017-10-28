@@ -93,6 +93,7 @@ namespace Lasagna
                 {
                     deathTime++;
                 }
+
                 HandleHorizontalMovement();
                 Fall(gameTime);
                 currentSprite.Update(gameTime, (int)position.X, (int)position.Y);
@@ -179,8 +180,18 @@ namespace Lasagna
         {
             if (side.Equals(CollisionSide.Bottom) && enemyHealth != EnemyHealth.Flipped)
             {
-                position.Y -= yDifference;
-                velocity = 1;
+                if(tile is BreakableBrickTile && ((BreakableBrickTile)tile).IsChangingState)
+                {
+                    ChangeState(EnemyState.Dead);
+                    enemyHealth = EnemyHealth.Flipped;
+                }
+                else if(tile is QuestionBlockTile && ((QuestionBlockTile)tile).IsChangingState)
+                {
+                    ChangeState(EnemyState.Dead);
+                    enemyHealth = EnemyHealth.Flipped;
+                }
+                    position.Y -= yDifference;
+                    velocity = 1;
             }
             if (side.Equals(CollisionSide.Right) && enemyHealth != EnemyHealth.Flipped)
             {
