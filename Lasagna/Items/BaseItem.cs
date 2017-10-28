@@ -269,10 +269,10 @@ namespace Lasagna
         }
         private void HandleCoinAnimation()
         {
-            position.Y -= 10;
+            position.Y -= 15;
             velocity += 4;
             coinAnimateTime++;
-            if (coinAnimateTime >= 40)
+            if (coinAnimateTime >= 20)
                 itemSprite = null;
         }
     }

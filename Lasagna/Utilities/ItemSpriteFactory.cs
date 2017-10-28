@@ -40,7 +40,7 @@ namespace Lasagna
 
         public AnimatedSprite CreateSprite_Coin()
         {
-            return new AnimatedSprite(coinSheet, 4, 1, 32, 32, 8);
+            return new AnimatedSprite(coinSheet, 4, 1, 25, 25, 8);
         }
 
         public AnimatedSprite CreateSprite_FireFlower()
