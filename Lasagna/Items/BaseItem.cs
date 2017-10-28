@@ -32,7 +32,7 @@ namespace Lasagna
         private int coinAnimateTime = 0;
         private bool isLeft = false;
         private int MovingTime = 0;
-        private int moveUpDifference = 150;
+        //private int moveUpDifference = 150;
         private ISprite originalSprite;
 
         protected ISprite ItemSprite

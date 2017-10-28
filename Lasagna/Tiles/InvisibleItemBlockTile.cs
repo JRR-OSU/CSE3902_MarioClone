@@ -71,7 +71,6 @@ namespace Lasagna
             //Toggles us between visible and invisible
             if (currentState == BlockState.Invisible)
             {
-                CurrentSprite = visibleSprite;
                 currentState = BlockState.Visible;
             }
             else
@@ -80,9 +79,11 @@ namespace Lasagna
             }
 
         }
-        public void Reset()
+        public void ReSet(object sender, EventArgs e)
         {
-            MarioEvents.OnReset += ChangeToInvisible;
+            currentState = BlockState.Invisible;
+            ((BaseItem)item).ReSet(sender, e);
+            ((BaseItem)item).ChangeToInvisible();
         }
         protected override void OnCollisionResponse(IPlayer Mario, CollisionSide side)
         {
