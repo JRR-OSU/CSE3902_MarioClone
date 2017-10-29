@@ -101,7 +101,6 @@ namespace Lasagna
                 {
                     currentState = BlockState.Idle;
                     bumpingTimer = 0;
-
                 }
             }
             else if(currentState == BlockState.Breaking)

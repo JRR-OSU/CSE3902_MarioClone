@@ -59,7 +59,8 @@ namespace Lasagna
                 }
                 if (PosY == preBumpPos)
                 {
-                    ChangeState();
+                    currentState = BlockState.Used;
+                    CurrentSprite = used;
                     bumpingTimer = 0;
                 }
             }
@@ -75,7 +76,7 @@ namespace Lasagna
             if (currentState == BlockState.Idle)
             {
                 CurrentSprite = used;
-                currentState = BlockState.Used;
+                currentState = BlockState.Bumped;
             }
             else
             {
@@ -90,7 +91,6 @@ namespace Lasagna
             {
                 this.ChangeState();
                 this.beingCollided = true;
-                this.currentState = BlockState.Bumped;
                 preBumpPos = PosY;
                 if (item != null)
                 {
