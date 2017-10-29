@@ -61,7 +61,17 @@ namespace Lasagna
             originalCount = newItems.Length;
             if (this.numItemsLeft >= 1)
                 this.hasItem = true;
-
+            if (newItems != null && newItems.Length > 0)
+            {
+                this.items = newItems;
+                foreach (IItem item in items)
+                {
+                    if (item != null)
+                    {
+                        ((BaseItem)item).ChangeToInvisible();
+                    }
+                }
+            }
             MarioEvents.OnReset += Reset;
         }
 
@@ -274,13 +284,16 @@ namespace Lasagna
                 this.hasItem = true;
             }
             beingCollided = false;
-            /*foreach (IItem item in items)
+            if (items != null && items.Length > 0)
             {
-                if (item != null)
+                foreach (IItem item in items)
                 {
-                    ((BaseItem)item).Reset(sender, e);
+                    if (item != null)
+                    {
+                        ((BaseItem)item).ChangeToInvisible();
+                    }
                 }
-            }*/         
+            }
         }
         ///TODO: Temp methods for sprint3
         /*public void ChangeToDefault(object sender, EventArgs e)

@@ -57,11 +57,11 @@ namespace Lasagna
                 base.Update(gameTime);
             }
             
-            if(beingCollided == true)
+            if (beingCollided == true)
             {
                 bumpingTime++;
             }
-            if(bumpingTime > 20)
+            if (bumpingTime > 20)
             {
                 beingCollided = false;
                 bumpingTime = 0;
@@ -122,6 +122,7 @@ namespace Lasagna
                 {
                     if (items[0] is GrowMushroomItem)
                     {
+                        Debug.Print("Mushroom\n");
                         if (((Mario)Mario).CurrentState == MarioStateMachine.MarioState.Small)
                         {
                             items[0].Spawn();
@@ -151,7 +152,6 @@ namespace Lasagna
                 {
                     if (item != null)
                     {
-                        //((BaseItem)item).Reset(sender, e);
                         ((BaseItem)item).ChangeToInvisible();
                     }
                 }

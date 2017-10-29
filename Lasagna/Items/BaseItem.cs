@@ -87,7 +87,6 @@ namespace Lasagna
             {
                 itemSprite = null;
             }
-
             if (itemSprite != null && currentState != ItemState.Taken)
             {
                 if (currentState.Equals(ItemState.Moving))

@@ -96,7 +96,6 @@ namespace Lasagna
                 {
                     if (item != null)
                     {
-                        //((BaseItem)item).Reset(sender, e);
                         ((BaseItem)item).ChangeToInvisible();
                     }
                 }
