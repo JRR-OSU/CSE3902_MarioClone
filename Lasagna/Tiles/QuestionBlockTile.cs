@@ -45,7 +45,7 @@ namespace Lasagna
             {
                 base.Update(gameTime);
             }
-            else if (currentState == BlockState.Bumped)
+            if (currentState == BlockState.Bumped)
             {
                 if (bumpingTimer < 8)
                 {
