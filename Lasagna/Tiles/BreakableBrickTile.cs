@@ -113,7 +113,6 @@ namespace Lasagna
             }
             if (isBreaking)
                 HandleBreakingBlock(spriteBatch);
-
         }
 
         private void HandleBreakingBlock(SpriteBatch spriteBatch)
@@ -252,6 +251,12 @@ namespace Lasagna
         {
             currentState = BlockState.Idle;
             CurrentSprite = this.idleSprite;
+            numItemsLeft = originalCount;
+            if (this.numItemsLeft >= 1)
+            {
+                this.hasItem = true;
+            }
+            beingCollided = false;
             foreach (IItem item in items)
             {
                 if (item != null)

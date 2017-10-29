@@ -83,6 +83,7 @@ namespace Lasagna
         public void Reset(object sender, EventArgs e)
         {
             currentState = BlockState.Invisible;
+            CollidedWithThreeSides = false;
             if (item != null)
             {
                 ((BaseItem)item).Reset(sender, e);

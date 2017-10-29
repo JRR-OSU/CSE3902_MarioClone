@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 
 namespace Lasagna
@@ -8,11 +9,14 @@ namespace Lasagna
         private enum BlockState
         {
             Idle,
+            Bumped,
             Used
         }
 
         private BlockState currentState;
         public IItem item;
+        private int preBumpPos;
+        private int bumpingTimer = 0;
         private bool beingCollided = false;
         private ISprite unused = TileSpriteFactory.Instance.CreateSprite_QuestionBlock();
         private ISprite used = TileSpriteFactory.Instance.CreateSprite_ItemBlockUsed();
@@ -41,6 +45,24 @@ namespace Lasagna
             {
                 base.Update(gameTime);
             }
+            else if (currentState == BlockState.Bumped)
+            {
+                if (bumpingTimer < 8)
+                {
+                    this.PosY -= 2;
+                    bumpingTimer++;
+                }
+                else if (bumpingTimer >= 8 && PosY != preBumpPos)
+                {
+
+                    this.PosY += 2;
+                }
+                if (PosY == preBumpPos)
+                {
+                    ChangeState();
+                    bumpingTimer = 0;
+                }
+            }
             if (Mario.Bounds.Y > this.CurrentSprite.Height + base.PosY)
             {
                 this.beingCollided = false;
@@ -68,6 +90,8 @@ namespace Lasagna
             {
                 this.ChangeState();
                 this.beingCollided = true;
+                this.currentState = BlockState.Bumped;
+                preBumpPos = PosY;
                 if (item != null)
                 {
                     this.item.Spawn();
@@ -79,6 +103,8 @@ namespace Lasagna
         {
             currentState = BlockState.Idle;
             CurrentSprite = this.unused;
+            bumpingTimer = 0;
+            beingCollided = false;
             if (item != null)
             {
                 ((BaseItem)item).Reset(sender, e);
