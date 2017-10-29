@@ -37,14 +37,16 @@ namespace Lasagna
         {
             CurrentSprite = visibleSprite;
             currentState = BlockState.Invisible;
-            if (items != null && items.Length > 0)
+            if (newItems != null && newItems.Length > 0)
+            {
                 this.items = newItems;
 
-            foreach (IItem item in items)
-            {
-                if (item != null)
+                foreach (IItem item in items)
                 {
-                    ((BaseItem)item).ChangeToInvisible();
+                    if (item != null)
+                    {
+                        ((BaseItem)item).ChangeToInvisible();
+                    }
                 }
             }
             MarioEvents.OnReset += Reset;

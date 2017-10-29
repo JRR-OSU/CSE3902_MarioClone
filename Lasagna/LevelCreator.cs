@@ -281,11 +281,21 @@ namespace Lasagna
                 itemStr = reader.GetAttribute("item");
                 if (TryCreateItemFromEnum(itemStr, posX, posY, out blockItem))
                 {
+                    //If item is mushroom, create fireflower as well
+                    if (blockItem is GrowMushroomItem)
+                        blockItems.Add(itemTypes[ItemType.FireFlower].Invoke(posX, posY));
                     //Duplicate for number of items needed
                     blockItems.Add(blockItem);
                     for (int i = 1; i < blockItemCount; i++)
+                    {
                         if (TryCreateItemFromEnum(itemStr, posX, posY, out blockItem))
+                        {
+                            //If item is mushroom, create fireflower as well
+                            if (blockItem is GrowMushroomItem)
+                                blockItems.Add(itemTypes[ItemType.FireFlower].Invoke(posX, posY));
                             blockItems.Add(blockItem);
+                        }
+                    }
 
                     items.AddRange(blockItems);
                 }
@@ -320,8 +330,15 @@ namespace Lasagna
                     List<IItem> newItems = new List<IItem>();
                     IItem newItem = null;
                     for (int bItem = 0; bItem < blockItemCount; bItem++)
+                    {
                         if (TryCreateItemFromEnum(itemStr, posX + (rSpace * i), posY, out newItem))
+                        {
+                            //If item is mushroom, create fireflower as well
+                            if (newItem is GrowMushroomItem)
+                                newItems.Add(itemTypes[ItemType.FireFlower].Invoke(posX, posY));
                             newItems.Add(newItem);
+                        }
+                    }
 
                     items.AddRange(newItems);
 
