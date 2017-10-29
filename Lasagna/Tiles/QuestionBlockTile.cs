@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Diagnostics;
 
 namespace Lasagna
 {
@@ -35,8 +36,17 @@ namespace Lasagna
         {
             CurrentSprite = unused;
             currentState = BlockState.Idle;
-            if (items != null && items.Length > 0)
+            if (newItems != null && newItems.Length > 0)
+            {
                 this.items = newItems;
+                foreach (IItem item in items)
+                {
+                    if (item != null)
+                    {
+                        ((BaseItem)item).ChangeToInvisible();
+                    }
+                }
+            }
             MarioEvents.OnReset += Reset;
         }
         public void Update(IPlayer Mario, GameTime gameTime)
@@ -135,13 +145,17 @@ namespace Lasagna
             CurrentSprite = this.unused;
             bumpingTimer = 0;
             beingCollided = false;
-            /*foreach (IItem item in items)
+            if (items != null && items.Length > 0)
             {
-                if (item != null)
+                foreach (IItem item in items)
                 {
-                    ((BaseItem)item).Reset(sender, e);
+                    if (item != null)
+                    {
+                        //((BaseItem)item).Reset(sender, e);
+                        ((BaseItem)item).ChangeToInvisible();
+                    }
                 }
-            }*/
+            }
         }
         ///TODO: Temp methods for sprint3
         /*private void ChangeToDefault(object sender, EventArgs e)

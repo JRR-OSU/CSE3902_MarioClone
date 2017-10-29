@@ -103,6 +103,7 @@ namespace Lasagna
                 {
                     if (this is CoinItem)
                     {
+                        this.isInvisible = false;
                         ((CoinItem)this).StartCoinAnimation();
                         this.isInBlock = false;
                     }
