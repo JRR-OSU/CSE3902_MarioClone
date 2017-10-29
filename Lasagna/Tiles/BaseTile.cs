@@ -17,8 +17,7 @@ namespace Lasagna
             get { return currentSprite; }
             set { currentSprite = value; }
         }
-        protected int PosX {get { return posX; } set { posX = value; }
-        }
+        protected int PosX {get { return posX; } set { posX = value; } }
         protected int PosY { get { return posY; } set { posY = value; } }
 
         protected BaseTile(int spawnPosX, int spawnPosY)
