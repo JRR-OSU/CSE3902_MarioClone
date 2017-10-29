@@ -99,6 +99,7 @@ namespace Lasagna
                 }              
                 if (PosY == preBumpPos)
                 {
+                    beingCollided = false;
                     currentState = BlockState.Idle;
                     bumpingTimer = 0;
                 }

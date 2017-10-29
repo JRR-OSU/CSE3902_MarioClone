@@ -36,6 +36,7 @@ namespace Lasagna
             if(slidingTime >= 500 && isKicked == false)
             {
                 //Spawn a Koopa
+                //new KoopaEnemy((int)posX,(int)posY);
             }
             if (currentState == KoopaShellStates.Sliding)
             {
