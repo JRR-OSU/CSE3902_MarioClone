@@ -98,20 +98,23 @@ namespace Lasagna
                 this.beingCollided = true;
                 preBumpPos = PosY;
                 //If the first item is grow mushroom, then the second item must be flower.
-                if (items[0] is GrowMushroomItem)
+                if (items != null && items.Length > 0)
                 {
-                    if (((Mario)Mario).CurrentState == MarioStateMachine.MarioState.Small)
+                    if (items[0] is GrowMushroomItem)
                     {
-                        items[0].Spawn();
+                        if (((Mario)Mario).CurrentState == MarioStateMachine.MarioState.Small)
+                        {
+                            items[0].Spawn();
+                        }
+                        else
+                        {
+                            items[1].Spawn();
+                        }
                     }
                     else
                     {
-                        items[1].Spawn();
+                        items[0].Spawn();
                     }
-                }
-                else
-                {
-                    items[0].Spawn();
                 }
             }
         }
@@ -122,13 +125,13 @@ namespace Lasagna
             CurrentSprite = this.unused;
             bumpingTimer = 0;
             beingCollided = false;
-            foreach (IItem item in items)
+            /*foreach (IItem item in items)
             {
                 if (item != null)
                 {
                     ((BaseItem)item).Reset(sender, e);
                 }
-            }
+            }*/
         }
         ///TODO: Temp methods for sprint3
         /*private void ChangeToDefault(object sender, EventArgs e)

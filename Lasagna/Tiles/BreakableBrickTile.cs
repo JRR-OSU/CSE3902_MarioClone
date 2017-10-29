@@ -273,13 +273,13 @@ namespace Lasagna
                 this.hasItem = true;
             }
             beingCollided = false;
-            foreach (IItem item in items)
+            /*foreach (IItem item in items)
             {
                 if (item != null)
                 {
                     ((BaseItem)item).Reset(sender, e);
                 }
-            }         
+            }*/         
         }
         ///TODO: Temp methods for sprint3
         /*public void ChangeToDefault(object sender, EventArgs e)

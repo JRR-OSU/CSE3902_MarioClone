@@ -89,12 +89,15 @@ namespace Lasagna
         {
             currentState = BlockState.Invisible;
             CollidedWithThreeSides = false;
-            foreach (IItem item in items)
+            if (items != null && items.Length > 0)
             {
-                if (item != null)
+                foreach (IItem item in items)
                 {
-                    ((BaseItem)item).Reset(sender, e);
-                    ((BaseItem)item).ChangeToInvisible();
+                    if (item != null)
+                    {
+                        //((BaseItem)item).Reset(sender, e);
+                        ((BaseItem)item).ChangeToInvisible();
+                    }
                 }
             }
         }
@@ -112,20 +115,23 @@ namespace Lasagna
             {
                 this.ChangeState();
                 //If the first item is grow mushroom, then the second item must be flower.
-                if (items[0] is GrowMushroomItem)
+                if (items != null && items.Length > 0)
                 {
-                    if (((Mario)Mario).CurrentState == MarioStateMachine.MarioState.Small)
+                    if (items[0] is GrowMushroomItem)
                     {
-                        items[0].Spawn();
+                        if (((Mario)Mario).CurrentState == MarioStateMachine.MarioState.Small)
+                        {
+                            items[0].Spawn();
+                        }
+                        else
+                        {
+                            items[1].Spawn();
+                        }
                     }
                     else
                     {
-                        items[1].Spawn();
+                        items[0].Spawn();
                     }
-                }
-                else
-                {
-                    items[0].Spawn();
                 }
             }
         }
