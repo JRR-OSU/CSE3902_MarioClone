@@ -17,6 +17,7 @@ namespace Lasagna
         public IItem[] items;
         private int preBumpPos;
         private int bumpingTimer = 0;
+        private int bumpingTime = 0;
         private bool beingCollided = false;
         private ISprite unused = TileSpriteFactory.Instance.CreateSprite_QuestionBlock();
         private ISprite used = TileSpriteFactory.Instance.CreateSprite_ItemBlockUsed();
@@ -46,10 +47,19 @@ namespace Lasagna
                 base.Update(gameTime);
             }
             
-            if (Mario.Bounds.Y > this.CurrentSprite.Height + base.PosY)
+            if(beingCollided == true)
             {
-                this.beingCollided = false;
+                bumpingTime++;
             }
+            if(bumpingTime > 20)
+            {
+                beingCollided = false;
+                bumpingTime = 0;
+            }
+            //if (Mario.Bounds.Y > this.CurrentSprite.Height + base.PosY)
+            //{
+              //  this.beingCollided = false;
+            //}
         }
 
         public override void Draw(SpriteBatch spriteBatch)
