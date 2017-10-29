@@ -62,7 +62,7 @@ namespace Lasagna
             if (this.numItemsLeft >= 1)
                 this.hasItem = true;
 
-            MarioEvents.OnReset += ChangeToDefault;
+            MarioEvents.OnReset += Reset;
         }
 
         public void Update(IPlayer Mario, GameTime gameTime)
@@ -248,12 +248,24 @@ namespace Lasagna
                 
             }
         }
-
+        public void Reset(object sender, EventArgs e)
+        {
+            currentState = BlockState.Idle;
+            CurrentSprite = this.idleSprite;
+            foreach (IItem item in items)
+            {
+                if (item != null)
+                {
+                    ((BaseItem)item).Reset(sender, e);
+                }
+            }         
+        }
         ///TODO: Temp methods for sprint3
-        public void ChangeToDefault(object sender, EventArgs e)
+        /*public void ChangeToDefault(object sender, EventArgs e)
         {
             if (currentState == BlockState.Broken || currentState == BlockState.Used)
                 ChangeState();
         }
+        */
     }
 }

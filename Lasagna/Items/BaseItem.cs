@@ -56,7 +56,7 @@ namespace Lasagna
             originalX = spawnPosX;
             originalY = spawnPosY;
             currentState = ItemState.Idle;
-            MarioEvents.OnReset += ReSet;
+            MarioEvents.OnReset += Reset;
         }
 
         public Rectangle Bounds
@@ -127,7 +127,7 @@ namespace Lasagna
                 itemSprite.Draw(spriteBatch);
         }
 
-        public void ReSet(object sender, EventArgs e)
+        public void Reset(object sender, EventArgs e)
         {
             itemSprite = originalSprite;
             currentState = ItemState.Idle;

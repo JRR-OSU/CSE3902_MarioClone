@@ -30,7 +30,7 @@ namespace Lasagna
         {
             CurrentSprite = visibleSprite;
             currentState = BlockState.Invisible;
-            MarioEvents.OnReset += ChangeToInvisible;
+            MarioEvents.OnReset += Reset;
         }
         public InvisibleItemBlockTile(int spawnXPos, int spawnYPos, IItem[] items)
             : base(spawnXPos, spawnYPos)
@@ -44,7 +44,7 @@ namespace Lasagna
             {
                 ((BaseItem)this.item).ChangeToInvisible();
             }
-            MarioEvents.OnReset += ChangeToInvisible;
+            MarioEvents.OnReset += Reset;
         }
         public void Update(ICollider Mario, GameTime gameTime)
         {
@@ -80,11 +80,14 @@ namespace Lasagna
             }
 
         }
-        public void ReSet(object sender, EventArgs e)
+        public void Reset(object sender, EventArgs e)
         {
             currentState = BlockState.Invisible;
-            ((BaseItem)item).ReSet(sender, e);
-            ((BaseItem)item).ChangeToInvisible();
+            if (item != null)
+            {
+                ((BaseItem)item).Reset(sender, e);
+                ((BaseItem)item).ChangeToInvisible();
+            }
         }
         protected override void OnCollisionResponse(IPlayer Mario, CollisionSide side)
         {
@@ -107,7 +110,7 @@ namespace Lasagna
         }
 
         ///TODO: Temp methods for sprint3
-        public void ChangeToInvisible(object sender, EventArgs e)
+        /*public void ChangeToInvisible(object sender, EventArgs e)
         {
             if (currentState == BlockState.Visible)
             {
@@ -117,6 +120,6 @@ namespace Lasagna
                 }
                 ChangeState();
             }
-        }
+        }*/
     }
 }

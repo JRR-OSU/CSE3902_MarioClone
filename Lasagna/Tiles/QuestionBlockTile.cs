@@ -23,7 +23,7 @@ namespace Lasagna
         {
             CurrentSprite = unused;
             currentState = BlockState.Idle;
-            MarioEvents.OnReset += ChangeToDefault;
+            MarioEvents.OnReset += Reset;
         }
         public QuestionBlockTile(int spawnXPos, int spawnYPos, IItem[] items)
             : base(spawnXPos, spawnYPos)
@@ -32,7 +32,7 @@ namespace Lasagna
             currentState = BlockState.Idle;
             if (items != null && items.Length > 0)
                 this.item = items[0];
-            MarioEvents.OnReset += ChangeToDefault;
+            MarioEvents.OnReset += Reset;
         }
         public void Update(IPlayer Mario, GameTime gameTime)
         {
@@ -75,15 +75,21 @@ namespace Lasagna
             }
         }
 
-        public void Reset()
+        public void Reset(object sender, EventArgs e)
         {
-            MarioEvents.OnReset += ChangeToDefault;
+            currentState = BlockState.Idle;
+            CurrentSprite = this.unused;
+            if (item != null)
+            {
+                ((BaseItem)item).Reset(sender, e);
+            }
         }
         ///TODO: Temp methods for sprint3
-        private void ChangeToDefault(object sender, EventArgs e)
+        /*private void ChangeToDefault(object sender, EventArgs e)
         {
             if (currentState == BlockState.Used)
                 ChangeState();
         }
+        */
     }
 }
