@@ -13,7 +13,7 @@ namespace Lasagna
         }
 
         private BlockState currentState;
-        public IItem item;
+        public IItem[] items;
         private ISprite visibleSprite = TileSpriteFactory.Instance.CreateSprite_ItemBlockUsed();
         private bool CollidedWithThreeSides = false;
 
@@ -32,17 +32,20 @@ namespace Lasagna
             currentState = BlockState.Invisible;
             MarioEvents.OnReset += Reset;
         }
-        public InvisibleItemBlockTile(int spawnXPos, int spawnYPos, IItem[] items)
+        public InvisibleItemBlockTile(int spawnXPos, int spawnYPos, IItem[] newItems)
             : base(spawnXPos, spawnYPos)
         {
             CurrentSprite = visibleSprite;
             currentState = BlockState.Invisible;
             if (items != null && items.Length > 0)
-                this.item = items[0];
+                this.items = newItems;
 
-            if (item != null)
+            foreach (IItem item in items)
             {
-                ((BaseItem)this.item).ChangeToInvisible();
+                if (item != null)
+                {
+                    ((BaseItem)item).ChangeToInvisible();
+                }
             }
             MarioEvents.OnReset += Reset;
         }
@@ -84,10 +87,13 @@ namespace Lasagna
         {
             currentState = BlockState.Invisible;
             CollidedWithThreeSides = false;
-            if (item != null)
+            foreach (IItem item in items)
             {
-                ((BaseItem)item).Reset(sender, e);
-                ((BaseItem)item).ChangeToInvisible();
+                if (item != null)
+                {
+                    ((BaseItem)item).Reset(sender, e);
+                    ((BaseItem)item).ChangeToInvisible();
+                }
             }
         }
         protected override void OnCollisionResponse(IPlayer Mario, CollisionSide side)
@@ -103,9 +109,21 @@ namespace Lasagna
                 this.CollidedWithThreeSides == false)
             {
                 this.ChangeState();
-                if (item != null)
+                //If the first item is grow mushroom, then the second item must be flower.
+                if (items[0] is GrowMushroomItem)
                 {
-                    this.item.Spawn();
+                    if (((Mario)Mario).CurrentState == MarioStateMachine.MarioState.Small)
+                    {
+                        items[0].Spawn();
+                    }
+                    else
+                    {
+                        items[1].Spawn();
+                    }
+                }
+                else
+                {
+                    items[0].Spawn();
                 }
             }
         }

@@ -215,7 +215,24 @@ namespace Lasagna
                 int curItem = items.Length - numItemsLeft;
                 if (items != null && curItem >= 0 && curItem < items.Length)
                 {
-                    items[curItem].Spawn();
+                    //If the first item is grow mushroom, then the second item must be flower.
+                    if (items[0] is GrowMushroomItem)
+                    {
+                        if (((Mario)Mario).CurrentState == MarioStateMachine.MarioState.Small)
+                        {
+                            items[0].Spawn();
+                        }
+                        else
+                        {
+                            items[1].Spawn();
+                        }
+                        this.numItemsLeft = 0;
+                        this.ChangeState();
+                    }
+                    else
+                    {
+                        items[curItem].Spawn();
+                    }
                 }
 
                 if (this.items.Length == 0)

@@ -14,7 +14,7 @@ namespace Lasagna
         }
 
         private BlockState currentState;
-        public IItem item;
+        public IItem[] items;
         private int preBumpPos;
         private int bumpingTimer = 0;
         private bool beingCollided = false;
@@ -29,13 +29,13 @@ namespace Lasagna
             currentState = BlockState.Idle;
             MarioEvents.OnReset += Reset;
         }
-        public QuestionBlockTile(int spawnXPos, int spawnYPos, IItem[] items)
+        public QuestionBlockTile(int spawnXPos, int spawnYPos, IItem[] newItems)
             : base(spawnXPos, spawnYPos)
         {
             CurrentSprite = unused;
             currentState = BlockState.Idle;
             if (items != null && items.Length > 0)
-                this.item = items[0];
+                this.items = newItems;
             MarioEvents.OnReset += Reset;
         }
         public void Update(IPlayer Mario, GameTime gameTime)
@@ -45,32 +45,36 @@ namespace Lasagna
             {
                 base.Update(gameTime);
             }
-            if (currentState == BlockState.Bumped)
-            {
-                if (bumpingTimer < 8)
-                {
-                    this.PosY -= 2;
-                    bumpingTimer++;
-                }
-                else if (bumpingTimer >= 8 && PosY != preBumpPos)
-                {
-
-                    this.PosY += 2;
-                }
-                if (PosY == preBumpPos)
-                {
-                    currentState = BlockState.Used;
-                    CurrentSprite = used;
-                    bumpingTimer = 0;
-                }
-            }
+            
             if (Mario.Bounds.Y > this.CurrentSprite.Height + base.PosY)
             {
                 this.beingCollided = false;
             }
         }
 
-        public override void ChangeState()
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            base.Draw(spriteBatch);
+            if (currentState == BlockState.Bumped)
+            {
+                if (bumpingTimer < 8)
+                {
+                    PosY -= 2;
+                    bumpingTimer++;
+                }
+                else if (bumpingTimer >= 8 && PosY != preBumpPos)
+                {
+
+                    PosY += 2;
+                }
+                if (PosY == preBumpPos)
+                {
+                    currentState = BlockState.Used;
+                    bumpingTimer = 0;
+                }
+            }
+        }
+        /*public override void ChangeState()
         {
             //Toggles us between used and unused
             if (currentState == BlockState.Idle)
@@ -83,18 +87,31 @@ namespace Lasagna
                 CurrentSprite = unused;
                 currentState = BlockState.Idle;
             }
-        }
+        }*/
 
         protected override void OnCollisionResponse(IPlayer Mario, CollisionSide side)
         {
             if (this.currentState.Equals(BlockState.Idle) && side.Equals(CollisionSide.Bottom))
             {
-                this.ChangeState();
+                CurrentSprite = used;
+                currentState = BlockState.Bumped;
                 this.beingCollided = true;
                 preBumpPos = PosY;
-                if (item != null)
+                //If the first item is grow mushroom, then the second item must be flower.
+                if (items[0] is GrowMushroomItem)
                 {
-                    this.item.Spawn();
+                    if (((Mario)Mario).CurrentState == MarioStateMachine.MarioState.Small)
+                    {
+                        items[0].Spawn();
+                    }
+                    else
+                    {
+                        items[1].Spawn();
+                    }
+                }
+                else
+                {
+                    items[0].Spawn();
                 }
             }
         }
@@ -105,9 +122,12 @@ namespace Lasagna
             CurrentSprite = this.unused;
             bumpingTimer = 0;
             beingCollided = false;
-            if (item != null)
+            foreach (IItem item in items)
             {
-                ((BaseItem)item).Reset(sender, e);
+                if (item != null)
+                {
+                    ((BaseItem)item).Reset(sender, e);
+                }
             }
         }
         ///TODO: Temp methods for sprint3

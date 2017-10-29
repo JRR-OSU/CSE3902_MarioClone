@@ -39,7 +39,7 @@ namespace Lasagna
                 currentSprite.Draw(spriteBatch);
             }
         }
-        public abstract void ChangeState();
+        public virtual void ChangeState() { return; }
         public void OnCollisionResponse(ICollider otherCollider, CollisionSide side)
         {
             if (otherCollider is IPlayer)
