@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Diagnostics;
 
 namespace Lasagna
 {
@@ -17,7 +18,7 @@ namespace Lasagna
 
         //Change this later if items support states.
         private ISprite itemSprite;
-        private ItemState currentState = ItemState.Idle;
+        protected ItemState currentState = ItemState.Idle;
         public Vector2 position;
         private GameTime gameTime;
         protected bool isInBlock = false;
@@ -79,6 +80,7 @@ namespace Lasagna
                 HandleCoinAnimation();
                 Fall(gameTime);
             }
+            
             if (currentState.Equals(ItemState.Moving) || currentState.Equals(ItemState.Bounce))
             {
                 MovingTime++;
@@ -94,12 +96,21 @@ namespace Lasagna
                     HandleHorizontalMovement();
                     Fall(gameTime);
                 }
-                else if (this is StarItem && ((StarItem)this).currentState.Equals(ItemState.Bounce))
+                else if (this is StarItem && currentState.Equals(ItemState.Bounce))
                 {
+                    Debug.Print("Base item update is called!!!\n");
                     HandleHorizontalMovement();
+                }
+                if (this is StarItem)
+                {
+                    Debug.Print("Is in block: " + this.isInBlock + "\n");
                 }
                 if (this.isInBlock)
                 {
+                    if (this is StarItem)
+                    {
+                        Debug.Print("Star item is in block!!!\n");
+                    }
                     if (this is CoinItem)
                     {
                         this.isInvisible = false;
@@ -189,7 +200,7 @@ namespace Lasagna
             if (isInBlock || currentState == ItemState.Idle)
                 return;
 
-            if (currentState == ItemState.Moving)
+            if (currentState == ItemState.Moving || currentState == ItemState.Bounce)
             {
                 if (side == CollisionSide.Left)
                     movingLeft = false;
@@ -197,7 +208,7 @@ namespace Lasagna
                     movingLeft = true;
             }
 
-            if (currentState.Equals(ItemState.Moving) && side.Equals(CollisionSide.Bottom))
+            if ((currentState.Equals(ItemState.Moving) || currentState.Equals(ItemState.Bounce)) && side.Equals(CollisionSide.Bottom))
             {
                 position.Y -= yDifference;
                 velocity = 1;
@@ -225,16 +236,18 @@ namespace Lasagna
         public virtual void Spawn()
         {
             this.isInBlock = true;
+            Debug.Print("Is in block changed!!!\n");
         }
         public void Move()
         {
-            if (!(this is FireFlowerItem))
+            if (this is StarItem)
+            {
+                Debug.Print("Star bounce!!!\n");
+                currentState = ItemState.Bounce;
+            }
+            else if (!(this is FireFlowerItem))
             {
                 currentState = ItemState.Moving;
-            }
-            else if (this is StarItem)
-            {
-                currentState = ItemState.Bounce;
             }
         }
         public void StartCoinAnimation()

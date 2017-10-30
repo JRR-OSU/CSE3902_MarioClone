@@ -8,19 +8,18 @@ namespace Lasagna
         
         protected const float starItemBounceTime = 0.2f;
         protected float movingUpTimeLeft;
-        private ItemState currentState = ItemState.Idle;
         private ISprite starItemSprite = ItemSpriteFactory.Instance.CreateSprite_Star();
         protected const int verticalMoveSpeed = 200;
         public StarItem(int spawnPosX, int spawnPosY)
             : base(spawnPosX, spawnPosY)
         {
-            currentState = ItemState.Idle;
+            ItemSprite = ItemSpriteFactory.Instance.CreateSprite_Star();
         }
 
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-            if (currentState == ItemState.Bounce)
+            if (base.currentState == ItemState.Bounce)
             {
                 if (movingUpTimeLeft > 0)
                 {
@@ -32,7 +31,7 @@ namespace Lasagna
             }
         }
 
-        protected override void OnCollisionResponse(ITile tile, CollisionSide side)
+       /* protected override void OnCollisionResponse(ITile tile, CollisionSide side)
         {
             if (isInBlock || currentState == ItemState.Idle)
                 return;
@@ -50,6 +49,6 @@ namespace Lasagna
                 movingUpTimeLeft = starItemBounceTime;
             }
             CorrectPosition(side, tile);
-        }
+        }*/
     }
 }
