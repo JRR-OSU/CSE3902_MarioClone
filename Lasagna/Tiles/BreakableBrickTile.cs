@@ -215,7 +215,7 @@ namespace Lasagna
         {
             if (this.currentState.Equals(BlockState.Idle) && side.Equals(CollisionSide.Bottom))
             {
-                if (this.numItemsLeft == 1) { 
+                if (this.numItemsLeft == 1) {
                     this.ChangeState();
                 }
                 else
@@ -242,6 +242,11 @@ namespace Lasagna
                     }
                     else
                     {
+                        if (currentState != BlockState.Used)
+                        {
+                            this.currentState = BlockState.Bumped;
+                            preBumpPos = PosY;
+                        }
                         items[curItem].Spawn();
                     }
                 }

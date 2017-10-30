@@ -39,7 +39,7 @@
     <Tile type="Brick" repeat="0" repeatspace="0" posx="-770" posy="287" item="" coins="" />
     <Tile type="Brick" repeat="0" repeatspace="0" posx="-750" posy="287" item="" coins="" />
     
-    <Tile type="InvisibleBlock" repeat="0" repeatspace="0" posx="-128" posy="287" item="" />
+    <Tile type="InvisibleBlock" repeat="0" repeatspace="0" posx="-128" posy="287" item="Coin"  coins="1"/>
     <Tile type="InvisibleBlock" repeat="0" repeatspace="0" posx="-96" posy="287" item="LifeMushroom" />
     
     <Tile type="QuestionBlock" repeat="0" repeatspace="0" posx="-64" posy="287" item="Coin" coins="1" />
