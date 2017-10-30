@@ -1,12 +1,13 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
+using System.Diagnostics;
 
 namespace Lasagna
 {
     public class StarItem : BaseItem
     {
         
-        protected const float starItemBounceTime = 0.2f;
+        protected const float starItemBounceTime = 0.8f;
         protected float movingUpTimeLeft;
         private ISprite starItemSprite = ItemSpriteFactory.Instance.CreateSprite_Star();
         protected const int verticalMoveSpeed = 200;
@@ -31,7 +32,7 @@ namespace Lasagna
             }
         }
 
-       /* protected override void OnCollisionResponse(ITile tile, CollisionSide side)
+       protected override void OnCollisionResponse(ITile tile, CollisionSide side)
         {
             if (isInBlock || currentState == ItemState.Idle)
                 return;
@@ -49,6 +50,6 @@ namespace Lasagna
                 movingUpTimeLeft = starItemBounceTime;
             }
             CorrectPosition(side, tile);
-        }*/
+        }
     }
 }

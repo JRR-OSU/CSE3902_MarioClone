@@ -33,7 +33,6 @@ namespace Lasagna
         private int coinAnimateTime = 0;
         protected bool movingLeft = false;
         protected int MovingTime = 0;
-        //private int moveUpDifference = 150;
         private ISprite originalSprite;
 
         protected ISprite ItemSprite
@@ -98,18 +97,12 @@ namespace Lasagna
                 }
                 else if (this is StarItem && currentState.Equals(ItemState.Bounce))
                 {
-                    Debug.Print("Base item update is called!!!\n");
                     HandleHorizontalMovement();
-                }
-                if (this is StarItem)
-                {
-                    Debug.Print("Is in block: " + this.isInBlock + "\n");
                 }
                 if (this.isInBlock)
                 {
                     if (this is StarItem)
                     {
-                        Debug.Print("Star item is in block!!!\n");
                     }
                     if (this is CoinItem)
                     {
@@ -200,7 +193,7 @@ namespace Lasagna
             if (isInBlock || currentState == ItemState.Idle)
                 return;
 
-            if (currentState == ItemState.Moving || currentState == ItemState.Bounce)
+            if (currentState == ItemState.Moving)
             {
                 if (side == CollisionSide.Left)
                     movingLeft = false;
@@ -208,7 +201,7 @@ namespace Lasagna
                     movingLeft = true;
             }
 
-            if ((currentState.Equals(ItemState.Moving) || currentState.Equals(ItemState.Bounce)) && side.Equals(CollisionSide.Bottom))
+            if ((currentState.Equals(ItemState.Moving)) && side.Equals(CollisionSide.Bottom))
             {
                 position.Y -= yDifference;
                 velocity = 1;
@@ -236,13 +229,11 @@ namespace Lasagna
         public virtual void Spawn()
         {
             this.isInBlock = true;
-            Debug.Print("Is in block changed!!!\n");
         }
         public void Move()
         {
             if (this is StarItem)
             {
-                Debug.Print("Star bounce!!!\n");
                 currentState = ItemState.Bounce;
             }
             else if (!(this is FireFlowerItem))

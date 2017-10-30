@@ -131,11 +131,6 @@ namespace Lasagna
                             items[1].Spawn();
                         }
                     }
-                    else if (items[0] is StarItem)
-                    {
-                        Debug.Print("Star item detected!!!\n");
-                        items[0].Spawn();
-                    }
                     else
                     {
                         items[0].Spawn();
