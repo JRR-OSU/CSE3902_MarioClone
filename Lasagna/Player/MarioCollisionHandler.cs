@@ -151,20 +151,40 @@ namespace Lasagna
                 switch (side)
                 {
                     case CollisionSide.Bottom:
+                        if ((enemy is GoombaEnemy))
+                        {
+                            if (((GoombaEnemy)enemy).enemyHealth == MovingEnemy.EnemyHealth.Flipped)
+                                return;
+                        }
                         mario.velocity.Y = 0;
                         mario.velocity.Y += 150;
                         state.HandleJump();
                         // Jump effect if landing on top of an enemy
                         break;
                     case CollisionSide.Top:
+                        if ((enemy is GoombaEnemy))
+                        {
+                            if (((GoombaEnemy)enemy).enemyHealth == MovingEnemy.EnemyHealth.Flipped)
+                                return;
+                        }
                         state.DamageMario();
                         mario.SetPosition(mario.Bounds.X, (mario.Bounds.Y + mario.Bounds.Height));
                         break;
                     case CollisionSide.Left:
+                        if ((enemy is GoombaEnemy))
+                        {
+                            if (((GoombaEnemy)enemy).enemyHealth == MovingEnemy.EnemyHealth.Flipped)
+                                return;
+                        }
                         state.DamageMario();
                         mario.SetPosition(mario.Bounds.X + mario.Bounds.Width / 2, mario.Bounds.Y);
                         break;
                     case CollisionSide.Right:
+                        if ((enemy is GoombaEnemy))
+                        {
+                            if (((GoombaEnemy)enemy).enemyHealth == MovingEnemy.EnemyHealth.Flipped)
+                                return;
+                        }
                         state.DamageMario();
                         mario.SetPosition(mario.Bounds.X - mario.Bounds.Width / 2, mario.Bounds.Y);
                         break;
