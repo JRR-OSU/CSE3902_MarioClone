@@ -20,7 +20,6 @@ namespace Lasagna
         private ISprite itemSprite;
         protected ItemState currentState = ItemState.Idle;
         public Vector2 position;
-        private GameTime gameTime;
         protected bool isInBlock = false;
         protected bool isInvisible = false;
         private float velocity = 1;
@@ -81,7 +80,6 @@ namespace Lasagna
 
         public virtual void Update(GameTime gameTime)
         {
-            this.gameTime = gameTime;
             if (currentState.Equals(ItemState.CoinAnimaiotn))
             {
                 HandleCoinAnimation();
