@@ -70,6 +70,12 @@ namespace Lasagna
             }
         }
 
+        // Method to allow adjustment of item spawn position in LevelCreator.cs
+        public void FixInitialPosition(int x)
+        {
+            position.X = x;
+        }
+
 
         public virtual void Update(GameTime gameTime)
         {
