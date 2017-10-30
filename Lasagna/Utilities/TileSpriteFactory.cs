@@ -51,11 +51,11 @@ namespace Lasagna
         }
         public NonAnimatedSprite CreateSprite_BrickPieceLeft()
         {
-            return new NonAnimatedSprite(breakableBrickSheet, 16, 16);
+            return new NonAnimatedSprite(brickPieceLeftSheet, 16, 16);
         }
         public NonAnimatedSprite CreateSprite_BrickPieceRight()
         {
-            return new NonAnimatedSprite(breakableBrickSheet, 16, 16);
+            return new NonAnimatedSprite(brickPieceRightSheet, 16, 16);
         }
         public NonAnimatedSprite CreateSprite_Floor()
         {

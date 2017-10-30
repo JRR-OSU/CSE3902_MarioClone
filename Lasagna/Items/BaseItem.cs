@@ -201,7 +201,7 @@ namespace Lasagna
                     movingLeft = true;
             }
 
-            if ((currentState.Equals(ItemState.Moving)) && side.Equals(CollisionSide.Bottom))
+            if (currentState.Equals(ItemState.Moving) && side.Equals(CollisionSide.Bottom))
             {
                 position.Y -= yDifference;
                 velocity = 1;
