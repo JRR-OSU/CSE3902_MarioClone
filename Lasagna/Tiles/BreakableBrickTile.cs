@@ -22,8 +22,6 @@ namespace Lasagna
         private List<ISprite> breakingBricks = new List<ISprite>();
         private List<Vector2> positions = new List<Vector2>();
         private Vector2 temp;
-        // private Dictionary<List<int>, ISprite  > breakingBricks =
-        //new Dictionary<List<int>, ISprite>();
         private int preBumpPos;
         private bool hasItem = false;
         private bool beingCollided = false;
@@ -32,7 +30,6 @@ namespace Lasagna
         private ISprite[] brickPieceSprites;
         private ISprite idleSprite = TileSpriteFactory.Instance.CreateSprite_BreakableBrick();
         private ISprite used = TileSpriteFactory.Instance.CreateSprite_ItemBlockUsed();
-        //private ISprite breakingSprite; //Reserved for breaking tile sprite.
         public override Rectangle Bounds
         {
             get
@@ -82,11 +79,6 @@ namespace Lasagna
             {
                 base.Update(gameTime);
             }
-
-            //if (Mario.Bounds.Y > this.CurrentSprite.Height + base.PosY)
-            //{
-              //  this.beingCollided = false;
-            //}
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -300,12 +292,5 @@ namespace Lasagna
                 }
             }
         }
-        ///TODO: Temp methods for sprint3
-        /*public void ChangeToDefault(object sender, EventArgs e)
-        {
-            if (currentState == BlockState.Broken || currentState == BlockState.Used)
-                ChangeState();
-        }
-        */
     }
 }

@@ -94,21 +94,6 @@ namespace Lasagna
                 }
             }
         }
-        /*public override void ChangeState()
-        {
-            //Toggles us between used and unused
-            if (currentState == BlockState.Idle)
-            {
-                CurrentSprite = used;
-                currentState = BlockState.Bumped;
-            }
-            else
-            {
-                CurrentSprite = unused;
-                currentState = BlockState.Idle;
-            }
-        }*/
-
         protected override void OnCollisionResponse(IPlayer Mario, CollisionSide side)
         {
             if (this.currentState.Equals(BlockState.Idle) && side.Equals(CollisionSide.Bottom))
@@ -156,12 +141,5 @@ namespace Lasagna
                 }
             }
         }
-        ///TODO: Temp methods for sprint3
-        /*private void ChangeToDefault(object sender, EventArgs e)
-        {
-            if (currentState == BlockState.Used)
-                ChangeState();
-        }
-        */
     }
 }

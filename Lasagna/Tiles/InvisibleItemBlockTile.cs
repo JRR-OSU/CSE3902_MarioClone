@@ -135,18 +135,5 @@ namespace Lasagna
                 }
             }
         }
-
-        ///TODO: Temp methods for sprint3
-        /*public void ChangeToInvisible(object sender, EventArgs e)
-        {
-            if (currentState == BlockState.Visible)
-            {
-                if (item != null)
-                {
-                    ((BaseItem)this.item).ChangeToInvisible();
-                }
-                ChangeState();
-            }
-        }*/
     }
 }
