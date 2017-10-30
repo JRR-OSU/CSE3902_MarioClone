@@ -318,28 +318,11 @@ namespace Lasagna
         }
         public void HandleJump()
         {
-            //switch (mariomovement)
-            //{
-            //    case mariomovement.crouchleft:
-            //        mariomovement = mariomovement.idleleft;
-            //        break;
-            //    case mariomovement.crouchright:
-            //        mariomovement = mariomovement.idleright;
-            //        break;
-            //}
-
             if (marioMovement == MarioMovement.RunLeft || marioMovement == MarioMovement.IdleLeft)
-            {
                 marioMovement = MarioMovement.JumpLeft;
-            }
             else if (marioMovement == MarioMovement.RunRight || marioMovement == MarioMovement.IdleRight)
-            {
                 marioMovement = MarioMovement.JumpRight;
-
-            }
-
             SwitchCurrentSprite(marioMovement);
-
         }
 
         public void Fall()
@@ -367,11 +350,6 @@ namespace Lasagna
             SwitchCurrentSprite(marioMovement);
         }
 
-        public void JumpEnemy()
-        {
-            //jumpCounter = 0;
-            Jump();
-        }
         public void Star()
         {
             starPower = true;
@@ -415,7 +393,6 @@ namespace Lasagna
                 frameCount = 0;
 
         }
-
         public void KillMario()
         {
             marioMovement = MarioMovement.Die;
@@ -559,7 +536,6 @@ namespace Lasagna
             canGrow = true;
             starPower = false;
             isJumping = false;
-            //jumpCounter = 0;
             marioState = MarioState.Small;
             marioMovement = MarioMovement.IdleRight;
             currentSprite = smallStates[marioMovement];
