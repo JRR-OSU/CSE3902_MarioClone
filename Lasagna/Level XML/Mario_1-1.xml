@@ -42,7 +42,7 @@
     <Tile type="InvisibleBlock" repeat="0" repeatspace="0" posx="-128" posy="287" item="" />
     <Tile type="InvisibleBlock" repeat="0" repeatspace="0" posx="-96" posy="287" item="LifeMushroom" />
     
-    <Tile type="QuestionBlock" repeat="0" repeatspace="0" posx="-64" posy="287" item="" />
+    <Tile type="QuestionBlock" repeat="0" repeatspace="0" posx="-64" posy="287" item="Coin" coins="1" />
     <Tile type="QuestionBlock" repeat="0" repeatspace="0" posx="-32" posy="287" item="FireFlower" />
     <Tile type="QuestionBlock" repeat="0" repeatspace="0" posx="0" posy="287" item="Star" />     
     
@@ -58,12 +58,12 @@
     <Tile type="Floor" repeat="63" repeatspace="0" posx="2848" posy="447" />   
     <Tile type="Floor" repeat="63" repeatspace="0" posx="4960" posy="415" />
     <Tile type="Floor" repeat="63" repeatspace="0" posx="4960" posy="447" />   
-    <Tile type="QuestionBlock" repeat="0" repeatspace="0" posx="512" posy="287" item="" coins="" />
+    <Tile type="QuestionBlock" repeat="0" repeatspace="0" posx="512" posy="287" item="Coin" coins="1" />
     <Tile type="Brick" repeat="0" repeatspace="0" posx="640" posy="287" />
     <Tile type="QuestionBlock" repeat="0" repeatspace="0" posx="672" posy="287" item="GrowMushroom" coins="" />
     <Tile type="Brick" repeat="0" repeatspace="0" posx="704" posy="287" />
-    <Tile type="QuestionBlock" repeat="0" repeatspace="0" posx="704" posy="159" item="" coins="" />
-    <Tile type="QuestionBlock" repeat="0" repeatspace="0" posx="736" posy="287" item="" coins="" />
+    <Tile type="QuestionBlock" repeat="0" repeatspace="0" posx="704" posy="159" item="Coin" coins="1" />
+    <Tile type="QuestionBlock" repeat="0" repeatspace="0" posx="736" posy="287" item="Coin" coins="1" />
     <Tile type="Brick" repeat="0" repeatspace="0" posx="768" posy="287" />
     <Tile type="Pipe" repeat="0" repeatspace="0" posx="896" posy="351" height="0" warpDest="" />
     <Tile type="Pipe" repeat="0" repeatspace="0" posx="1216" posy="319" height="1" warpDest="" />
@@ -75,19 +75,19 @@
     <Tile type="Brick" repeat="0" repeatspace="0" posx="2528" posy="287" />
     <Tile type="Brick" repeat="7" repeatspace="0" posx="2560" posy="159" />
     <Tile type="Brick" repeat="2" repeatspace="0" posx="2912" posy="159" />
-    <Tile type="QuestionBlock" repeat="0" repeatspace="0" posx="3008" posy="159" item="" coins="" />
+    <Tile type="QuestionBlock" repeat="0" repeatspace="0" posx="3008" posy="159" item="Coin" coins="1" />
     <Tile type="Brick" repeat="0" repeatspace="0" posx="3008" posy="287" item="Coin" coins="10" />
     <Tile type="Brick" repeat="0" repeatspace="0" posx="3200" posy="287" />
     <Tile type="Brick" repeat="0" repeatspace="0" posx="3232" posy="287" item="Star" coins="" />
-    <Tile type="QuestionBlock" repeat="0" repeatspace="0" posx="3392" posy="287" item="" coins="" />
-    <Tile type="QuestionBlock" repeat="0" repeatspace="0" posx="3488" posy="287" item="" coins="" />
+    <Tile type="QuestionBlock" repeat="0" repeatspace="0" posx="3392" posy="287" item="Coin" coins="1" />
+    <Tile type="QuestionBlock" repeat="0" repeatspace="0" posx="3488" posy="287" item="Coin" coins="1" />
     <Tile type="QuestionBlock" repeat="0" repeatspace="0" posx="3488" posy="159" item="GrowMushroom" coins="" />
-    <Tile type="QuestionBlock" repeat="0" repeatspace="0" posx="3584" posy="287" item="" coins="" />
+    <Tile type="QuestionBlock" repeat="0" repeatspace="0" posx="3584" posy="287" item="Coin" coins="1" />
     <Tile type="Brick" repeat="0" repeatspace="0" posx="3776" posy="287" />
     <Tile type="Brick" repeat="2" repeatspace="0" posx="3872" posy="159" />
     <Tile type="Brick" repeat="0" repeatspace="0" posx="4096" posy="159" />
     <Tile type="Brick" repeat="1" repeatspace="0" posx="4128" posy="287" />96
-    <Tile type="QuestionBlock" repeat="1" repeatspace="0" posx="4128" posy="159" item="" coins="" />
+    <Tile type="QuestionBlock" repeat="1" repeatspace="0" posx="4128" posy="159" item="Coin" coins="1" />
     <Tile type="Brick" repeat="0" repeatspace="0" posx="4192" posy="159" />
     <Tile type="UnbreakableBlock" repeat="3" repeatspace="0" posx="4288" posy="383" />
     <Tile type="UnbreakableBlock" repeat="2" repeatspace="0" posx="4320" posy="351" />
@@ -107,7 +107,7 @@
     <Tile type="UnbreakableBlock" repeat="3" repeatspace="0" posx="4960" posy="383" />
     <Tile type="Pipe" repeat="0" repeatspace="0" posx="5216" posy="351" height="0" warpDest="From_Underground" />
     <Tile type="Brick" repeat="1" repeatspace="0" posx="5376" posy="287" />
-    <Tile type="QuestionBlock" repeat="0" repeatspace="0" posx="5440" posy="287" item="" coins="" />
+    <Tile type="QuestionBlock" repeat="0" repeatspace="0" posx="5440" posy="287" item="Coin" coins="1" />
     <Tile type="Brick" repeat="0" repeatspace="0" posx="5472" posy="287" />
     <Tile type="Pipe" repeat="0" repeatspace="0" posx="5728" posy="351" height="0" warpDest="" />    
     <Tile type="UnbreakableBlock" repeat="8" repeatspace="0" posx="5792" posy="383" />
