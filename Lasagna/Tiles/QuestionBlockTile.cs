@@ -37,7 +37,7 @@ namespace Lasagna
             CurrentSprite = unused;
             currentState = BlockState.Idle;
             if (newItems != null && newItems.Length > 0)
-            {
+            {     
                 this.items = newItems;
                 foreach (IItem item in items)
                 {
@@ -122,7 +122,6 @@ namespace Lasagna
                 {
                     if (items[0] is GrowMushroomItem)
                     {
-                        Debug.Print("Mushroom\n");
                         if (((Mario)Mario).CurrentState == MarioStateMachine.MarioState.Small)
                         {
                             items[0].Spawn();
