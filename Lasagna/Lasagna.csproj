@@ -151,6 +151,10 @@
     <Content Include="Code Reviews_Sprint3\MouseController_QualityReview.txt" />
     <Content Include="CodeReviews_Sprint4\EdgeControlledCamera_QualityReview.txt" />
     <Content Include="CodeReviews_Sprint4\EdgeControlledCamera_ReadabilityReview.txt" />
+    <Content Include="CodeReviews_Sprint4\GoombaEnemy_QualityReview.txt" />
+    <Content Include="CodeReviews_Sprint4\GoombaEnemy_QualityReview_refactored.txt" />
+    <Content Include="CodeReviews_Sprint4\GoombaEnemy_ReadbilityReview.txt" />
+    <Content Include="CodeReviews_Sprint4\GoombaEnemy_ReadbilityReview_refactored.txt" />
     <Content Include="CodeReviews_Sprint4\Mario_QualityReview.txt" />
     <Content Include="CodeReviews_Sprint4\Mario_ReadabilityReview.txt" />
     <Content Include="CodeReviews_Sprint4\QuestionBlockTile_QualityReview.txt" />

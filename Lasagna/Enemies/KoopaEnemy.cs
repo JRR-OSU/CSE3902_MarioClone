@@ -38,19 +38,19 @@ namespace Lasagna
         {
             CurrentSprite = null;
             MarioGame.Instance.RegisterProjectile(new KoopaShellProjectile(PosX, PosY + 15, true));
-            enemyHealth = EnemyHealth.Stomped;
+            currentHealth = EnemyHealth.Stomped;
         }
 
         protected override void OnCollisionResponse(IPlayer mario, CollisionSide side)
         {
-            if (side.Equals(CollisionSide.Top) && enemyHealth == EnemyHealth.Normal)
+            if (side.Equals(CollisionSide.Top) && currentHealth == EnemyHealth.Normal)
             {
                 Damage();
             }
-            else if (mario is Mario && ((Mario)mario).StarPowered && enemyHealth == EnemyHealth.Normal)
+            else if (mario is Mario && ((Mario)mario).StarPowered && currentHealth == EnemyHealth.Normal)
             {
                 ChangeState(EnemyState.Dead);
-                enemyHealth = EnemyHealth.Flipped;
+                currentHealth = EnemyHealth.Flipped;
             }
         }
 
@@ -59,7 +59,7 @@ namespace Lasagna
             if (side.Equals(CollisionSide.Left) || side.Equals(CollisionSide.Right))
             {
                 ChangeState(EnemyState.Dead);
-                enemyHealth = EnemyHealth.Flipped;
+                currentHealth = EnemyHealth.Flipped;
             }
         }
     }

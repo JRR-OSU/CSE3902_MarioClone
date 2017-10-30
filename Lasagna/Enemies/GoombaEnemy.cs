@@ -40,15 +40,15 @@ namespace Lasagna
 
         protected override void OnCollisionResponse(IPlayer mario, CollisionSide side)
         {
-            if (side.Equals(CollisionSide.Top) && enemyHealth == EnemyHealth.Normal)
+            if (side.Equals(CollisionSide.Top) && currentHealth == EnemyHealth.Normal)
             {
                 ChangeState(EnemyState.Dead);
-                enemyHealth = EnemyHealth.Stomped;
+                currentHealth = EnemyHealth.Stomped;
             }
-            else if((mario is Mario && ((Mario)mario).StarPowered) && enemyHealth == EnemyHealth.Normal)
+            else if((mario is Mario && ((Mario)mario).StarPowered) && currentHealth == EnemyHealth.Normal)
             {
                 ChangeState(EnemyState.Flipped);
-                enemyHealth = EnemyHealth.Flipped;
+                currentHealth = EnemyHealth.Flipped;
             }
         }
 
@@ -57,7 +57,7 @@ namespace Lasagna
             if (side.Equals(CollisionSide.Left) || side.Equals(CollisionSide.Right))
             {
                 ChangeState(EnemyState.Flipped);
-                enemyHealth = EnemyHealth.Flipped;
+                currentHealth = EnemyHealth.Flipped;
             }
         }
     }

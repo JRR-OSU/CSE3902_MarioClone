@@ -9,7 +9,7 @@ namespace Lasagna
         private ISprite currentSprite;
         private EnemyState currentState;
         public enum EnemyHealth { Normal, Flipped, Stomped };
-        public EnemyHealth enemyHealth = EnemyHealth.Normal;
+        public EnemyHealth currentHealth = EnemyHealth.Normal;
         public bool isLeft = true;
         public bool isMoving = true;
         public bool isSeen;
@@ -60,7 +60,7 @@ namespace Lasagna
        
         public void Reset(object sender, EventArgs e)
         {
-            enemyHealth = EnemyHealth.Normal;
+            currentHealth = EnemyHealth.Normal;
             position.X = orignalPos[0];
             position.Y = orignalPos[1];
             isLeft = true;
@@ -71,7 +71,7 @@ namespace Lasagna
         }
         public virtual void Update(GameTime gameTime)
         {
-            if (enemyHealth != EnemyHealth.Flipped && deathTime >= 20)
+            if (currentHealth != EnemyHealth.Flipped && deathTime >= 20)
             {
                 currentSprite = null;
             }
@@ -85,11 +85,11 @@ namespace Lasagna
                     isMoving = false;
                 }
 
-                if (enemyHealth == EnemyHealth.Flipped)
+                if (currentHealth == EnemyHealth.Flipped)
                 {
                     DeathAnimation();
                 }
-                if (enemyHealth != EnemyHealth.Normal)
+                if (currentHealth != EnemyHealth.Normal)
                 {
                     deathTime++;
                 }
@@ -174,7 +174,7 @@ namespace Lasagna
 
         protected virtual void OnCollisionResponse(ITile tile, CollisionSide side)
         {
-            if (side.Equals(CollisionSide.Bottom) && enemyHealth != EnemyHealth.Flipped)
+            if (side.Equals(CollisionSide.Bottom) && currentHealth != EnemyHealth.Flipped)
             {
                 if(tile is BreakableBrickTile && ((BreakableBrickTile)tile).IsChangingState)
                 {
@@ -182,7 +182,7 @@ namespace Lasagna
                         ChangeState(EnemyState.Dead);
                     else
                         ChangeState(EnemyState.Flipped);
-                    enemyHealth = EnemyHealth.Flipped;
+                    currentHealth = EnemyHealth.Flipped;
                 }
                 else if(tile is QuestionBlockTile && ((QuestionBlockTile)tile).IsChangingState)
                 {
@@ -190,18 +190,18 @@ namespace Lasagna
                         ChangeState(EnemyState.Dead);
                     else
                         ChangeState(EnemyState.Flipped);
-                    enemyHealth = EnemyHealth.Flipped;
+                    currentHealth = EnemyHealth.Flipped;
                 }
                     position.Y -= yDifference;
                     velocity = 1;
             }
-            if (side.Equals(CollisionSide.Right) && enemyHealth != EnemyHealth.Flipped)
+            if (side.Equals(CollisionSide.Right) && currentHealth != EnemyHealth.Flipped)
             {
                 ChangeState(EnemyState.WalkRight);
                 isLeft = true;
                     position.Y -= (float)3.5;
             }
-            else if (side.Equals(CollisionSide.Left) && enemyHealth != EnemyHealth.Flipped)
+            else if (side.Equals(CollisionSide.Left) && currentHealth != EnemyHealth.Flipped)
             {
                 ChangeState(EnemyState.WalkLeft);
                 isLeft = false;
@@ -210,7 +210,7 @@ namespace Lasagna
         }
         private void HandleHorizontalMovement()
         {
-            if (enemyHealth == EnemyHealth.Normal && isMoving == true)
+            if (currentHealth == EnemyHealth.Normal && isMoving == true)
             {
                 if (isLeft == true)
                 {

@@ -1,0 +1,8 @@
+﻿Jon Reed
+10/30/2017
+Sprint 4
+GoombaEnemy.cs - Refactored
+Yiwei Zhang
+
+This source file looks largely the same as before.
+The code is extremely simple and easy to understand. The code exhibits good cohesion and good coupling. 

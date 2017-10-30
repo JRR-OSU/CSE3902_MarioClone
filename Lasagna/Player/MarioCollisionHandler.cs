@@ -153,7 +153,7 @@ namespace Lasagna
                     case CollisionSide.Bottom:
                         if ((enemy is GoombaEnemy))
                         {
-                            if (((GoombaEnemy)enemy).enemyHealth == MovingEnemy.EnemyHealth.Flipped)
+                            if (((GoombaEnemy)enemy).currentHealth == MovingEnemy.EnemyHealth.Flipped)
                                 return;
                         }
                         mario.velocity.Y = 0;
@@ -164,7 +164,7 @@ namespace Lasagna
                     case CollisionSide.Top:
                         if ((enemy is GoombaEnemy))
                         {
-                            if (((GoombaEnemy)enemy).enemyHealth == MovingEnemy.EnemyHealth.Flipped)
+                            if (((GoombaEnemy)enemy).currentHealth == MovingEnemy.EnemyHealth.Flipped)
                                 return;
                         }
                         state.DamageMario();
@@ -173,7 +173,7 @@ namespace Lasagna
                     case CollisionSide.Left:
                         if ((enemy is GoombaEnemy))
                         {
-                            if (((GoombaEnemy)enemy).enemyHealth == MovingEnemy.EnemyHealth.Flipped)
+                            if (((GoombaEnemy)enemy).currentHealth == MovingEnemy.EnemyHealth.Flipped)
                                 return;
                         }
                         state.DamageMario();
@@ -182,7 +182,7 @@ namespace Lasagna
                     case CollisionSide.Right:
                         if ((enemy is GoombaEnemy))
                         {
-                            if (((GoombaEnemy)enemy).enemyHealth == MovingEnemy.EnemyHealth.Flipped)
+                            if (((GoombaEnemy)enemy).currentHealth == MovingEnemy.EnemyHealth.Flipped)
                                 return;
                         }
                         state.DamageMario();
