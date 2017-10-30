@@ -416,6 +416,8 @@ namespace Lasagna
                 marioMovement = (marioMovement == MarioMovement.ShrinkRight) ? MarioMovement.IdleRight : MarioMovement.IdleLeft;
                 UpdateSprite();
             }
+            mario.ignoreGravity = false;
+            mario.velocity = mario.transitionVel;
         }
 
         private void UpdateSprite()
