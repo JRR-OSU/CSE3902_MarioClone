@@ -34,6 +34,8 @@ namespace Lasagna
         protected bool movingLeft = false;
         protected int MovingTime = 0;
         private ISprite originalSprite;
+        private int hideTime = 0;
+        private bool waitToDraw = false;
 
         protected ISprite ItemSprite
         {
@@ -137,8 +139,17 @@ namespace Lasagna
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            if (itemSprite != null && currentState != ItemState.Taken && !this.isInvisible)
+            // Don't draw if the block is bumping
+            if (this.waitToDraw == true)
+                hideTime++;
+            
+            if (itemSprite != null && currentState != ItemState.Taken && !this.isInvisible && !this.waitToDraw)
                 itemSprite.Draw(spriteBatch);
+            if (hideTime >= 16)
+            {
+                hideTime = 0;
+                this.waitToDraw = false;
+            }
         }
 
         public void Reset(object sender, EventArgs e)
@@ -234,6 +245,9 @@ namespace Lasagna
 
         public virtual void Spawn()
         {
+            if(!(this is CoinItem))
+                this.waitToDraw = true;
+
             this.isInBlock = true;
         }
         public void Move()
