@@ -1,0 +1,8 @@
+﻿Tim Williams
+10/30/2017
+Sprint4
+Mario.cs
+Jon Reed
+
+Code is looking much cleaner, much better. Not a lot of comments overall, 
+try to reduce logic branching and increase cohesion.
