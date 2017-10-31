@@ -1,0 +1,10 @@
+﻿Zeyu Li
+10/30/2017
+Sprint 4
+FireProjectile.cs
+Timothy Williams
+5 minutes
+
+The code is good. Every method headers and variables are well defined. Many methods
+are defined in BaseProjectile.cs. So few methods are needed in the file, which makes
+the file very clean. Methods names are clear, the whole file follows the OOD concept.

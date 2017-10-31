@@ -1,0 +1,13 @@
+﻿Zeyu Li
+10/30/2017
+Sprint 4
+FireProjectile.cs
+Timothy Williams
+
+The code is definitely in high quality. Only few necessary methods are overridden. The
+Update() methods handled the movement of fireball perfectly. It performs like the original
+game during the testing. The collision response parts also follow the original game rules.
+
+I am not able to make further modifications. Because I am not able to handle the gravity
+in the game well. I still need to learn from the code, and implement the concepts in the
+future sprints.

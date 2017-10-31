@@ -150,6 +150,8 @@
     <Content Include="Code Reviews_Sprint3\InvisibleBlockTile_QualityReview_Refactored.txt" />
     <Content Include="Code Reviews_Sprint3\MouseController_ReadabilityReview.txt" />
     <Content Include="Code Reviews_Sprint3\MouseController_QualityReview.txt" />
+    <Content Include="CodeReviews_Sprint4\FireProjectile_ReadabilityReview.txt" />
+    <Content Include="CodeReviews_Sprint4\FireProjectile_QualityReview.txt" />
     <Content Include="CodeReviews_Sprint4\EdgeControlledCamera_QualityReview.txt" />
     <Content Include="CodeReviews_Sprint4\EdgeControlledCamera_ReadabilityReview.txt" />
     <Content Include="CodeReviews_Sprint4\GoombaEnemy_QualityReview.txt" />
