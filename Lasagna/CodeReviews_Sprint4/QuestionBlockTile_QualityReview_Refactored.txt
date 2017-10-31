@@ -1,0 +1,10 @@
+﻿Yiwei Zhang
+10/30/2017
+Sprint 4
+QuestionBlockTile.cs - Refactored
+Zeyu Li
+5 minutes
+
+Add several features to question blocks such as bumping animation.
+Fix some bugs like items are still visible when the blocks are hitted.
+The overall code has low coupling and high cohesion.

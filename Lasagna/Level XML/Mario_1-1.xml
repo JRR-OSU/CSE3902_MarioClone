@@ -43,7 +43,7 @@
     <Tile type="InvisibleBlock" repeat="0" repeatspace="0" posx="-96" posy="287" item="LifeMushroom" />
     
     <Tile type="QuestionBlock" repeat="0" repeatspace="0" posx="-64" posy="287" item="Coin" coins="1" />
-    <Tile type="QuestionBlock" repeat="0" repeatspace="0" posx="-32" posy="287" item="FireFlower" />
+    <Tile type="QuestionBlock" repeat="0" repeatspace="0" posx="-32" posy="287" item="GrowMushroom" />
     <Tile type="QuestionBlock" repeat="0" repeatspace="0" posx="0" posy="287" item="Star" />     
     
     <Tile type="UnbreakableBlock" repeat="0" repeatspace="0" posx="-704" posy="383" />

@@ -160,6 +160,8 @@
     <Content Include="CodeReviews_Sprint4\Mario_ReadabilityReview.txt" />
     <Content Include="CodeReviews_Sprint4\QuestionBlockTile_QualityReview.txt" />
     <Content Include="CodeReviews_Sprint4\QuestionBlockTile_ReadbilityReview.txt" />
+    <Content Include="CodeReviews_Sprint4\QuestionBlockTile_QualityReview_Refactored.txt" />
+    <Content Include="CodeReviews_Sprint4\QuestionBlockTile_Readbility_Refactored.txt" />
     <Content Include="Icon.ico" />
     <Content Include="Level XML\Mario_1-1.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

@@ -1,0 +1,9 @@
+﻿Yiwei Zhang
+10/30/2017
+Sprint 4
+QuestionBlockTile.cs - Refactored
+Zeyu Li
+5 minutes
+
+The overall code readbility does not change comparing to the ones beforing refactoring.
+There are still some magic number issues need to be fixed later.
