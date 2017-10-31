@@ -158,7 +158,9 @@
     <Content Include="CodeReviews_Sprint4\GoombaEnemy_QualityReview_refactored.txt" />
     <Content Include="CodeReviews_Sprint4\GoombaEnemy_ReadbilityReview.txt" />
     <Content Include="CodeReviews_Sprint4\GoombaEnemy_ReadbilityReview_refactored.txt" />
+    <Content Include="CodeReviews_Sprint4\Mario_QualityReview_Refactored.txt" />
     <Content Include="CodeReviews_Sprint4\Mario_QualityReview.txt" />
+    <Content Include="CodeReviews_Sprint4\Mario_ReadabilityReview_Refactored.txt" />
     <Content Include="CodeReviews_Sprint4\Mario_ReadabilityReview.txt" />
     <Content Include="CodeReviews_Sprint4\QuestionBlockTile_QualityReview.txt" />
     <Content Include="CodeReviews_Sprint4\QuestionBlockTile_ReadbilityReview.txt" />
