@@ -64,4 +64,12 @@ namespace Lasagna
         LifeMushroom,
         Star
     }
+
+    public enum Direction
+    {
+        Up,
+        Down,
+        Left,
+        Right
+    }
 }

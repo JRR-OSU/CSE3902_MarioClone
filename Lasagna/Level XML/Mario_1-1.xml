@@ -1,12 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Root leveltype="MarioClear">
   <Players>
+    <!--posx = -800, posy = 380-->
     <Player type="Mario" posx="-800" posy="380" />
   </Players>
   <Enemies>
-    <!-- Test area enemies -->
+    <!-- Test area enemies 
     <Enemy type="Koopa" posx="-533" posy="375" />
-    <Enemy type="Goomba" posx="-730" posy="230" />
+    <Enemy type="Goomba" posx="-730" posy="230" />-->
     
     <!-- Actual level -->
     <Enemy type="Goomba" posx="704" posy="383" />
@@ -31,6 +32,8 @@
     <!-- Test play area blocks -->
     <Tile type="Floor" repeat="24" repeatspace="0" posx="-800" posy="415" />
     <Tile type="Floor" repeat="24" repeatspace="0" posx="-800" posy="447" />   
+        
+    <Tile type="Pipe" repeat="0" repeatspace="0" posx="-650" posy="223" height="2" warpSource="" warpDest="Underground" />
     
     <Tile type="Brick" repeat="0" repeatspace="0" posx="-224" posy="287" item="" coins="" />
     <Tile type="Brick" repeat="0" repeatspace="0" posx="-192" posy="287" item="Coin" coins="5" />
@@ -49,7 +52,7 @@
     <Tile type="UnbreakableBlock" repeat="0" repeatspace="0" posx="-704" posy="383" />
     <Tile type="UnbreakableBlock" repeat="0" repeatspace="0" posx="-352" posy="383" />
     
-    <!-- Actual level -->
+    <!-- Main Level -->
     <Tile type="Floor" repeat="68" repeatspace="0" posx="0" posy="415" />
     <Tile type="Floor" repeat="68" repeatspace="0" posx="0" posy="447" />        
     <Tile type="Floor" repeat="14" repeatspace="0" posx="2272" posy="415" />
@@ -65,10 +68,10 @@
     <Tile type="QuestionBlock" repeat="0" repeatspace="0" posx="704" posy="159" item="Coin" coins="1" />
     <Tile type="QuestionBlock" repeat="0" repeatspace="0" posx="736" posy="287" item="Coin" coins="1" />
     <Tile type="Brick" repeat="0" repeatspace="0" posx="768" posy="287" />
-    <Tile type="Pipe" repeat="0" repeatspace="0" posx="896" posy="351" height="0" warpDest="" />
-    <Tile type="Pipe" repeat="0" repeatspace="0" posx="1216" posy="319" height="1" warpDest="" />
-    <Tile type="Pipe" repeat="0" repeatspace="0" posx="1472" posy="287" height="2" warpDest="" />
-    <Tile type="Pipe" repeat="0" repeatspace="0" posx="1824" posy="287" height="2" warpDest="To_Underground" />
+    <Tile type="Pipe" repeat="0" repeatspace="0" posx="896" posy="351" height="0" warpSource="" warpDest="" />
+    <Tile type="Pipe" repeat="0" repeatspace="0" posx="1216" posy="319" height="1" warpSource="" warpDest="" />
+    <Tile type="Pipe" repeat="0" repeatspace="0" posx="1472" posy="287" height="2" warpSource="" warpDest="" />
+    <Tile type="Pipe" repeat="0" repeatspace="0" posx="1824" posy="287" height="2" warpSource="" warpDest="Underground" />
     <Tile type="InvisibleBlock" repeat="0" repeatspace="0" posx="2048" posy="255" item="LifeMushroom" coins="" />
     <Tile type="Brick" repeat="0" repeatspace="0" posx="2464" posy="287" />
     <Tile type="QuestionBlock" repeat="0" repeatspace="0" posx="2496" posy="287" item="GrowMushroom" coins="" />
@@ -105,11 +108,11 @@
     <Tile type="UnbreakableBlock" repeat="1" repeatspace="0" posx="4960" posy="319" />
     <Tile type="UnbreakableBlock" repeat="2" repeatspace="0" posx="4960" posy="351" />
     <Tile type="UnbreakableBlock" repeat="3" repeatspace="0" posx="4960" posy="383" />
-    <Tile type="Pipe" repeat="0" repeatspace="0" posx="5216" posy="351" height="0" warpDest="From_Underground" />
+    <Tile type="Pipe" repeat="0" repeatspace="0" posx="5216" posy="351" height="15" warpSource="Overworld" warpDest="" />
     <Tile type="Brick" repeat="1" repeatspace="0" posx="5376" posy="287" />
     <Tile type="QuestionBlock" repeat="0" repeatspace="0" posx="5440" posy="287" item="Coin" coins="1" />
     <Tile type="Brick" repeat="0" repeatspace="0" posx="5472" posy="287" />
-    <Tile type="Pipe" repeat="0" repeatspace="0" posx="5728" posy="351" height="0" warpDest="" />    
+    <Tile type="Pipe" repeat="0" repeatspace="0" posx="5728" posy="351" height="0" warpSource="" warpDest="" />    
     <Tile type="UnbreakableBlock" repeat="8" repeatspace="0" posx="5792" posy="383" />
     <Tile type="UnbreakableBlock" repeat="7" repeatspace="0" posx="5824" posy="351" />
     <Tile type="UnbreakableBlock" repeat="6" repeatspace="0" posx="5856" posy="319" />
@@ -120,5 +123,29 @@
     <Tile type="UnbreakableBlock" repeat="1" repeatspace="0" posx="6016" posy="159" />    
     <Tile type="UnbreakableBlock" repeat="0" repeatspace="0" posx="6336" posy="383" />  
     <Tile type="Flag" repeat="0" repeatspace="0" posx="6344" posy="79" />
+  
+    <!--Underground    4736
+    <Tile type="Pipe" repeat="0" repeatspace="0" posx="4768" posy="479" height="0" facing="Down" warpSource="Underground" warpDest="" />
+    <Tile type="UndergroundBrick" repeat="0" repeatspace="0" posx="4736" posy="543" />
+    <Tile type="UndergroundBrick" repeat="0" repeatspace="0" posx="4736" posy="575" />
+    <Tile type="UndergroundBrick" repeat="0" repeatspace="0" posx="4736" posy="607" />
+    <Tile type="UndergroundBrick" repeat="0" repeatspace="0" posx="4736" posy="639" />
+    <Tile type="UndergroundBrick" repeat="0" repeatspace="0" posx="4736" posy="671" />
+    <Tile type="UndergroundBrick" repeat="0" repeatspace="0" posx="4736" posy="703" />
+    <Tile type="UndergroundBrick" repeat="0" repeatspace="0" posx="4736" posy="735" />
+    <Tile type="UndergroundBrick" repeat="0" repeatspace="0" posx="4736" posy="767" />
+    <Tile type="UndergroundBrick" repeat="0" repeatspace="0" posx="4736" posy="799" />
+    <Tile type="UndergroundBrick" repeat="0" repeatspace="0" posx="4736" posy="831" />
+    <Tile type="UndergroundBrick" repeat="0" repeatspace="0" posx="4736" posy="863" />
+    <Tile type="Floor" repeat="16" repeatspace="0" posx="4736" posy="895" />
+    <Tile type="Floor" repeat="16" repeatspace="0" posx="4736" posy="927" />   
+    <Tile type="UndergroundBrick" repeat="6" repeatspace="0" posx="4864" posy="543" />
+    <Tile type="UndergroundBrick" repeat="6" repeatspace="0" posx="4864" posy="799" />
+    <Tile type="UndergroundBrick" repeat="6" repeatspace="0" posx="4864" posy="831" />
+    <Tile type="UndergroundBrick" repeat="6" repeatspace="0" posx="4864" posy="863" />
+    <Tile type="Pipe" repeat="0" repeatspace="0" posx="5152" posy="831" height="0" facing="Left" warpSource="" warpDest="Overworld" /> -->
   </Tiles>
+  <Items>
+      <Item type="Coin" posx="" posy=""/>
+  </Items>
 </Root>

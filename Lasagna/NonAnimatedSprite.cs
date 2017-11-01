@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using System;
 
 namespace Lasagna
 {
@@ -66,8 +67,8 @@ namespace Lasagna
         {
             Draw(spriteBatch, Color.White);
         }
-
-        public void Draw(SpriteBatch spriteBatch, Color spriteTint)
+        
+        public void Draw(SpriteBatch spriteBatch, Color spriteTint, float rotation = 0)
         {
             if (spriteBatch == null)
             {
@@ -79,9 +80,21 @@ namespace Lasagna
                 destinationRectangle = new Rectangle();
             if (sourceRectangle == null)
                 sourceRectangle = new Rectangle();
-            
+
             spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, MarioGame.Instance.CameraTransform);
-            spriteBatch.Draw(sourceSpriteSheet, destinationRectangle, sourceRectangle, spriteTint);
+            if (rotation != 0)
+            {
+                //Rotation takes place along the top-left corner, offset sprite to account for this.
+                Rectangle offsetRect = destinationRectangle;
+                Vector2 origin = new Vector2(sourceSpriteSheet.Width / 2f, sourceSpriteSheet.Height / 2f);
+                offsetRect.X += destinationRectangle.Width / 2;
+                offsetRect.Y += destinationRectangle.Height / 2;
+
+                spriteBatch.Draw(sourceSpriteSheet, offsetRect, sourceRectangle, spriteTint, rotation, origin, SpriteEffects.None, 0);
+            }
+            else
+                spriteBatch.Draw(sourceSpriteSheet, destinationRectangle, sourceRectangle, spriteTint);
+            
             spriteBatch.End();
         }
 
