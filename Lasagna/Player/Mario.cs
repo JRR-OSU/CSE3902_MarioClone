@@ -370,5 +370,10 @@ namespace Lasagna
             stateMachine.Draw(spriteBatch);
         }
 
+
+        public void BeginWarpAnimation(Direction moveDir, bool startWithMove)
+        {
+            stateMachine.BeginWarpAnimation(moveDir, startWithMove);
+        }
     }
 }

@@ -179,7 +179,7 @@ namespace Lasagna
         {
             //If player is crouching, try and warp to destination.
             if (otherCollider != null && ShouldWarp(side))
-                MarioGame.Instance.TryWarp(warpDest, warpCamXPos, warpCamYPos);
+                MarioGame.Instance.TryWarp(warpDest, warpCamXPos, warpCamYPos, pipeDir);
         }
 
         private bool ShouldWarp(CollisionSide side)

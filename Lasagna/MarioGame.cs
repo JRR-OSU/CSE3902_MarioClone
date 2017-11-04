@@ -91,7 +91,7 @@ namespace Lasagna
             //If game is paused, exit.
             if (paused)
                 return;
-
+            
             foreach (IPlayer player in players)
                 if (player != null)
                     player.isCollideGround = false;
@@ -156,7 +156,7 @@ namespace Lasagna
 
             bool anyDead = players != null && players.Find(o => o is Mario && ((Mario)o).IsDead) != null;
 
-            if (mainCamera != null && !anyDead)
+            if (mainCamera != null && !anyDead && !warping)
                 mainCamera.Update(players, screenWidth, screenHeight);
 
             base.Update(gameTime);
@@ -169,6 +169,13 @@ namespace Lasagna
             if (levelBackground != null)
                 levelBackground.Draw(spriteBatch);
 
+            //If we're warping, draw under everything else
+            if (warping)
+            {
+                foreach (IPlayer player in players)
+                    if (player != null)
+                        player.Draw(spriteBatch);
+            }
             foreach (IItem item in items)
                 if (item != null)
                     item.Draw(spriteBatch);
@@ -181,9 +188,13 @@ namespace Lasagna
             foreach (IProjectile projectile in projectiles)
                 if (projectile != null)
                     projectile.Draw(spriteBatch);
-            foreach (IPlayer player in players)
-                if (player != null)
-                    player.Draw(spriteBatch);
+            //If we're not warping, draw over everything else
+            if (!warping)
+            {
+                foreach (IPlayer player in players)
+                    if (player != null)
+                        player.Draw(spriteBatch);
+            }
 
             base.Draw(gameTime);
         }
@@ -219,15 +230,23 @@ namespace Lasagna
                 projectiles.Remove(projectile);
         }
 
+        private bool warping;
+        private int warpDestX;
+        private int warpDestY;
+        private int warpDestCamPosX;
+        private int warpDestCamPosY;
+        private Direction warpDestPipeFacing;
+
         /// <summary>
         /// Attempts too warp to the given target. If target is valid, plays warp animation and moves.
         /// </summary>
         /// <param name="warpDest">ID of pipe we want too warp to</param>
         /// <param name="warpCamPosX">X position too force the camera to for this warp</param>
         /// <param name="warpCamPosY">Y position too force the camera to for this warp</param>
-        public void TryWarp(string warpDest, int warpCamPosX, int warpCamPosY)
+        /// <param name="sourcePipeFacing">Direction source pipe is facing</param>
+        public void TryWarp(string warpDest, int warpCamPosX, int warpCamPosY, Direction sourcePipeFacing)
         {
-            if (string.IsNullOrEmpty(warpDest))
+            if (string.IsNullOrEmpty(warpDest) || warping)
                 return;
 
             foreach (ITile tile in tiles)
@@ -236,40 +255,68 @@ namespace Lasagna
                     continue;
 
                 Direction dir = ((WarpPipeTile)tile).PipeDirection;
-                int destX, destY;
                 if (dir == Direction.Up || dir == Direction.Down)
                 {
-                    destX = tile.Bounds.X + tile.Bounds.Width / 2;
-                    destY = (dir == Direction.Up) ? tile.Bounds.Y : tile.Bounds.Bottom;
+                    warpDestX = tile.Bounds.X + tile.Bounds.Width / 2;
+                    warpDestY = (dir == Direction.Up) ? tile.Bounds.Y : tile.Bounds.Bottom;
                 }
                 else
                 {
-                    destX = (dir == Direction.Left) ? tile.Bounds.X : tile.Bounds.Right;
-                    destY = tile.Bounds.Y + tile.Bounds.Height / 2;
+                    warpDestX = (dir == Direction.Left) ? tile.Bounds.X : tile.Bounds.Right;
+                    warpDestY = tile.Bounds.Y + tile.Bounds.Height / 2;
                 }
 
-                //TODO: MAKE THIS ANIMATE INSTEAD OF IMMEDIATE
+                //Begin warp process
+                warpDestPipeFacing = dir;
+                warpDestCamPosX = warpCamPosX;
+                warpDestCamPosY = warpCamPosY;
+                warping = true;
+
+                Direction animDir = Direction.Down;
+
+                if (sourcePipeFacing == Direction.Down)
+                    animDir = Direction.Up;
+                else if (sourcePipeFacing == Direction.Left)
+                    animDir = Direction.Right;
+                else if (sourcePipeFacing == Direction.Right)
+                    animDir = Direction.Left;
+
+                //Start animating each player
                 foreach (IPlayer pl in players)
-                {
                     if (pl != null)
-                    {
-                        int offsetX = 0, offsetY = 0;
-
-                        if (dir == Direction.Up)
-                            offsetY = -pl.Bounds.Height;
-                        else if (dir == Direction.Left)
-                            offsetX = -pl.Bounds.Width;
-
-                        pl.SetPosition(destX + offsetX, destY + offsetY);
-                    }
-                }
+                        pl.BeginWarpAnimation(animDir, true);
 
                 break;
+            }
+        }
+
+        public void FinishWarp()
+        {
+            if (!warping)
+                return;
+
+            //move each player to warp dest, and begin playing exit pipe animation.
+            foreach (IPlayer pl in players)
+            {
+                if (pl != null)
+                {
+                    int offsetX = 0, offsetY = 0;
+
+                    if (warpDestPipeFacing == Direction.Down)
+                        offsetY = -pl.Bounds.Height;
+                    else if (warpDestPipeFacing == Direction.Right)
+                        offsetX = -pl.Bounds.Width;
+
+                    pl.SetPosition(warpDestX + offsetX, warpDestY + offsetY);
+                    pl.BeginWarpAnimation(warpDestPipeFacing, false);
+                }
             }
 
             //Force main camera to the necessary view
             if (mainCamera != null)
-                mainCamera.ForcePosition(warpCamPosX, warpCamPosY);
+                mainCamera.ForcePosition(warpDestCamPosX, warpDestCamPosY);
+
+            warping = false;
         }
     }
 }

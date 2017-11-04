@@ -46,6 +46,8 @@ namespace Lasagna
         };
         //How long mario blinks for after beign damaged
         private const float blinkLength = 3f;
+        private const float marioWarpMoveLength = 0.75f;
+        private const float marioWarpStillLength = 0.75f;
 
         private bool canGrow = true;
 
@@ -56,6 +58,9 @@ namespace Lasagna
 
         public bool isTouchingGround;
 
+        private bool warpMoveFirst;
+        private Direction warpDirection;
+        private float warpTimeRemaining;
         //If this > 0 mario ignores collisions and can't be hurt. 
         private float blinkTimeRemaining;
         private bool blinkShow;
@@ -73,7 +78,7 @@ namespace Lasagna
         private int turnFrames = 0;
 
         public bool StarPowered { get { return starPower; } }
-        public bool IsTransitioning { get { return stateTransitionTimeRemaining > 0; } }
+        public bool IsTransitioning { get { return stateTransitionTimeRemaining > 0 || warpTimeRemaining > 0; } }
         public bool IsBlinking { get { return blinkTimeRemaining > 0; } }
 
         private Dictionary<MarioMovement, ISprite> smallStates = new Dictionary<MarioMovement, ISprite>();
@@ -484,6 +489,27 @@ namespace Lasagna
                         stateTransitionColor = Color.White;
                 }
 
+                if (warpTimeRemaining > 0)
+                {
+                    warpTimeRemaining -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+                    bool vertical = warpDirection == Direction.Up || warpDirection == Direction.Down;
+                    float speed = ((vertical) ? mario.Bounds.Height : mario.Bounds.Width) / marioWarpMoveLength;
+
+                    float move = speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+                    if ((warpMoveFirst && warpTimeRemaining > marioWarpStillLength - 0.1f) || (!warpMoveFirst && warpTimeRemaining <= marioWarpMoveLength + 0.01f))
+                    {
+                        if (vertical)
+                            mario.ForceMove(0, move * ((warpDirection == Direction.Up) ? -1 : 1));
+                        else
+                            mario.ForceMove(move * ((warpDirection == Direction.Left) ? -1 : 1), 0);
+                    }
+
+                    if (warpTimeRemaining <= 0)
+                        MarioGame.Instance.FinishWarp();
+                }
+
                 if (starPower)
                 {
                     HandleStarPower();
@@ -541,6 +567,13 @@ namespace Lasagna
             marioState = MarioState.Small;
             marioMovement = MarioMovement.IdleRight;
             currentSprite = smallStates[marioMovement];
+        }
+
+        public void BeginWarpAnimation(Direction moveDir, bool startWithMoving)
+        {
+            warpMoveFirst = startWithMoving;
+            warpTimeRemaining = marioWarpMoveLength + marioWarpStillLength;
+            warpDirection = moveDir;
         }
     }
 }
