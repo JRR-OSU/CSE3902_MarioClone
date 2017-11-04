@@ -17,6 +17,7 @@ namespace Lasagna
         public Vector2 position;
         public Vector2 velocity;
         public Vector2 transitionVel;
+        public bool isWarping = false;
         private int maxVelX = 150;
         private int maxVelY = 400;
         public bool isFalling = false;
@@ -348,6 +349,10 @@ namespace Lasagna
             else if (!stateMachine.IsTransitioning && velocity != Vector2.Zero)
                 transitionVel = velocity;
 
+
+            if (!isWarping && !stateMachine.IsTransitioning)
+                ignoreGravity = false;
+
             HandleJumpBools();
 
             HandleMovement();
@@ -373,6 +378,7 @@ namespace Lasagna
 
         public void BeginWarpAnimation(Direction moveDir, bool startWithMove)
         {
+            isWarping = true;
             stateMachine.BeginWarpAnimation(moveDir, startWithMove);
         }
     }

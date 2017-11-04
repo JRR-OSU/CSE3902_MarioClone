@@ -114,7 +114,7 @@ namespace Lasagna
                       
                         break;
                     case CollisionSide.Right:
-                       mario.velocity.X = 0;
+                        mario.velocity.X = 0;
                         mario.SetPosition((tile.Bounds.X - mario.Bounds.Width), mario.Bounds.Y);
 
                         break;

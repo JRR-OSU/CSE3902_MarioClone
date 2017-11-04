@@ -507,7 +507,10 @@ namespace Lasagna
                     }
 
                     if (warpTimeRemaining <= 0)
+                    {
                         MarioGame.Instance.FinishWarp();
+                        mario.isWarping = false;
+                    }
                 }
 
                 if (starPower)
