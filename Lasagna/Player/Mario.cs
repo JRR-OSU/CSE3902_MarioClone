@@ -65,6 +65,7 @@ namespace Lasagna
             orignalPos[1] = -(int)position.Y;
         }
 
+
         public void ForceMove(float x, float y)
         {
             position.X += x;
@@ -252,6 +253,7 @@ namespace Lasagna
         public void Die(object sender, EventArgs e)
         {
             marioIsDead = true;
+            
             stateMachine.KillMario();
         }
 
@@ -262,6 +264,7 @@ namespace Lasagna
             velocity.X = 0;
             stateMachine.KillMario();
             Score.Lives--;
+            
         }
 
         public void OnCollisionResponse(ICollider otherCollider, CollisionSide side)

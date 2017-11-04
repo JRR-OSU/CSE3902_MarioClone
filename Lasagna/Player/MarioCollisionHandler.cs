@@ -47,6 +47,7 @@ namespace Lasagna
             else if (item is CoinItem)
             {
                 Score.addCoinMario();
+                Score.increaseScoreMario(100);
             }
             else if(item is LifeMushroomItem)
             {

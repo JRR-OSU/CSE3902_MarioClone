@@ -60,6 +60,9 @@ namespace Lasagna
         private int warpDestCamPosX;
         private int warpDestCamPosY;
         private Direction warpDestPipeFacing;
+        private bool deathScreen = true;
+        private const int deathScreenCount = 120;
+        private int deathScreenTimer = Zero;
 
         public MarioGame()
         {
@@ -86,13 +89,14 @@ namespace Lasagna
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            hud = new HUD();
+      
             EnemySpriteFactory.Instance.LoadAllContent(Content);
             ItemSpriteFactory.Instance.LoadAllContent(Content);
             MarioSpriteFactory.Instance.LoadAllContent(Content);
             ProjectileSpriteFactory.Instance.LoadAllContent(Content);
             TileSpriteFactory.Instance.LoadAllContent(Content);
             BackgroundSpriteFactory.Instance.LoadAllContent(Content, GraphicsDevice.Viewport.Height / ViewPortHeightMod, GraphicsDevice.Viewport.Height);
+            hud = new HUD();
 
             LevelCreator.Instance.LoadLevelFromXML(Environment.CurrentDirectory + Level1XMLPath, out levelBackground, out players, out enemies, out tiles, out items);
             font = Content.Load<SpriteFont>("Fonts/HUD");
@@ -101,6 +105,8 @@ namespace Lasagna
                 mainCamera = new EdgeControlledCamera(pl.Bounds.X, Zero);
             else
                 mainCamera = new EdgeControlledCamera(Zero, Zero);
+
+                  
         }
 
         protected override void Update(GameTime gameTime)
@@ -183,9 +189,16 @@ namespace Lasagna
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.Black);
-
+            if (deathScreen)
+            {
+                DisplayDeathScreen();
+                return;
+            }
             if (levelBackground != null)
                 levelBackground.Draw(spriteBatch);
+
+
+
 
             //If we're warping, draw under everything else
             if (warping)
@@ -207,15 +220,15 @@ namespace Lasagna
                 if (projectile != null)
                     projectile.Draw(spriteBatch);
             //If we're not warping, draw over everything else
-            hud.Draw(spriteBatch, font, false);
+        
             if (!warping)
             {
                 foreach (IPlayer player in players)
                     if (player != null)
                         player.Draw(spriteBatch);
             }
-
-            base.Draw(gameTime);       
+            hud.Draw(spriteBatch,font,deathScreen);
+            base.Draw(gameTime);
         }
 
         //Event handlers
@@ -329,6 +342,23 @@ namespace Lasagna
                 mainCamera.ForcePosition(warpDestCamPosX, warpDestCamPosY);
 
             warping = false;
+        }
+
+        public void TriggerDeathSequence()
+        {
+            deathScreen = true;
+        }
+
+        private void DisplayDeathScreen()
+        {
+            hud.Draw(spriteBatch, font, deathScreen);
+            if (deathScreenTimer < deathScreenCount)
+                deathScreenTimer++;
+            else
+            {
+                deathScreenTimer = Zero;
+                deathScreen = false;
+            }
         }
     }
 }

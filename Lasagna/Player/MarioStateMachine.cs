@@ -452,7 +452,10 @@ namespace Lasagna
 
             //When we finish animation, reset level.
             if (deathAnimTimeRemaining <= 0)
+            {
                 MarioEvents.Reset(this, EventArgs.Empty);
+                MarioGame.Instance.TriggerDeathSequence();
+            }
         }
 
         public void Update(GameTime gameTime, int spriteXPos, int spriteYPos)
