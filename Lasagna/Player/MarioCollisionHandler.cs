@@ -103,7 +103,6 @@ namespace Lasagna
                 {
                     case CollisionSide.Bottom:
                         state.SetGroundedState();
-
                         if (!(tile is FloorBlockTile))
                         {
                             mario.ignoreGravity = false;
@@ -177,6 +176,7 @@ namespace Lasagna
                         mario.velocity.Y = 0;
                         mario.velocity.Y += 150;
                         state.HandleJump();
+                        Score.increaseScoreMario(200);
                         // Jump effect if landing on top of an enemy
                         break;
                     case CollisionSide.Top:

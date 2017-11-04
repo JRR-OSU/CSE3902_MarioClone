@@ -88,6 +88,7 @@ namespace Lasagna
                 if (currentHealth == EnemyHealth.Flipped)
                 {
                     DeathAnimation();
+                    
                 }
                 if (currentHealth != EnemyHealth.Normal)
                 {
@@ -183,6 +184,7 @@ namespace Lasagna
                     else
                         ChangeState(EnemyState.Flipped);
                     currentHealth = EnemyHealth.Flipped;
+                    Score.increaseScoreMario(200);
                 }
                 else if(tile is QuestionBlockTile && ((QuestionBlockTile)tile).IsChangingState)
                 {
@@ -191,6 +193,7 @@ namespace Lasagna
                     else
                         ChangeState(EnemyState.Flipped);
                     currentHealth = EnemyHealth.Flipped;
+                    Score.increaseScoreMario(200);
                 }
                     position.Y -= yDifference;
                     velocity = 1;

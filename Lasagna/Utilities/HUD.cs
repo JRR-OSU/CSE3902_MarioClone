@@ -19,6 +19,9 @@ using System.Text;
             public const int oneUpValue = 1000;
             public const int initialLives = 3;
 
+            private int counter = 0;
+            private int FPS = 60;
+
 
             private int Time;
             private ISprite mario;
@@ -27,6 +30,7 @@ using System.Text;
 
             public HUD()
             {
+                 MarioEvents.OnReset += Reset;
 
                 Score.Lives = initialLives;
                 Score.marioScore = 0;
@@ -39,30 +43,39 @@ using System.Text;
             //mario.SetSpriteScreenPosition(640 / 2, 480 / 2);
             }
 
-            public void Update(double time, double previous)
-            {
-            if (isDeathScreen)
-                return;
-                    Time = startTime - (int)(time - previous);
+            public void Update()
+        {
+                if (isDeathScreen)
+                    return;
+
+                if (counter < FPS)
+                {
+                    counter++;
+                }
+                else
+                {
+                    Time--;
+                    counter = 0;
+                }
             }
 
             public void Draw(SpriteBatch batch, SpriteFont font, bool deathScreen)
             {
 
-            isDeathScreen = deathScreen;
-            batch.Begin();    
-            batch.DrawString(font, "MARIO" + addSpaces(4) + "COINS" + addSpaces(4) + "LIVES" + addSpaces(5) + "TIME" + addSpaces(4) + "WORLD", new Vector2(10, 10), Color.White);
-            batch.DrawString(font, formattedScore(Score.marioScore) + addSpaces(3) + formattedCoins(Score.Coins) + addSpaces(7) + formattedLives(Score.Lives) + addSpaces(8) + Time.ToString() + addSpaces(5) + "1-1", new Vector2(10, 25), Color.White);
+                isDeathScreen = deathScreen;
+                batch.Begin();    
+                batch.DrawString(font, "MARIO" + addSpaces(4) + "COINS" + addSpaces(4) + "LIVES" + addSpaces(5) + "TIME" + addSpaces(4) + "WORLD", new Vector2(10, 10), Color.White);
+                batch.DrawString(font, formattedScore(Score.marioScore) + addSpaces(3) + formattedCoins(Score.Coins) + addSpaces(7) + formattedLives(Score.Lives) + addSpaces(8) + Time.ToString() + addSpaces(5) + "1-1", new Vector2(10, 25), Color.White);
 
-            if (deathScreen)
-            {
-                batch.DrawString(font, "WORLD 1 - 1\n\n" + addSpaces(4) +  "x  " + Score.Lives, new Vector2((640 / 2)-30, (480 / 2)-50), Color.White);
-                Time = 400;
+                if (deathScreen)
+                {
+                    batch.DrawString(font, "WORLD 1 - 1\n\n" + addSpaces(4) +  "x  " + Score.Lives, new Vector2((640 / 2)-30, (480 / 2)-50), Color.White);
+                    Time = 400;
                 
-                //mario.Draw(batch);
-            }
+                    //mario.Draw(batch);
+                }
 
-            batch.End();
+                batch.End();
 
             }
 
@@ -116,6 +129,18 @@ using System.Text;
                     text = lives.ToString();
                 }
                 return text;
+            }
+
+            public void Reset(object sender, EventArgs e)
+            {
+
+                //Score.Lives = initialLives;
+                Score.marioScore = 0;
+                Score.Coins = 0;
+
+                Time = startTime;
+                Score.enemyKilledPoints = new int[10] { 100, 200, 400, 500, 800, 1000, 2000, 4000, 8000, 10000 };
+                Score.marioEnemyKilledCount = 0;
             }
         }
     }

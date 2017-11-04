@@ -115,7 +115,7 @@ namespace Lasagna
             if (paused)
                 return;
 
-            hud.Update(gameTime.TotalGameTime.Seconds, 0);
+            hud.Update();
             foreach (IPlayer player in players)
                 if (player != null)
                     player.isCollideGround = false;
