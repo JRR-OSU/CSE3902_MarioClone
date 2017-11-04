@@ -12,5 +12,6 @@ namespace Lasagna
         void Jump();
         void Crouch();
         void ShootFire();
+        void Pause();
     }
 }

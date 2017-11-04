@@ -14,7 +14,8 @@ namespace Lasagna
                 { new [] { Keys.Q }, Quit },
                 { new [] { Keys.R }, Reset },
                 //{ new [] { Keys.M }, ToggleMouseController },
-                { new [] { Keys.X }, ShootFire }
+                { new [] { Keys.X }, ShootFire },
+                { new [] { Keys.Enter }, Pause }
             };
 
             onKeyHeldEvents = new Dictionary<Keys[], MarioEventHandler>
@@ -96,6 +97,11 @@ namespace Lasagna
         public void ShootFire()
         {
             MarioEvents.ShootFire(this, EventArgs.Empty);
+        }
+
+        public void Pause()
+        {
+            MarioEvents.Pause(this, EventArgs.Empty);
         }
     }
 }

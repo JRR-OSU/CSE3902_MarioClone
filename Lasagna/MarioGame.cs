@@ -43,6 +43,7 @@ namespace Lasagna
         private List<IItem> items = new List<IItem>();
         private List<IProjectile> projectiles = new List<IProjectile>();
         private List<IPlayer> players = new List<IPlayer>();
+        private bool paused;
 
         public MarioGame()
         {
@@ -61,6 +62,7 @@ namespace Lasagna
 
             //Subscribe to events
             MarioEvents.OnQuit += OnQuit;
+            MarioEvents.OnPause += OnPauseGame;
 
             base.Initialize();
         }
@@ -86,6 +88,10 @@ namespace Lasagna
 
         protected override void Update(GameTime gameTime)
         {
+            //If game is paused, exit.
+            if (paused)
+                return;
+
             foreach (IPlayer player in players)
                 if (player != null)
                     player.isCollideGround = false;
@@ -186,6 +192,11 @@ namespace Lasagna
         private void OnQuit(object sender, EventArgs e)
         {
             Exit();
+        }
+
+        private void OnPauseGame(object sender, EventArgs e)
+        {
+            paused = !paused;
         }
 
         /// <summary>
