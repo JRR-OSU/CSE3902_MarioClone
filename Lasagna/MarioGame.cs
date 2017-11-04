@@ -50,6 +50,8 @@ namespace Lasagna
         private List<IItem> items = new List<IItem>();
         private List<IProjectile> projectiles = new List<IProjectile>();
         private List<IPlayer> players = new List<IPlayer>();
+        private HUD hud;
+        private SpriteFont font;
         private bool paused;
         //Fields for warping
         private bool warping;
@@ -84,6 +86,7 @@ namespace Lasagna
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            hud = new HUD();
             EnemySpriteFactory.Instance.LoadAllContent(Content);
             ItemSpriteFactory.Instance.LoadAllContent(Content);
             MarioSpriteFactory.Instance.LoadAllContent(Content);
@@ -92,7 +95,7 @@ namespace Lasagna
             BackgroundSpriteFactory.Instance.LoadAllContent(Content, GraphicsDevice.Viewport.Height / ViewPortHeightMod, GraphicsDevice.Viewport.Height);
 
             LevelCreator.Instance.LoadLevelFromXML(Environment.CurrentDirectory + Level1XMLPath, out levelBackground, out players, out enemies, out tiles, out items);
-
+            font = Content.Load<SpriteFont>("Fonts/HUD");
             IPlayer pl;
             if (players != null && players.Count > Zero && (pl = players.Find(o => o != null)) != null)
                 mainCamera = new EdgeControlledCamera(pl.Bounds.X, Zero);
@@ -105,7 +108,8 @@ namespace Lasagna
             //If game is paused, exit.
             if (paused)
                 return;
-            
+
+            hud.Update(gameTime.TotalGameTime.Seconds, 0);
             foreach (IPlayer player in players)
                 if (player != null)
                     player.isCollideGround = false;
@@ -203,6 +207,7 @@ namespace Lasagna
                 if (projectile != null)
                     projectile.Draw(spriteBatch);
             //If we're not warping, draw over everything else
+            hud.Draw(spriteBatch, font, false);
             if (!warping)
             {
                 foreach (IPlayer player in players)
@@ -210,7 +215,7 @@ namespace Lasagna
                         player.Draw(spriteBatch);
             }
 
-            base.Draw(gameTime);
+            base.Draw(gameTime);       
         }
 
         //Event handlers

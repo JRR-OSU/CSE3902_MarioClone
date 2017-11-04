@@ -261,6 +261,7 @@ namespace Lasagna
             marioIsDead = true;
             velocity.X = 0;
             stateMachine.KillMario();
+            Score.Lives--;
         }
 
         public void OnCollisionResponse(ICollider otherCollider, CollisionSide side)

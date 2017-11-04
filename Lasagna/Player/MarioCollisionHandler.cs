@@ -32,15 +32,28 @@ namespace Lasagna
             if (item is FireFlowerItem)
             {
                 state.SetFireState();
+                Score.increaseScoreMario(1000);
             }
             else if (item is GrowMushroomItem)
             {
                 state.Grow();
+                Score.increaseScoreMario(1000);
             }
             else if (item is StarItem)
             {
                 state.Star();
+                Score.increaseScoreMario(1000);
             }
+            else if (item is CoinItem)
+            {
+                Score.addCoinMario();
+            }
+            else if(item is LifeMushroomItem)
+            {
+                Score.extraLifeMario();
+                Score.increaseScoreMario(1000);
+            }
+            
 
         }
 
@@ -107,6 +120,10 @@ namespace Lasagna
                         mario.velocity.Y = 0;
                         mario.SetPosition(mario.Bounds.X, (tile.Bounds.Y + tile.Bounds.Height + 5));
                         mario.ignoreGravity = false;
+                        if (tile is BreakableBrickTile)
+                            if (((BreakableBrickTile)tile).items.Length > 0 && ((BreakableBrickTile)tile).items[0] is CoinItem)
+                                Score.addCoinMario();
+                            
                         break;
                     case CollisionSide.Left:
                         mario.velocity.X = 0;

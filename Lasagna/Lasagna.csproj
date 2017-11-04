@@ -63,6 +63,8 @@
     <Compile Include="Enemies\MovingEnemy.cs" />
     <Compile Include="Tiles\UndergroundFloorBlockTile.cs" />
     <Compile Include="Tiles\UndergroundBrickTile.cs" />
+    <Compile Include="Utilities\Score.cs" />
+    <Compile Include="Utilities\HUD.cs" />
     <Compile Include="Utilities\GlobalSuppressions.cs" />
     <Compile Include="Interfaces\ICamera.cs" />
     <Compile Include="Interfaces\ICollider.cs" />
