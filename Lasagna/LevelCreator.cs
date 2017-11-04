@@ -379,6 +379,7 @@ namespace Lasagna
             }
 
             item = itemTypes[t].Invoke(posX, posY);
+
             return true;
         }
 

@@ -76,7 +76,7 @@ namespace Lasagna
         {
             position.X = x;
         }
-
+        
 
         public virtual void Update(GameTime gameTime)
         {
@@ -131,6 +131,7 @@ namespace Lasagna
                         }
                     }
                 }
+                
                 itemSprite.Update(gameTime, (int)position.X, (int)position.Y);
             }
         }
@@ -140,7 +141,7 @@ namespace Lasagna
             // Don't draw if the block is bumping
             if (this.waitToDraw == true)
                 hideTime++;
-            
+
             if (itemSprite != null && currentState != ItemState.Taken && !this.isInvisible && !this.waitToDraw)
                 itemSprite.Draw(spriteBatch);
             if (hideTime >= 16)

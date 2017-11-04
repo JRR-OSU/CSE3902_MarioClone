@@ -145,7 +145,25 @@
     <Tile type="UndergroundBrick" repeat="6" repeatspace="0" posx="4864" posy="863" />
     <Tile type="Pipe" repeat="0" repeatspace="0" posx="5152" posy="831" cameraX="4608" cameraY="0" height="0" facing="Left" warpSource="" warpDest="Overworld" />
   </Tiles>
-  <Items>
-      <Item type="Coin" posx="" posy=""/>
+  <Items>    
+      <Item type="Coin" posx="4896" posy="639"/>
+      <Item type="Coin" posx="4928" posy="639"/>
+      <Item type="Coin" posx="4960" posy="639"/>
+      <Item type="Coin" posx="4992" posy="639"/>
+      <Item type="Coin" posx="5024" posy="639"/>    
+      <Item type="Coin" posx="4864" posy="703"/>
+      <Item type="Coin" posx="4896" posy="703"/>
+      <Item type="Coin" posx="4928" posy="703"/>
+      <Item type="Coin" posx="4960" posy="703"/>
+      <Item type="Coin" posx="4992" posy="703"/>
+      <Item type="Coin" posx="5024" posy="703"/>
+      <Item type="Coin" posx="5056" posy="703"/>    
+      <Item type="Coin" posx="4864" posy="767"/>
+      <Item type="Coin" posx="4896" posy="767"/>
+      <Item type="Coin" posx="4928" posy="767"/>
+      <Item type="Coin" posx="4960" posy="767"/>
+      <Item type="Coin" posx="4992" posy="767"/>
+      <Item type="Coin" posx="5024" posy="767"/>
+      <Item type="Coin" posx="5056" posy="767"/>
   </Items>
 </Root>
