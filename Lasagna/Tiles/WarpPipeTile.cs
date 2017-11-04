@@ -6,9 +6,15 @@ namespace Lasagna
 {
     public class WarpPipeTile : ITile
     {
+        private const int Two = 2;
+        private const int One = 1;
+        private const int Zero = 0;
+        private const int defaultPipeTipHeight = 64;
+        private const int defaultPipeBaseHeight = 32;
+
         private ISprite pipeTipSprite = TileSpriteFactory.Instance.CreateSprite_Pipe_Tip();
         private ISprite[] pipeBaseSprites;
-        //Number of pipe base segments high this pipe is. 0 means just the pipe tip.
+        //Number of pipe base segments high this pipe is. Zero means just the pipe tip.
         private int height = 0;
         private int posX;
         private int posY;
@@ -64,18 +70,18 @@ namespace Lasagna
 
             //Set pipe base sprites
             pipeBaseSprites = new ISprite[height];
-            for (int i = 0; i < height; i++)
+            for (int i = Zero; i < height; i++)
                 pipeBaseSprites[i] = TileSpriteFactory.Instance.CreateSprite_Pipe_Base();
 
             //Store height of our sprites, if null ref default values
             if (pipeTipSprite != null)
                 pipeTipHeight = pipeTipSprite.Height;
             else
-                pipeTipHeight = 64;
-            if (pipeBaseSprites != null && pipeBaseSprites.Length > 0 && pipeBaseSprites[0] != null)
-                pipeBaseHeight = pipeBaseSprites[0].Height;
+                pipeTipHeight = defaultPipeTipHeight;
+            if (pipeBaseSprites != null && pipeBaseSprites.Length > Zero && pipeBaseSprites[Zero] != null)
+                pipeBaseHeight = pipeBaseSprites[Zero].Height;
             else
-                pipeBaseHeight = 32;
+                pipeBaseHeight = defaultPipeBaseHeight;
 
             MarioEvents.OnCrouch += OnMarioCrouch;
             MarioEvents.OnMoveLeft += OnMarioMoveLeft;
@@ -93,14 +99,14 @@ namespace Lasagna
 
         private float PipeRotation()
         {
-            double rot = 0;
+            double rot = Zero;
 
             if (pipeDir == Direction.Down)
                 rot = Math.PI;
             else if (pipeDir == Direction.Left)
-                rot = -Math.PI / 2;
+                rot = -Math.PI / Two;
             else if (pipeDir == Direction.Right)
-                rot = Math.PI / 2;
+                rot = Math.PI / Two;
 
             return (float)rot;
         }
@@ -120,23 +126,23 @@ namespace Lasagna
                 pipeTipSprite.Update(gameTime, tempPosX, tempPosY);
 
             //Modifier for pipe base spawning for X and Y based off spawn direction.
-            int yOffsetMod = 0,
-                xOffsetMod = 0;
+            int yOffsetMod = Zero,
+                xOffsetMod = Zero;
             if (FacingHorizontal())
             {
-                int pipeBaseXOffset = (pipeBaseHeight / 2);
-                xOffsetMod = (pipeDir == Direction.Left) ? 1 : -1;
+                int pipeBaseXOffset = (pipeBaseHeight / Two);
+                xOffsetMod = (pipeDir == Direction.Left) ? One : -One;
                 tempPosX += (((pipeDir == Direction.Left) ? pipeTipHeight : pipeBaseHeight) * xOffsetMod) - pipeBaseXOffset;
                 tempPosY += pipeBaseXOffset;
             }
             else
             {
-                yOffsetMod = (pipeDir == Direction.Up) ? 1 : -1;
+                yOffsetMod = (pipeDir == Direction.Up) ? One : -One;
                 tempPosY += ((pipeDir == Direction.Up) ? pipeTipHeight : pipeBaseHeight) * yOffsetMod;
             }
 
             //Draw each base after. 
-            for (int i = 0; i < pipeBaseSprites.Length; i++)
+            for (int i = Zero; i < pipeBaseSprites.Length; i++)
             {
                 if (pipeBaseSprites[i] != null)
                 {
@@ -148,12 +154,15 @@ namespace Lasagna
 
             //Clear crouching flag
             crouching = false;
+            movingLeft = false;
+            movingRight = false;
+            jumping = false;
         }
         public void Draw(SpriteBatch spriteBatch)
         {
             if (pipeTipSprite != null)
                 pipeTipSprite.Draw(spriteBatch, Color.White, PipeRotation());
-            for (int i = 0; i < pipeBaseSprites.Length; i++)
+            for (int i = Zero; i < pipeBaseSprites.Length; i++)
                 if (pipeBaseSprites[i] != null)
                     pipeBaseSprites[i].Draw(spriteBatch, Color.White, PipeRotation());
         }

@@ -6,10 +6,15 @@ namespace Lasagna
     public class ItemSpriteFactory
     {
         private Texture2D lifeMushroomSheet;
+        private readonly SpriteSheetInfo lifeMushroomInfo = new SpriteSheetInfo("ItemSprites/1UpMushroom", 32, 32);
         private Texture2D coinSheet;
+        private readonly SpriteSheetInfo coinInfo = new SpriteSheetInfo("ItemSprites/Coin", 25, 25, 4, 1, 8);
         private Texture2D fireFlowerSheet;
+        private readonly SpriteSheetInfo fireFlowerInfo = new SpriteSheetInfo("ItemSprites/FireFlower", 32, 32, 4, 1, 8);
         private Texture2D mushroomSheet;
+        private readonly SpriteSheetInfo mushroomInfo = new SpriteSheetInfo("ItemSprites/PowerupMushroom", 32, 32);
         private Texture2D starSheet;
+        private readonly SpriteSheetInfo starInfo = new SpriteSheetInfo("ItemSprites/PowerupStar", 28, 32, 4, 1, 8);
 
         private static ItemSpriteFactory instance;
 
@@ -26,36 +31,36 @@ namespace Lasagna
 
         public void LoadAllContent(ContentManager content)
         {
-            lifeMushroomSheet = content.Load<Texture2D>("ItemSprites/1UpMushroom");
-            coinSheet = content.Load<Texture2D>("ItemSprites/Coin");
-            fireFlowerSheet = content.Load<Texture2D>("ItemSprites/FireFlower");
-            mushroomSheet = content.Load<Texture2D>("ItemSprites/PowerupMushroom");
-            starSheet = content.Load<Texture2D>("ItemSprites/PowerupStar");
+            lifeMushroomSheet = content.Load<Texture2D>(lifeMushroomInfo.ContentPath);
+            coinSheet = content.Load<Texture2D>(coinInfo.ContentPath);
+            fireFlowerSheet = content.Load<Texture2D>(fireFlowerInfo.ContentPath);
+            mushroomSheet = content.Load<Texture2D>(mushroomInfo.ContentPath);
+            starSheet = content.Load<Texture2D>(starInfo.ContentPath);
         }
 
         public NonAnimatedSprite CreateSprite_1UpMushroom()
         {
-            return new NonAnimatedSprite(lifeMushroomSheet, 32, 32);
+            return new NonAnimatedSprite(lifeMushroomSheet, lifeMushroomInfo);
         }
 
         public AnimatedSprite CreateSprite_Coin()
         {
-            return new AnimatedSprite(coinSheet, 4, 1, 25, 25, 8);
+            return new AnimatedSprite(coinSheet, coinInfo);
         }
 
         public AnimatedSprite CreateSprite_FireFlower()
         {
-            return new AnimatedSprite(fireFlowerSheet, 4, 1, 32, 32, 8);
+            return new AnimatedSprite(fireFlowerSheet, fireFlowerInfo);
         }
 
         public NonAnimatedSprite CreateSprite_PowerupMushroom()
         {
-            return new NonAnimatedSprite(mushroomSheet, 32, 32);
+            return new NonAnimatedSprite(mushroomSheet, mushroomInfo);
         }
 
         public AnimatedSprite CreateSprite_Star()
         {
-            return new AnimatedSprite(starSheet, 4, 1, 28, 32, 8);
+            return new AnimatedSprite(starSheet, starInfo);
         }
     }
 }

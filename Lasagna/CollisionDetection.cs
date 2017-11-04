@@ -6,6 +6,9 @@ namespace Lasagna
 {
     public static class CollisionDetection
     {
+        private const float Half = 0.5f;
+        private const int Zero = 0;
+
         //By the interfaces, we know IPlayer, IEnemy, ITile, and IItem are all IColliders as well.
         public static void Update(ReadOnlyCollection<IPlayer> players, ReadOnlyCollection<IEnemy> enemies, ReadOnlyCollection<ITile> tiles, ReadOnlyCollection<IItem> items, ReadOnlyCollection<IProjectile> projectiles)
         {
@@ -68,7 +71,7 @@ namespace Lasagna
                 return false;
 
             bool collided = false;
-            float biggestCollisionLength = 0;
+            float biggestCollisionLength = Zero;
             ICollider targetCollider = null;
             CollisionSide biggestSourceSide = CollisionSide.None, biggestTargetSide = CollisionSide.None;
 
@@ -121,8 +124,8 @@ namespace Lasagna
         {
             CollisionSide side;
 
-            float avgWidth = 0.5f * (sourceRect.Width + targetRect.Width);
-            float avgHeight = 0.5f * (sourceRect.Height + targetRect.Height);
+            float avgWidth = Half * (sourceRect.Width + targetRect.Width);
+            float avgHeight = Half * (sourceRect.Height + targetRect.Height);
             float xDirection = sourceRect.Center.X - targetRect.Center.X;
             float yDirection = sourceRect.Center.Y - targetRect.Center.Y;
 

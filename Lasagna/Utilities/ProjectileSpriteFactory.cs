@@ -6,7 +6,9 @@ namespace Lasagna
     class ProjectileSpriteFactory
     {
         private Texture2D fireballDefaultSheet;
+        private readonly SpriteSheetInfo fireballDefaultInfo = new SpriteSheetInfo("MiscSprites/Fireball_Default", 16, 16, 4, 1, 12);
         private Texture2D fireballExplodeSheet;
+        private readonly SpriteSheetInfo fireballExplodeInfo = new SpriteSheetInfo("MiscSprites/Fireball_Explode", 32, 32, 3, 1, 12);
 
         private static ProjectileSpriteFactory instance;
 
@@ -23,18 +25,18 @@ namespace Lasagna
 
         public void LoadAllContent(ContentManager content)
         {
-            fireballDefaultSheet = content.Load<Texture2D>("MiscSprites/Fireball_Default");
-            fireballExplodeSheet = content.Load<Texture2D>("MiscSprites/Fireball_Explode");
+            fireballDefaultSheet = content.Load<Texture2D>(fireballDefaultInfo.ContentPath);
+            fireballExplodeSheet = content.Load<Texture2D>(fireballExplodeInfo.ContentPath);
         }
 
         public AnimatedSprite CreateSprite_Fireball_Default()
         {
-            return new AnimatedSprite(fireballDefaultSheet, 4, 1, 16, 16, 12);
+            return new AnimatedSprite(fireballDefaultSheet, fireballDefaultInfo);
         }
 
         public AnimatedSprite CreateSprite_Fireball_Explode()
         {
-            return new AnimatedSprite(fireballExplodeSheet, 3, 1, 32, 32, 12);
+            return new AnimatedSprite(fireballExplodeSheet, fireballExplodeInfo);
         }
     }
 }

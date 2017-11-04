@@ -6,6 +6,9 @@ namespace Lasagna
 {
     public class EdgeControlledCamera : ICamera
     {
+        private const int Two = 2;
+        private const int Zero = 0;
+
         private Matrix transform;
         private float screenXPos;
         private float screenYPos;
@@ -30,7 +33,7 @@ namespace Lasagna
             //Calculate screen edge positions
             rightEdge = screenXPos + screenWidth;
             bottomEdge = screenYPos + screenHeight;
-            float horMiddle = screenXPos + (screenWidth / 2);
+            float horMiddle = screenXPos + (screenWidth / Two);
 
             foreach (IPlayer pl in players)
             {
@@ -50,7 +53,7 @@ namespace Lasagna
             }
 
             //Update our camera view matrix
-            transform = Matrix.CreateTranslation(-screenXPos, -screenYPos, 0);
+            transform = Matrix.CreateTranslation(-screenXPos, -screenYPos, Zero);
         }
 
         public void Reset(object sender, EventArgs e)

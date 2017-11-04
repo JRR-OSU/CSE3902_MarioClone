@@ -4,6 +4,9 @@ namespace Lasagna
 {
     public class FireProjectile : BaseProjectile
     {
+        private const int One = 1;
+        private const int Zero = 0;
+
         private enum FireballStates
         {
             Idle,
@@ -31,9 +34,9 @@ namespace Lasagna
         {
             if (currentState == FireballStates.Idle)
             {
-                posX += (float)(gameTime.ElapsedGameTime.TotalSeconds * horizontalMoveSpeed) * (MovingRight ? 1 : -1);
+                posX += (float)(gameTime.ElapsedGameTime.TotalSeconds * horizontalMoveSpeed) * (MovingRight ? One : -One);
 
-                if (movingUpTimeLeft > 0)
+                if (movingUpTimeLeft > Zero)
                 {
                     posY -= (float)(gameTime.ElapsedGameTime.TotalSeconds * verticalMoveSpeed);
                     movingUpTimeLeft -= (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -45,7 +48,7 @@ namespace Lasagna
             {
                 explodeTimeLeft -= (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-                if (explodeTimeLeft < 0)
+                if (explodeTimeLeft < Zero)
                     DestroyShell();
             }
 

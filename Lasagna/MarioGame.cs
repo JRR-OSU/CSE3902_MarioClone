@@ -9,6 +9,13 @@ namespace Lasagna
 {
     public class MarioGame : Game
     {
+        private const string ContentDirectory = "Content";
+        private const string InstanceError = "Error, MarioGame instance not set!! Should be set in Initialize().";
+        private const string Level1XMLPath = "\\Level XML\\Mario_1-One.xml";
+        private const int Two = 2;
+        private const int Zero = 0;
+        private const int ViewPortHeightMod = 232 * 3392;
+
         private static MarioGame instance;
 
         public static MarioGame Instance
@@ -16,7 +23,7 @@ namespace Lasagna
             get
             {
                 if (instance == null)
-                    Debug.WriteLine("Error, MarioGame instance not set!! Should be set in Initialize().");
+                    Debug.WriteLine(InstanceError);
 
                 return instance;
             }
@@ -44,12 +51,19 @@ namespace Lasagna
         private List<IProjectile> projectiles = new List<IProjectile>();
         private List<IPlayer> players = new List<IPlayer>();
         private bool paused;
+        //Fields for warping
+        private bool warping;
+        private int warpDestX;
+        private int warpDestY;
+        private int warpDestCamPosX;
+        private int warpDestCamPosY;
+        private Direction warpDestPipeFacing;
 
         public MarioGame()
         {
             instance = this;
             new GraphicsDeviceManager(this);
-            Content.RootDirectory = "Content";
+            Content.RootDirectory = ContentDirectory;
         }
 
         protected override void Initialize()
@@ -75,15 +89,15 @@ namespace Lasagna
             MarioSpriteFactory.Instance.LoadAllContent(Content);
             ProjectileSpriteFactory.Instance.LoadAllContent(Content);
             TileSpriteFactory.Instance.LoadAllContent(Content);
-            BackgroundSpriteFactory.Instance.LoadAllContent(Content, GraphicsDevice.Viewport.Height / 232 * 3392, GraphicsDevice.Viewport.Height);
+            BackgroundSpriteFactory.Instance.LoadAllContent(Content, GraphicsDevice.Viewport.Height / ViewPortHeightMod, GraphicsDevice.Viewport.Height);
 
-            LevelCreator.Instance.LoadLevelFromXML(Environment.CurrentDirectory + "\\Level XML\\Mario_1-1.xml", out levelBackground, out players, out enemies, out tiles, out items);
+            LevelCreator.Instance.LoadLevelFromXML(Environment.CurrentDirectory + Level1XMLPath, out levelBackground, out players, out enemies, out tiles, out items);
 
             IPlayer pl;
-            if (players != null && players.Count > 0 && (pl = players.Find(o => o != null)) != null)
-                mainCamera = new EdgeControlledCamera(pl.Bounds.X, 0);
+            if (players != null && players.Count > Zero && (pl = players.Find(o => o != null)) != null)
+                mainCamera = new EdgeControlledCamera(pl.Bounds.X, Zero);
             else
-                mainCamera = new EdgeControlledCamera(0, 0);
+                mainCamera = new EdgeControlledCamera(Zero, Zero);
         }
 
         protected override void Update(GameTime gameTime)
@@ -97,13 +111,13 @@ namespace Lasagna
                     player.isCollideGround = false;
 
             keyControl.Update();
-            //if (players != null && players.Count > 0)
-            //   mouseControl.Update(players[0], enemies.AsReadOnly(), tiles.AsReadOnly());
+            //if (players != null && players.Count > Zero)
+            //   mouseControl.Update(players[Zero], enemies.AsReadOnly(), tiles.AsReadOnly());
 
             CollisionDetection.Update(players.AsReadOnly(), enemies.AsReadOnly(), tiles.AsReadOnly(), items.AsReadOnly(), projectiles.AsReadOnly());
 
             if (levelBackground != null)
-                levelBackground.Update(gameTime, 0, 0);
+                levelBackground.Update(gameTime, Zero, Zero);
 
             foreach (ITile tile in tiles)
                 if (tile != null)
@@ -230,13 +244,6 @@ namespace Lasagna
                 projectiles.Remove(projectile);
         }
 
-        private bool warping;
-        private int warpDestX;
-        private int warpDestY;
-        private int warpDestCamPosX;
-        private int warpDestCamPosY;
-        private Direction warpDestPipeFacing;
-
         /// <summary>
         /// Attempts too warp to the given target. If target is valid, plays warp animation and moves.
         /// </summary>
@@ -257,13 +264,13 @@ namespace Lasagna
                 Direction dir = ((WarpPipeTile)tile).PipeDirection;
                 if (dir == Direction.Up || dir == Direction.Down)
                 {
-                    warpDestX = tile.Bounds.X + tile.Bounds.Width / 2;
+                    warpDestX = tile.Bounds.X + tile.Bounds.Width / Two;
                     warpDestY = (dir == Direction.Up) ? tile.Bounds.Y : tile.Bounds.Bottom;
                 }
                 else
                 {
                     warpDestX = (dir == Direction.Left) ? tile.Bounds.X : tile.Bounds.Right;
-                    warpDestY = tile.Bounds.Y + tile.Bounds.Height / 2;
+                    warpDestY = tile.Bounds.Y + tile.Bounds.Height / Two;
                 }
 
                 //Begin warp process
@@ -300,7 +307,7 @@ namespace Lasagna
             {
                 if (pl != null)
                 {
-                    int offsetX = 0, offsetY = 0;
+                    int offsetX = Zero, offsetY = Zero;
 
                     if (warpDestPipeFacing == Direction.Down)
                         offsetY = -pl.Bounds.Height;

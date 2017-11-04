@@ -102,6 +102,7 @@
     <Compile Include="Controllers\KeyboardController.cs" />
     <Compile Include="Utilities\ProjectileSpriteFactory.cs" />
     <Compile Include="Utilities\BackgroundSpriteFactory.cs" />
+    <Compile Include="Utilities\SpriteSheetInfo.cs" />
     <Compile Include="Utilities\TileSpriteFactory.cs" />
     <Compile Include="Utilities\MarioSpriteFactory.cs" />
     <Compile Include="Utilities\ItemSpriteFactory.cs" />

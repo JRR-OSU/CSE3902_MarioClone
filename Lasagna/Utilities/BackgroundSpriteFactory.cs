@@ -8,6 +8,7 @@ namespace Lasagna
         private int screenWidth;
         private int screenHeight;
         private Texture2D marioClearSheet;
+        private readonly SpriteSheetInfo marioClearInfo = new SpriteSheetInfo("LevelBackgrounds/level_1-1", 400, 400);
 
         private static BackgroundSpriteFactory instance;
 
@@ -26,12 +27,12 @@ namespace Lasagna
         {
             screenWidth = newScreenWidth;
             screenHeight = newScreenHeight;
-            marioClearSheet = content.Load<Texture2D>("LevelBackgrounds/level_1-1");
+            marioClearSheet = content.Load<Texture2D>(marioClearInfo.ContentPath);
         }
 
         public NonAnimatedSprite CreateBackground_MarioClear()
         {
-            return new NonAnimatedSprite(marioClearSheet, screenWidth, screenHeight);
+            return new NonAnimatedSprite(marioClearSheet, new SpriteSheetInfo(string.Empty, screenWidth, screenHeight));
         }
     }
 }

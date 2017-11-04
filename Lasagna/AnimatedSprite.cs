@@ -7,11 +7,15 @@ namespace Lasagna
 {
     public class AnimatedSprite : NonAnimatedSprite
     {
+        private const string drawError = "Invalid params passed for update on AnimatedSprite.";
+        private const int Zero = 0;
+        private const int One = 1;
+
         private int sourceSpriteSheetColumns,
             sourceSpriteSheetRows,
             animationFPS;
 
-        private int currentFrame = 0;
+        private int currentFrame = Zero;
         private int totalFrames;
         private float frameTime;
 
@@ -23,24 +27,24 @@ namespace Lasagna
             }
         }
 
-        public AnimatedSprite(Texture2D spriteSheet, int spriteSheetColumns, int spriteSheetRows, int spriteScreenXSize, int spriteScreenYSize, int spriteAnimationFPS)
-            : base(spriteSheet, spriteScreenXSize, spriteScreenYSize)
+        public AnimatedSprite(Texture2D spriteSheet, SpriteSheetInfo info)
+            : base(spriteSheet, info)
         {
-            sourceSpriteSheetColumns = spriteSheetColumns;
-            sourceSpriteSheetRows = spriteSheetRows;
-            animationFPS = spriteAnimationFPS;
+            sourceSpriteSheetColumns = info.Columns;
+            sourceSpriteSheetRows = info.Rows;
+            animationFPS = info.AnimationFPS;
 
             //Calculate an individual sprite size on the source sheet based on our number of rows and columns
             SourceRectangle = new Rectangle(SourceRectangle.X, SourceRectangle.Y, SourceSpriteSheet.Width / sourceSpriteSheetColumns, SourceSpriteSheet.Height / sourceSpriteSheetRows);
 
-            totalFrames = spriteSheetColumns * spriteSheetRows;
+            totalFrames = info.Columns * info.Rows;
         }
 
         public override void Update(GameTime gameTime, int spriteXPos, int spriteYPos)
         {
             if (gameTime == null)
             {
-                Debug.WriteLine("Invalid params passed for update on AnimatedSprite.");
+                Debug.WriteLine(drawError);
                 return;
             }
 
@@ -49,12 +53,12 @@ namespace Lasagna
 
             //Perform spritesheet animation calculations.
             frameTime += (float)(gameTime.ElapsedGameTime.TotalSeconds * animationFPS);
-            if (frameTime >= 1.0f)
+            if (frameTime >= One)
             {
-                frameTime = 0.0f;
+                frameTime = Zero;
                 currentFrame++;
                 if (currentFrame >= totalFrames)
-                    currentFrame = 0;
+                    currentFrame = Zero;
 
                 //Calculate new frame source position
                 int row = (int)((float)currentFrame / (float)sourceSpriteSheetColumns);
