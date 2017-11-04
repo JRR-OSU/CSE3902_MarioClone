@@ -16,6 +16,8 @@ namespace Lasagna
         private Texture2D flagPoleSheet;
         private Texture2D brickPieceLeftSheet;
         private Texture2D brickPieceRightSheet;
+        private Texture2D undergroundBrickSheet;
+        private Texture2D undergroundFloorSheet;
 
         private static TileSpriteFactory instance;
 
@@ -43,6 +45,8 @@ namespace Lasagna
             flagPoleSheet = content.Load<Texture2D>("MiscSprites/FlagPole");
             brickPieceLeftSheet = content.Load<Texture2D>("BlockSprites/BrickPieceLeft");
             brickPieceRightSheet = content.Load<Texture2D>("BlockSprites/BrickPieceRight");
+            undergroundBrickSheet = content.Load<Texture2D>("BlockSprites/UndergroundBrick");
+            undergroundFloorSheet = content.Load<Texture2D>("BlockSprites/UndergroundFloor");
         }
 
         public NonAnimatedSprite CreateSprite_BreakableBrick()
@@ -95,6 +99,16 @@ namespace Lasagna
         public NonAnimatedSprite CreateSprite_FlagPole()
         {
             return new NonAnimatedSprite(flagPoleSheet, 16, 304);
+        }
+
+        public NonAnimatedSprite CreateSprite_UndergroundBrick()
+        {
+            return new NonAnimatedSprite(undergroundBrickSheet, 32, 32);
+        }
+
+        public NonAnimatedSprite CreateSprite_UndergroundFloor()
+        {
+            return new NonAnimatedSprite(undergroundFloorSheet, 32, 32);
         }
     }
 }

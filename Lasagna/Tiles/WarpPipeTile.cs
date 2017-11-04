@@ -14,9 +14,19 @@ namespace Lasagna
         private int posY;
         private int pipeTipHeight;
         private int pipeBaseHeight;
+        private string warpDest;
+        private string warpSource;
+        private bool crouching;
+        private bool jumping;
+        private bool movingLeft;
+        private bool movingRight;
+        private int warpCamXPos;
+        private int warpCamYPos;
         //Direction this pipe faces, changes where mario can enter pipe from.
         private Direction pipeDir;
         public bool IsChangingState { get; set; }
+        public string WarpSource { get { return warpSource; } }
+        public Direction PipeDirection { get { return pipeDir; } }
         public Rectangle Bounds
         {
             get
@@ -39,12 +49,18 @@ namespace Lasagna
             }
         }
 
-        public WarpPipeTile(int spawnPosX, int spawnPosY, Direction facing, int pipeHeight)
+        public WarpPipeTile(int spawnPosX, int spawnPosY, Direction facing, int pipeHeight, 
+            string pipeWarpSource, string pipeWarpDest, Vector2 warpForcesCamPos)
         {
             posX = spawnPosX;
             posY = spawnPosY;
             pipeDir = facing;
             height = pipeHeight;
+            warpSource = pipeWarpSource;
+            if (warpSource != pipeWarpDest)
+                warpDest = pipeWarpDest;
+            warpCamXPos = (int)warpForcesCamPos.X;
+            warpCamYPos = (int)warpForcesCamPos.Y;
 
             //Set pipe base sprites
             pipeBaseSprites = new ISprite[height];
@@ -60,6 +76,11 @@ namespace Lasagna
                 pipeBaseHeight = pipeBaseSprites[0].Height;
             else
                 pipeBaseHeight = 32;
+
+            MarioEvents.OnCrouch += OnMarioCrouch;
+            MarioEvents.OnMoveLeft += OnMarioMoveLeft;
+            MarioEvents.OnMoveRight += OnMarioMoveRight;
+            MarioEvents.OnJump += OnMarioJump;
         }
 
         //Empty for now
@@ -124,6 +145,9 @@ namespace Lasagna
                     tempPosY += pipeBaseHeight * yOffsetMod;
                 }
             }
+
+            //Clear crouching flag
+            crouching = false;
         }
         public void Draw(SpriteBatch spriteBatch)
         {
@@ -133,10 +157,37 @@ namespace Lasagna
                 if (pipeBaseSprites[i] != null)
                     pipeBaseSprites[i].Draw(spriteBatch, Color.White, PipeRotation());
         }
+        
+        private void OnMarioCrouch(object sender, EventArgs e)
+        {
+            crouching = true;
+        }
+        private void OnMarioJump(object sender, EventArgs e)
+        {
+            jumping = true;
+        }
+        private void OnMarioMoveLeft(object sender, EventArgs e)
+        {
+            movingLeft = true;
+        }
+        private void OnMarioMoveRight(object sender, EventArgs e)
+        {
+            movingRight = true;
+        }
 
         public void OnCollisionResponse(ICollider otherCollider, CollisionSide side)
         {
-            //TODO: Warp mario on down if thisis warp pipe.
+            //If player is crouching, try and warp to destination.
+            if (otherCollider != null && ShouldWarp(side))
+                MarioGame.Instance.TryWarp(warpDest, warpCamXPos, warpCamYPos);
+        }
+
+        private bool ShouldWarp(CollisionSide side)
+        {
+            return (crouching && pipeDir == Direction.Up && side == CollisionSide.Top) 
+                || (jumping && pipeDir == Direction.Down && side == CollisionSide.Bottom) 
+                || (movingLeft && pipeDir == Direction.Left && side == CollisionSide.Left) 
+                || (movingRight && pipeDir == Direction.Right && side == CollisionSide.Right);
         }
     }
 }

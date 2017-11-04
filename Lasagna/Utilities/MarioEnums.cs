@@ -53,7 +53,9 @@ namespace Lasagna
         InvisibleBlock,
         QuestionBlock,
         UnbreakableBlock,
-        Pipe
+        Pipe,
+        UndergroundBrick,
+        UndergroundFloor
     }
 
     public enum ItemType

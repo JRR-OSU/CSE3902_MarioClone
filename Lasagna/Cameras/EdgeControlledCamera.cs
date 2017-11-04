@@ -64,5 +64,11 @@ namespace Lasagna
             return col.Bounds.X + col.Bounds.Width >= screenXPos && col.Bounds.X <= rightEdge
                 && col.Bounds.Y + col.Bounds.Height >= screenYPos && col.Bounds.Y <= bottomEdge;
         }
+
+        public void ForcePosition(int xPos, int yPos)
+        {
+            screenXPos = xPos;
+            screenYPos = yPos;
+        }
     }
 }

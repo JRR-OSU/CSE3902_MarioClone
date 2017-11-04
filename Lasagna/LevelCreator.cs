@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -13,7 +14,7 @@ namespace Lasagna
         private readonly Dictionary<LevelType, ISprite> levelBackdrops = new Dictionary<LevelType, ISprite>(CreateLevelTypesDictionary());
         private readonly Dictionary<PlayerType, Func<int, int, IPlayer>> playerTypes = new Dictionary<PlayerType, Func<int, int, IPlayer>>(CreatePlayerTypesDictionary());
         private readonly Dictionary<EnemyType, Func<int, int, IEnemy>> enemyTypes = new Dictionary<EnemyType, Func<int, int, IEnemy>>(CreateEnemyTypesDictionary());
-        private readonly Dictionary<TileType, Func<Direction, int, int, int, string, IItem[], ITile>> tileTypes = new Dictionary<TileType, Func<Direction, int, int, int, string, IItem[], ITile>>(CreateTileTypesDictionary());
+        private readonly Dictionary<TileType, Func<Direction, int, int, int, Vector2, string, string, IItem[], ITile>> tileTypes = new Dictionary<TileType, Func<Direction, int, int, int, Vector2, string, string, IItem[], ITile>>(CreateTileTypesDictionary());
         private readonly Dictionary<ItemType, Func<int, int, IItem>> itemTypes = new Dictionary<ItemType, Func<int, int, IItem>>(CreateItemTypesDictionary());
 
         private static Dictionary<LevelType, ISprite> CreateLevelTypesDictionary()
@@ -46,17 +47,19 @@ namespace Lasagna
             return newDictionary;
         }
 
-        private static Dictionary<TileType, Func<Direction, int, int, int, string, IItem[], ITile>> CreateTileTypesDictionary()
+        private static Dictionary<TileType, Func<Direction, int, int, int, Vector2, string, string, IItem[], ITile>> CreateTileTypesDictionary()
         {
-            Dictionary<TileType, Func<Direction, int, int, int, string, IItem[], ITile>> newDictionary = new Dictionary<TileType, Func<Direction, int, int, int, string, IItem[], ITile>>()
+            Dictionary<TileType, Func<Direction, int, int, int, Vector2, string, string, IItem[], ITile>> newDictionary = new Dictionary<TileType, Func<Direction, int, int, int, Vector2, string, string, IItem[], ITile>>()
             {
-                { TileType.Brick, (Direction notUsed4, int posX, int posY, int notUsed1, string notUsed2, IItem[] blockItems) => new BreakableBrickTile(posX, posY, blockItems)},
-                { TileType.Flag, (Direction notUsed4, int posX, int posY, int notUsed1, string notUsed2, IItem[] notUsed3) => new FlagPoleTile(posX, posY)},
-                { TileType.Floor, (Direction notUsed4, int posX, int posY, int notUsed1, string notUsed2, IItem[] notUsed3) => new FloorBlockTile(posX, posY)},
-                { TileType.InvisibleBlock, (Direction notUsed4, int posX, int posY, int notUsed1, string notUsed2, IItem[] blockItems) => new InvisibleItemBlockTile(posX, posY, blockItems)},
-                { TileType.QuestionBlock, (Direction notUsed4, int posX, int posY, int notUsed1, string notUsed2, IItem[] blockItems) => new QuestionBlockTile(posX, posY, blockItems)},
-                { TileType.UnbreakableBlock, (Direction notUsed4, int posX, int posY, int notUsed1, string notUsed2, IItem[] notUsed3) => new UnbreakableBlockTile(posX, posY)},
-                { TileType.Pipe, (Direction facing, int posX, int posY, int height, string warpDest, IItem[] notUsed3) => new WarpPipeTile(posX, posY, facing, height)}
+                { TileType.Brick, (Direction notUsed4, int posX, int posY, int notUsed1, Vector2 notUsed6, string notUsed2, string notUsed3, IItem[] blockItems) => new BreakableBrickTile(posX, posY, blockItems)},
+                { TileType.Flag, (Direction notUsed4, int posX, int posY, int notUsed1, Vector2 notUsed6, string notUsed2, string notUsed3, IItem[] notUsed5) => new FlagPoleTile(posX, posY)},
+                { TileType.Floor, (Direction notUsed4, int posX, int posY, int notUsed1, Vector2 notUsed6, string notUsed2, string notUsed3, IItem[] notUsed5) => new FloorBlockTile(posX, posY)},
+                { TileType.InvisibleBlock, (Direction notUsed4, int posX, int posY, int notUsed1, Vector2 notUsed6, string notUsed2, string notUsed3, IItem[] blockItems) => new InvisibleItemBlockTile(posX, posY, blockItems)},
+                { TileType.QuestionBlock, (Direction notUsed4, int posX, int posY, int notUsed1, Vector2 notUsed6, string notUsed2, string notUsed3, IItem[] blockItems) => new QuestionBlockTile(posX, posY, blockItems)},
+                { TileType.UnbreakableBlock, (Direction notUsed4, int posX, int posY, int notUsed1, Vector2 notUsed6, string notUsed2, string notUsed3, IItem[] notUsed5) => new UnbreakableBlockTile(posX, posY)},
+                { TileType.Pipe, (Direction facing, int posX, int posY, int height, Vector2 warpForcesCamPos, string warpSource, string warpDest, IItem[] notUsed3) => new WarpPipeTile(posX, posY, facing, height, warpSource, warpDest, warpForcesCamPos)},
+                { TileType.UndergroundBrick, (Direction notUsed4, int posX, int posY, int notUsed1, Vector2 notUsed6, string notUsed2, string notUsed3, IItem[] notUsed5) => new UndergroundBrickTile(posX, posY)},
+                { TileType.UndergroundFloor, (Direction notUsed4, int posX, int posY, int notUsed1, Vector2 notUsed6, string notUsed2, string notUsed3, IItem[] notUsed5) => new UndergroundFloorBlockTile(posX, posY)},
             };
 
             return newDictionary;
@@ -260,19 +263,26 @@ namespace Lasagna
             List<IItem> blockItems = new List<IItem>();
             Direction pipeFacing = Direction.Up;
             int pipeHeight = -1;
+            string warpSource = "";
             string warpDest = "";
+            Vector2 warpForcesCamPos = Vector2.Zero;
             int blockItemCount = -1;
             string itemStr = "";
 
             //If this is pipe, get optional params from reader
             if (t == TileType.Pipe)
             {
+                int camX, camY;
+                if (int.TryParse(reader.GetAttribute("cameraX"), out camX) && int.TryParse(reader.GetAttribute("cameraY"), out camY))
+                    warpForcesCamPos = new Vector2(camX, camY);
+
                 Enum.TryParse(reader.GetAttribute("facing"), out pipeFacing);
                 int.TryParse(reader.GetAttribute("height"), out pipeHeight);
                 pipeHeight = Math.Max(0, pipeHeight);
                 warpDest = reader.GetAttribute("warpDest");
+                warpSource = reader.GetAttribute("warpSource");
 
-                tiles.Add(tileTypes[t].Invoke(pipeFacing, posX, posY, pipeHeight, warpDest, blockItems.ToArray()));
+                tiles.Add(tileTypes[t].Invoke(pipeFacing, posX, posY, pipeHeight, warpForcesCamPos, warpSource, warpDest, blockItems.ToArray()));
             }
             //If this is question, invisible, or brick block, optional params from reader
             else if (t == TileType.Brick || t == TileType.InvisibleBlock || t == TileType.QuestionBlock)
@@ -306,11 +316,11 @@ namespace Lasagna
                     items.AddRange(blockItems);
                 }
 
-                tiles.Add(tileTypes[t].Invoke(pipeFacing, posX, posY, pipeHeight, warpDest, blockItems.ToArray()));
+                tiles.Add(tileTypes[t].Invoke(pipeFacing, posX, posY, pipeHeight, warpForcesCamPos, warpSource, warpDest, blockItems.ToArray()));
             }
             //Else create generic tile
             else
-                tiles.Add(tileTypes[t].Invoke(Direction.Up, posX, posY, -1, "", blockItems.ToArray()));
+                tiles.Add(tileTypes[t].Invoke(Direction.Up, posX, posY, -1, Vector2.Zero, "", "", blockItems.ToArray()));
 
             //If this element has a repeat field, and it has a valid integer, repeat this tile according to the field.
             //Each repeated tile is spawned to the right of the base tile.
@@ -348,7 +358,7 @@ namespace Lasagna
 
                     items.AddRange(newItems);
 
-                    tiles.Add(tileTypes[t].Invoke(pipeFacing, posX + (rSpace * i), posY, pipeHeight, warpDest, newItems.ToArray()));
+                    tiles.Add(tileTypes[t].Invoke(pipeFacing, posX + (rSpace * i), posY, pipeHeight, warpForcesCamPos, warpSource, warpDest, newItems.ToArray()));
                 }
             }
 
