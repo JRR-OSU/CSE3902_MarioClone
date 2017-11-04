@@ -11,7 +11,7 @@ namespace Lasagna
     {
         private const string ContentDirectory = "Content";
         private const string InstanceError = "Error, MarioGame instance not set!! Should be set in Initialize().";
-        private const string Level1XMLPath = "\\Level XML\\Mario_1-One.xml";
+        private const string Level1XMLPath = "\\Level XML\\Mario_1-1.xml";
         private const int Two = 2;
         private const int Zero = 0;
         private const int ViewPortHeightMod = 232 * 3392;
