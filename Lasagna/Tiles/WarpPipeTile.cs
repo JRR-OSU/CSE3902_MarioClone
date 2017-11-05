@@ -55,7 +55,7 @@ namespace Lasagna
             }
         }
 
-        public WarpPipeTile(int spawnPosX, int spawnPosY, Direction facing, int pipeHeight, 
+        public WarpPipeTile(int spawnPosX, int spawnPosY, Direction facing, int pipeHeight,
             string pipeWarpSource, string pipeWarpDest, Vector2 warpForcesCamPos)
         {
             posX = spawnPosX;
@@ -166,7 +166,7 @@ namespace Lasagna
                 if (pipeBaseSprites[i] != null)
                     pipeBaseSprites[i].Draw(spriteBatch, Color.White, PipeRotation());
         }
-        
+
         private void OnMarioCrouch(object sender, EventArgs e)
         {
             crouching = true;
@@ -193,10 +193,10 @@ namespace Lasagna
 
         private bool ShouldWarp(CollisionSide side)
         {
-            return (crouching && pipeDir == Direction.Up && side == CollisionSide.Top) 
-                || (jumping && pipeDir == Direction.Down && side == CollisionSide.Bottom) 
-                || (movingLeft && pipeDir == Direction.Left && side == CollisionSide.Left) 
-                || (movingRight && pipeDir == Direction.Right && side == CollisionSide.Right);
+            return (crouching && pipeDir == Direction.Up && side == CollisionSide.Top)
+                || (jumping && pipeDir == Direction.Down && side == CollisionSide.Bottom)
+                || (movingRight && pipeDir == Direction.Left && side == CollisionSide.Left)
+                || (movingLeft && pipeDir == Direction.Right && side == CollisionSide.Right);
         }
     }
 }
