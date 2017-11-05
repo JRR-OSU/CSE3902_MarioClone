@@ -53,6 +53,12 @@ namespace Lasagna
             }
 
             //Update our camera view matrix
+            UpdateViewMatrix();
+        }
+
+        private void UpdateViewMatrix()
+        {
+            //Update our camera view matrix
             transform = Matrix.CreateTranslation(-screenXPos, -screenYPos, Zero);
         }
 
@@ -72,6 +78,7 @@ namespace Lasagna
         {
             screenXPos = xPos;
             screenYPos = yPos;
+            UpdateViewMatrix();
         }
     }
 }

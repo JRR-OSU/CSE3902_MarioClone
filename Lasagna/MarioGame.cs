@@ -315,7 +315,7 @@ namespace Lasagna
             }
         }
 
-        public void FinishWarp()
+        public void SecondWarpPhase()
         {
             if (!warping)
                 return;
@@ -340,7 +340,10 @@ namespace Lasagna
             //Force main camera to the necessary view
             if (mainCamera != null)
                 mainCamera.ForcePosition(warpDestCamPosX, warpDestCamPosY);
+        }
 
+        public void FinishWarp()
+        {
             warping = false;
         }
 

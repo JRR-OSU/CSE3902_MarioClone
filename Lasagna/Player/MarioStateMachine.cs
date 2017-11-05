@@ -511,7 +511,12 @@ namespace Lasagna
 
                     if (warpTimeRemaining <= 0)
                     {
-                        MarioGame.Instance.FinishWarp();
+                        //If we start with move, this is first phase, move to second
+                        if (warpMoveFirst)
+                            MarioGame.Instance.SecondWarpPhase();
+                        //Otherwise finish warp
+                        else
+                            MarioGame.Instance.FinishWarp();
                         mario.isWarping = false;
                     }
                 }
