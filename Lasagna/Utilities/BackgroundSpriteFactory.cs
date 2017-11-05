@@ -31,7 +31,11 @@ namespace Lasagna
 
         public NonAnimatedSprite CreateBackground_MarioClear()
         {
-            return new NonAnimatedSprite(marioClearSheet, new SpriteSheetInfo(string.Empty, screenHeight / marioClearSheet.Height * marioClearSheet.Width, screenHeight));
+            int width = 0;
+            if (marioClearSheet != null)
+                width = screenHeight / marioClearSheet.Height * marioClearSheet.Width;
+
+            return new NonAnimatedSprite(marioClearSheet, new SpriteSheetInfo(string.Empty, width, screenHeight));
         }
     }
 }

@@ -578,6 +578,9 @@ namespace Lasagna
             marioState = MarioState.Small;
             marioMovement = MarioMovement.IdleRight;
             currentSprite = smallStates[marioMovement];
+            stateTransitionTimeRemaining = 0;
+            warpTimeRemaining = 0;
+            blinkTimeRemaining = 0;
         }
 
         public void BeginWarpAnimation(Direction moveDir, bool startWithMoving)

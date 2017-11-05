@@ -81,6 +81,7 @@ namespace Lasagna
             //Subscribe to events
             MarioEvents.OnQuit += OnQuit;
             MarioEvents.OnPause += OnPauseGame;
+            MarioEvents.OnReset += OnReset;
 
             base.Initialize();
         }
@@ -237,6 +238,11 @@ namespace Lasagna
         private void OnPauseGame(object sender, EventArgs e)
         {
             paused = !paused;
+        }
+
+        private void OnReset(object sender, EventArgs e)
+        {
+            warping = false;
         }
 
         /// <summary>
