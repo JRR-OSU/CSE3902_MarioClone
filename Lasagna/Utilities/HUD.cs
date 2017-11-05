@@ -26,6 +26,7 @@ using System.Text;
             private int Time;
             private ISprite mario;
             private bool isDeathScreen = true;
+            private bool isGameOver = false;
 
 
             public HUD()
@@ -57,10 +58,9 @@ using System.Text;
                     Time--;
                     counter = 0;
                 }
-                if (Time <= 0)
+                if (Time <= 0 || Score.Lives <=0)
                 {
-                Score.Lives = 0;
-                Score.KillMario();
+                    isGameOver = true;
                 }
                 
             }
@@ -73,12 +73,22 @@ using System.Text;
                 batch.DrawString(font, "MARIO" + addSpaces(4) + "COINS" + addSpaces(4) + "LIVES" + addSpaces(5) + "TIME" + addSpaces(4) + "WORLD", new Vector2(10, 10), Color.White);
                 batch.DrawString(font, formattedScore(Score.marioScore) + addSpaces(3) + formattedCoins(Score.Coins) + addSpaces(7) + formattedLives(Score.Lives) + addSpaces(8) + Time.ToString() + addSpaces(5) + "1-1", new Vector2(10, 25), Color.White);
 
-                if (deathScreen)
+
+                if (deathScreen && isGameOver == false)
                 {
                     batch.DrawString(font, "WORLD 1 - 1\n\n" + addSpaces(4) +  "x  " + Score.Lives, new Vector2((640 / 2)-30, (480 / 2)-50), Color.White);
                     Time = 400;
                 
                     //mario.Draw(batch);
+                }
+
+                if (isGameOver && deathScreen)
+                {
+                    batch.DrawString(font, "GAME OVER", new Vector2((640 / 2) - 30, (480 / 2) - 50), Color.White);
+                    Time = 400;
+                    Score.Lives = 3;
+                    Score.marioScore = 0;
+                    Score.Coins = 0;
                 }
 
                 batch.End();
