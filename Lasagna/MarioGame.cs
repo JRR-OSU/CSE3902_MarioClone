@@ -14,7 +14,6 @@ namespace Lasagna
         private const string Level1XMLPath = "\\Level XML\\Mario_1-1.xml";
         private const int Two = 2;
         private const int Zero = 0;
-        private const int ViewPortHeightMod = 232 * 3392;
 
         private static MarioGame instance;
 
@@ -95,7 +94,7 @@ namespace Lasagna
             MarioSpriteFactory.Instance.LoadAllContent(Content);
             ProjectileSpriteFactory.Instance.LoadAllContent(Content);
             TileSpriteFactory.Instance.LoadAllContent(Content);
-            BackgroundSpriteFactory.Instance.LoadAllContent(Content, GraphicsDevice.Viewport.Height / ViewPortHeightMod, GraphicsDevice.Viewport.Height);
+            BackgroundSpriteFactory.Instance.LoadAllContent(Content, GraphicsDevice.Viewport.Height);
             hud = new HUD();
 
             LevelCreator.Instance.LoadLevelFromXML(Environment.CurrentDirectory + Level1XMLPath, out levelBackground, out players, out enemies, out tiles, out items);
@@ -194,11 +193,9 @@ namespace Lasagna
                 DisplayDeathScreen();
                 return;
             }
+
             if (levelBackground != null)
                 levelBackground.Draw(spriteBatch);
-
-
-
 
             //If we're warping, draw under everything else
             if (warping)

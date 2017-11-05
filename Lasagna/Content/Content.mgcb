@@ -613,18 +613,6 @@
 /processorParam:TextureFormat=Color
 /build:EnemySprites/Koopa_Die.png
 
-#begin LevelBackgrounds/level_1-1.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:LevelBackgrounds/level_1-1.png
-
 #begin MarioSprites/Mario_Big_ShrinkLeft.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -751,4 +739,16 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Compressed
 /build:Fonts/HUD.spritefont
+
+#begin LevelBackgrounds/level_1-1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:LevelBackgrounds/level_1-1.png
 

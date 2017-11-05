@@ -1,14 +1,14 @@
 ﻿using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 
 namespace Lasagna
 {
     public class BackgroundSpriteFactory
     {
-        private int screenWidth;
         private int screenHeight;
         private Texture2D marioClearSheet;
-        private readonly SpriteSheetInfo marioClearInfo = new SpriteSheetInfo("LevelBackgrounds/level_1-1", 400, 400);
+        private readonly SpriteSheetInfo marioClearInfo = new SpriteSheetInfo("LevelBackgrounds/level_1-1", 0, 0);
 
         private static BackgroundSpriteFactory instance;
 
@@ -23,16 +23,15 @@ namespace Lasagna
             }
         }
 
-        public void LoadAllContent(ContentManager content, int newScreenWidth, int newScreenHeight)
+        public void LoadAllContent(ContentManager content, int viewPortHeight)
         {
-            screenWidth = newScreenWidth;
-            screenHeight = newScreenHeight;
+            screenHeight = viewPortHeight;
             marioClearSheet = content.Load<Texture2D>(marioClearInfo.ContentPath);
         }
 
         public NonAnimatedSprite CreateBackground_MarioClear()
         {
-            return new NonAnimatedSprite(marioClearSheet, new SpriteSheetInfo(string.Empty, screenWidth, screenHeight));
+            return new NonAnimatedSprite(marioClearSheet, new SpriteSheetInfo(string.Empty, screenHeight / marioClearSheet.Height * marioClearSheet.Width, screenHeight));
         }
     }
 }
