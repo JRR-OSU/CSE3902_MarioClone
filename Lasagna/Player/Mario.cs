@@ -263,7 +263,7 @@ namespace Lasagna
             marioIsDead = true;
             velocity.X = 0;
             stateMachine.KillMario();
-            Score.Lives--;
+            Score.LoseLifeMario();
             
         }
 

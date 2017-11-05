@@ -8,9 +8,9 @@ namespace Lasagna
 {
     public static class Score
     {
-        public static int marioScore;
-        public static int Coins;
-        public static int Lives;
+        public static int marioScore = 0;
+        public static int Coins = 0;
+        public static int Lives = 3;
         public static int[] enemyKilledPoints;
         public static int marioEnemyKilledCount;
 
@@ -31,19 +31,29 @@ namespace Lasagna
 
 
 
-        public static void addCoinMario()
+        public static void AddCoinMario()
         {
             Coins++;
+            if(Coins >= 100)
+            {
+                Lives++;
+                Coins = 0;
+            }
         }
 
 
-        public static void extraLifeMario()
+        public static void ExtraLifeMario()
         {
             Lives++;
         }
 
+        public static void LoseLifeMario()
+        {
+            Lives--;
+        }
 
-        public static void killMario()
+
+        public static void KillMario()
         {
             if (Lives == 0)
             {

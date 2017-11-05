@@ -46,12 +46,12 @@ namespace Lasagna
             }
             else if (item is CoinItem)
             {
-                Score.addCoinMario();
+                Score.AddCoinMario();
                 Score.increaseScoreMario(100);
             }
             else if(item is LifeMushroomItem)
             {
-                Score.extraLifeMario();
+                Score.ExtraLifeMario();
                 Score.increaseScoreMario(1000);
             }
             
@@ -122,7 +122,11 @@ namespace Lasagna
                         mario.ignoreGravity = false;
                         if (tile is BreakableBrickTile)
                             if (((BreakableBrickTile)tile).items.Length > 0 && ((BreakableBrickTile)tile).items[0] is CoinItem)
-                                Score.addCoinMario();
+                            {
+                                Score.AddCoinMario();
+                                Score.increaseScoreMario(100);
+                            }
+                                
                             
                         break;
                     case CollisionSide.Left:

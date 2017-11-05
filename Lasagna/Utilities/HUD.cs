@@ -57,6 +57,12 @@ using System.Text;
                     Time--;
                     counter = 0;
                 }
+                if (Time <= 0)
+                {
+                Score.Lives = 0;
+                Score.KillMario();
+                }
+                
             }
 
             public void Draw(SpriteBatch batch, SpriteFont font, bool deathScreen)
