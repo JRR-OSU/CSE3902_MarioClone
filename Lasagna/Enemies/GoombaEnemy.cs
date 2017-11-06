@@ -58,6 +58,7 @@ namespace Lasagna
             {
                 ChangeState(EnemyState.Flipped);
                 currentHealth = EnemyHealth.Flipped;
+                Score.increaseScoreMario(200);
             }
         }
     }

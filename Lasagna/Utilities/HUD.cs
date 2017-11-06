@@ -58,10 +58,12 @@ using System.Text;
                     Time--;
                     counter = 0;
                 }
-                if (Time <= 0 || Score.Lives <=0)
-                {
-                    isGameOver = true;
-                }
+            if (Time <= 0 || Score.Lives <= 0)
+            {
+                isGameOver = true;
+            }
+            else
+                isGameOver = false;
                 
             }
 

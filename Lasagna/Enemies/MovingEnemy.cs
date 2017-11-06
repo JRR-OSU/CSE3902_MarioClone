@@ -20,6 +20,12 @@ namespace Lasagna
         private Vector2 position;
         private float yDifference;
         private int deathTime = 0;
+
+        private int maxVelocity = 37;
+        private int increasingYDifference = 7;
+        private int increasingVelocity = 2;
+        private float adjustYDifference = (float)3.5;
+        private int deathTimeMax = 20;
         
 
         protected ISprite CurrentSprite
@@ -71,7 +77,7 @@ namespace Lasagna
         }
         public virtual void Update(GameTime gameTime)
         {
-            if (currentHealth != EnemyHealth.Flipped && deathTime >= 20)
+            if (currentHealth != EnemyHealth.Flipped && deathTime >= deathTimeMax)
             {
                 currentSprite = null;
             }
@@ -202,13 +208,13 @@ namespace Lasagna
             {
                 ChangeState(EnemyState.WalkRight);
                 isLeft = true;
-                    position.Y -= (float)3.5;
+                    position.Y -= adjustYDifference;
             }
             else if (side.Equals(CollisionSide.Left) && currentHealth != EnemyHealth.Flipped)
             {
                 ChangeState(EnemyState.WalkLeft);
                 isLeft = false;
-                    position.Y -= (float)3.5;
+                    position.Y -= adjustYDifference;
             }
         }
         private void HandleHorizontalMovement()
@@ -231,14 +237,14 @@ namespace Lasagna
                 position.Y += yDifference;
                 velocity += fallingVelocity;
                 velocity *= fallingVelocityDecayRate;
-                if (velocity > 37)
-                    velocity = 37;
+                if (velocity > maxVelocity)
+                    velocity = maxVelocity;
         }
         private void DeathAnimation()
         {
             position.X ++;
-            position.Y -= (float)7;
-            velocity += 2;
+            position.Y -= (float)increasingYDifference;
+            velocity += increasingVelocity;
         }
     }
 }

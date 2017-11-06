@@ -60,6 +60,7 @@ namespace Lasagna
             {
                 ChangeState(EnemyState.Dead);
                 currentHealth = EnemyHealth.Flipped;
+                Score.increaseScoreMario(200);
             }
         }
     }

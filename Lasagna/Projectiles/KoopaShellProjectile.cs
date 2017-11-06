@@ -17,6 +17,8 @@ namespace Lasagna
         private KoopaShellStates currentState = KoopaShellStates.Idle;
         private bool isKicked = false;
 
+        private int SlidingTimeMax = 300;
+
 
 
         private ISprite shellDefault = EnemySpriteFactory.Instance.CreateSprite_Koopa_Shell();
@@ -31,9 +33,9 @@ namespace Lasagna
 
         public override void Update(GameTime gameTime)
         {
-            if (slidingTime >= 500)
+            if (slidingTime >= SlidingTimeMax)
                 CurrentSprite = null;
-            if(slidingTime >= 500 && isKicked == false)
+            if(slidingTime >= SlidingTimeMax && isKicked == false)
             {
                 //Spawn a Koopa
                 //new KoopaEnemy((int)posX,(int)posY);

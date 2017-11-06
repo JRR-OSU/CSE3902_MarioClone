@@ -36,6 +36,12 @@ namespace Lasagna
         private int hideTime = 0;
         private bool waitToDraw = false;
 
+        private int maxMovingTime = 2000;
+        private int increasingYDifference = 7;
+        private int increasingXDifference = 2;
+        private int increasingVelocity = 4;
+        private int coinAnimateedTimeMax = 20;
+
         protected ISprite ItemSprite
         {
             get { return itemSprite; }
@@ -90,7 +96,7 @@ namespace Lasagna
             {
                 MovingTime++;
             }
-            if (MovingTime >= 2000)
+            if (MovingTime >= maxMovingTime)
             {
                 itemSprite = null;
             }
@@ -277,20 +283,20 @@ namespace Lasagna
             {
                 if (movingLeft == true)
                 {
-                    position.X -= 2;
+                    position.X -= increasingXDifference;
                 }
                 else
                 {
-                    position.X += 2;
+                    position.X += increasingXDifference;
                 }
             }
         }
         private void HandleCoinAnimation()
         {
-            position.Y -= 15;
-            velocity += 4;
+            position.Y -= increasingYDifference;
+            velocity += increasingVelocity;
             coinAnimateTime++;
-            if (coinAnimateTime >= 20)
+            if (coinAnimateTime >= coinAnimateedTimeMax)
                 itemSprite = null;
         }
     }
