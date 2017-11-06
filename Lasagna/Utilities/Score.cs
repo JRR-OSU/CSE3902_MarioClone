@@ -71,6 +71,10 @@ namespace Lasagna
             marioScore += score;
         }
 
+        public static void IncreasePoleHeightScore()
+        {
+            marioScore += 5000;
+        }
 
     }
 }
