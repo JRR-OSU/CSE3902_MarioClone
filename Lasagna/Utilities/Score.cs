@@ -11,22 +11,13 @@ namespace Lasagna
         public static int marioScore = 0;
         public static int Coins = 0;
         public static int Lives = 3;
-        public static int[] enemyKilledPoints;
-        public static int marioEnemyKilledCount;
+        public static int[] enemyKilledPoints = new int[9] {200, 400, 500, 800, 1000, 2000, 4000, 8000, 10000};
+        public static int marioEnemyKilledCount = 0;
 
 
-        public static void marioEnemyKill(Mario mario)
+        public static void marioEnemyKill()
         {
-            // Code goes here for chaining enemy kills
-            //if ()
-            //{
-            //    marioEnemyKilledCount++;
-            //}
-            //else
-            //{
-            //    marioEnemyKilledCount = 0;
-            //}
-            marioScore += enemyKilledPoints[marioEnemyKilledCount];
+            increaseScoreMario(enemyKilledPoints[marioEnemyKilledCount]);
         }
 
 
@@ -52,20 +43,6 @@ namespace Lasagna
             Lives--;
         }
 
-
-        public static void KillMario()
-        {
-            if (Lives == 0)
-            {
-                //death screen
-            }
-            else if (Lives > 0)
-            {
-                Lives--;
-                //restart screen
-            }
-        }
-
         public static void increaseScoreMario(int score)
         {
             marioScore += score;
@@ -76,5 +53,9 @@ namespace Lasagna
             marioScore += 5000;
         }
 
+        public static void ResetConsecutiveEnemiesKilled()
+        {
+            marioEnemyKilledCount = 0;
+        }
     }
 }

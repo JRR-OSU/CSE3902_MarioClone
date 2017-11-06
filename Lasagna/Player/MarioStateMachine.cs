@@ -517,7 +517,7 @@ namespace Lasagna
                         //Otherwise finish warp
                         else
                             MarioGame.Instance.FinishWarp();
-                        mario.isWarping = false;
+                        mario.Jump(null, null);
                     }
                 }
 

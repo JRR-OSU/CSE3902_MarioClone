@@ -147,26 +147,7 @@ namespace Lasagna
         public void OnCollisionResponse(IEnemy enemy, CollisionSide side)
         {
             if (state.isStar() || (enemy is GoombaEnemy && enemy.Bounds.Height <= 16) || (enemy is KoopaEnemy && enemy.Bounds.Height <= 40))// if star or enemy is dead
-            {
-                //switch (side)
-                //{
-                //    case CollisionSide.Bottom:
-                //        mario.SetPosition(mario.Bounds.X, (enemy.Bounds.Y - mario.Bounds.Height));
-                //        state.isCollideFloor = true;
-                //        state.EndJump();
-                //        break;
-                //    case CollisionSide.Top:
-                //        mario.SetPosition(mario.Bounds.X, (enemy.Bounds.Y + enemy.Bounds.Height));
-                //        break;
-                //    case CollisionSide.Left:
-                //        mario.SetPosition((enemy.Bounds.X + enemy.Bounds.Width) + 3, mario.Bounds.Y);
-                //        break;
-                //    case CollisionSide.Right:
-                //        mario.SetPosition((enemy.Bounds.X - enemy.Bounds.Width) - 3, mario.Bounds.Y);
-                //        break;
-                //}
-            }
-
+                return;            
             else
             {
                 switch (side)
@@ -177,11 +158,13 @@ namespace Lasagna
                             if (((GoombaEnemy)enemy).currentHealth == MovingEnemy.EnemyHealth.Flipped)
                                 return;
                         }
+                        // Jump effect if landing on top of an enemy
                         mario.velocity.Y = 0;
                         mario.velocity.Y += 150;
                         state.HandleJump();
-                        Score.increaseScoreMario(200);
-                        // Jump effect if landing on top of an enemy
+                        Score.marioEnemyKilledCount++;
+                        Score.marioEnemyKill();
+
                         break;
                     case CollisionSide.Top:
                         if ((enemy is GoombaEnemy))
