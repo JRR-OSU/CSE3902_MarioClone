@@ -9,41 +9,6 @@ namespace Lasagna
 {
     public class LevelCreator
     {
-        private const string XmlFileExtension = ".xml";
-        private const string BadXmlError1 = "Error! Invalid filepath given for loading level: \"";
-        private const string BadXmlError2 = "\"";
-        private const string RootLocalName = "Root";
-        private const string LevelTypeAttr = "leveltype";
-        private const string PlayersLocalName = "Players";
-        private const string PlayerChildElementName = "Player";
-        private const string PosXAttr = "posx";
-        private const string PosYAttr = "posy";
-        private const string EnemiesLocalName = "Enemies";
-        private const string EnemyChildElementName = "Enemy";
-        private const string TilesLocalName = "Tiles";
-        private const string TileChildElementName = "Tile";
-        private const string TypeAttr = "type";
-        private const string RepeatAttr = "repeat";
-        private const string RepeatSpaceAttr = "repeatspace";
-        private const string ItemsLocalName = "Items";
-        private const string ItemChildElementName = "Item";
-        private const string BadXmlElementError1 = "Warning: \"";
-        private const string BadXmlElementError2 = "\" level XML file has element of unknown type: ";
-        private const string BadPlayerTypeError = "Invalid type passed for creating player: ";
-        private const string BadEnemyTypeError = "Invalid type passed for creating enemy: ";
-        private const string BadTileTypeError = "Invalid type passed for creating tile: ";
-        private const string BadItemTypeError = "Invalid type passed for creating item: ";
-        private const string CameraXAttr = "cameraX";
-        private const string CameraYAttr = "cameraY";
-        private const string FacingAttr = "facing";
-        private const string HeightAttr = "height";
-        private const string WarpDestAttr = "warpDest";
-        private const string WarpSourceAttr = "warpSource";
-        private const string CoinsAttr = "coins";
-        private const int Five = 5;
-        private const int One = 1;
-        private const int Zero = 0;
-
         #region Object Type Dictionaries
 
         private readonly Dictionary<LevelType, ISprite> levelBackdrops = new Dictionary<LevelType, ISprite>(CreateLevelTypesDictionary());
@@ -134,10 +99,10 @@ namespace Lasagna
         /// Spawns all objects needed for a level based on an XML file
         /// </summary>
         /// <param name="filepath">Path to the XML file we should read from for this level</param>
-        /// <param name=PlayersLocalName>List of players spawned for this level</param>
-        /// <param name=EnemiesLocalName>List of enemies spawned for this level</param>
-        /// <param name=TilesLocalName>List of tiles spawned for this level</param>
-        /// <param name=ItemsLocalName>List of items spawned for this level</param>
+        /// <param name="players">List of players spawned for this level</param>
+        /// <param name="enemies">List of enemies spawned for this level</param>
+        /// <param name="Tiles">List of tiles spawned for this level</param>
+        /// <param name="items">List of items spawned for this level</param>
         /// <returns>True if level loading was successful, false if there was an error.</returns>
         public bool LoadLevelFromXML(string filepath, out ISprite levelBackground, out List<IPlayer> players, out List<IEnemy> enemies, out List<ITile> tiles, out List<IItem> items)
         {
@@ -148,9 +113,9 @@ namespace Lasagna
             items = new List<IItem>();
 
             //If we were given a bad file, exit.
-            if (!filepath.EndsWith(XmlFileExtension) || !File.Exists(filepath))
+            if (!filepath.EndsWith(".xml") || !File.Exists(filepath))
             {
-                Debug.WriteLine(BadXmlError1 + filepath + BadXmlError2);
+                Debug.WriteLine("Error! Invalid filepath given for loading level: \"" + filepath + "\"");
                 return false;
             }
 
@@ -161,54 +126,54 @@ namespace Lasagna
                 if (!reader.IsStartElement())
                     continue;
 
-                if (reader.LocalName == RootLocalName)
+                if (reader.LocalName == "Root")
                 {
                     LevelType t;
-                    if (TryGetLevelTypeFromEnum(reader.GetAttribute(LevelTypeAttr), out t) && levelBackdrops.ContainsKey(t))
+                    if (TryGetLevelTypeFromEnum(reader.GetAttribute("leveltype"), out t) && levelBackdrops.ContainsKey(t))
                         levelBackground = levelBackdrops[t];
                 }
-                else if (reader.LocalName == PlayersLocalName)
-                    RetrieveAllChildElementsFromReader<IPlayer>(ref reader, PlayerChildElementName, TryCreatePlayerFromEnum, out players);
-                else if (reader.LocalName == EnemiesLocalName)
-                    RetrieveAllChildElementsFromReader<IEnemy>(ref reader, EnemyChildElementName, TryCreateEnemyFromEnum, out enemies);
+                else if (reader.LocalName == "Players")
+                    RetrieveAllChildElementsFromReader<IPlayer>(ref reader, "Player", TryCreatePlayerFromEnum, out players);
+                else if (reader.LocalName == "Enemies")
+                    RetrieveAllChildElementsFromReader<IEnemy>(ref reader, "Enemy", TryCreateEnemyFromEnum, out enemies);
                 //Tile uses its own logic temporarily, until we add in optional parameters to RetrieveAllChildElementsFromReader() next sprint.
-                else if (reader.LocalName == TilesLocalName)
+                else if (reader.LocalName == "Tiles")
                 {
-                    if (!reader.ReadToDescendant(TileChildElementName))
+                    if (!reader.ReadToDescendant("Tile"))
                         continue;
 
                     //Add first tile element
                     List<ITile> newTiles = new List<ITile>();
                     List<IItem> newItems = new List<IItem>();
                     int posX, posY;
-                    if (int.TryParse(reader.GetAttribute(PosXAttr), out posX)
-                        && int.TryParse(reader.GetAttribute(PosYAttr), out posY)
-                        && TryCreateTileFromEnum(reader, reader.GetAttribute(TypeAttr), reader.GetAttribute(RepeatAttr), reader.GetAttribute(RepeatSpaceAttr), posX, posY, out newTiles, out newItems))
+                    if (int.TryParse(reader.GetAttribute("posx"), out posX)
+                        && int.TryParse(reader.GetAttribute("posy"), out posY)
+                        && TryCreateTileFromEnum(reader, reader.GetAttribute("type"), reader.GetAttribute("repeat"), reader.GetAttribute("repeatspace"), posX, posY, out newTiles, out newItems))
                     {
                         tiles.AddRange(newTiles);
                         items.AddRange(newItems);
                     }
 
                     //Add all subsequent elements
-                    while (reader.ReadToNextSibling(TileChildElementName))
+                    while (reader.ReadToNextSibling("Tile"))
                     {
-                        if (int.TryParse(reader.GetAttribute(PosXAttr), out posX)
-                           && int.TryParse(reader.GetAttribute(PosYAttr), out posY)
-                           && TryCreateTileFromEnum(reader, reader.GetAttribute(TypeAttr), reader.GetAttribute(RepeatAttr), reader.GetAttribute(RepeatSpaceAttr), posX, posY, out newTiles, out newItems))
+                        if (int.TryParse(reader.GetAttribute("posx"), out posX)
+                           && int.TryParse(reader.GetAttribute("posy"), out posY)
+                           && TryCreateTileFromEnum(reader, reader.GetAttribute("type"), reader.GetAttribute("repeat"), reader.GetAttribute("repeatspace"), posX, posY, out newTiles, out newItems))
                         {
                             tiles.AddRange(newTiles);
                             items.AddRange(newItems);
                         }
                     }
                 }
-                else if (reader.LocalName == ItemsLocalName)
+                else if (reader.LocalName == "Items")
                 {
                     List<IItem> newItems;
-                    RetrieveAllChildElementsFromReader<IItem>(ref reader, ItemChildElementName, TryCreateItemFromEnum, out newItems);
+                    RetrieveAllChildElementsFromReader<IItem>(ref reader, "Item", TryCreateItemFromEnum, out newItems);
                     items.AddRange(newItems);
                 }
                 else
-                    Debug.WriteLine(BadXmlElementError1 + filepath + BadXmlElementError2 + reader.LocalName);
+                    Debug.WriteLine("Warning: \"" + filepath + "\" level XML file has element of unknown type: " + reader.LocalName);
             }
 
             return true;
@@ -225,9 +190,9 @@ namespace Lasagna
             //Add first element
             List<T> objects;
             int posX, posY;
-            if (int.TryParse(reader.GetAttribute(PosXAttr), out posX)
-                && int.TryParse(reader.GetAttribute(PosYAttr), out posY)
-                && objCreationMethod(reader.GetAttribute(TypeAttr), posX, posY, out objects))
+            if (int.TryParse(reader.GetAttribute("posx"), out posX)
+                && int.TryParse(reader.GetAttribute("posy"), out posY)
+                && objCreationMethod(reader.GetAttribute("type"), posX, posY, out objects))
             {
                 childElements.AddRange(objects);
             }
@@ -235,9 +200,9 @@ namespace Lasagna
             //Add all subsequent sibling elements
             while (reader.ReadToNextSibling(elementName))
             {
-                if (int.TryParse(reader.GetAttribute(PosXAttr), out posX)
-                   && int.TryParse(reader.GetAttribute(PosYAttr), out posY)
-                   && objCreationMethod(reader.GetAttribute(TypeAttr), posX, posY, out objects))
+                if (int.TryParse(reader.GetAttribute("posx"), out posX)
+                   && int.TryParse(reader.GetAttribute("posy"), out posY)
+                   && objCreationMethod(reader.GetAttribute("type"), posX, posY, out objects))
                 {
                     childElements.AddRange(objects);
                 }
@@ -246,7 +211,7 @@ namespace Lasagna
 
         private static bool TryGetLevelTypeFromEnum(string lType, out LevelType t)
         {
-            t = Zero;
+            t = 0;
             return !string.IsNullOrEmpty(lType) && Enum.TryParse(lType, out t);
         }
 
@@ -258,7 +223,7 @@ namespace Lasagna
             //If passed null parameter, or can't cast to type, or we don't have a delegate for type, exit.
             if (string.IsNullOrEmpty(pType) || !Enum.TryParse(pType, out t) || !playerTypes.ContainsKey(t))
             {
-                Debug.WriteLine(BadPlayerTypeError + pType);
+                Debug.WriteLine("Invalid type passed for creating player: " + pType);
                 return false;
             }
 
@@ -274,7 +239,7 @@ namespace Lasagna
             //If passed null parameter, or can't cast to type, or we don't have a delegate for type, exit.
             if (string.IsNullOrEmpty(eType) || !Enum.TryParse(eType, out t) || !enemyTypes.ContainsKey(t))
             {
-                Debug.WriteLine(BadEnemyTypeError + eType);
+                Debug.WriteLine("Invalid type passed for creating enemy: " + eType);
                 return false;
             }
 
@@ -291,31 +256,31 @@ namespace Lasagna
             //If passed null parameter, or can't cast to type, or we don't have a delegate for type, exit.
             if (string.IsNullOrEmpty(tType) || !Enum.TryParse(tType, out t) || !tileTypes.ContainsKey(t))
             {
-                Debug.WriteLine(BadTileTypeError + tType);
+                Debug.WriteLine("Invalid type passed for creating tile: " + tType);
                 return false;
             }
 
             List<IItem> blockItems = new List<IItem>();
             Direction pipeFacing = Direction.Up;
-            int pipeHeight = -One;
-            string warpSource = string.Empty;
-            string warpDest = string.Empty;
+            int pipeHeight = -1;
+            string warpSource = "";
+            string warpDest = "";
             Vector2 warpForcesCamPos = Vector2.Zero;
-            int blockItemCount = -One;
-            string itemStr = string.Empty;
+            int blockItemCount = -1;
+            string itemStr = "";
 
             //If this is pipe, get optional params from reader
             if (t == TileType.Pipe)
             {
                 int camX, camY;
-                if (int.TryParse(reader.GetAttribute(CameraXAttr), out camX) && int.TryParse(reader.GetAttribute(CameraYAttr), out camY))
+                if (int.TryParse(reader.GetAttribute("cameraX"), out camX) && int.TryParse(reader.GetAttribute("cameraY"), out camY))
                     warpForcesCamPos = new Vector2(camX, camY);
 
-                Enum.TryParse(reader.GetAttribute(FacingAttr), out pipeFacing);
-                int.TryParse(reader.GetAttribute(HeightAttr), out pipeHeight);
-                pipeHeight = Math.Max(Zero, pipeHeight);
-                warpDest = reader.GetAttribute(WarpDestAttr);
-                warpSource = reader.GetAttribute(WarpSourceAttr);
+                Enum.TryParse(reader.GetAttribute("facing"), out pipeFacing);
+                int.TryParse(reader.GetAttribute("height"), out pipeHeight);
+                pipeHeight = Math.Max(0, pipeHeight);
+                warpDest = reader.GetAttribute("warpDest");
+                warpSource = reader.GetAttribute("warpSource");
 
                 tiles.Add(tileTypes[t].Invoke(pipeFacing, posX, posY, pipeHeight, warpForcesCamPos, warpSource, warpDest, blockItems.ToArray()));
             }
@@ -323,21 +288,21 @@ namespace Lasagna
             else if (t == TileType.Brick || t == TileType.InvisibleBlock || t == TileType.QuestionBlock)
             {
                 IItem blockItem;
-                int.TryParse(reader.GetAttribute(CoinsAttr), out blockItemCount);
-                blockItemCount = Math.Max(Zero, blockItemCount);
-                itemStr = reader.GetAttribute(ItemChildElementName);
+                int.TryParse(reader.GetAttribute("coins"), out blockItemCount);
+                blockItemCount = Math.Max(0, blockItemCount);
+                itemStr = reader.GetAttribute("item");
                 if (TryCreateItemFromEnum(itemStr, posX, posY, out blockItem))
                 {
                     // Fix coin position so it's centered in the QuestionBlock
                     if (t == TileType.QuestionBlock && blockItem is CoinItem)
-                        ((CoinItem)blockItem).FixInitialPosition(posX + Five);
+                        ((CoinItem)blockItem).FixInitialPosition(posX + 5);
                     blockItems.Add(blockItem);
                     //If item is mushroom, create fireflower as well
                     if (blockItem is GrowMushroomItem)
                         blockItems.Add(itemTypes[ItemType.FireFlower].Invoke(posX, posY));
 
                     //Duplicate for number of items needed
-                    for (int i = One; i < blockItemCount; i++)
+                    for (int i = 1; i < blockItemCount; i++)
                     {
                         if (TryCreateItemFromEnum(itemStr, posX, posY, out blockItem))
                         {
@@ -355,32 +320,32 @@ namespace Lasagna
             }
             //Else create generic tile
             else
-                tiles.Add(tileTypes[t].Invoke(Direction.Up, posX, posY, -One, Vector2.Zero, string.Empty, string.Empty, blockItems.ToArray()));
+                tiles.Add(tileTypes[t].Invoke(Direction.Up, posX, posY, -1, Vector2.Zero, "", "", blockItems.ToArray()));
 
             //If this element has a repeat field, and it has a valid integer, repeat this tile according to the field.
             //Each repeated tile is spawned to the right of the base tile.
             ///TODO: Maybe change this to take a directional param later?
             int rTimes,
-                rSpace = Zero;
-            if (tiles.Count > Zero && tiles[Zero] != null && !string.IsNullOrEmpty(repeatTimes) && int.TryParse(repeatTimes, out rTimes))
+                rSpace = 0;
+            if (tiles.Count > 0 && tiles[0] != null && !string.IsNullOrEmpty(repeatTimes) && int.TryParse(repeatTimes, out rTimes))
             {
-                if (rTimes < Zero)
-                    rTimes = Zero;
+                if (rTimes < 0)
+                    rTimes = 0;
                 //Try to get spacing between tiles, defaulting to no space.
                 if (!string.IsNullOrEmpty(repeatSpace))
                     rSpace = int.Parse(repeatSpace);
-                if (rSpace < Zero)
-                    rSpace = Zero;
+                if (rSpace < 0)
+                    rSpace = 0;
 
                 //Add tile width to spacing
-                rSpace += tiles[Zero].Bounds.Width;
+                rSpace += tiles[0].Bounds.Width;
 
                 //Spawn each subsequent tile
-                for (int i = One; i <= rTimes; i++)
+                for (int i = 1; i <= rTimes; i++)
                 {
                     List<IItem> newItems = new List<IItem>();
                     IItem newItem = null;
-                    for (int bItem = Zero; bItem < blockItemCount; bItem++)
+                    for (int bItem = 0; bItem < blockItemCount; bItem++)
                     {
                         if (TryCreateItemFromEnum(itemStr, posX + (rSpace * i), posY, out newItem))
                         {
@@ -409,7 +374,7 @@ namespace Lasagna
             if (string.IsNullOrEmpty(iType) || !Enum.TryParse(iType, out t) || !itemTypes.ContainsKey(t))
             {
                 if (!string.IsNullOrEmpty(iType))
-                    Debug.WriteLine(BadItemTypeError + iType);
+                    Debug.WriteLine("Invalid type passed for creating item: " + iType);
                 return false;
             }
 

@@ -17,7 +17,7 @@ namespace Lasagna
         public Vector2 position;
         public Vector2 velocity;
         public Vector2 transitionVel;
-        public bool isWarping = false;
+
         private int maxVelX = 150;
         private int maxVelY = 400;
         public bool isFalling = false;
@@ -35,7 +35,7 @@ namespace Lasagna
 
         public bool isCollideGround { get; set; }
 
-
+        private int marioWarpCount = 0;
         private bool marioIsDead = false;
 
         public bool marioMovingLeft;
@@ -202,7 +202,7 @@ namespace Lasagna
             if (!marioIsDead && !(Math.Abs(velocity.Y) >= maxVelY))
             {
                 stateMachine.Jump();
-                if (velocity.Y < 275 && (position.Y * -1 > maxHeight) && !isFalling)
+                if (velocity.Y < 275 && !isFalling)
                     velocity.Y += 75;
                 else
                     isFalling = true;
@@ -345,6 +345,16 @@ namespace Lasagna
 
         public void Update(GameTime gameTime)
         {
+            if (marioIsDead)
+            {
+                stateMachine.Update(gameTime, (int)position.X, -(int)position.Y);
+                return;
+            }
+            if(!MarioIsInWarpZone() && !stateMachine.IsTransitioning && position.Y < -440)
+            {
+                stateMachine.DamageMario();
+            }
+
             if (stateMachine.IsTransitioning)
             {
                 velocity = Vector2.Zero;
@@ -354,8 +364,6 @@ namespace Lasagna
                 transitionVel = velocity;
 
 
-            if (!isWarping && !stateMachine.IsTransitioning)
-                ignoreGravity = false;
 
             HandleJumpBools();
 
@@ -367,10 +375,14 @@ namespace Lasagna
             HandleRunning();
 
             UpdatePhysics(gameTime);
+            if (isCollideGround)
+                Score.ResetConsecutiveEnemiesKilled();
             stateMachine.Update(gameTime, (int)position.X, -(int)position.Y);
             marioMovingLeft = false;
             marioMovingRight = false;
             isCollideGround = false;
+
+
 
         }
 
@@ -382,8 +394,17 @@ namespace Lasagna
 
         public void BeginWarpAnimation(Direction moveDir, bool startWithMove)
         {
-            isWarping = true;
+            
             stateMachine.BeginWarpAnimation(moveDir, startWithMove);
+        }
+
+        public void MarioEnterWarpZone()
+        {
+            marioWarpCount++;
+        }
+        public bool MarioIsInWarpZone()
+        {
+            return marioWarpCount % 2 == 1;
         }
     }
 }
