@@ -58,20 +58,127 @@ namespace Lasagna
             gameOverTwo = content.Load<Song>("BGM/10-game-over-2");
             ending = content.Load<Song>("BGM/12-ending");
         }
-        //Sample
         public void Play_Castle()
         {
             song = castle;
-            MediaPlayer.Play(song);
-            MediaPlayer.MediaStateChanged += MediaPlayer_MediaStateChanged;
+            PlaySound();
         }
 
+        public void Play_CastleComplete()
+        {
+            song = castleComplete;
+            PlaySound();
+        }
 
-        void MediaPlayer_MediaStateChanged(object sender, System.
-                                           EventArgs e)
+        public void Play_HurryUnderWater()
+        {
+            song = hurryUnderWater;
+            PlaySound();
+        }
+
+        public void Play_IntoTheTunnel()
+        {
+            song = intoTheTunnel;
+            PlaySound();
+        }
+
+        public void Play_StarMan()
+        {
+            song = starMan;
+            PlaySound();
+        }
+
+        public void Play_HurryOverWorld()
+        {
+            song = hurryOverWorld;
+            PlaySound();
+        }
+
+        public void Play_LevelComplete()
+        {
+            song = levelComplete;
+            PlaySound();
+        }
+
+        public void Play_GameOver()
+        {
+            song = gameOver;
+            PlaySound();
+        }
+
+        public void Play_HurryUnderGround()
+        {
+            song = hurryUnderGround;
+            PlaySound();
+        }
+
+        public void Play_YouAreDead()
+        {
+            song = youAreDead;
+            PlaySound();
+        }
+
+        public void Play_Hurry()
+        {
+            song = hurry;
+            PlaySound();
+        }
+
+        public void Play_HurryCastle()
+        {
+            song = hurryCastle;
+            PlaySound();
+        }
+
+        public void Play_MainTheme()
+        {
+            song = mainThemeOverWorld;
+            PlaySound();
+        }
+
+        public void Play_UnderWater()
+        {
+            song = underWater;
+            PlaySound();
+        }
+
+        public void Play_UnderWorld()
+        {
+            song = underWorld;
+            PlaySound();
+        }
+
+        public void Play_HurryStarMan()
+        {
+            song = hurryStarMan;
+            PlaySound();
+        }
+
+        public void Play_GameOverTwo()
+        {
+            song = gameOverTwo;
+            PlaySound();
+        }
+
+        public void Play_Ending()
+        {
+            song = ending;
+            PlaySound();
+        }
+
+        public void PlaySound()
+        {
+            if (song != null)
+            {
+                MediaPlayer.Play(song);
+                MediaPlayer.MediaStateChanged += MediaPlayer_MediaStateChanged;
+            }
+        }
+
+        void MediaPlayer_MediaStateChanged(object sender, System.EventArgs e)
         {
             // 0.0f is silent, 1.0f is full volume
-            MediaPlayer.Volume -= 0.1f;
+            MediaPlayer.Volume = 0.1f;
             MediaPlayer.Play(song);
         }
     }
