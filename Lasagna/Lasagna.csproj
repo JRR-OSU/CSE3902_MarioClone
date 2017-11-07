@@ -63,6 +63,7 @@
     <Compile Include="Enemies\MovingEnemy.cs" />
     <Compile Include="Tiles\UndergroundFloorBlockTile.cs" />
     <Compile Include="Tiles\UndergroundBrickTile.cs" />
+    <Compile Include="Utilities\BGMFactory.cs" />
     <Compile Include="Utilities\Score.cs" />
     <Compile Include="Utilities\HUD.cs" />
     <Compile Include="Utilities\GlobalSuppressions.cs" />
@@ -104,6 +105,7 @@
     <Compile Include="Controllers\KeyboardController.cs" />
     <Compile Include="Utilities\ProjectileSpriteFactory.cs" />
     <Compile Include="Utilities\BackgroundSpriteFactory.cs" />
+    <Compile Include="Utilities\SoundEffectFactory.cs" />
     <Compile Include="Utilities\SpriteSheetInfo.cs" />
     <Compile Include="Utilities\TileSpriteFactory.cs" />
     <Compile Include="Utilities\MarioSpriteFactory.cs" />
