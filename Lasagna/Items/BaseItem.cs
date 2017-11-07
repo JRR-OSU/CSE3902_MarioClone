@@ -297,7 +297,10 @@ namespace Lasagna
             velocity += increasingVelocity;
             coinAnimateTime++;
             if (coinAnimateTime >= coinAnimateedTimeMax)
+            {
                 itemSprite = null;
+            }
+               
         }
     }
 }
