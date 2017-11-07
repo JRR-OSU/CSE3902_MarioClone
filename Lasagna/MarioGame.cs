@@ -54,6 +54,7 @@ namespace Lasagna
         private bool paused;
         //Fields for warping
         private bool warping;
+        public bool isInWarpZone;
         private int warpDestX;
         private int warpDestY;
         private int warpDestCamPosX;

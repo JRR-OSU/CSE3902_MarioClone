@@ -516,8 +516,18 @@ namespace Lasagna
                             MarioGame.Instance.SecondWarpPhase();
                         //Otherwise finish warp
                         else
+                        {
                             MarioGame.Instance.FinishWarp();
-                        mario.Jump(null, null);
+                            mario.MarioEnterWarpZone();
+                        }
+                        if(mario.MarioIsInWarpZone())
+                            mario.Jump(null, null);
+                        else
+                        {
+                            mario.isFalling = false;
+                            mario.isCollideGround = true;
+                            
+                        }
                     }
                 }
 
