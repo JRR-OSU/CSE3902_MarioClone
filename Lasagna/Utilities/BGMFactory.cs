@@ -5,6 +5,7 @@ namespace Lasagna
 {
     public class BGMFactory
     {
+        private Song song;
         private Song castle;
         private Song castleComplete;
         private Song hurryUnderWater;
@@ -38,24 +39,40 @@ namespace Lasagna
         }
 
         public void LoadAllContent(ContentManager content) {
-            castle = content.Load<Song>("prepare");
-            castle = content.Load<Song>("prepare");
-            castle = content.Load<Song>("prepare");
-            castle = content.Load<Song>("prepare");
-            castle = content.Load<Song>("prepare");
-            castle = content.Load<Song>("prepare");
-            castle = content.Load<Song>("prepare");
-            castle = content.Load<Song>("prepare");
-            castle = content.Load<Song>("prepare");
-            castle = content.Load<Song>("prepare");
-            castle = content.Load<Song>("prepare");
-            castle = content.Load<Song>("prepare");
-            castle = content.Load<Song>("prepare");
-            castle = content.Load<Song>("prepare");
-            castle = content.Load<Song>("prepare");
-            castle = content.Load<Song>("prepare");
-            castle = content.Load<Song>("prepare");
-            castle = content.Load<Song>("prepare");
-        }      
+            castle = content.Load<Song>("BGM/04-castle");
+            castleComplete = content.Load<Song>("BGM/07-castle-complete");
+            hurryUnderWater = content.Load<Song>("BGM/15-hurry-underwater-");
+            intoTheTunnel = content.Load<Song>("BGM/11-into-the-tunnel");
+            starMan = content.Load<Song>("BGM/05-starman");
+            hurryOverWorld = content.Load<Song>("BGM/18-hurry-overworld-");
+            levelComplete = content.Load<Song>("BGM/06-level-complete");
+            gameOver = content.Load<Song>("BGM/09-game-over");
+            hurryUnderGround = content.Load<Song>("BGM/14-hurry-underground-");
+            youAreDead = content.Load<Song>("BGM/08-you-re-dead");
+            hurry = content.Load<Song>("BGM/13-hurry");
+            hurryCastle = content.Load<Song>("BGM/16-hurry-castle-");
+            mainThemeOverWorld = content.Load<Song>("BGM/01-main-theme-overworld");
+            underWater = content.Load<Song>("BGM/03-underwater");
+            underWorld = content.Load<Song>("BGM/02-underworld");
+            hurryStarMan = content.Load<Song>("BGM/17-hurry-starman-");
+            gameOverTwo = content.Load<Song>("BGM/10-game-over-2");
+            ending = content.Load<Song>("BGM/12-ending");
+        }
+        //Sample
+        public void Play_Castle()
+        {
+            song = castle;
+            MediaPlayer.Play(song);
+            MediaPlayer.MediaStateChanged += MediaPlayer_MediaStateChanged;
+        }
+
+
+        void MediaPlayer_MediaStateChanged(object sender, System.
+                                           EventArgs e)
+        {
+            // 0.0f is silent, 1.0f is full volume
+            MediaPlayer.Volume -= 0.1f;
+            MediaPlayer.Play(song);
+        }
     }
 }
