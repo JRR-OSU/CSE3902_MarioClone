@@ -155,22 +155,22 @@
     <Content Include="Code Reviews_Sprint3\InvisibleBlockTile_QualityReview_Refactored.txt" />
     <Content Include="Code Reviews_Sprint3\MouseController_ReadabilityReview.txt" />
     <Content Include="Code Reviews_Sprint3\MouseController_QualityReview.txt" />
-    <Content Include="CodeReviews_Sprint4\FireProjectile_ReadabilityReview.txt" />
-    <Content Include="CodeReviews_Sprint4\FireProjectile_QualityReview.txt" />
-    <Content Include="CodeReviews_Sprint4\EdgeControlledCamera_QualityReview.txt" />
-    <Content Include="CodeReviews_Sprint4\EdgeControlledCamera_ReadabilityReview.txt" />
-    <Content Include="CodeReviews_Sprint4\GoombaEnemy_QualityReview.txt" />
-    <Content Include="CodeReviews_Sprint4\GoombaEnemy_QualityReview_refactored.txt" />
-    <Content Include="CodeReviews_Sprint4\GoombaEnemy_ReadbilityReview.txt" />
-    <Content Include="CodeReviews_Sprint4\GoombaEnemy_ReadbilityReview_refactored.txt" />
-    <Content Include="CodeReviews_Sprint4\Mario_QualityReview_Refactored.txt" />
-    <Content Include="CodeReviews_Sprint4\Mario_QualityReview.txt" />
-    <Content Include="CodeReviews_Sprint4\Mario_ReadabilityReview_Refactored.txt" />
-    <Content Include="CodeReviews_Sprint4\Mario_ReadabilityReview.txt" />
-    <Content Include="CodeReviews_Sprint4\QuestionBlockTile_QualityReview.txt" />
-    <Content Include="CodeReviews_Sprint4\QuestionBlockTile_ReadbilityReview.txt" />
-    <Content Include="CodeReviews_Sprint4\QuestionBlockTile_QualityReview_Refactored.txt" />
-    <Content Include="CodeReviews_Sprint4\QuestionBlockTile_Readbility_Refactored.txt" />
+    <Content Include="Code Reviews_Sprint4\FireProjectile_ReadabilityReview.txt" />
+    <Content Include="Code Reviews_Sprint4\FireProjectile_QualityReview.txt" />
+    <Content Include="Code Reviews_Sprint4\EdgeControlledCamera_QualityReview.txt" />
+    <Content Include="Code Reviews_Sprint4\EdgeControlledCamera_ReadabilityReview.txt" />
+    <Content Include="Code Reviews_Sprint4\GoombaEnemy_QualityReview.txt" />
+    <Content Include="Code Reviews_Sprint4\GoombaEnemy_QualityReview_refactored.txt" />
+    <Content Include="Code Reviews_Sprint4\GoombaEnemy_ReadbilityReview.txt" />
+    <Content Include="Code Reviews_Sprint4\GoombaEnemy_ReadbilityReview_refactored.txt" />
+    <Content Include="Code Reviews_Sprint4\Mario_QualityReview_Refactored.txt" />
+    <Content Include="Code Reviews_Sprint4\Mario_QualityReview.txt" />
+    <Content Include="Code Reviews_Sprint4\Mario_ReadabilityReview_Refactored.txt" />
+    <Content Include="Code Reviews_Sprint4\Mario_ReadabilityReview.txt" />
+    <Content Include="Code Reviews_Sprint4\QuestionBlockTile_QualityReview.txt" />
+    <Content Include="Code Reviews_Sprint4\QuestionBlockTile_ReadbilityReview.txt" />
+    <Content Include="Code Reviews_Sprint4\QuestionBlockTile_QualityReview_Refactored.txt" />
+    <Content Include="Code Reviews_Sprint4\QuestionBlockTile_Readbility_Refactored.txt" />
     <Content Include="Icon.ico" />
     <Content Include="Level XML\Mario_1-1.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -187,7 +187,9 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Sound\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
