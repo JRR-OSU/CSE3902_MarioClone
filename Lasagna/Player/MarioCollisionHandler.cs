@@ -47,12 +47,11 @@ namespace Lasagna
             else if (item is CoinItem)
             {
                 Score.AddCoinMario();
-                Score.increaseScoreMario(100);
+                Score.increaseScoreMario(200);
             }
             else if(item is LifeMushroomItem)
             {
                 Score.ExtraLifeMario();
-                Score.increaseScoreMario(1000);
             }
             
 
@@ -124,7 +123,7 @@ namespace Lasagna
                             if (((BreakableBrickTile)tile).items.Length > 0 && ((BreakableBrickTile)tile).items[0] is CoinItem)
                             {
                                 Score.AddCoinMario();
-                                Score.increaseScoreMario(100);
+                                Score.increaseScoreMario(200);
                             }
                                 
                             

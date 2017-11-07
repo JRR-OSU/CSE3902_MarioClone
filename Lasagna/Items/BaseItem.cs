@@ -37,7 +37,7 @@ namespace Lasagna
         private bool waitToDraw = false;
 
         private int maxMovingTime = 2000;
-        private int increasingYDifference = 7;
+        private int increasingYDifference = 15;
         private int increasingXDifference = 2;
         private int increasingVelocity = 4;
         private int coinAnimateedTimeMax = 20;
