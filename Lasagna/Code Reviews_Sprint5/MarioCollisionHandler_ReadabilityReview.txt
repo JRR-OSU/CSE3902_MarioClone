@@ -1,0 +1,9 @@
+﻿Tim Williams
+11/08/2017
+Sprint5
+Mario.cs
+Jon Reed
+10 minutes
+
+Branching logic makes the class a bit hard to read, it is also very long.
+Maybe try to lower number of lines of code, try to reduce branching logic where possible and put large chunks of code in separate functions.

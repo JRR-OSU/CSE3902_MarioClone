@@ -1,0 +1,9 @@
+﻿Tim Williams
+11/08/2017
+Sprint5
+Mario.cs
+Jon Reed
+
+Quality it decent overall. The class is long, and seems like it could have its size reduced.
+Lots of repeated logic, try to put repeated logic into separate classes, try to avoid branching as much.
+Same functions get called many times in same code, try to compile those into one statement,
