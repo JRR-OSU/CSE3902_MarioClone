@@ -13,7 +13,7 @@ namespace Lasagna
     {
         private Mario mario;
         public enum MarioState { Small, Big, Fire };
-        public enum MarioMovement { CrouchRight, CrouchLeft, IdleLeft, IdleRight, RunLeft, RunRight, TurnLeft, TurnRight, JumpLeft, JumpRight, GrowLeft, GrowRight, ShrinkLeft, ShrinkRight, Die };
+        public enum MarioMovement { CrouchRight, CrouchLeft, IdleLeft, IdleRight, RunLeft, RunRight, TurnLeft, TurnRight, JumpLeft, JumpRight, GrowLeft, GrowRight, ShrinkLeft, ShrinkRight, Flagpole, Die };
         private MarioState marioState = MarioState.Small;
         private MarioMovement marioMovement = MarioMovement.IdleRight;
         private ISprite currentSprite = MarioSpriteFactory.Instance.CreateSprite_MarioSmall_IdleRight();
@@ -81,6 +81,12 @@ namespace Lasagna
         public bool IsTransitioning { get { return stateTransitionTimeRemaining > 0 || warpTimeRemaining > 0; } }
         public bool IsBlinking { get { return blinkTimeRemaining > 0; } }
 
+        public bool flagpoleSequence = false;
+        public Vector2 flagpoleColPos = new Vector2();
+        public Vector2 flagpoleSlide = new Vector2();
+        private bool finishSequence = false;
+        private int flagpoleCount = 0;
+
         private Dictionary<MarioMovement, ISprite> smallStates = new Dictionary<MarioMovement, ISprite>();
         private Dictionary<MarioMovement, ISprite> bigStates = new Dictionary<MarioMovement, ISprite>();
         private Dictionary<MarioMovement, ISprite> fireStates = new Dictionary<MarioMovement, ISprite>();
@@ -100,6 +106,7 @@ namespace Lasagna
             smallStates.Add(MarioMovement.Die, MarioSpriteFactory.Instance.CreateSprite_MarioSmall_Die());
             smallStates.Add(MarioMovement.ShrinkLeft, MarioSpriteFactory.Instance.CreateSprite_MarioBig_ShrinkLeft());
             smallStates.Add(MarioMovement.ShrinkRight, MarioSpriteFactory.Instance.CreateSprite_MarioBig_ShrinkRight());
+            smallStates.Add(MarioMovement.Flagpole, MarioSpriteFactory.Instance.CreateSprite_MarioSmall_JumpRight());
 
             bigStates.Add(MarioMovement.CrouchLeft, MarioSpriteFactory.Instance.CreateSprite_MarioBig_CrouchLeft());
             bigStates.Add(MarioMovement.CrouchRight, MarioSpriteFactory.Instance.CreateSprite_MarioBig_CrouchRight());
@@ -113,6 +120,7 @@ namespace Lasagna
             bigStates.Add(MarioMovement.JumpRight, MarioSpriteFactory.Instance.CreateSprite_MarioBig_JumpRight());
             bigStates.Add(MarioMovement.GrowLeft, MarioSpriteFactory.Instance.CreateSprite_MarioSmall_GrowLeft());
             bigStates.Add(MarioMovement.GrowRight, MarioSpriteFactory.Instance.CreateSprite_MarioSmall_GrowRight());
+            bigStates.Add(MarioMovement.Flagpole, MarioSpriteFactory.Instance.CreateSprite_MarioSmall_JumpRight());
 
             fireStates.Add(MarioMovement.CrouchLeft, MarioSpriteFactory.Instance.CreateSprite_MarioFire_CrouchLeft());
             fireStates.Add(MarioMovement.CrouchRight, MarioSpriteFactory.Instance.CreateSprite_MarioFire_CrouchRight());
@@ -124,6 +132,7 @@ namespace Lasagna
             fireStates.Add(MarioMovement.TurnRight, MarioSpriteFactory.Instance.CreateSprite_MarioFire_TurnRight());
             fireStates.Add(MarioMovement.JumpLeft, MarioSpriteFactory.Instance.CreateSprite_MarioFire_JumpLeft());
             fireStates.Add(MarioMovement.JumpRight, MarioSpriteFactory.Instance.CreateSprite_MarioFire_JumpRight());
+            fireStates.Add(MarioMovement.Flagpole, MarioSpriteFactory.Instance.CreateSprite_MarioSmall_JumpRight());
 
             mario = player;
         }
@@ -551,12 +560,18 @@ namespace Lasagna
 
             HandleTurnFrames();
 
+            if (flagpoleSequence && !MarioGame.Instance.gameComplete)
+            {
+                HandleFlagPoleSequence();
+            }
 
 
             currentSprite.Update(gameTime, spriteXPos, spriteYPos);
         }
         public void Draw(SpriteBatch spriteBatch)
         {
+            if (MarioGame.Instance.gameComplete)
+                return;
             if (starPower)
             {
                 DrawStarMario(spriteBatch);
@@ -585,6 +600,11 @@ namespace Lasagna
             canGrow = true;
             starPower = false;
             isJumping = false;
+            flagpoleSequence = false;
+            flagpoleColPos = new Vector2();
+            flagpoleSlide = new Vector2();
+            finishSequence = false;
+            flagpoleCount = 0;
             marioState = MarioState.Small;
             marioMovement = MarioMovement.IdleRight;
             currentSprite = smallStates[marioMovement];
@@ -598,6 +618,55 @@ namespace Lasagna
             warpMoveFirst = startWithMoving;
             warpTimeRemaining = marioWarpMoveLength + marioWarpStillLength;
             warpDirection = moveDir;
+        }
+
+        private void HandleFlagPoleSequence()
+        {
+            if (flagpoleCount == 0)
+            {
+                marioMovement = MarioMovement.Flagpole;
+                SwitchCurrentSprite(marioMovement);
+                mario.position = flagpoleColPos;
+                flagpoleSlide = flagpoleColPos;
+                flagpoleCount++;
+            }
+            else if (mario.position.Y > -345)
+            {
+                SlideDownFlagPoll();
+                mario.position = flagpoleSlide;
+            }
+            else if (finishSequence)
+            {
+                if (mario.position.X < 6520)
+                {
+                    flagpoleSlide.X++;
+                    mario.position = flagpoleSlide;
+                }
+                else
+                {
+                    MarioGame.Instance.gameComplete = true;
+                    return;
+                }
+            }
+            else if (mario.position.Y <= -345)
+            {
+                if (Score.flagAtBottom)
+                {
+                    marioMovement = MarioMovement.RunRight;
+                    SwitchCurrentSprite(marioMovement);
+                    mario.position = new Vector2(6360, -381);
+                    flagpoleSlide = mario.position;
+                    finishSequence = true;
+                }
+            }
+
+            
+        }
+
+        private void SlideDownFlagPoll()
+        {
+            
+                flagpoleSlide.Y = flagpoleSlide.Y - 3f;
         }
     }
 }

@@ -75,6 +75,7 @@ namespace Lasagna
                     {
                         flagOffsetY = flagPoleSprite.Height - flagSprite.Height;
                         atBottom = true;
+                        Score.flagAtBottom = true;
                         currentState = BlockState.Idle;
                     }
                 }

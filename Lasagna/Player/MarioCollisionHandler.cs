@@ -96,7 +96,7 @@ namespace Lasagna
             }
             else
             {
-
+                
                 switch (side)
                 {
                     case CollisionSide.Bottom:
@@ -108,7 +108,13 @@ namespace Lasagna
                         else
                             mario.ignoreGravity = true;
                         mario.isCollideGround = true;
-
+                        if (tile is FlagPoleTile)
+                        {
+                            Console.WriteLine(mario.position);
+                            state.flagpoleSequence = true;
+                            state.flagpoleColPos.X = mario.position.X;
+                            state.flagpoleColPos.Y = mario.position.Y;
+                        }
                         mario.CalcMaxHeight(tile.Bounds.Y, tile.Bounds.Height);
                         mario.SetPosition(mario.Bounds.X, ((tile.Bounds.Y - mario.Bounds.Height-2)));
 
@@ -139,7 +145,15 @@ namespace Lasagna
                         break;
                     case CollisionSide.Right:
                         mario.velocity.X = 0;
-                        mario.SetPosition((tile.Bounds.X - mario.Bounds.Width), mario.Bounds.Y);
+
+                        if (tile is FlagPoleTile)
+                        {
+                            state.flagpoleSequence = true;
+                            state.flagpoleColPos.X = mario.position.X;
+                            state.flagpoleColPos.Y = mario.position.Y;
+                        }
+                        else
+                            mario.SetPosition((tile.Bounds.X - mario.Bounds.Width), mario.Bounds.Y);
 
                         break;
                 }

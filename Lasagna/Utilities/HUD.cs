@@ -67,7 +67,7 @@ using System.Text;
                 
             }
 
-        public void Draw(SpriteBatch batch, SpriteFont font, bool deathScreen)
+        public void Draw(SpriteBatch batch, SpriteFont font, bool deathScreen, bool gameComplete)
             {
 
                 isDeathScreen = deathScreen;
@@ -76,7 +76,13 @@ using System.Text;
                 batch.DrawString(font, formattedScore(Score.marioScore) + addSpaces(3) + formattedCoins(Score.Coins) + addSpaces(7) + formattedLives(Score.Lives) + addSpaces(8) + Time.ToString() + addSpaces(5) + "1-1", new Vector2(10, 25), Color.White);
 
 
-                if (deathScreen && !isGameOver)
+                if (gameComplete)
+                {
+                    batch.DrawString(font, "WORLD 1 - 1", new Vector2((640 / 2)-30, (480 / 2)-50), Color.White);
+                    batch.DrawString(font, "Level Complete!\nPress R to reset", new Vector2((640 / 2) - 30, (480 / 2)), Color.White);
+                }
+
+                else if (deathScreen && !isGameOver)
                 {
                     batch.DrawString(font, "WORLD 1 - 1\n\n" + addSpaces(4) +  "x  " + Score.Lives, new Vector2((640 / 2)-30, (480 / 2)-50), Color.White);
                     Time = 400;
@@ -92,7 +98,7 @@ using System.Text;
                     Score.marioScore = 0;
                     Score.Coins = 0;
                 }
-
+               
                 batch.End();
 
             }
@@ -155,7 +161,7 @@ using System.Text;
                 //Score.Lives = initialLives;
                 Score.marioScore = 0;
                 Score.Coins = 0;
-
+                MarioGame.Instance.gameComplete = false;
                 Time = startTime;
                 Score.enemyKilledPoints = new int[10] { 100, 200, 400, 500, 800, 1000, 2000, 4000, 8000, 10000 };
                 Score.marioEnemyKilledCount = 0;

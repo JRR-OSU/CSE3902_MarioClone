@@ -63,6 +63,8 @@ namespace Lasagna
         private bool deathScreen = true;
         private const int deathScreenCount = 120;
         private int deathScreenTimer = Zero;
+        public bool gameComplete = false;
+
 
         public MarioGame()
         {
@@ -195,6 +197,11 @@ namespace Lasagna
                 DisplayDeathScreen();
                 return;
             }
+            else if (gameComplete)
+            {
+                hud.Draw(spriteBatch, font, deathScreen, gameComplete);
+                return;
+            }
 
             if (levelBackground != null)
                 levelBackground.Draw(spriteBatch);
@@ -226,7 +233,7 @@ namespace Lasagna
                     if (player != null)
                         player.Draw(spriteBatch);
             }
-            hud.Draw(spriteBatch,font,deathScreen);
+            hud.Draw(spriteBatch,font,deathScreen,gameComplete);
             base.Draw(gameTime);
         }
 
@@ -358,7 +365,7 @@ namespace Lasagna
 
         private void DisplayDeathScreen()
         {
-            hud.Draw(spriteBatch, font, deathScreen);
+            hud.Draw(spriteBatch, font, deathScreen, false);
             if (deathScreenTimer < deathScreenCount)
                 deathScreenTimer++;
             else

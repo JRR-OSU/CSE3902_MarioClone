@@ -13,9 +13,11 @@ namespace Lasagna
         public static int Lives = 3;
         public static int[] enemyKilledPoints = new int[9] {200, 400, 500, 800, 1000, 2000, 4000, 8000, 10000};
         public static int marioEnemyKilledCount = 0;
-
+        public static bool flagAtBottom = false;
         private static int OneCoinScore = 200;
         private static int OneItemScore = 1000;
+
+
 
         public static void marioEnemyKill()
         {

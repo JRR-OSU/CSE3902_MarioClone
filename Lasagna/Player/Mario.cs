@@ -63,6 +63,7 @@ namespace Lasagna
             position.Y = -y;
             orignalPos[0] = (int)position.X;
             orignalPos[1] = -(int)position.Y;
+
         }
 
 
@@ -345,8 +346,9 @@ namespace Lasagna
 
         public void Update(GameTime gameTime)
         {
-            if (marioIsDead)
+            if (marioIsDead || stateMachine.flagpoleSequence)
             {
+                Console.WriteLine(position);
                 stateMachine.Update(gameTime, (int)position.X, -(int)position.Y);
                 return;
             }
@@ -382,8 +384,7 @@ namespace Lasagna
             marioMovingRight = false;
             isCollideGround = false;
 
-
-
+            // Console.WriteLine(position);
         }
 
         public void Draw(SpriteBatch spriteBatch)
