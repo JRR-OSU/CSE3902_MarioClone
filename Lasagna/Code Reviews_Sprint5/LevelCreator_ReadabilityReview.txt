@@ -1,0 +1,12 @@
+﻿Zeyu Li
+11/8/2017
+Sprint 5
+LevelCreator.cs
+Timothy Williams
+5 minutes
+
+The code is decent. Methods headers are easy to understand. However, some methods
+are too long, which is not easy for code reading. For instance, for
+TryCreateTileFromEnum, there are too many lines in this method. I think a better way
+to solve this problem is to break it dowm into several parts, write them into 
+different methods, so it will be more readable.

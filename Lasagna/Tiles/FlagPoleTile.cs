@@ -104,6 +104,7 @@ namespace Lasagna
                 currentState == BlockState.Idle && !atBottom)
             {
                 currentState = BlockState.Moving;
+                Score.AddPoleHeightScore();
             }
         }
     }
