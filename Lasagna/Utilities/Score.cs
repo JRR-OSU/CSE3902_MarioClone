@@ -14,8 +14,9 @@ namespace Lasagna
         public static int[] enemyKilledPoints = new int[9] {200, 400, 500, 800, 1000, 2000, 4000, 8000, 10000};
         public static int marioEnemyKilledCount = 0;
 
-        private static int OneCoinScore = 200;
-        private static int OneItemScore = 1000;
+        private static int oneCoinScore = 200;
+        private static int oneItemScore = 1000;
+        private static int poleHeightScore = 5000;
 
         public static void marioEnemyKill()
         {
@@ -27,7 +28,7 @@ namespace Lasagna
         public static void AddCoinMario()
         {
             Coins++;
-            marioScore += OneCoinScore;
+            marioScore += oneCoinScore;
             if(Coins >= 100)
             {
                 Lives++;
@@ -37,7 +38,7 @@ namespace Lasagna
 
         public static void AddItemScore()
         {
-            marioScore += OneItemScore;
+            marioScore += oneItemScore;
         }
 
 
@@ -58,7 +59,7 @@ namespace Lasagna
 
         public static void AddPoleHeightScore()
         {
-            marioScore += 5000;
+            marioScore += poleHeightScore;
         }
 
         public static void ResetConsecutiveEnemiesKilled()
