@@ -10,8 +10,7 @@ namespace Lasagna.Sound
 
         protected SoundEffects()
         {
-            SoundEffectFactory soundEffect = new SoundEffectFactory();
-            soundEffects = soundEffect.ReturnSoundEffects();
+            soundEffects = SoundEffectFactory.Instance.ReturnSoundEffects();
         }
 
         public void GetOneUp()

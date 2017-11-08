@@ -178,7 +178,7 @@ namespace Lasagna
         void MediaPlayer_MediaStateChanged(object sender, System.EventArgs e)
         {
             // 0.0f is silent, 1.0f is full volume
-            MediaPlayer.Volume = 0.1f;
+            MediaPlayer.Volume = 0.5f;
             MediaPlayer.Play(song);
         }
     }
