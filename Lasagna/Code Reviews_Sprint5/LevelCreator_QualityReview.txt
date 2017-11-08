@@ -1,0 +1,15 @@
+﻿Zeyu Li
+11/8/2017
+Sprint 4
+LevelCreator.cs
+Timothy Williams
+
+The code is decent. However, it has problems when generating coins in the block.
+The coin will be generated at a wrong place. A temporary fix made the code become
+much longer. Also for the passing items into the tiles, I think there is still 
+some space for improving.
+
+For instance, the code can always pass a item list into the tile, regardless how
+many items need to be passed into one tile. The tile*.cs will detect the item list
+length by itself, and take the items[0] by default. By using this improvement,
+it can eliminate the code of passing one item into one tile.
