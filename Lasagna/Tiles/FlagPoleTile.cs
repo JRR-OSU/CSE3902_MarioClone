@@ -1,5 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using System;
+using System.Diagnostics;
 
 namespace Lasagna
 {
@@ -16,8 +18,12 @@ namespace Lasagna
         private BlockState currentState;
         private int posX;
         private int posY;
+        private int originalFlagX;
+        private int originalFlagY;
         private int flagOffsetX;
         private int flagOffsetY;
+        private int moveDownVelocity = 3;
+        private bool atBottom = false;
         public bool IsChangingState { get; set; }
         public Rectangle Bounds { get { return new Rectangle(this.posX, this.posY, this.flagPoleSprite.Width, this.flagPoleSprite.Height); } }
 
@@ -38,29 +44,40 @@ namespace Lasagna
                 flagOffsetX = -24;
                 flagOffsetY = 16;
             }
+            originalFlagX = flagOffsetX;
+            originalFlagY = flagOffsetY;
+            MarioEvents.OnReset += Reset;
         }
 
-        public void ChangeState()
+        public void Reset(object sender, EventArgs e)
         {
-            //Make the flag start moving down, or reset us.
-            if (currentState == BlockState.Idle)
-                currentState = BlockState.Moving;
-            else
-            {
-                ///TODO: reset position to top
-                currentState = BlockState.Idle;
-            }
+            currentState = BlockState.Idle;
+            flagOffsetX = originalFlagX;
+            flagOffsetY = originalFlagY;
+            atBottom = false;
+        }
 
+        public virtual void ChangeState() {
+            return;
         }
 
         public void Update(GameTime gameTime)
         {
-            ///TODO: If moving make flag move down
-
             if (flagPoleSprite != null)
                 flagPoleSprite.Update(gameTime, posX, posY);
             if (flagSprite != null)
+            {
                 flagSprite.Update(gameTime, posX + flagOffsetX, posY + flagOffsetY);
+                if (currentState == BlockState.Moving && !atBottom)
+                {
+                    flagOffsetY += moveDownVelocity;
+                    if (posY + flagOffsetY + flagSprite.Height >= posY + flagPoleSprite.Height)
+                    {
+                        atBottom = true;
+                        currentState = BlockState.Idle;
+                    }
+                }
+            }
         }
         
         public void Draw(SpriteBatch spriteBatch)
@@ -71,19 +88,21 @@ namespace Lasagna
                 flagSprite.Draw(spriteBatch);
         }
 
+        public bool IsAtBottom { get { return atBottom; } }
+
         public void OnCollisionResponse(ICollider otherCollider, CollisionSide side)
         {
             if (otherCollider is IPlayer)
                 OnCollisionResponse((IPlayer)otherCollider, side);
         }
 
-        private static void OnCollisionResponse(IPlayer Mario, CollisionSide side)
+        private void OnCollisionResponse(IPlayer Mario, CollisionSide side)
         {
-            if (Mario == null || side == CollisionSide.None)
-                return;
-
-            //Reserved for moving flag down. (Need to be discussed.)
-            return;
+            if ((side == CollisionSide.Left || side == CollisionSide.Top) && 
+                currentState == BlockState.Idle && !atBottom)
+            {
+                currentState = BlockState.Moving;
+            }
         }
     }
 }
