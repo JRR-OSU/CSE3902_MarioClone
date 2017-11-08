@@ -71,8 +71,9 @@ namespace Lasagna
                 if (currentState == BlockState.Moving && !atBottom)
                 {
                     flagOffsetY += moveDownVelocity;
-                    if (posY + flagOffsetY + flagSprite.Height >= posY + flagPoleSprite.Height)
+                    if (flagOffsetY + flagSprite.Height + moveDownVelocity >= flagPoleSprite.Height)
                     {
+                        flagOffsetY = flagPoleSprite.Height - flagSprite.Height;
                         atBottom = true;
                         currentState = BlockState.Idle;
                     }
