@@ -1,0 +1,8 @@
+﻿Jon Reed
+11/8/2017
+Sprint 5
+Score.cs
+Yiwei Zhang
+
+This source file provides the required functionality for Sprint 5 and works as intended. 
+The code is extremely simple and easy to understand. The code exhibits good cohesion and good coupling. 
