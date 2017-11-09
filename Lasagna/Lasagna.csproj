@@ -180,6 +180,8 @@
     <Content Include="Code Reviews_Sprint5\LevelCreator_ReadabilityReview.txt" />
     <Content Include="Code Reviews_Sprint5\MarioCollisionHandler_QualityReview.txt" />
     <Content Include="Code Reviews_Sprint5\MarioCollisionHandler_ReadabilityReview.txt" />
+    <Content Include="Code Reviews_Sprint5\SoundEffectFactory_ReadbilityReview.txt" />
+    <Content Include="Code Reviews_Sprint5\SoundEffectFactory_QualityReview.txt" />
     <Content Include="Icon.ico" />
     <Content Include="Level XML\Mario_1-1.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

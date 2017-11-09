@@ -1,0 +1,8 @@
+﻿Yiwei Zhang
+11/8/2017
+Sprint 5
+SoundEffectFactory.cs
+Zeyu Li
+
+The fields and methods are all appripriately named according to their functionality
+The codes look clean and easy to understand overall. 
