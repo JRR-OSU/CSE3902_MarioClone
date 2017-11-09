@@ -22,6 +22,7 @@ namespace Lasagna
         private int maxVelY = 400;
         public bool isFalling = false;
         public int maxHeight;
+        private SoundEffects soundEffects = new SoundEffects();
 
         readonly Vector2 gravity = new Vector2(0, -500f);
         float time;
@@ -130,6 +131,7 @@ namespace Lasagna
             int spawnX = Bounds.X + (facingRight ? Bounds.Width : 0);
 
             MarioGame.Instance.RegisterProjectile(new FireProjectile(spawnX, Bounds.Y + Bounds.Height / 2, facingRight));
+            soundEffects.Fireball();
         }
 
         private bool IsMarioMovingRight()
@@ -219,6 +221,14 @@ namespace Lasagna
             if (!marioIsDead && !(Math.Abs(velocity.Y) >= maxVelY))
             {
                 stateMachine.Jump();
+                if (CurrentState == MarioStateMachine.MarioState.Small)
+                {
+                    soundEffects.JumpMarioSmall();
+                }
+                else
+                {
+                    soundEffects.JumpMarioBig();
+                }
                 if (velocity.Y < TWO_SEVENTY_FIVE && !isFalling)
                     velocity.Y += SEVENTY_FIVE;
                 else

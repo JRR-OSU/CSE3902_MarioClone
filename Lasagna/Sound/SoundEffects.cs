@@ -2,13 +2,13 @@
 using Microsoft.Xna.Framework.Audio;
 using System.Collections.Generic;
 
-namespace Lasagna.Sound
+namespace Lasagna
 {
     public class SoundEffects
     {
         private List<SoundEffect> soundEffects = new List<SoundEffect>();
 
-        protected SoundEffects()
+        public SoundEffects()
         {
             soundEffects = SoundEffectFactory.Instance.ReturnSoundEffects();
         }
