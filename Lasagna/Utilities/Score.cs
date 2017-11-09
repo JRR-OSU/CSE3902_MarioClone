@@ -18,6 +18,9 @@ namespace Lasagna
         private static int oneItemScore = 1000;
         private static int poleHeightScore = 5000;
 
+        private const int ZERO = 0;
+        private const int ONE_HUNDRED = 100;
+
 
 
         public static void marioEnemyKill()
@@ -31,10 +34,10 @@ namespace Lasagna
         {
             Coins++;
             marioScore += oneCoinScore;
-            if(Coins >= 100)
+            if(Coins >= ONE_HUNDRED)
             {
                 Lives++;
-                Coins = 0;
+                Coins = ZERO;
             }
         }
 
@@ -66,7 +69,7 @@ namespace Lasagna
 
         public static void ResetConsecutiveEnemiesKilled()
         {
-            marioEnemyKilledCount = 0;
+            marioEnemyKilledCount = ZERO;
         }
     }
 }

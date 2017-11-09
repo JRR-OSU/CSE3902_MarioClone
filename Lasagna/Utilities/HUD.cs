@@ -18,8 +18,26 @@ using System.Text;
             public const int starValue = 1000;
             public const int oneUpValue = 1000;
             public const int initialLives = 3;
+            private const int ZERO = 0;
+            private const int FOUR_HUNDRED = 400;
+            private const int THREE = 3;
+            private const int TEN = 10;
+            private const int NINETY_NINE = 99;
+
+            private const string MARIO = "MARIO";
+            private const string WORLD = "WORLD";
+            private const string LIVES = "LIVES";
+            private const string COINS = "COINS";
+            private const string TIME = "TIME";
+            private const string WORLD_1_1 = "WORLD 1 - 1";
+            private const string LEVEL_COMPLETE = "Level Complete!\nPress R to reset";
+            private const string GAME_OVER = "Game Over";
+
+
+
 
             private int counter = 0;
+
             private int FPS = 60;
 
             ISprite ItemSprite = ItemSpriteFactory.Instance.CreateSprite_Coin();
@@ -36,12 +54,12 @@ using System.Text;
                  MarioEvents.OnReset += Reset;
 
                 Score.Lives = initialLives;
-                Score.marioScore = 0;
-                Score.Coins = 0;
+                Score.marioScore = ZERO;
+                Score.Coins = ZERO;
 
                 Time = startTime;
                 Score.enemyKilledPoints = new int[10] { 100, 200, 400, 500, 800, 1000, 2000, 4000, 8000, 10000 };
-               Score.marioEnemyKilledCount = 0;
+               Score.marioEnemyKilledCount = ZERO;
                //mario = MarioSpriteFactory.Instance.CreateSprite_MarioSmall_IdleRight();
             //mario.SetSpriteScreenPosition(640 / 2, 480 / 2);
             }
@@ -58,9 +76,9 @@ using System.Text;
                     else
                     {
                         Time--;
-                        counter = 0;
+                        counter = ZERO;
                     }
-                    if (Time <= 0 || Score.Lives <= 0)
+                    if (Time <= ZERO || Score.Lives <= ZERO)
                     {
                         isGameOver = true;
                     }
@@ -74,7 +92,7 @@ using System.Text;
 
                 isDeathScreen = deathScreen;
                 batch.Begin();
-                batch.DrawString(font, "MARIO" + addSpaces(4) + "COINS" + addSpaces(4) + "LIVES" + addSpaces(5) + "TIME" + addSpaces(4) + "WORLD", new Vector2(10, 10), Color.White);
+                batch.DrawString(font, MARIO + addSpaces(4) + COINS + addSpaces(4) + LIVES + addSpaces(5) + TIME + addSpaces(4) + WORLD, new Vector2(10, 10), Color.White);
 
                 batch.DrawString(font, formattedScore(Score.marioScore) + addSpaces(3) + formattedCoins(Score.Coins) + addSpaces(7) + formattedLives(Score.Lives) + addSpaces(8) + Time.ToString() + addSpaces(5) + "1-1", new Vector2(10, 25), Color.White);
             
@@ -82,25 +100,25 @@ using System.Text;
 
                 if (gameComplete)
                 {
-                    batch.DrawString(font, "WORLD 1 - 1", new Vector2((640 / 2)-30, (480 / 2)-50), Color.White);
-                    batch.DrawString(font, "Level Complete!\nPress R to reset", new Vector2((640 / 2) - 30, (480 / 2)), Color.White);
+                    batch.DrawString(font, WORLD_1_1, new Vector2((640 / 2)-30, (480 / 2)-50), Color.White);
+                    batch.DrawString(font, LEVEL_COMPLETE, new Vector2((640 / 2) - 30, (480 / 2)), Color.White);
                 }
 
                 else if (deathScreen && !isGameOver)
                 {
                     batch.DrawString(font, "WORLD 1 - 1\n\n" + addSpaces(4) +  "x  " + Score.Lives, new Vector2((640 / 2)-30, (480 / 2)-50), Color.White);
-                    Time = 400;
+                    Time = FOUR_HUNDRED;
                 
                     //mario.Draw(batch);
                 }
 
                 else if (isGameOver && deathScreen)
                 {
-                    batch.DrawString(font, "GAME OVER", new Vector2((640 / 2) - 30, (480 / 2) - 50), Color.White);
+                    batch.DrawString(font, GAME_OVER, new Vector2((640 / 2) - 30, (480 / 2) - 50), Color.White);
                     Time = 400;
-                    Score.Lives = 3;
-                    Score.marioScore = 0;
-                    Score.Coins = 0;
+                    Score.Lives = THREE;
+                    Score.marioScore = ZERO;
+                    Score.Coins = ZERO;
                 }
                
                 batch.End();
@@ -120,8 +138,8 @@ using System.Text;
                 String text = "";
                 for (int i = 0; i < 6; i++)
                 {
-                    text = (gameScore % 10) + text;
-                    gameScore /= 10;
+                    text = (gameScore % TEN) + text;
+                    gameScore /= TEN;
                 }
                 return text;
             }
@@ -129,7 +147,7 @@ using System.Text;
             private String formattedCoins(int coins)
             {
                 String text = "";
-                if (coins < 10)
+                if (coins < TEN)
                 {
                     text = "0" + coins.ToString();
                 }
@@ -143,14 +161,14 @@ using System.Text;
             private String formattedLives(int lives)
             {
                 String text = "";
-                if (lives < 10)
+                if (lives < TEN)
                 {
                     text = "0" + lives.ToString();
                 }
-                else if (lives > 99)
+                else if (lives > NINETY_NINE)
                 {
                     text = "99";
-                    lives = 99;
+                    lives = NINETY_NINE;
                 }
                 else
                 {
@@ -163,12 +181,12 @@ using System.Text;
             {
 
                 //Score.Lives = initialLives;
-                Score.marioScore = 0;
-                Score.Coins = 0;
+                Score.marioScore = ZERO;
+                Score.Coins = ZERO;
                 MarioGame.Instance.gameComplete = false;
                 Time = startTime;
                 Score.enemyKilledPoints = new int[10] { 100, 200, 400, 500, 800, 1000, 2000, 4000, 8000, 10000 };
-                Score.marioEnemyKilledCount = 0;
+                Score.marioEnemyKilledCount = ZERO;
             }
         }
     }

@@ -36,6 +36,22 @@ namespace Lasagna
         public bool isCollideGround { get; set; }
 
         private int marioWarpCount = 0;
+
+        /// <summary>
+        /// Constants
+        /// </summary>
+        private const int ZERO = 0;
+        private const int ONE = 1;
+        private const int TWO = 2;
+        private const int NEGATIVE_ONE = -1;
+        private const int TEN = 10;
+        private const int ONE_HUNDRED = 100;
+        private const int SEVENTY_FIVE = 75;
+        private const int NEGATIVE_TWO_HUNDRED = -200;
+        private const int TWO_SEVENTY_FIVE = 275;
+        private const int NEGATIVE_FOUR_FORTY = -440;
+
+
         private bool marioIsDead = false;
 
         public bool marioMovingLeft;
@@ -85,8 +101,8 @@ namespace Lasagna
 
         private void Reset(object sender, EventArgs e)
         {
-            position.X = orignalPos[0];
-            position.Y = -1 * orignalPos[1];
+            position.X = orignalPos[ZERO];
+            position.Y = NEGATIVE_ONE * orignalPos[ONE];
             velocity = Vector2.Zero;
             marioIsDead = false;
             stateMachine.Reset();
@@ -150,15 +166,15 @@ namespace Lasagna
 
             if (isRunning && !marioIsDead && !(Math.Abs(velocity.X) >= maxVelX + 100))
             {
-                velocity.X -= 10;
+                velocity.X -= TEN;
                 stateMachine.MoveLeft();
             }
             else if (!isRunning && !marioIsDead)
             {   // Slow velocity down if moving but not running
                 if ((Math.Abs(velocity.X) >= maxVelX) && !marioMovingRight)
-                    velocity.X += 2;
+                    velocity.X += TWO;
                 else
-                    velocity.X -= 10;
+                    velocity.X -= TEN;
 
                 stateMachine.MoveLeft();
             }
@@ -170,17 +186,17 @@ namespace Lasagna
             if (marioMovingLeft)
                 return;
 
-            if (isRunning && !marioIsDead && !(Math.Abs(velocity.X) >= maxVelX + 100))
+            if (isRunning && !marioIsDead && !(Math.Abs(velocity.X) >= maxVelX + ONE_HUNDRED))
             {
-                velocity.X += 10;
+                velocity.X += TEN;
                 stateMachine.MoveRight();
             }
             else if (!isRunning && !marioIsDead)
             {   // Slow velocity down if moving but not running
                 if ((Math.Abs(velocity.X) >= maxVelX) && !marioMovingLeft)
-                    velocity.X -= 2;
+                    velocity.X -= TWO;
                 else
-                    velocity.X += 10;
+                    velocity.X += TEN;
 
                 stateMachine.MoveRight();
             }
@@ -203,20 +219,8 @@ namespace Lasagna
             if (!marioIsDead && !(Math.Abs(velocity.Y) >= maxVelY))
             {
                 stateMachine.Jump();
-                if (velocity.Y < 275 && !isFalling)
-                    velocity.Y += 75;
-                else
-                    isFalling = true;
-            }
-        }
-
-        public void HandleJump()
-        {
-            if (!marioIsDead && !(Math.Abs(velocity.Y) >= maxVelY))
-            {
-                stateMachine.Jump();
-                if (velocity.Y < 350 && !isFalling)
-                    velocity.Y += 205;
+                if (velocity.Y < TWO_SEVENTY_FIVE && !isFalling)
+                    velocity.Y += SEVENTY_FIVE;
                 else
                     isFalling = true;
             }
@@ -237,11 +241,11 @@ namespace Lasagna
 
         public void HandleJumpDelay()
         {
-            if (jumpDelayCount != 2)
+            if (jumpDelayCount != TWO)
                 jumpDelayCount++;
             else
             {
-                jumpDelayCount = 0;
+                jumpDelayCount = ZERO;
                 jumpDelay = false;
             }
         }
@@ -262,7 +266,7 @@ namespace Lasagna
         public void Die()
         {
             marioIsDead = true;
-            velocity.X = 0;
+            velocity.X = ZERO;
             stateMachine.KillMario();
             Score.LoseLifeMario();
             
@@ -335,13 +339,13 @@ namespace Lasagna
             if ((Math.Abs(velocity.Y) >= maxVelY))
                 stateMachine.EndJump();
             // Slow mario down if he starts moving the opposite direction
-            if ((marioMovingLeft && velocity.X > 0) || (marioMovingRight && velocity.X < 0))
+            if ((marioMovingLeft && velocity.X > ZERO) || (marioMovingRight && velocity.X < ZERO))
                 velocity.X = velocity.X / 1.2f;
 
-            if (!ignoreGravity && velocity.Y > -200)
+            if (!ignoreGravity && velocity.Y > NEGATIVE_TWO_HUNDRED)
                 velocity += gravity * time;
             else if (ignoreGravity)
-                velocity.Y = 0;
+                velocity.Y = ZERO;
             position += velocity * time;
         }
 
@@ -355,7 +359,7 @@ namespace Lasagna
                 stateMachine.Update(gameTime, (int)position.X, -(int)position.Y);
                 return;
             }
-            if(!MarioIsInWarpZone() && !stateMachine.IsTransitioning && position.Y < -440)
+            if(!MarioIsInWarpZone() && !stateMachine.IsTransitioning && position.Y < NEGATIVE_FOUR_FORTY)
             {
                Die();
             }
@@ -408,7 +412,7 @@ namespace Lasagna
         }
         public bool MarioIsInWarpZone()
         {
-            return marioWarpCount % 2 == 1;
+            return marioWarpCount % TWO == ONE;
         }
     }
 }
