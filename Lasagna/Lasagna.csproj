@@ -61,7 +61,7 @@
     <Compile Include="Cameras\EdgeControlledCamera.cs" />
     <Compile Include="CollisionDetection.cs" />
     <Compile Include="Enemies\MovingEnemy.cs" />
-    <Compile Include="Sound\SoundEffects.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Tiles\UndergroundFloorBlockTile.cs" />
     <Compile Include="Tiles\UndergroundBrickTile.cs" />
     <Compile Include="Utilities\BGMFactory.cs" />

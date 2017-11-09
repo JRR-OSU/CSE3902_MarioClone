@@ -131,7 +131,7 @@ namespace Lasagna
             int spawnX = Bounds.X + (facingRight ? Bounds.Width : 0);
 
             MarioGame.Instance.RegisterProjectile(new FireProjectile(spawnX, Bounds.Y + Bounds.Height / 2, facingRight));
-            SoundEffectFactory.Instance.Fireball();
+            SoundEffectFactory.Instance.PlayFireball();
         }
 
         private bool IsMarioMovingRight()
@@ -219,7 +219,7 @@ namespace Lasagna
                 return;
             if (!isJumping)
             {
-                SoundEffectFactory.Instance.JumpMarioBig();
+                SoundEffectFactory.Instance.PlayJumpMarioBig();
             }
                 isJumping = true;
             if (!marioIsDead && !(Math.Abs(velocity.Y) >= maxVelY))

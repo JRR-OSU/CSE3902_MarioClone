@@ -313,6 +313,7 @@ namespace Lasagna
                 warpDestCamPosX = warpCamPosX;
                 warpDestCamPosY = warpCamPosY;
                 warping = true;
+                SoundEffectFactory.Instance.PlayPipeSound();
 
                 Direction animDir = Direction.Down;
 

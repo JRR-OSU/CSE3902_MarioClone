@@ -366,6 +366,7 @@ namespace Lasagna
 
         public void Star()
         {
+            BGMFactory.Instance.Play_StarMan();
             starPower = true;
         }
         public bool isStar()
@@ -382,6 +383,7 @@ namespace Lasagna
             {
                 starPower = false;
                 starCounter = 0;
+                BGMFactory.Instance.Play_MainTheme();
             }
         }
         private void DrawStarMario(SpriteBatch spriteBatch)

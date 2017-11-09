@@ -1,5 +1,5 @@
-﻿using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Audio;
+﻿using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Content;
 using System.Collections.Generic;
 
 namespace Lasagna
@@ -100,7 +100,7 @@ namespace Lasagna
             }
         }
 
-        public void BowserFall()
+        public void PlayBowserFall()
         {
             if (soundEffects != null)
             {
@@ -108,7 +108,7 @@ namespace Lasagna
             }
         }
 
-        public void BowserFire()
+        public void PlayBowserFire()
         {
             if (soundEffects != null)
             {
@@ -116,39 +116,27 @@ namespace Lasagna
             }
         }
 
-        public void BreakBlock()
+        public void PlayBrickBlock()
         {
-            if (soundEffects != null)
-            {
-                soundEffects[3].Play();
-            }
+            breakBlock.Play();
         }
 
-        public void Bump()
+        public void PlayBump()
         {
-            if (soundEffects != null)
-            {
-                soundEffects[4].Play();
-            }
+            bump.Play();
         }
 
-        public void Coin()
+        public void PlayCoin()
         {
-            if (soundEffects != null)
-            {
-                soundEffects[5].Play();
-            }
+            coin.Play();
         }
 
-        public void Fireball()
+        public void PlayFireball()
         {
-            if (soundEffects != null)
-            {
-                soundEffects[6].Play();
-            }
+            fireball.Play();
         }
 
-        public void Fireworks()
+        public void PlayFireworks()
         {
             if (soundEffects != null)
             {
@@ -156,7 +144,7 @@ namespace Lasagna
             }
         }
 
-        public void Flagpole()
+        public void PlayFlagpole()
         {
             if (soundEffects != null)
             {
@@ -164,7 +152,7 @@ namespace Lasagna
             }
         }
 
-        public void Gameover()
+        public void PlayGameOver()
         {
             if (soundEffects != null)
             {
@@ -172,7 +160,7 @@ namespace Lasagna
             }
         }
 
-        public void JumpMarioBig()
+        public void PlayJumpMarioBig()
         {
             if (soundEffects != null)
             {
@@ -180,7 +168,7 @@ namespace Lasagna
             }
         }
 
-        public void JumpMarioSmall()
+        public void PlayJumpMarioSmall()
         {
             if (soundEffects != null)
             {
@@ -188,7 +176,7 @@ namespace Lasagna
             }
         }
 
-        public void Kick()
+        public void PlayKick()
         {
             if (soundEffects != null)
             {
@@ -196,7 +184,7 @@ namespace Lasagna
             }
         }
 
-        public void MarioDie()
+        public void PlayMarioDie()
         {
             if (soundEffects != null)
             {
@@ -204,7 +192,7 @@ namespace Lasagna
             }
         }
 
-        public void Pause()
+        public void PlayPauseSound()
         {
             if (soundEffects != null)
             {
@@ -212,31 +200,22 @@ namespace Lasagna
             }
         }
 
-        public void Pipe()
+        public void PlayPipeSound()
         {
-            if (soundEffects != null)
-            {
-                soundEffects[15].Play();
-            }
+            pipe.Play();
         }
 
-        public void PowerUp()
+        public void PlayPowerUp()
         {
-            if (soundEffects != null)
-            {
-                soundEffects[16].Play();
-            }
+            powerUp.Play();
         }
 
-        public void PowerUpAppears()
+        public void PlayPowerUpAppearsSound()
         {
-            if (soundEffects != null)
-            {
-                soundEffects[17].Play();
-            }
+            powerUpAppears.Play();
         }
 
-        public void StageClear()
+        public void PlayStageClear()
         {
             if (soundEffects != null)
             {
@@ -244,15 +223,12 @@ namespace Lasagna
             }
         }
 
-        public void Stomp()
+        public void PlayStomp()
         {
-            if (soundEffects != null)
-            {
-                soundEffects[19].Play();
-            }
+            stomp.Play();
         }
 
-        public void Vine()
+        public void PlayVine()
         {
             if (soundEffects != null)
             {
@@ -260,7 +236,7 @@ namespace Lasagna
             }
         }
 
-        public void Warning()
+        public void PlayWarning()
         {
             if (soundEffects != null)
             {
@@ -268,7 +244,7 @@ namespace Lasagna
             }
         }
 
-        public void WorldClear()
+        public void PlayWorldClear()
         {
             if (soundEffects != null)
             {

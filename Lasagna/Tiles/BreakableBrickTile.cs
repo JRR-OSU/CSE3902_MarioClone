@@ -221,7 +221,7 @@ namespace Lasagna
                     //If the first item is grow mushroom, then the second item must be flower.
                     if (items[0] is GrowMushroomItem)
                     {
-                        SoundEffectFactory.Instance.PowerUpAppears();
+                        SoundEffectFactory.Instance.PlayPowerUpAppearsSound();
                         if (((Mario)Mario).CurrentState == MarioStateMachine.MarioState.Small)
                         {
                             items[0].Spawn();
@@ -239,11 +239,11 @@ namespace Lasagna
                         {
                             if (items[0] is CoinItem)
                             {
-                                SoundEffectFactory.Instance.Coin();
+                                SoundEffectFactory.Instance.PlayCoin();
                             }
                             else
                             {
-                                SoundEffectFactory.Instance.PowerUpAppears();
+                                SoundEffectFactory.Instance.PlayPowerUpAppearsSound();
                             }
                             this.currentState = BlockState.Bumped;
                             preBumpPos = PosY;
@@ -257,7 +257,7 @@ namespace Lasagna
                     if (((Mario)Mario).CurrentState == MarioStateMachine.MarioState.Big || ((Mario)Mario).CurrentState == MarioStateMachine.MarioState.Fire)
                     {
                         this.currentState = BlockState.Breaking;
-                        SoundEffectFactory.Instance.BreakBlock();
+                        SoundEffectFactory.Instance.PlayBrickBlock();
                         breakingBricks.Add(TileSpriteFactory.Instance.CreateSprite_BrickPieceLeft());
                         breakingBricks.Add(TileSpriteFactory.Instance.CreateSprite_BrickPieceRight());
                         breakingBricks.Add(TileSpriteFactory.Instance.CreateSprite_BrickPieceLeft());
@@ -273,7 +273,7 @@ namespace Lasagna
                     }
                     else if (((Mario)Mario).CurrentState == MarioStateMachine.MarioState.Small)
                     {
-                        SoundEffectFactory.Instance.Bump();
+                        SoundEffectFactory.Instance.PlayBump();
                         this.currentState = BlockState.Bumped;
                         preBumpPos = PosY;
                     }

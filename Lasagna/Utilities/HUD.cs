@@ -66,6 +66,8 @@ using System.Text;
 
             public void Update()
             {
+            if (Time < 100)
+                BGMFactory.Instance.Play_HurryOverWorld();
                     if (isDeathScreen || MarioGame.Instance.gameComplete)
                         return;
 

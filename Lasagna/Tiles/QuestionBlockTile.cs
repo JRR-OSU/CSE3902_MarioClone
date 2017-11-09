@@ -107,7 +107,7 @@ namespace Lasagna
                 {
                     if (items[0] is GrowMushroomItem)
                     {
-                        SoundEffectFactory.Instance.PowerUpAppears();
+                        SoundEffectFactory.Instance.PlayPowerUpAppearsSound();
                         if (((Mario)Mario).CurrentState == MarioStateMachine.MarioState.Small)
                         {
                             items[0].Spawn();
@@ -121,11 +121,11 @@ namespace Lasagna
                     {
                         if (items[0] is CoinItem)
                         {
-                            SoundEffectFactory.Instance.Coin();
+                            SoundEffectFactory.Instance.PlayCoin();
                         }
                         else
                         {
-                            SoundEffectFactory.Instance.PowerUpAppears();
+                            SoundEffectFactory.Instance.PlayPowerUpAppearsSound();
                         }
                         items[0].Spawn();
                     }

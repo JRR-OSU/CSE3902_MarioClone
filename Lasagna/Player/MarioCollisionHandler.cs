@@ -42,13 +42,13 @@ namespace Lasagna
             {
                 state.SetFireState();
                 Score.AddItemScore();
-                SoundEffectFactory.Instance.PowerUp();
+                SoundEffectFactory.Instance.PlayPowerUp();
             }
             else if (item is GrowMushroomItem)
             {
                 state.Grow();
                 Score.AddItemScore();
-                SoundEffectFactory.Instance.PowerUp();
+                SoundEffectFactory.Instance.PlayPowerUp();
             }
             else if (item is StarItem)
             {
@@ -59,7 +59,7 @@ namespace Lasagna
             else if (item is CoinItem)
             {
                 Score.AddCoinMario();
-                SoundEffectFactory.Instance.Coin();
+                SoundEffectFactory.Instance.PlayCoin();
             }
             else if(item is LifeMushroomItem)
             {
@@ -184,9 +184,11 @@ namespace Lasagna
                     case CollisionSide.Bottom:
                         if ((enemy is GoombaEnemy))
                         {
+                            SoundEffectFactory.Instance.PlayStomp();
                             if (((GoombaEnemy)enemy).currentHealth == MovingEnemy.EnemyHealth.Flipped)
                                 return;
                         }
+                        
                         // Jump effect if landing on top of an enemy
                         mario.velocity.Y = ZERO;
                         mario.velocity.Y += ONE_HUNDRED_FIFTY;
@@ -198,6 +200,7 @@ namespace Lasagna
                     case CollisionSide.Top:
                         if ((enemy is GoombaEnemy))
                         {
+
                             if (((GoombaEnemy)enemy).currentHealth == MovingEnemy.EnemyHealth.Flipped)
                                 return;
                         }
