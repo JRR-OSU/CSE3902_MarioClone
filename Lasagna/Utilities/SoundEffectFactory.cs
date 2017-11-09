@@ -29,7 +29,7 @@ namespace Lasagna
         public SoundEffect vine;
         public SoundEffect warning;
         public SoundEffect worldClear;
-        public List<SoundEffect> soundEffects;
+        public List<SoundEffect> soundEffects = new List<SoundEffect>();
         private static SoundEffectFactory instance;
 
         public static SoundEffectFactory Instance

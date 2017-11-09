@@ -6,7 +6,7 @@ namespace Lasagna.Sound
 {
     public class SoundEffects
     {
-        private List<SoundEffect> soundEffects;
+        private List<SoundEffect> soundEffects = new List<SoundEffect>();
 
         protected SoundEffects()
         {
