@@ -12,8 +12,6 @@ namespace Lasagna
     {
         private MarioStateMachine state;
         private Mario mario;
-        private SoundEffects soundEffects = new SoundEffects();
-        private BGMFactory bgm = new BGMFactory();
 
         /// <summary>
         /// Constants
@@ -44,29 +42,29 @@ namespace Lasagna
             {
                 state.SetFireState();
                 Score.AddItemScore();
-                soundEffects.PowerUp();
+                SoundEffectFactory.Instance.PowerUp();
             }
             else if (item is GrowMushroomItem)
             {
                 state.Grow();
                 Score.AddItemScore();
-                soundEffects.PowerUp();
+                SoundEffectFactory.Instance.PowerUp();
             }
             else if (item is StarItem)
             {
                 state.Star();
                 Score.AddItemScore();
-                bgm.Play_StarMan();
+                //bgm.Play_StarMan();
             }
             else if (item is CoinItem)
             {
                 Score.AddCoinMario();
-                soundEffects.Coin();
+                SoundEffectFactory.Instance.Coin();
             }
             else if(item is LifeMushroomItem)
             {
                 Score.ExtraLifeMario();
-                soundEffects.GetOneUp();
+                SoundEffectFactory.Instance.GetOneUp();
             }
         }
 

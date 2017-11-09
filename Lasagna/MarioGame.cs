@@ -86,6 +86,8 @@ namespace Lasagna
             MarioEvents.OnPause += OnPauseGame;
             MarioEvents.OnReset += OnReset;
 
+
+
             base.Initialize();
         }
 
@@ -100,6 +102,7 @@ namespace Lasagna
             TileSpriteFactory.Instance.LoadAllContent(Content);
             BackgroundSpriteFactory.Instance.LoadAllContent(Content, GraphicsDevice.Viewport.Height);
             SoundEffectFactory.Instance.LoadAllContent(Content);
+            BGMFactory.Instance.LoadAllContent(Content);
             hud = new HUD();
 
             LevelCreator.Instance.LoadLevelFromXML(Environment.CurrentDirectory + Level1XMLPath, out levelBackground, out players, out enemies, out tiles, out items);
@@ -195,11 +198,13 @@ namespace Lasagna
             GraphicsDevice.Clear(Color.Black);
             if (deathScreen)
             {
+                BGMFactory.Instance.Play_MainTheme();
                 DisplayDeathScreen();
                 return;
             }
             else if (gameComplete)
             {
+
                 hud.Draw(spriteBatch, font, deathScreen, gameComplete);
                 return;
             }

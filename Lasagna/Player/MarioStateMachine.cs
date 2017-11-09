@@ -624,6 +624,7 @@ namespace Lasagna
         {
             if (flagpoleCount == 0)
             {
+                BGMFactory.Instance.Play_LevelComplete();
                 marioMovement = MarioMovement.Flagpole;
                 SwitchCurrentSprite(marioMovement);
                 mario.position = flagpoleColPos;

@@ -22,7 +22,6 @@ namespace Lasagna
         private int maxVelY = 400;
         public bool isFalling = false;
         public int maxHeight;
-        private SoundEffects soundEffects = new SoundEffects();
 
         readonly Vector2 gravity = new Vector2(0, -500f);
         float time;
@@ -106,6 +105,7 @@ namespace Lasagna
             position.Y = NEGATIVE_ONE * orignalPos[ONE];
             velocity = Vector2.Zero;
             marioIsDead = false;
+            BGMFactory.Instance.Play_MainTheme();
             stateMachine.Reset();
         }
 
@@ -131,7 +131,7 @@ namespace Lasagna
             int spawnX = Bounds.X + (facingRight ? Bounds.Width : 0);
 
             MarioGame.Instance.RegisterProjectile(new FireProjectile(spawnX, Bounds.Y + Bounds.Height / 2, facingRight));
-            soundEffects.Fireball();
+            SoundEffectFactory.Instance.Fireball();
         }
 
         private bool IsMarioMovingRight()
@@ -219,16 +219,9 @@ namespace Lasagna
                 return;
             if (!isJumping)
             {
-                if (CurrentState == MarioStateMachine.MarioState.Small)
-                {
-                    soundEffects.JumpMarioSmall();
-                }
-                else
-                {
-                    soundEffects.JumpMarioBig();
-                }
+                SoundEffectFactory.Instance.JumpMarioBig();
             }
-            isJumping = true;
+                isJumping = true;
             if (!marioIsDead && !(Math.Abs(velocity.Y) >= maxVelY))
             {
                 stateMachine.Jump();
@@ -272,7 +265,7 @@ namespace Lasagna
         public void Die(object sender, EventArgs e)
         {
             marioIsDead = true;
-            
+
             stateMachine.KillMario();
         }
 
@@ -283,7 +276,8 @@ namespace Lasagna
             velocity.X = ZERO;
             stateMachine.KillMario();
             Score.LoseLifeMario();
-            
+            BGMFactory.Instance.Play_YouAreDead();
+
         }
 
         public void OnCollisionResponse(ICollider otherCollider, CollisionSide side)
