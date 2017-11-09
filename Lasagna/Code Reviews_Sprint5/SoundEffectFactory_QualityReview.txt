@@ -1,0 +1,8 @@
+﻿Yiwei Zhang
+11/8/2017
+Sprint 5
+SoundEffectFactory.cs
+Zeyu Li
+
+The class efficiently introduces all the individual sound effects to an array list and organizes them.
+However, it is a little hard to memorize which sound effect is at each location of the arraylist.
