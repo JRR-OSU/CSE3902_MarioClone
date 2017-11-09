@@ -360,7 +360,6 @@ namespace Lasagna
 
         public void Update(GameTime gameTime)
         {
-            Console.WriteLine(position);
             if (marioIsDead || stateMachine.flagpoleSequence)
             {
                 Console.WriteLine(position);
