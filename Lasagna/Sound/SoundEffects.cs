@@ -199,7 +199,7 @@ namespace Lasagna
 
         public void Clear()
         {
-            soundEffects = null;
+            soundEffects = new List<SoundEffect>();
         }
     }
 }
