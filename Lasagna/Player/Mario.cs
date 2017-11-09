@@ -287,6 +287,8 @@ namespace Lasagna
 
         private void SetPhysicsBools()
         {
+            if ((position.X >= 2193 && position.X <= 2256) || (position.X >= 2738 && position.X <= 2835) || (position.X >= 4884 && position.X <= 4952))
+                ignoreGravity = false;
             if (isCollideGround || velocity.Y == 0)
             {
                 isJumping = false;
@@ -346,6 +348,7 @@ namespace Lasagna
 
         public void Update(GameTime gameTime)
         {
+            Console.WriteLine(position);
             if (marioIsDead || stateMachine.flagpoleSequence)
             {
                 Console.WriteLine(position);
@@ -354,7 +357,7 @@ namespace Lasagna
             }
             if(!MarioIsInWarpZone() && !stateMachine.IsTransitioning && position.Y < -440)
             {
-                stateMachine.DamageMario();
+               Die();
             }
 
             if (stateMachine.IsTransitioning)

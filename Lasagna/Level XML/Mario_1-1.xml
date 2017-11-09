@@ -2,7 +2,7 @@
 <Root leveltype="MarioClear">
   <Players>
     <!--posx = -800, posy = 380-->
-    <Player type="Mario" posx="-800" posy="380" />
+    <Player type="Mario" posx="200" posy="380" />
   </Players>
   <Enemies>
     <!-- Test area enemies 

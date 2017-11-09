@@ -67,6 +67,7 @@ namespace Lasagna
         public  void Reset()
         {
             MarioEvents.Reset(this, EventArgs.Empty);
+            Score.Lives = 3;
         }
 
         public  void MoveLeft()

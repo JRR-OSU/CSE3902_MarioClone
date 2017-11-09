@@ -48,7 +48,7 @@ using System.Text;
 
             public void Update()
             {
-                    if (isDeathScreen)
+                    if (isDeathScreen || MarioGame.Instance.gameComplete)
                         return;
 
                     if (counter < FPS)

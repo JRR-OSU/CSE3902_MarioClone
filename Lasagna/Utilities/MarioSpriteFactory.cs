@@ -29,6 +29,8 @@ namespace Lasagna
         private readonly SpriteSheetInfo marioBigShrinkLeftInfo = new SpriteSheetInfo("MarioSprites/Mario_Big_ShrinkLeft", 32, 64, 10, 1, 10);
         private Texture2D marioBigShrinkRightSheet;
         private readonly SpriteSheetInfo marioBigShrinkRightInfo = new SpriteSheetInfo("MarioSprites/Mario_Big_ShrinkRight", 32, 64, 10, 1, 10);
+        private Texture2D marioBigFlagpoleSheet;
+        private readonly SpriteSheetInfo marioBigFlagpoleInfo = new SpriteSheetInfo("MarioSprites/Mario_Big_Flagpole", 32, 64);
         private Texture2D marioFireCrouchLeftSheet;
         private readonly SpriteSheetInfo marioFireCrouchLeftInfo = new SpriteSheetInfo("MarioSprites/Mario_Fire_CrouchLeft", 32, 44);
         private Texture2D marioFireCrouchRightSheet;
@@ -49,6 +51,8 @@ namespace Lasagna
         private readonly SpriteSheetInfo marioFireTurnLeftInfo = new SpriteSheetInfo("MarioSprites/Mario_Fire_TurnLeft", 32, 64);
         private Texture2D marioFireTurnRightSheet;
         private readonly SpriteSheetInfo marioFireTurnRightInfo = new SpriteSheetInfo("MarioSprites/Mario_Fire_TurnRight", 32, 64);
+        private Texture2D marioFireFlagpoleSheet;
+        private readonly SpriteSheetInfo marioFireFlagpoleInfo = new SpriteSheetInfo("MarioSprites/Mario_Fire_Flagpole", 32, 64);
         private Texture2D marioSmallDieSheet;
         private readonly SpriteSheetInfo marioSmallDieInfo = new SpriteSheetInfo("MarioSprites/Mario_Small_Die", 28, 28);
         private Texture2D marioSmallGrowLeftSheet;
@@ -71,6 +75,8 @@ namespace Lasagna
         private readonly SpriteSheetInfo marioSmallTurnLeftInfo = new SpriteSheetInfo("MarioSprites/Mario_Small_TurnLeft", 24, 32);
         private Texture2D marioSmallTurnRightSheet;
         private readonly SpriteSheetInfo marioSmallTurnRightInfo = new SpriteSheetInfo("MarioSprites/Mario_Small_TurnRight", 24, 32);
+        private Texture2D marioSmallFlagpoleSheet;
+        private readonly SpriteSheetInfo marioSmallFlagpoleInfo = new SpriteSheetInfo("MarioSprites/Mario_Small_Flagpole", 24, 32);
 
         private static MarioSpriteFactory instance;
 
@@ -99,6 +105,7 @@ namespace Lasagna
             marioBigTurnRightSheet = content.Load<Texture2D>(marioBigTurnRightInfo.ContentPath);
             marioBigShrinkLeftSheet = content.Load<Texture2D>(marioBigShrinkLeftInfo.ContentPath);
             marioBigShrinkRightSheet = content.Load<Texture2D>(marioBigShrinkRightInfo.ContentPath);
+            marioBigFlagpoleSheet = content.Load<Texture2D>(marioBigFlagpoleInfo.ContentPath);
             marioFireCrouchLeftSheet = content.Load<Texture2D>(marioFireCrouchLeftInfo.ContentPath);
             marioFireCrouchRightSheet = content.Load<Texture2D>(marioFireCrouchRightInfo.ContentPath);
             marioFireIdleLeftSheet = content.Load<Texture2D>(marioFireIdleLeftInfo.ContentPath);
@@ -109,6 +116,7 @@ namespace Lasagna
             marioFireRunRightSheet = content.Load<Texture2D>(marioFireRunRightInfo.ContentPath);
             marioFireTurnLeftSheet = content.Load<Texture2D>(marioFireTurnLeftInfo.ContentPath);
             marioFireTurnRightSheet = content.Load<Texture2D>(marioFireTurnRightInfo.ContentPath);
+            marioFireFlagpoleSheet = content.Load<Texture2D>(marioFireFlagpoleInfo.ContentPath);
             marioSmallDieSheet = content.Load<Texture2D>(marioSmallDieInfo.ContentPath);
             marioSmallGrowLeftSheet = content.Load<Texture2D>(marioSmallGrowLeftInfo.ContentPath);
             marioSmallGrowRightSheet = content.Load<Texture2D>(marioSmallGrowRightInfo.ContentPath);
@@ -120,6 +128,7 @@ namespace Lasagna
             marioSmallRunRightSheet = content.Load<Texture2D>(marioSmallRunRightInfo.ContentPath);
             marioSmallTurnLeftSheet = content.Load<Texture2D>(marioSmallTurnLeftInfo.ContentPath);
             marioSmallTurnRightSheet = content.Load<Texture2D>(marioSmallTurnRightInfo.ContentPath);
+            marioSmallFlagpoleSheet = content.Load<Texture2D>(marioSmallFlagpoleInfo.ContentPath);
         }
 
         public NonAnimatedSprite CreateSprite_MarioBig_CrouchLeft()
@@ -181,7 +190,10 @@ namespace Lasagna
         {
             return new AnimatedSprite(marioBigShrinkRightSheet, marioBigShrinkRightInfo);
         }
-
+        public NonAnimatedSprite CreateSprite_MarioBig_Flagpole()
+        {
+            return new NonAnimatedSprite(marioBigFlagpoleSheet, marioBigFlagpoleInfo);
+        }
         public NonAnimatedSprite CreateSprite_MarioFire_CrouchLeft()
         {
             return new NonAnimatedSprite(marioFireCrouchLeftSheet, marioFireCrouchLeftInfo);
@@ -231,7 +243,10 @@ namespace Lasagna
         {
             return new NonAnimatedSprite(marioFireTurnRightSheet, marioFireTurnRightInfo);
         }
-
+        public NonAnimatedSprite CreateSprite_MarioFire_Flagpole()
+        {
+            return new NonAnimatedSprite(marioFireFlagpoleSheet, marioFireFlagpoleInfo);
+        }
         public NonAnimatedSprite CreateSprite_MarioSmall_Die()
         {
             return new NonAnimatedSprite(marioSmallDieSheet, marioSmallDieInfo);
@@ -286,5 +301,10 @@ namespace Lasagna
         {
             return new NonAnimatedSprite(marioSmallTurnRightSheet, marioSmallTurnRightInfo);
         }
+        public NonAnimatedSprite CreateSprite_MarioSmall_Flagpole()
+        {
+            return new NonAnimatedSprite(marioSmallFlagpoleSheet, marioSmallFlagpoleInfo);
+        }
+
     }
 }
