@@ -258,7 +258,7 @@ namespace Lasagna
                     if (((Mario)Mario).CurrentState == MarioStateMachine.MarioState.Big || ((Mario)Mario).CurrentState == MarioStateMachine.MarioState.Fire)
                     {
                         this.currentState = BlockState.Breaking;
-
+                        soundEffects.BreakBlock();
                         breakingBricks.Add(TileSpriteFactory.Instance.CreateSprite_BrickPieceLeft());
                         breakingBricks.Add(TileSpriteFactory.Instance.CreateSprite_BrickPieceRight());
                         breakingBricks.Add(TileSpriteFactory.Instance.CreateSprite_BrickPieceLeft());
@@ -274,6 +274,7 @@ namespace Lasagna
                     }
                     else if (((Mario)Mario).CurrentState == MarioStateMachine.MarioState.Small)
                     {
+                        soundEffects.Bump();
                         this.currentState = BlockState.Bumped;
                         preBumpPos = PosY;
                     }

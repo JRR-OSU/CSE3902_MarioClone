@@ -22,6 +22,7 @@ namespace Lasagna
         private bool beingCollided = false;
         private ISprite unused = TileSpriteFactory.Instance.CreateSprite_QuestionBlock();
         private ISprite used = TileSpriteFactory.Instance.CreateSprite_ItemBlockUsed();
+        private SoundEffects soundEffects = new SoundEffects();
 
         public override bool IsChangingState { get { return beingCollided; } }
         public QuestionBlockTile(int spawnXPos, int spawnYPos)
@@ -107,6 +108,7 @@ namespace Lasagna
                 {
                     if (items[0] is GrowMushroomItem)
                     {
+                        soundEffects.PowerUpAppears();
                         if (((Mario)Mario).CurrentState == MarioStateMachine.MarioState.Small)
                         {
                             items[0].Spawn();
@@ -118,6 +120,14 @@ namespace Lasagna
                     }
                     else
                     {
+                        if (items[0] is CoinItem)
+                        {
+                            soundEffects.Coin();
+                        }
+                        else
+                        {
+                            soundEffects.PowerUpAppears();
+                        }
                         items[0].Spawn();
                     }
                 }

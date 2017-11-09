@@ -68,8 +68,6 @@ namespace Lasagna
                 Score.ExtraLifeMario();
                 soundEffects.GetOneUp();
             }
-            
-
         }
 
         public void OnCollisionResponse(IProjectile projectile, CollisionSide side)
