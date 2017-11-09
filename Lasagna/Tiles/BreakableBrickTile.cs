@@ -30,6 +30,7 @@ namespace Lasagna
         private ISprite[] brickPieceSprites;
         private ISprite idleSprite = TileSpriteFactory.Instance.CreateSprite_BreakableBrick();
         private ISprite used = TileSpriteFactory.Instance.CreateSprite_ItemBlockUsed();
+        private SoundEffects soundEffects = new SoundEffects();
         public override Rectangle Bounds
         {
             get
@@ -221,6 +222,7 @@ namespace Lasagna
                     //If the first item is grow mushroom, then the second item must be flower.
                     if (items[0] is GrowMushroomItem)
                     {
+                        soundEffects.PowerUpAppears();
                         if (((Mario)Mario).CurrentState == MarioStateMachine.MarioState.Small)
                         {
                             items[0].Spawn();
@@ -236,6 +238,14 @@ namespace Lasagna
                     {
                         if (currentState != BlockState.Used)
                         {
+                            if (items[0] is CoinItem)
+                            {
+                                soundEffects.Coin();
+                            }
+                            else
+                            {
+                                soundEffects.PowerUpAppears();
+                            }
                             this.currentState = BlockState.Bumped;
                             preBumpPos = PosY;
                         }
