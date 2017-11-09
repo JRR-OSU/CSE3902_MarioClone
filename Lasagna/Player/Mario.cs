@@ -217,10 +217,8 @@ namespace Lasagna
         {
             if (stateMachine != null && stateMachine.IsTransitioning || !canJump)
                 return;
-            isJumping = true;
-            if (!marioIsDead && !(Math.Abs(velocity.Y) >= maxVelY))
+            if (!isJumping)
             {
-                stateMachine.Jump();
                 if (CurrentState == MarioStateMachine.MarioState.Small)
                 {
                     soundEffects.JumpMarioSmall();
@@ -229,6 +227,12 @@ namespace Lasagna
                 {
                     soundEffects.JumpMarioBig();
                 }
+            }
+            isJumping = true;
+            if (!marioIsDead && !(Math.Abs(velocity.Y) >= maxVelY))
+            {
+                stateMachine.Jump();
+               
                 if (velocity.Y < TWO_SEVENTY_FIVE && !isFalling)
                     velocity.Y += SEVENTY_FIVE;
                 else
