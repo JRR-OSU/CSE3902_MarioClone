@@ -70,7 +70,7 @@ namespace Lasagna
                 isMovingRight = false;
             else if (side.Equals(CollisionSide.Left))
                 isMovingRight = true;
-
+            SoundEffectFactory.Instance.PlayBump();
             CorrectPosition(side, tile);
         }
 
@@ -86,7 +86,7 @@ namespace Lasagna
                     isMovingRight = false;
                 else if (side.Equals(CollisionSide.Left))
                     isMovingRight = true;
-
+                SoundEffectFactory.Instance.PlayKick();
                 CorrectPosition(side, player);
             }
 

@@ -43,22 +43,26 @@ namespace Lasagna
             if (side.Equals(CollisionSide.Top) && currentHealth == EnemyHealth.Normal)
             {
                 ChangeState(EnemyState.Dead);
+                SoundEffectFactory.Instance.PlayStomp();
                 currentHealth = EnemyHealth.Stomped;
             }
             else if((mario is Mario && ((Mario)mario).StarPowered) && currentHealth == EnemyHealth.Normal)
             {
                 ChangeState(EnemyState.Flipped);
                 currentHealth = EnemyHealth.Flipped;
+                SoundEffectFactory.Instance.PlayStomp();
                 Score.increaseScoreMario(200);
             }
         }
 
         protected override void OnCollisionResponse(IProjectile fireball, CollisionSide side)
         {
-            if (side.Equals(CollisionSide.Left) || side.Equals(CollisionSide.Right))
+            if ((side.Equals(CollisionSide.Left) || side.Equals(CollisionSide.Right)) 
+                && currentHealth == EnemyHealth.Normal)
             {
                 ChangeState(EnemyState.Flipped);
                 currentHealth = EnemyHealth.Flipped;
+                SoundEffectFactory.Instance.PlayStomp();
                 Score.increaseScoreMario(200);
             }
         }

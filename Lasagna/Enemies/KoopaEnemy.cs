@@ -46,10 +46,12 @@ namespace Lasagna
             if (side.Equals(CollisionSide.Top) && currentHealth == EnemyHealth.Normal)
             {
                 Damage();
+                SoundEffectFactory.Instance.PlayStomp();
             }
             else if (mario is Mario && ((Mario)mario).StarPowered && currentHealth == EnemyHealth.Normal)
             {
                 ChangeState(EnemyState.Dead);
+                SoundEffectFactory.Instance.PlayStomp();
                 currentHealth = EnemyHealth.Flipped;
                 Score.increaseScoreMario(200);
             }
@@ -61,6 +63,7 @@ namespace Lasagna
             {
                 ChangeState(EnemyState.Dead);
                 currentHealth = EnemyHealth.Flipped;
+                SoundEffectFactory.Instance.PlayStomp();
                 Score.increaseScoreMario(200);
             }
         }

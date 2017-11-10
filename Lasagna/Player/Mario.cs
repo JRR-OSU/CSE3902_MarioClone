@@ -219,7 +219,14 @@ namespace Lasagna
                 return;
             if (!isJumping)
             {
-                SoundEffectFactory.Instance.PlayJumpMarioBig();
+                if (CurrentState.Equals(MarioStateMachine.MarioState.Small))
+                {
+                    SoundEffectFactory.Instance.PlayJumpMarioSmall();
+                }
+                else
+                {
+                    SoundEffectFactory.Instance.PlayJumpMarioBig();
+                }
             }
                 isJumping = true;
             if (!marioIsDead && !(Math.Abs(velocity.Y) >= maxVelY))

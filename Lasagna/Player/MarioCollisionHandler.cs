@@ -184,7 +184,6 @@ namespace Lasagna
                     case CollisionSide.Bottom:
                         if ((enemy is GoombaEnemy))
                         {
-                            SoundEffectFactory.Instance.PlayStomp();
                             if (((GoombaEnemy)enemy).currentHealth == MovingEnemy.EnemyHealth.Flipped)
                                 return;
                         }
