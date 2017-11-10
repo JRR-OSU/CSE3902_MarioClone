@@ -896,141 +896,141 @@
 /processorParam:TextureFormat=Color
 /build:MarioSprites/Mario_Fire_Flagpole.png
 
-#begin SFX/1-UP.wav
-/importer:WavImporter
+#begin SFX/1-UP.mp3
+/importer:Mp3Importer
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:SFX/1-UP.wav
+/build:SFX/1-UP.mp3
 
-#begin SFX/BowserFall.wav
-/importer:WavImporter
+#begin SFX/BowserFall.mp3
+/importer:Mp3Importer
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:SFX/BowserFall.wav
+/build:SFX/BowserFall.mp3
 
-#begin SFX/BowserFire.wav
-/importer:WavImporter
+#begin SFX/BowserFire.mp3
+/importer:Mp3Importer
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:SFX/BowserFire.wav
+/build:SFX/BowserFire.mp3
 
-#begin SFX/BreakBlock.wav
-/importer:WavImporter
+#begin SFX/BreakBlock.mp3
+/importer:Mp3Importer
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:SFX/BreakBlock.wav
+/build:SFX/BreakBlock.mp3
 
-#begin SFX/Bump.wav
-/importer:WavImporter
+#begin SFX/Bump.mp3
+/importer:Mp3Importer
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:SFX/Bump.wav
+/build:SFX/Bump.mp3
 
-#begin SFX/Coin.wav
-/importer:WavImporter
+#begin SFX/Coin.mp3
+/importer:Mp3Importer
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:SFX/Coin.wav
+/build:SFX/Coin.mp3
 
-#begin SFX/Fireball.wav
-/importer:WavImporter
+#begin SFX/Fireball.mp3
+/importer:Mp3Importer
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:SFX/Fireball.wav
+/build:SFX/Fireball.mp3
 
-#begin SFX/Fireworks.wav
-/importer:WavImporter
+#begin SFX/Fireworks.mp3
+/importer:Mp3Importer
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:SFX/Fireworks.wav
+/build:SFX/Fireworks.mp3
 
-#begin SFX/Flagpole.wav
-/importer:WavImporter
+#begin SFX/Flagpole.mp3
+/importer:Mp3Importer
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:SFX/Flagpole.wav
+/build:SFX/Flagpole.mp3
 
-#begin SFX/Gameover.wav
-/importer:WavImporter
+#begin SFX/Gameover.mp3
+/importer:Mp3Importer
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:SFX/Gameover.wav
+/build:SFX/Gameover.mp3
 
-#begin SFX/JumpMarioBig.wav
-/importer:WavImporter
+#begin SFX/JumpMarioBig.mp3
+/importer:Mp3Importer
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:SFX/JumpMarioBig.wav
+/build:SFX/JumpMarioBig.mp3
 
-#begin SFX/JumpMarioSmall.wav
-/importer:WavImporter
+#begin SFX/JumpMarioSmall.mp3
+/importer:Mp3Importer
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:SFX/JumpMarioSmall.wav
+/build:SFX/JumpMarioSmall.mp3
 
-#begin SFX/Kick.wav
-/importer:WavImporter
+#begin SFX/Kick.mp3
+/importer:Mp3Importer
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:SFX/Kick.wav
+/build:SFX/Kick.mp3
 
-#begin SFX/MarioDie.wav
-/importer:WavImporter
+#begin SFX/MarioDie.mp3
+/importer:Mp3Importer
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:SFX/MarioDie.wav
+/build:SFX/MarioDie.mp3
 
-#begin SFX/Pause.wav
-/importer:WavImporter
+#begin SFX/Pause.mp3
+/importer:Mp3Importer
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:SFX/Pause.wav
+/build:SFX/Pause.mp3
 
-#begin SFX/Pipe.wav
-/importer:WavImporter
+#begin SFX/Pipe.mp3
+/importer:Mp3Importer
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:SFX/Pipe.wav
+/build:SFX/Pipe.mp3
 
-#begin SFX/PowerUp.wav
-/importer:WavImporter
+#begin SFX/PowerUp.mp3
+/importer:Mp3Importer
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:SFX/PowerUp.wav
+/build:SFX/PowerUp.mp3
 
-#begin SFX/PowerUpAppears.wav
-/importer:WavImporter
+#begin SFX/PowerUpAppears.mp3
+/importer:Mp3Importer
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:SFX/PowerUpAppears.wav
+/build:SFX/PowerUpAppears.mp3
 
-#begin SFX/StageClear.wav
-/importer:WavImporter
+#begin SFX/StageClear.mp3
+/importer:Mp3Importer
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:SFX/StageClear.wav
+/build:SFX/StageClear.mp3
 
-#begin SFX/Stomp.wav
-/importer:WavImporter
+#begin SFX/Stomp.mp3
+/importer:Mp3Importer
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:SFX/Stomp.wav
+/build:SFX/Stomp.mp3
 
-#begin SFX/Vine.wav
-/importer:WavImporter
+#begin SFX/Vine.mp3
+/importer:Mp3Importer
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:SFX/Vine.wav
+/build:SFX/Vine.mp3
 
-#begin SFX/Warning.wav
-/importer:WavImporter
+#begin SFX/Warning.mp3
+/importer:Mp3Importer
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:SFX/Warning.wav
+/build:SFX/Warning.mp3
 
-#begin SFX/WorldClear.wav
-/importer:WavImporter
+#begin SFX/WorldClear.mp3
+/importer:Mp3Importer
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:SFX/WorldClear.wav
+/build:SFX/WorldClear.mp3
 
