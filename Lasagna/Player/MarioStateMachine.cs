@@ -171,19 +171,11 @@ namespace Lasagna
                 mario.Die();
             else
             {
-                if (marioState == MarioState.Fire)
-                {
-                    marioState = MarioState.Big;
-                    UpdateSprite();
-                }
-                else
-                {
-                    //If facing left, set movement to be transition left.
-                    marioMovement = (MarioFacingLeft()) ? MarioMovement.ShrinkLeft : MarioMovement.ShrinkRight;
-                    marioState = MarioState.Small;
-                    UpdateSprite();
-                }
-
+                //If facing left, set movement to be transition left.
+                marioMovement = (MarioFacingLeft()) ? MarioMovement.ShrinkLeft : MarioMovement.ShrinkRight;
+                marioState = MarioState.Small;
+                SoundEffectFactory.Instance.PlayPipeSound();
+                UpdateSprite();
                 blinkTimeRemaining = blinkLength;
                 stateTransitionTimeRemaining = (marioState == MarioState.Big) ? firePowerupTransitionLength : currentSprite.ClipLength;
             }
