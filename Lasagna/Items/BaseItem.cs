@@ -70,7 +70,7 @@ namespace Lasagna
         {
             get
             {
-                if (itemSprite == null || currentState == ItemState.Taken)
+                if (itemSprite == null || currentState == ItemState.Taken || isInvisible)
                     return Rectangle.Empty;
                 else
                     return new Rectangle((int)position.X, (int)position.Y, itemSprite.Width, itemSprite.Height);
