@@ -76,13 +76,7 @@ namespace Lasagna
                     return new Rectangle((int)position.X, (int)position.Y, itemSprite.Width, itemSprite.Height);
             }
         }
-
-        // Method to allow adjustment of item spawn position in LevelCreator.cs
-        public void FixInitialPosition(int x)
-        {
-            position.X = x;
-        }
-        
+              
 
         public virtual void Update(GameTime gameTime)
         {
@@ -234,7 +228,7 @@ namespace Lasagna
         //This should be called whenever there is a collision, it resolves this item's new position.
         protected void CorrectPosition(CollisionSide side, ICollider target)
         {
-            if (side == CollisionSide.None || target == null)
+            if (side == CollisionSide.None || target == null || (this is CoinItem))
                 return;
 
             if (side == CollisionSide.Left)
@@ -250,7 +244,7 @@ namespace Lasagna
 
         public virtual void Spawn()
         {
-            if(!(this is CoinItem))
+            if (!(this is CoinItem))
                 this.waitToDraw = true;
 
             this.isInBlock = true;

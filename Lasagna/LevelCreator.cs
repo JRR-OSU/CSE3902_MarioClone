@@ -329,9 +329,6 @@ namespace Lasagna
                 itemStr = reader.GetAttribute(ItemAttr);
                 if (TryCreateItemFromEnum(itemStr, posX, posY, out blockItem))
                 {
-                    // Fix coin position so it's centered in the QuestionBlock
-                    if (t == TileType.QuestionBlock && blockItem is CoinItem)
-                        ((CoinItem)blockItem).FixInitialPosition(posX + Five);
                     blockItems.Add(blockItem);
                     //If item is mushroom, create fireflower as well
                     if (blockItem is GrowMushroomItem)
