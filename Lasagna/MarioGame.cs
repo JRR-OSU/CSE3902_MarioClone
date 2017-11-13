@@ -94,7 +94,7 @@ namespace Lasagna
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
-      
+
             EnemySpriteFactory.Instance.LoadAllContent(Content);
             ItemSpriteFactory.Instance.LoadAllContent(Content);
             MarioSpriteFactory.Instance.LoadAllContent(Content);
@@ -113,7 +113,7 @@ namespace Lasagna
             else
                 mainCamera = new EdgeControlledCamera(Zero, Zero);
 
-                  
+
         }
 
         protected override void Update(GameTime gameTime)
@@ -137,33 +137,29 @@ namespace Lasagna
                 levelBackground.Update(gameTime, Zero, Zero);
 
             foreach (ITile tile in tiles)
-                if (tile != null)
+            {
+                if (tile == null)
+                    continue;
+
+                if (!(tile is InvisibleItemBlockTile) && !(tile is QuestionBlockTile) && !(tile is BreakableBrickTile))
+                    tile.Update(gameTime);
+                //If the tile is an invisible block, then use a different update method.
+                else
                 {
-                    if (!(tile is InvisibleItemBlockTile) || !(tile is QuestionBlockTile) || !(tile is BreakableBrickTile))
+                    foreach (IPlayer player in players)
                     {
-                        tile.Update(gameTime);
-                    }
-                    //If the tile is an invisible block, then use a different update method.
-                    else
-                    {
-                        foreach (IPlayer player in players)
-                            if (player != null)
-                            {
-                                if (tile is InvisibleItemBlockTile)
-                                {
-                                    ((InvisibleItemBlockTile)tile).Update(player, gameTime);
-                                }
-                                else if (tile is QuestionBlockTile)
-                                {
-                                    ((QuestionBlockTile)tile).Update(player, gameTime);
-                                }
-                                else if (tile is BreakableBrickTile)
-                                {
-                                    ((BreakableBrickTile)tile).Update(player, gameTime);
-                                }
-                            }
+                        if (player == null)
+                            continue;
+
+                        if (tile is InvisibleItemBlockTile)
+                            ((InvisibleItemBlockTile)tile).Update(player, gameTime);
+                        else if (tile is QuestionBlockTile)
+                            ((QuestionBlockTile)tile).Update(player, gameTime);
+                        else if (tile is BreakableBrickTile)
+                            ((BreakableBrickTile)tile).Update(player, gameTime);
                     }
                 }
+            }
             foreach (IProjectile projectile in projectiles)
                 if (projectile != null)
                     projectile.Update(gameTime);
@@ -232,14 +228,14 @@ namespace Lasagna
                 if (projectile != null)
                     projectile.Draw(spriteBatch);
             //If we're not warping, draw over everything else
-        
+
             if (!warping)
             {
                 foreach (IPlayer player in players)
                     if (player != null)
                         player.Draw(spriteBatch);
             }
-            hud.Draw(spriteBatch,font,deathScreen,gameComplete);
+            hud.Draw(spriteBatch, font, deathScreen, gameComplete);
             base.Draw(gameTime);
         }
 
