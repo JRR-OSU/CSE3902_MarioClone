@@ -1,0 +1,9 @@
+﻿Jon Reed
+11/13/2017
+Sprint 5 - Refactored
+Score.cs
+Yiwei Zhang
+5 minutes
+
+The code is extremely readable and is an easy to understand static class which handles score incrementation for the player.
+The code maintains good readability after refactoring.
