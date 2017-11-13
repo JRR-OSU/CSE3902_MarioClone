@@ -20,6 +20,7 @@ namespace Lasagna
         private const int ONE = 1;
         private const int TWO = 2;
         private const int FIVE = 5;
+        private const int TWENTY = 20;
         private const int ONE_HUNDRED_FIFTY = 150;
 
         public MarioCollisionHandler(Mario player, MarioStateMachine marioState)
@@ -122,19 +123,15 @@ namespace Lasagna
                         mario.isCollideGround = true;
                         if (tile is FlagPoleTile)
                         {
-                            Console.WriteLine(mario.position);
                             state.flagpoleSequence = true;
-                            state.flagpoleColPos.X = mario.position.X;
+                            state.flagpoleColPos.X = ((FlagPoleTile)tile).Bounds.X-TWENTY;
                             state.flagpoleColPos.Y = mario.position.Y;
                         }
                         else if (tile is WarpPipeTile)
                             mario.disableCrouch = true;
                         else
                             mario.disableCrouch = false;
-                        
-                        mario.CalcMaxHeight(tile.Bounds.Y, tile.Bounds.Height);
                         mario.SetPosition(mario.Bounds.X, ((tile.Bounds.Y - mario.Bounds.Height-TWO)));
-
                         mario.isFalling = false;
                         break;
                     case CollisionSide.Top:

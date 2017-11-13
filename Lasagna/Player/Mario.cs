@@ -106,6 +106,9 @@ namespace Lasagna
             position.Y = NEGATIVE_ONE * orignalPos[ONE];
             velocity = Vector2.Zero;
             marioIsDead = false;
+            marioMovingLeft = false;
+            marioMovingRight = false;
+            isCollideGround = false;
             BGMFactory.Instance.Play_MainTheme();
             stateMachine.Reset();
         }
@@ -241,12 +244,11 @@ namespace Lasagna
             }
         }
 
-        public void CalcMaxHeight(int tileY, int tileHeight)
+        public void CheckFlagpoleHeight()
         {
-            if (!isJumping && !isRunning)
-                maxHeight = (int)(((tileY - tileHeight) - Bounds.Height * 3.0));
-            else if (isRunning)
-                maxHeight = (int)(((tileY - tileHeight) - Bounds.Height * 4.0));
+            if (position.X > 6000 && position.Y >= -40)
+                ForceMove(0, 1);
+                
         }
 
         public void StartJumpDelay()
@@ -389,7 +391,7 @@ namespace Lasagna
                 transitionVel = velocity;
 
 
-
+            CheckFlagpoleHeight();
             HandleJumpBools();
 
             HandleMovement();
@@ -406,9 +408,6 @@ namespace Lasagna
             marioMovingLeft = false;
             marioMovingRight = false;
             isCollideGround = false;
-
-
-            // Console.WriteLine(position);
         }
 
         public void Draw(SpriteBatch spriteBatch)

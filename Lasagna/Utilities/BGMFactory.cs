@@ -189,6 +189,11 @@ namespace Lasagna
             MediaPlayer.Resume();
         }
 
+        public void DisableRepeatMode()
+        {
+            MediaPlayer.IsRepeating = false;
+        }
+
 
         void MediaPlayer_MediaStateChanged(object sender, System.EventArgs e)
         {

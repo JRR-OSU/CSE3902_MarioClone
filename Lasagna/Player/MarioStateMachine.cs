@@ -635,7 +635,7 @@ namespace Lasagna
             {
                 if (mario.position.X < 6520)
                 {
-                    if(marioState == MarioState.Big)
+                    if(marioState == MarioState.Big || marioState == MarioState.Fire)
                         flagpoleSlide.Y = -355;
                     flagpoleSlide.X++;
                     mario.position = flagpoleSlide;
@@ -643,6 +643,7 @@ namespace Lasagna
                 else
                 {
                     MarioGame.Instance.gameComplete = true;
+                    BGMFactory.Instance.DisableRepeatMode();
                     return;
                 }
             }
