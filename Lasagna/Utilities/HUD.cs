@@ -32,11 +32,12 @@ using System.Text;
             private const string WORLD_1_1 = "WORLD 1 - 1";
             private const string LEVEL_COMPLETE = "Level Complete!\nPress R to reset";
             private const string GAME_OVER = "Game Over";
+            private const string TIME_UP = "Time Up";
 
 
 
 
-            private int counter = 0;
+        private int counter = 0;
 
             private int FPS = 60;
 
@@ -47,6 +48,9 @@ using System.Text;
 
             private bool isDeathScreen = true;
             private bool isGameOver = false;
+            private bool timeUp = false;
+
+        ISprite mario;
 
 
             public HUD()
@@ -60,13 +64,13 @@ using System.Text;
                 Time = startTime;
                 Score.enemyKilledPoints = new int[10] { 100, 200, 400, 500, 800, 1000, 2000, 4000, 8000, 10000 };
                Score.marioEnemyKilledCount = ZERO;
-               //mario = MarioSpriteFactory.Instance.CreateSprite_MarioSmall_IdleRight();
-            //mario.SetSpriteScreenPosition(640 / 2, 480 / 2);
+               mario = MarioSpriteFactory.Instance.CreateSprite_MarioSmall_IdleRight();
+            mario.SetSpriteScreenPosition((640 / 2) + 175, (480 / 2)-20);
+
             }
 
             public void Update()
             {
-            Time--;
             if (Time < 100)
                 BGMFactory.Instance.Play_HurryOverWorld();
                     if (isDeathScreen || MarioGame.Instance.gameComplete)
@@ -83,11 +87,13 @@ using System.Text;
                     }
                     if (Time <= ZERO || Score.Lives <= ZERO)
                     {
+                        if (Time == ZERO)
+                            Score.Lives--;
                         MarioGame.Instance.TriggerDeathSequence();
-                        isGameOver = true;
+                        timeUp = true;
                     }
                     else
-                        isGameOver = false;
+                        timeUp = false;
                 
             }
 
@@ -108,12 +114,20 @@ using System.Text;
                     batch.DrawString(font, LEVEL_COMPLETE, new Vector2((640 / 2) - 30, (480 / 2)), Color.White);
                 }
 
-                else if (deathScreen && !isGameOver)
+                else if (deathScreen && !isGameOver && !timeUp)
                 {
                     batch.DrawString(font, "WORLD 1 - 1\n\n" + addSpaces(4) +  "x  " + Score.Lives, new Vector2((640 / 2)-30, (480 / 2)-50), Color.White);
                     Time = FOUR_HUNDRED;
-                
-                    //mario.Draw(batch);
+                batch.End();
+                    mario.Draw(batch);
+                }
+
+                else if(timeUp && deathScreen)
+                {
+                    batch.DrawString(font, TIME_UP, new Vector2((640 / 2) - 30, (480 / 2) - 50), Color.White);
+                    Time = 400;
+                    Score.marioScore = ZERO;
+                    Score.Coins = ZERO;
                 }
 
                 else if (isGameOver && deathScreen)
