@@ -137,7 +137,8 @@ namespace Lasagna
                         mario.SetPosition(mario.Bounds.X, (tile.Bounds.Y + tile.Bounds.Height + FIVE));
                         mario.ignoreGravity = false;
                         if (tile is BreakableBrickTile)
-                            if (((BreakableBrickTile)tile).items.Length > 0 && ((BreakableBrickTile)tile).items[0] is CoinItem)
+                            if (((BreakableBrickTile)tile).items.Length > 0 && ((BreakableBrickTile)tile).items[0] is CoinItem
+                                && !((BreakableBrickTile)tile).IsUsed)
                             {
                                 Score.AddCoinMario();
                             }
