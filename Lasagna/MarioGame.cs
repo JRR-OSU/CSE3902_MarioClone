@@ -51,7 +51,7 @@ namespace Lasagna
         private List<IPlayer> players = new List<IPlayer>();
         private HUD hud;
         private SpriteFont font;
-        private bool paused;
+        private bool paused = false;
         //Fields for warping
         private bool warping;
         public bool isInWarpZone;
@@ -86,8 +86,6 @@ namespace Lasagna
             MarioEvents.OnPause += OnPauseGame;
             MarioEvents.OnReset += OnReset;
 
-
-
             base.Initialize();
         }
 
@@ -118,16 +116,18 @@ namespace Lasagna
 
         protected override void Update(GameTime gameTime)
         {
-            //If game is paused, exit.
+
+            keyControl.Update();
             if (paused)
                 return;
-
             hud.Update();
             foreach (IPlayer player in players)
                 if (player != null)
                     player.isCollideGround = false;
 
-            keyControl.Update();
+
+            //If game is paused, exit.
+
             //if (players != null && players.Count > Zero)
             //   mouseControl.Update(players[Zero], enemies.AsReadOnly(), tiles.AsReadOnly());
 
@@ -247,7 +247,17 @@ namespace Lasagna
 
         private void OnPauseGame(object sender, EventArgs e)
         {
-            paused = !paused;
+            SoundEffectFactory.Instance.PlayPauseSound();
+            if (paused)
+            {
+                paused = false;
+                BGMFactory.Instance.Resume();
+            }
+            else
+            {
+                paused = true;
+                BGMFactory.Instance.Pause();
+            }
         }
 
         private void OnReset(object sender, EventArgs e)

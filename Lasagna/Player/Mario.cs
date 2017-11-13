@@ -32,6 +32,7 @@ namespace Lasagna
         private bool jumpDelay = false;
         private int jumpDelayCount = 0;
         private bool canJump = true;
+        public bool disableCrouch = false;
 
         public bool isCollideGround { get; set; }
 
@@ -79,7 +80,6 @@ namespace Lasagna
             position.Y = -y;
             orignalPos[0] = (int)position.X;
             orignalPos[1] = -(int)position.Y;
-
         }
 
 
@@ -101,6 +101,7 @@ namespace Lasagna
 
         private void Reset(object sender, EventArgs e)
         {
+
             position.X = orignalPos[ZERO];
             position.Y = NEGATIVE_ONE * orignalPos[ONE];
             velocity = Vector2.Zero;
@@ -206,7 +207,7 @@ namespace Lasagna
 
         public void Crouch(object sender, EventArgs e)
         {
-            if (stateMachine != null && stateMachine.IsTransitioning)
+            if (stateMachine != null && stateMachine.IsTransitioning || disableCrouch)
                 return;
 
             if (!marioIsDead)
@@ -339,6 +340,8 @@ namespace Lasagna
         }
         private void HandleMovement()
         {
+            if (stateMachine.IsTransitioning)
+                return;
             if (marioMovingLeft)
                 MarioMoveLeft();
             else if (marioMovingRight)
@@ -369,7 +372,6 @@ namespace Lasagna
         {
             if (marioIsDead || stateMachine.flagpoleSequence)
             {
-                Console.WriteLine(position);
                 stateMachine.Update(gameTime, (int)position.X, -(int)position.Y);
                 return;
             }
@@ -404,6 +406,7 @@ namespace Lasagna
             marioMovingLeft = false;
             marioMovingRight = false;
             isCollideGround = false;
+
 
             // Console.WriteLine(position);
         }

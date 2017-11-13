@@ -527,8 +527,8 @@ namespace Lasagna
                             mario.Jump(null, null);
                         else
                         {
-                            mario.isFalling = false;
-                            mario.isCollideGround = true;
+
+                            mario.ignoreGravity = false;
                             
                         }
                     }
@@ -602,6 +602,7 @@ namespace Lasagna
             marioState = MarioState.Small;
             marioMovement = MarioMovement.IdleRight;
             currentSprite = smallStates[marioMovement];
+            SwitchCurrentSprite(marioMovement);
             stateTransitionTimeRemaining = 0;
             warpTimeRemaining = 0;
             blinkTimeRemaining = 0;
@@ -634,6 +635,8 @@ namespace Lasagna
             {
                 if (mario.position.X < 6520)
                 {
+                    if(marioState == MarioState.Big)
+                        flagpoleSlide.Y = -355;
                     flagpoleSlide.X++;
                     mario.position = flagpoleSlide;
                 }

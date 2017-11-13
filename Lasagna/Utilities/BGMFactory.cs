@@ -170,10 +170,23 @@ namespace Lasagna
         {
             if (song != null)
             {
+                MediaPlayer.Volume = 0.5f;
                 MediaPlayer.Play(song);
-                MediaPlayer.MediaStateChanged += MediaPlayer_MediaStateChanged;
+
+                //MediaPlayer.MediaStateChanged += MediaPlayer_MediaStateChanged;
             }
         }
+
+        public void Pause()
+        {
+            MediaPlayer.Pause();
+        }
+
+        public void Resume()
+        {
+            MediaPlayer.Resume();
+        }
+
 
         void MediaPlayer_MediaStateChanged(object sender, System.EventArgs e)
         {

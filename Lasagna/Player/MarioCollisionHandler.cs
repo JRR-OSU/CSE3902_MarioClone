@@ -102,7 +102,7 @@ namespace Lasagna
         public void OnCollisionResponse(ITile tile, CollisionSide side)
         {
             //If the Mario hits the invisible block from the top, left and right sides of the block, do nothing.
-            if (tile is InvisibleItemBlockTile && ((InvisibleItemBlockTile)tile).MarioCollidedWithThreeSides())
+            if (tile is InvisibleItemBlockTile && ((InvisibleItemBlockTile)tile).MarioCollidedWithThreeSides() || state.flagpoleSequence)
             {
                 return;
             }
@@ -127,6 +127,11 @@ namespace Lasagna
                             state.flagpoleColPos.X = mario.position.X;
                             state.flagpoleColPos.Y = mario.position.Y;
                         }
+                        else if (tile is WarpPipeTile)
+                            mario.disableCrouch = true;
+                        else
+                            mario.disableCrouch = false;
+                        
                         mario.CalcMaxHeight(tile.Bounds.Y, tile.Bounds.Height);
                         mario.SetPosition(mario.Bounds.X, ((tile.Bounds.Y - mario.Bounds.Height-TWO)));
 
