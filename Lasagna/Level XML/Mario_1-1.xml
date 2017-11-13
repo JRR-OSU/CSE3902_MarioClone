@@ -115,7 +115,7 @@
     <Tile type="UndergroundBrick" repeat="6" repeatspace="0" posx="4864" posy="799" />
     <Tile type="UndergroundBrick" repeat="6" repeatspace="0" posx="4864" posy="831" />
     <Tile type="UndergroundBrick" repeat="6" repeatspace="0" posx="4864" posy="863" />
-    <Tile type="Pipe" repeat="0" repeatspace="0" posx="5152" posy="831" cameraX="4608" cameraY="0" height="0" facing="Left" warpSource="" warpDest="Overworld" />
+    <Tile type="Pipe" repeat="0" repeatspace="0" posx="5152" posy="831" cameraX="5120" cameraY="0" height="0" facing="Left" warpSource="" warpDest="Overworld" />
   </Tiles>
   <Items>
       <Item type="Coin" posx="4896" posy="639"/>
