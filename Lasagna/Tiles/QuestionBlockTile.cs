@@ -20,10 +20,12 @@ namespace Lasagna
         private int bumpingTimer = 0;
         private int bumpingTime = 0;
         private bool beingCollided = false;
+        private bool isUsed = false;
         private ISprite unused = TileSpriteFactory.Instance.CreateSprite_QuestionBlock();
         private ISprite used = TileSpriteFactory.Instance.CreateSprite_ItemBlockUsed();
 
         public override bool IsChangingState { get { return beingCollided; } }
+        public override bool IsUsed { get { return currentState.Equals(BlockState.Used); } }
         public QuestionBlockTile(int spawnXPos, int spawnYPos)
             : base(spawnXPos, spawnYPos)
         {

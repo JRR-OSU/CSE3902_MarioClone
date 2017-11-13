@@ -47,6 +47,7 @@ namespace Lasagna
             }
         }
         public override bool IsChangingState { get { return beingCollided; } }
+        public override bool IsUsed { get { return currentState.Equals(BlockState.Used); } }
 
         public BreakableBrickTile(int spawnXPos, int spawnYPos, IItem[] newItems)
             : base(spawnXPos, spawnYPos)

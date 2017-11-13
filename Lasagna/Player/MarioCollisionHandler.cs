@@ -143,7 +143,7 @@ namespace Lasagna
                             }
                         if(tile is QuestionBlockTile)
                             {
-                               if(((QuestionBlockTile)tile).items[0] is CoinItem)
+                               if(((QuestionBlockTile)tile).items[0] is CoinItem && ((QuestionBlockTile)tile).IsUsed == false)
                                 {
                                 Score.AddCoinMario();
                                 }
