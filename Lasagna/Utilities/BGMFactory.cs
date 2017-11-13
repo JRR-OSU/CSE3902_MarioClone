@@ -133,7 +133,9 @@ namespace Lasagna
         public void Play_MainTheme()
         {
             song = mainThemeOverWorld;
-            PlaySound();
+
+            MediaPlayer.Play(song);           
+            MediaPlayer.IsRepeating = true;
         }
 
         public void Play_UnderWater()

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Media;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -385,6 +386,7 @@ namespace Lasagna
             {
                 deathScreenTimer = Zero;
                 deathScreen = false;
+                MarioEvents.Reset(null, null);
             }
         }
     }

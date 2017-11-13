@@ -66,11 +66,12 @@ using System.Text;
 
             public void Update()
             {
+            Time--;
             if (Time < 100)
                 BGMFactory.Instance.Play_HurryOverWorld();
                     if (isDeathScreen || MarioGame.Instance.gameComplete)
                         return;
-
+                    
                     if (counter < FPS)
                     {
                         counter++;
@@ -82,6 +83,7 @@ using System.Text;
                     }
                     if (Time <= ZERO || Score.Lives <= ZERO)
                     {
+                        MarioGame.Instance.TriggerDeathSequence();
                         isGameOver = true;
                     }
                     else
