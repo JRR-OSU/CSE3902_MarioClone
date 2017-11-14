@@ -155,7 +155,7 @@ namespace Lasagna
             }
         }
 
-        public void Reset(object sender, EventArgs e)
+        public virtual void Reset(object sender, EventArgs e)
         {
             itemSprite = originalSprite;
             currentState = ItemState.Idle;
@@ -167,6 +167,11 @@ namespace Lasagna
             MovingTime = ZERO;
             coinAnimateTime = ZERO;
             isInBlock = false;
+            /*if (this is StarItem)
+            {
+                ((StarItem)this).verticalMoveSpeed = 0f;
+                ((StarItem)this).hittedGround = false;
+            }*/
         }
 
         public void ChangeToInvisible()

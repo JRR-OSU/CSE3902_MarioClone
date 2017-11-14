@@ -7,10 +7,12 @@ namespace Lasagna
     public class StarItem : BaseItem
     {
         private const int ZERO = 0;
-        protected const float starItemBounceTime = 0.8f;
-        protected float movingUpTimeLeft;
+        private const float ZEROF = 0f;
         private ISprite starItemSprite = ItemSpriteFactory.Instance.CreateSprite_Star();
-        protected const int verticalMoveSpeed = 200;
+        private float verticalMoveSpeed = ZEROF;
+        private const float standardVerticalMoveSpeed = -4.4f;
+        private const float acceleration = 0.15f;
+        private bool hittedGround = false;
         public StarItem(int spawnPosX, int spawnPosY)
             : base(spawnPosX, spawnPosY)
         {
@@ -22,32 +24,45 @@ namespace Lasagna
             base.Update(gameTime);
             if (base.currentState == ItemState.Bounce)
             {
-                if (movingUpTimeLeft > ZERO)
-                {
-                    PosY -= (float)(gameTime.ElapsedGameTime.TotalSeconds * verticalMoveSpeed);
-                    movingUpTimeLeft -= (float)gameTime.ElapsedGameTime.TotalSeconds;
-                }
-                else
-                    PosY += (float)(gameTime.ElapsedGameTime.TotalSeconds * verticalMoveSpeed);
+                verticalMoveSpeed += acceleration;
+                PosY += verticalMoveSpeed;
             }
         }
+        public override void Reset(object sender, EventArgs e)
+        {
+            base.Reset(sender, e);
+            verticalMoveSpeed = ZEROF;
+            hittedGround = false;
+        }
 
-       protected override void OnCollisionResponse(ITile tile, CollisionSide side)
+        protected override void OnCollisionResponse(ITile tile, CollisionSide side)
         {
             if (isInBlock || currentState == ItemState.Idle)
                 return;
 
             if (currentState == ItemState.Bounce)
             {
+                if (tile is FloorBlockTile || tile is UndergroundFloorBlockTile)
+                {
+                    hittedGround = true;
+                }
                 if (side == CollisionSide.Left)
+                {
                     movingLeft = false;
+                }
                 else if (side == CollisionSide.Right)
+                {
                     movingLeft = true;
-            }
-
-            if (currentState.Equals(ItemState.Bounce) && side.Equals(CollisionSide.Bottom))
-            {
-                movingUpTimeLeft = starItemBounceTime;
+                }
+                else
+                {
+                    verticalMoveSpeed = -verticalMoveSpeed;
+                    if (verticalMoveSpeed < standardVerticalMoveSpeed || (side == CollisionSide.Bottom && hittedGround
+                        ))
+                    {
+                        verticalMoveSpeed = standardVerticalMoveSpeed;
+                    }
+                }
             }
             CorrectPosition(side, tile);
         }
