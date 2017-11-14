@@ -1,0 +1,10 @@
+﻿Zeyu Li
+11/13/2017
+Sprint 5
+LevelCreator.cs
+Timothy Williams
+5 minutes
+
+The code is decent. Because nearly all the magic numbers are fixed,
+so the code became more readable. There are still too many lines
+in some methods, I believe that there is a way to break those up.

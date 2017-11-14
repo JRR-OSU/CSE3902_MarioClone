@@ -1,0 +1,13 @@
+﻿Zeyu Li
+11/13/2017
+Sprint 5
+LevelCreator.cs
+Timothy Williams
+
+The code is decent. The coin spawning problem was fixed. I thought it was the 
+problem in LevelCreator, but it is not. And the code quality was improved by
+the elimination of magic numbers.
+
+As what I metioned at last time, maybe the items can be passed into a list,
+even if the number of items is 1 or 0. However, this might comsume more
+memory and run time, but the code can be simplified in this way.
