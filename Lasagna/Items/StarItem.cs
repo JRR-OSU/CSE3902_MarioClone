@@ -6,7 +6,7 @@ namespace Lasagna
 {
     public class StarItem : BaseItem
     {
-        
+        private const int ZERO = 0;
         protected const float starItemBounceTime = 0.8f;
         protected float movingUpTimeLeft;
         private ISprite starItemSprite = ItemSpriteFactory.Instance.CreateSprite_Star();
@@ -22,7 +22,7 @@ namespace Lasagna
             base.Update(gameTime);
             if (base.currentState == ItemState.Bounce)
             {
-                if (movingUpTimeLeft > 0)
+                if (movingUpTimeLeft > ZERO)
                 {
                     PosY -= (float)(gameTime.ElapsedGameTime.TotalSeconds * verticalMoveSpeed);
                     movingUpTimeLeft -= (float)gameTime.ElapsedGameTime.TotalSeconds;

@@ -15,23 +15,27 @@ namespace Lasagna
             Moving,
             Taken
         }
-
+        private const int ZERO = 0;
+        private const int ONE = 1;
+        private const double ONEPFIVE = 1.5;
+        private const int SIXTEEN = 16;
+        private const int FIFTY = 50;
         //Change this later if items support states.
         private ISprite itemSprite;
         protected ItemState currentState = ItemState.Idle;
         public Vector2 position;
         protected bool isInBlock = false;
         protected bool isInvisible = false;
-        private float velocity = 1;
-        protected const float moveUpVelocity = 1;
-        private float fallingVelocity = (float)1.5;
+        private float velocity = ONE;
+        protected const float moveUpVelocity = ONE;
+        private float fallingVelocity = (float)ONEPFIVE;
         private float fallingVelocityDecayRate = (float).9;
         protected float yDifference;
         protected int originalX;
         protected int originalY;
-        private int coinAnimateTime = 0;
+        private int coinAnimateTime = ZERO;
         protected bool movingLeft = false;
-        protected int MovingTime = 0;
+        protected int MovingTime = ZERO;
         private ISprite originalSprite;
         private int hideTime = 0;
         private bool waitToDraw = false;
@@ -119,7 +123,7 @@ namespace Lasagna
                     else
                     {
                         this.isInvisible = false;
-                        yDifference = moveUpVelocity * ((float)gameTime.ElapsedGameTime.Milliseconds / 50);
+                        yDifference = moveUpVelocity * ((float)gameTime.ElapsedGameTime.Milliseconds / FIFTY);
                         if (position.Y + this.itemSprite.Height > originalY)
                         {
                             position.Y -= yDifference;
@@ -144,9 +148,9 @@ namespace Lasagna
 
             if (itemSprite != null && currentState != ItemState.Taken && !this.isInvisible && !this.waitToDraw)
                 itemSprite.Draw(spriteBatch);
-            if (hideTime >= 16)
+            if (hideTime >= SIXTEEN)
             {
-                hideTime = 0;
+                hideTime = ZERO;
                 this.waitToDraw = false;
             }
         }
@@ -158,10 +162,10 @@ namespace Lasagna
             position.X = originalX;
             position.Y = originalY;
             movingLeft = false;
-            fallingVelocity = (float)1.5;
-            velocity = 1;
-            MovingTime = 0;
-            coinAnimateTime = 0;
+            fallingVelocity = (float)ONEPFIVE;
+            velocity = ONE;
+            MovingTime = ZERO;
+            coinAnimateTime = ZERO;
             isInBlock = false;
         }
 
@@ -220,7 +224,7 @@ namespace Lasagna
             if (currentState.Equals(ItemState.Moving) && side.Equals(CollisionSide.Bottom))
             {
                 position.Y -= yDifference;
-                velocity = 1;
+                velocity = ONE;
             }
             CorrectPosition(side, tile);
         }
@@ -266,7 +270,7 @@ namespace Lasagna
         }
         private void Fall(GameTime gameTime)
         {
-            yDifference = velocity * ((float)gameTime.ElapsedGameTime.Milliseconds / 50);
+            yDifference = velocity * ((float)gameTime.ElapsedGameTime.Milliseconds / FIFTY);
             position.Y += yDifference;
             velocity += fallingVelocity;
             velocity -= fallingVelocityDecayRate;
