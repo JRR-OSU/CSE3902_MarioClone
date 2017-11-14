@@ -15,9 +15,16 @@ namespace Lasagna
             Bumped,
             Used
         }
-        private int numItemsLeft = 0;
-        private int originalCount = 0;
-        private int bumpingTimer = 0;
+        private const int ZERO = 0;
+        private const int ONE = 1;
+        private const int TWO = 2;
+        private const int THREE = 3;
+        private const int FOUR = 4;
+        private const int EIGHT = 8;
+        private const int TWENTY = 20;
+        private int numItemsLeft = ZERO;
+        private int originalCount = ZERO;
+        private int bumpingTimer = ZERO;
         private bool isBreaking = false;
         private List<ISprite> breakingBricks = new List<ISprite>();
         private List<Vector2> positions = new List<Vector2>();
@@ -57,9 +64,9 @@ namespace Lasagna
             items = newItems;
             numItemsLeft = newItems.Length;
             originalCount = newItems.Length;
-            if (this.numItemsLeft >= 1)
+            if (this.numItemsLeft >= ONE)
                 this.hasItem = true;
-            if (newItems != null && newItems.Length > 0)
+            if (newItems != null && newItems.Length > ZERO)
             {
                 this.items = newItems;
                 foreach (IItem item in items)
@@ -90,21 +97,21 @@ namespace Lasagna
 
             if (currentState == BlockState.Bumped)
             {
-                if (bumpingTimer < 8)
+                if (bumpingTimer < EIGHT)
                 {
-                    this.PosY -= 2;
+                    this.PosY -= TWO;
                     bumpingTimer++;
                 }
-                else if (bumpingTimer >= 8 && PosY != preBumpPos)
+                else if (bumpingTimer >= EIGHT && PosY != preBumpPos)
                 {
                    
-                    this.PosY += 2;
+                    this.PosY += TWO;
                 }              
                 if (PosY == preBumpPos)
                 {
                     beingCollided = false;
                     currentState = BlockState.Idle;
-                    bumpingTimer = 0;
+                    bumpingTimer = ZERO;
                 }
             }
             else if(currentState == BlockState.Breaking)
@@ -120,30 +127,30 @@ namespace Lasagna
 
         private void HandleBreakingBlock(SpriteBatch spriteBatch)
         {
-            if (bumpingTimer < 20)
+            if (bumpingTimer < TWENTY)
             {
 
-                for (int i = 0; i < 4; i++)
+                for (int i = ZERO; i < FOUR; i++)
                 {
                     temp.X = positions[i].X;
                     temp.Y = positions[i].Y;
                     switch (i)
                     {
-                        case 0:
-                            temp.X -= 3;
-                            temp.Y -= 2;
+                        case ZERO:
+                            temp.X -= THREE;
+                            temp.Y -= TWO;
                             break;
-                        case 1:
-                            temp.X += 3;
-                            temp.Y -= 2;
+                        case ONE:
+                            temp.X += THREE;
+                            temp.Y -= TWO;
                             break;
-                        case 2:
-                            temp.X -= 3;
-                            temp.Y += 2;
+                        case TWO:
+                            temp.X -= THREE;
+                            temp.Y += TWO;
                             break;
-                        case 3:
-                            temp.X += 3;
-                            temp.Y += 2;
+                        case THREE:
+                            temp.X += THREE;
+                            temp.Y += TWO;
                             break;
                     }
                     positions[i] = temp;
@@ -157,21 +164,21 @@ namespace Lasagna
 
                 bumpingTimer++;
             }
-            else if (bumpingTimer >= 20)
+            else if (bumpingTimer >= TWENTY)
             {
                 //currentState = BlockState.Broken;
-                bumpingTimer = 0;
+                bumpingTimer = ZERO;
                 beingCollided = false;
                 isBreaking = false;
             }
         }
         public ISprite[] Breaking()
         {
-            brickPieceSprites = new ISprite[4];
-            for (int i = 0; i < 4; i += 2)
+            brickPieceSprites = new ISprite[FOUR];
+            for (int i = ZERO; i < FOUR; i += TWO)
             {
                 brickPieceSprites[i] = TileSpriteFactory.Instance.CreateSprite_BrickPieceLeft();
-                brickPieceSprites[i + 1] = TileSpriteFactory.Instance.CreateSprite_BrickPieceRight();
+                brickPieceSprites[i + ONE] = TileSpriteFactory.Instance.CreateSprite_BrickPieceRight();
             }
             return brickPieceSprites;
         }
@@ -208,7 +215,7 @@ namespace Lasagna
         {
             if (this.currentState.Equals(BlockState.Idle) && side.Equals(CollisionSide.Bottom))
             {
-                if (this.numItemsLeft == 1) {
+                if (this.numItemsLeft == ONE) {
                     this.ChangeState();
                 }
                 else
@@ -217,28 +224,28 @@ namespace Lasagna
                 }
                 this.beingCollided = true;
                 int curItem = items.Length - numItemsLeft;
-                if (items != null && curItem >= 0 && curItem < items.Length)
+                if (items != null && curItem >= ZERO && curItem < items.Length)
                 {
                     //If the first item is grow mushroom, then the second item must be flower.
-                    if (items[0] is GrowMushroomItem)
+                    if (items[ZERO] is GrowMushroomItem)
                     {
                         SoundEffectFactory.Instance.PlayPowerUpAppearsSound();
                         if (((Mario)Mario).CurrentState == MarioStateMachine.MarioState.Small)
                         {
-                            items[0].Spawn();
+                            items[ZERO].Spawn();
                         }
                         else
                         {
-                            items[1].Spawn();
+                            items[ONE].Spawn();
                         }
-                        this.numItemsLeft = 0;
+                        this.numItemsLeft = ZERO;
                         this.ChangeState();
                     }
                     else
                     {
                         if (currentState != BlockState.Used)
                         {
-                            if (items[0] is CoinItem)
+                            if (items[ZERO] is CoinItem)
                             {
                                 SoundEffectFactory.Instance.PlayCoin();
                             }
@@ -253,7 +260,7 @@ namespace Lasagna
                     }
                 }
 
-                if (this.items.Length == 0)
+                if (this.items.Length == ZERO)
                 {
                     if (((Mario)Mario).CurrentState == MarioStateMachine.MarioState.Big || ((Mario)Mario).CurrentState == MarioStateMachine.MarioState.Fire)
                     {
@@ -263,13 +270,13 @@ namespace Lasagna
                         breakingBricks.Add(TileSpriteFactory.Instance.CreateSprite_BrickPieceRight());
                         breakingBricks.Add(TileSpriteFactory.Instance.CreateSprite_BrickPieceLeft());
                         breakingBricks.Add(TileSpriteFactory.Instance.CreateSprite_BrickPieceRight());
-                        breakingBricks[0].SetSpriteScreenPosition(this.Bounds.X, this.Bounds.Y);
+                        breakingBricks[ZERO].SetSpriteScreenPosition(this.Bounds.X, this.Bounds.Y);
                         positions.Add(new Vector2 ( this.Bounds.X, this.Bounds.Y ));
-                        breakingBricks[1].SetSpriteScreenPosition(this.Bounds.X + this.Bounds.Width, this.Bounds.Y);
+                        breakingBricks[ONE].SetSpriteScreenPosition(this.Bounds.X + this.Bounds.Width, this.Bounds.Y);
                         positions.Add(new Vector2(this.Bounds.X + this.Bounds.Width, this.Bounds.Y ));
-                        breakingBricks[2].SetSpriteScreenPosition(this.Bounds.X,  this.Bounds.Y + this.Bounds.Height);
+                        breakingBricks[TWO].SetSpriteScreenPosition(this.Bounds.X,  this.Bounds.Y + this.Bounds.Height);
                         positions.Add(new Vector2(this.Bounds.X, this.Bounds.Y + this.Bounds.Height ));
-                        breakingBricks[3].SetSpriteScreenPosition(this.Bounds.X + this.Bounds.Width, this.Bounds.Y + this.Bounds.Height);
+                        breakingBricks[THREE].SetSpriteScreenPosition(this.Bounds.X + this.Bounds.Width, this.Bounds.Y + this.Bounds.Height);
                         positions.Add(new Vector2(this.Bounds.X + this.Bounds.Width, this.Bounds.Y + this.Bounds.Height ));
                     }
                     else if (((Mario)Mario).CurrentState == MarioStateMachine.MarioState.Small)
@@ -287,12 +294,12 @@ namespace Lasagna
             currentState = BlockState.Idle;
             CurrentSprite = this.idleSprite;
             numItemsLeft = originalCount;
-            if (this.numItemsLeft >= 1)
+            if (this.numItemsLeft >= ONE)
             {
                 this.hasItem = true;
             }
             beingCollided = false;
-            if (items != null && items.Length > 0)
+            if (items != null && items.Length > ZERO)
             {
                 foreach (IItem item in items)
                 {

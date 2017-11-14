@@ -13,12 +13,16 @@ namespace Lasagna
             Bumped,
             Used
         }
-
+        private const int ZERO = 0;
+        private const int ONE = 1;
+        private const int TWO = 2;
+        private const int EIGHT = 8;
+        private const int TWENTY = 20;
         private BlockState currentState;
         public IItem[] items;
         private int preBumpPos;
-        private int bumpingTimer = 0;
-        private int bumpingTime = 0;
+        private int bumpingTimer = ZERO;
+        private int bumpingTime = ZERO;
         private bool beingCollided = false;
         private bool isUsed = false;
         private ISprite unused = TileSpriteFactory.Instance.CreateSprite_QuestionBlock();
@@ -38,7 +42,7 @@ namespace Lasagna
         {
             CurrentSprite = unused;
             currentState = BlockState.Idle;
-            if (newItems != null && newItems.Length > 0)
+            if (newItems != null && newItems.Length > ZERO)
             {     
                 this.items = newItems;
                 foreach (IItem item in items)
@@ -63,10 +67,10 @@ namespace Lasagna
             {
                 bumpingTime++;
             }
-            if (bumpingTime > 20)
+            if (bumpingTime > TWENTY)
             {
                 beingCollided = false;
-                bumpingTime = 0;
+                bumpingTime = ZERO;
             }
             //if (Mario.Bounds.Y > this.CurrentSprite.Height + base.PosY)
             //{
@@ -79,20 +83,20 @@ namespace Lasagna
             base.Draw(spriteBatch);
             if (currentState == BlockState.Bumped)
             {
-                if (bumpingTimer < 8)
+                if (bumpingTimer < EIGHT)
                 {
-                    PosY -= 2;
+                    PosY -= TWO;
                     bumpingTimer++;
                 }
-                else if (bumpingTimer >= 8 && PosY != preBumpPos)
+                else if (bumpingTimer >= EIGHT && PosY != preBumpPos)
                 {
 
-                    PosY += 2;
+                    PosY += TWO;
                 }
                 if (PosY == preBumpPos)
                 {
                     currentState = BlockState.Used;
-                    bumpingTimer = 0;
+                    bumpingTimer = ZERO;
                 }
             }
         }
@@ -105,23 +109,23 @@ namespace Lasagna
                 this.beingCollided = true;
                 preBumpPos = PosY;
                 //If the first item is grow mushroom, then the second item must be flower.
-                if (items != null && items.Length > 0)
+                if (items != null && items.Length > ZERO)
                 {
-                    if (items[0] is GrowMushroomItem)
+                    if (items[ZERO] is GrowMushroomItem)
                     {
                         SoundEffectFactory.Instance.PlayPowerUpAppearsSound();
                         if (((Mario)Mario).CurrentState == MarioStateMachine.MarioState.Small)
                         {
-                            items[0].Spawn();
+                            items[ZERO].Spawn();
                         }
                         else
                         {
-                            items[1].Spawn();
+                            items[ONE].Spawn();
                         }
                     }
                     else
                     {
-                        if (items[0] is CoinItem)
+                        if (items[ZERO] is CoinItem)
                         {
                             SoundEffectFactory.Instance.PlayCoin();
                         }
@@ -129,7 +133,7 @@ namespace Lasagna
                         {
                             SoundEffectFactory.Instance.PlayPowerUpAppearsSound();
                         }
-                        items[0].Spawn();
+                        items[ZERO].Spawn();
                     }
                 }
             }
@@ -139,9 +143,9 @@ namespace Lasagna
         {
             currentState = BlockState.Idle;
             CurrentSprite = this.unused;
-            bumpingTimer = 0;
+            bumpingTimer = ZERO;
             beingCollided = false;
-            if (items != null && items.Length > 0)
+            if (items != null && items.Length > ZERO)
             {
                 foreach (IItem item in items)
                 {

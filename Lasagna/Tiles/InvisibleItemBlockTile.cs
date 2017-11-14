@@ -12,7 +12,8 @@ namespace Lasagna
             Invisible,
             Visible
         }
-
+        private const int ZERO = 0;
+        private const int ONE = 1;
         private BlockState currentState;
         public IItem[] items;
         private ISprite visibleSprite = TileSpriteFactory.Instance.CreateSprite_ItemBlockUsed();
@@ -38,7 +39,7 @@ namespace Lasagna
         {
             CurrentSprite = visibleSprite;
             currentState = BlockState.Invisible;
-            if (newItems != null && newItems.Length > 0)
+            if (newItems != null && newItems.Length > ZERO)
             {
                 this.items = newItems;
 
@@ -90,7 +91,7 @@ namespace Lasagna
         {
             currentState = BlockState.Invisible;
             CollidedWithThreeSides = false;
-            if (items != null && items.Length > 0)
+            if (items != null && items.Length > ZERO)
             {
                 foreach (IItem item in items)
                 {
@@ -115,23 +116,23 @@ namespace Lasagna
             {
                 this.ChangeState();
                 //If the first item is grow mushroom, then the second item must be flower.
-                if (items != null && items.Length > 0)
+                if (items != null && items.Length > ZERO)
                 {
-                    if (items[0] is GrowMushroomItem)
+                    if (items[ZERO] is GrowMushroomItem)
                     {
                         SoundEffectFactory.Instance.PlayPowerUpAppearsSound();
                         if (((Mario)Mario).CurrentState == MarioStateMachine.MarioState.Small)
                         {
-                            items[0].Spawn();
+                            items[ZERO].Spawn();
                         }
                         else
                         {
-                            items[1].Spawn();
+                            items[ONE].Spawn();
                         }
                     }
                     else
                     {
-                        if (items[0] is CoinItem)
+                        if (items[ZERO] is CoinItem)
                         {
                             SoundEffectFactory.Instance.PlayCoin();
                         }
@@ -139,7 +140,7 @@ namespace Lasagna
                         {
                             SoundEffectFactory.Instance.PlayPowerUpAppearsSound();
                         }
-                        items[0].Spawn();
+                        items[ZERO].Spawn();
                     }
                 }
             }

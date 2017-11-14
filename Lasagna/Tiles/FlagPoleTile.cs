@@ -12,7 +12,10 @@ namespace Lasagna
             Idle,
             Moving
         }
-
+        private const int TWO = 2;
+        private const int THREE = 3;
+        private const int NTWENTYFOUR = -24;
+        private const int SIXTEEN = 16;
         private ISprite flagSprite = TileSpriteFactory.Instance.CreateSprite_Flag();
         private ISprite flagPoleSprite = TileSpriteFactory.Instance.CreateSprite_FlagPole();
         private BlockState currentState;
@@ -22,7 +25,7 @@ namespace Lasagna
         private int originalFlagY;
         private int flagOffsetX;
         private int flagOffsetY;
-        private int moveDownVelocity = 3;
+        private int moveDownVelocity = THREE;
         private bool atBottom = false;
         public bool IsChangingState { get; set; }
         public Rectangle Bounds { get { return new Rectangle(this.posX, this.posY, this.flagPoleSprite.Width, this.flagPoleSprite.Height); } }
@@ -35,14 +38,14 @@ namespace Lasagna
             //Flag offset is based on half the flag width + half the pole width, and half the flag height
             if (flagSprite != null && flagPoleSprite != null)
             {
-                flagOffsetX = -((flagSprite.Width + flagPoleSprite.Width) / 2);
-                flagOffsetY = flagSprite.Height / 2;
+                flagOffsetX = -((flagSprite.Width + flagPoleSprite.Width) / TWO);
+                flagOffsetY = flagSprite.Height / TWO;
             }
             //If given null values, set to default.
             else
             {
-                flagOffsetX = -24;
-                flagOffsetY = 16;
+                flagOffsetX = NTWENTYFOUR;
+                flagOffsetY = SIXTEEN;
             }
             originalFlagX = flagOffsetX;
             originalFlagY = flagOffsetY;
