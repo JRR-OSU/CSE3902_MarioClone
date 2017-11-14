@@ -1,0 +1,9 @@
+﻿Yiwei Zhang
+11/13/2017
+Sprint 5 - Refactored
+SoundEffectFactory.cs
+Zeyu Li
+5 minutes
+
+Eliminating the array list makes the more efficient execution.
+Merging the two sound effect classes has increased cohesion and lower coupling.

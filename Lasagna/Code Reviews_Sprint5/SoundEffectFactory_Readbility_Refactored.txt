@@ -1,0 +1,10 @@
+﻿Yiwei Zhang
+11/13/2017
+Sprint 5 - Refactored
+SoundEffectFactory.cs
+Zeyu Li
+5 minutes
+
+Eliminating the array list makes the class easier to read.
+Fields and methods are properly named after their functionality.
+The class has good readbility.
