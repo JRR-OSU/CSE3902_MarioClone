@@ -57,8 +57,7 @@ namespace Lasagna
                 else
                 {
                     verticalMoveSpeed = -verticalMoveSpeed;
-                    if (verticalMoveSpeed < standardVerticalMoveSpeed || (side == CollisionSide.Bottom && hittedGround
-                        ))
+                    if (verticalMoveSpeed < standardVerticalMoveSpeed || (side == CollisionSide.Bottom && hittedGround))
                     {
                         verticalMoveSpeed = standardVerticalMoveSpeed;
                     }
