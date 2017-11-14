@@ -82,7 +82,6 @@ namespace Lasagna
             orignalPos[1] = -(int)position.Y;
         }
 
-
         public void ForceMove(float x, float y)
         {
             position.X += x;

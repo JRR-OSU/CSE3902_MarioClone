@@ -20,7 +20,9 @@ namespace Lasagna
         private const int ONE = 1;
         private const int TWO = 2;
         private const int FIVE = 5;
+        private const int SIXTEEN = 16;
         private const int TWENTY = 20;
+        private const int FORTY = 40;
         private const int ONE_HUNDRED_FIFTY = 150;
 
         public MarioCollisionHandler(Mario player, MarioStateMachine marioState)
@@ -140,7 +142,7 @@ namespace Lasagna
                         mario.ignoreGravity = false;
                         if (tile is BreakableBrickTile)
                         {
-                            if (((BreakableBrickTile)tile).items.Length > 0 && ((BreakableBrickTile)tile).items[0] is CoinItem
+                            if (((BreakableBrickTile)tile).items.Length > ZERO && ((BreakableBrickTile)tile).items[ZERO] is CoinItem
                                 && !((BreakableBrickTile)tile).IsUsed)
                             {
                                 Score.AddCoinMario();
@@ -148,7 +150,7 @@ namespace Lasagna
                         }
                         if (tile is QuestionBlockTile)
                         {
-                               if (((QuestionBlockTile)tile).items[0] is CoinItem && !((QuestionBlockTile)tile).IsUsed)
+                               if (((QuestionBlockTile)tile).items[ZERO] is CoinItem && !((QuestionBlockTile)tile).IsUsed)
                                {
                                    Score.AddCoinMario();
                                }
@@ -180,7 +182,7 @@ namespace Lasagna
 
         public void OnCollisionResponse(IEnemy enemy, CollisionSide side)
         {
-            if (state.isStar() || (enemy is GoombaEnemy && enemy.Bounds.Height <= 16) || (enemy is KoopaEnemy && enemy.Bounds.Height <= 40))// if star or enemy is dead
+            if (state.isStar() || (enemy is GoombaEnemy && enemy.Bounds.Height <= SIXTEEN) || (enemy is KoopaEnemy && enemy.Bounds.Height <= FORTY))// if star or enemy is dead
                 return;            
             else
             {

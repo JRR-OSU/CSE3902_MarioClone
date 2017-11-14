@@ -50,7 +50,7 @@ using System.Text;
             private bool isGameOver = false;
             private bool timeUp = false;
 
-        ISprite mario;
+            ISprite mario;
 
 
             public HUD()
@@ -65,7 +65,7 @@ using System.Text;
                 Score.enemyKilledPoints = new int[10] { 100, 200, 400, 500, 800, 1000, 2000, 4000, 8000, 10000 };
                Score.marioEnemyKilledCount = ZERO;
                mario = MarioSpriteFactory.Instance.CreateSprite_MarioSmall_IdleRight();
-            mario.SetSpriteScreenPosition((640 / 2) + 175, (480 / 2)-20);
+                mario.SetSpriteScreenPosition((640 / 2) + 175, (480 / 2)-20);
 
             }
 
