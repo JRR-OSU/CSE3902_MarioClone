@@ -1,0 +1,8 @@
+﻿Tim Williams
+11/13/2017
+Sprint5
+Mario.cs
+Jon Reed
+5 minutes
+
+Code is slightly more readable than before, still lots of branching logic which should be broken out into their own classes. Try to increase chesion and reduce coupling.

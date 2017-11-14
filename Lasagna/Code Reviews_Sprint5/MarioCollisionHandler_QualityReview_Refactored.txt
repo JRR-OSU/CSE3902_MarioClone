@@ -1,0 +1,7 @@
+﻿Tim Williams
+11/13/2017
+Sprint5
+Mario.cs
+Jon Reed
+
+Quality is improved since initial submission. Still lots of branching logic which could be improved, try to reduce coupling and improve coheion.

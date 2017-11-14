@@ -18,6 +18,13 @@ namespace Lasagna
         private MarioMovement marioMovement = MarioMovement.IdleRight;
         private ISprite currentSprite = MarioSpriteFactory.Instance.CreateSprite_MarioSmall_IdleRight();
 
+        private const int ZERO = 0;
+        private const int THREE = 3;
+        private const int NINE = 9;
+        private const int SIX = 6;
+        private const int SEVEN = 7;
+        private const int TWELVE = 12;
+
         //How long our death animation is
         private const float deathAnimLength = 4f;
         //How fast we move during death anim
@@ -183,7 +190,7 @@ namespace Lasagna
 
         public void DamageMario()
         {
-            if (!starPower && stateTransitionTimeRemaining <= 0 && blinkTimeRemaining <= 0)
+            if (!starPower && stateTransitionTimeRemaining <= ZERO && blinkTimeRemaining <= ZERO)
                 Shrink();
         }
 
@@ -334,7 +341,7 @@ namespace Lasagna
         public void Fall()
         {
             if (!isCollideFloor)
-                mario.SetPosition(mario.Bounds.X, mario.Bounds.Y + 7);
+                mario.SetPosition(mario.Bounds.X, mario.Bounds.Y + SEVEN);
             else
             {
                 isCollideUnder = false;
@@ -374,21 +381,21 @@ namespace Lasagna
             else
             {
                 starPower = false;
-                starCounter = 0;
+                starCounter = ZERO;
                 BGMFactory.Instance.Play_MainTheme();
             }
         }
         private void DrawStarMario(SpriteBatch spriteBatch)
         {
-            if (frameCount < 3)
+            if (frameCount < THREE)
             {
                 currentSprite.Draw(spriteBatch, Color.LightGreen);
             }
-            else if (frameCount < 6)
+            else if (frameCount < SIX)
             {
                 currentSprite.Draw(spriteBatch, Color.MediumVioletRed);
             }
-            else if (frameCount < 9)
+            else if (frameCount < NINE)
             {
                 currentSprite.Draw(spriteBatch, Color.Black);
             }
@@ -397,8 +404,8 @@ namespace Lasagna
                 currentSprite.Draw(spriteBatch);
             }
             frameCount++;
-            if (frameCount > 12)
-                frameCount = 0;
+            if (frameCount > TWELVE)
+                frameCount = ZERO;
 
         }
         public void KillMario()
@@ -454,7 +461,7 @@ namespace Lasagna
                 mario.ForceMove(0, move);
 
             //When we finish animation, reset level.
-            if (deathAnimTimeRemaining <= 0)
+            if (deathAnimTimeRemaining <= ZERO)
             {
                 MarioEvents.Reset(this, EventArgs.Empty);
                 MarioGame.Instance.TriggerDeathSequence();
@@ -466,7 +473,7 @@ namespace Lasagna
             if (marioMovement != MarioMovement.Die)
             {
                 //If we're transitioning, handle transition timer.
-                if (stateTransitionTimeRemaining > 0)
+                if (stateTransitionTimeRemaining > ZERO)
                 {
                     stateTransitionTimeRemaining -= (float)gameTime.ElapsedGameTime.TotalSeconds;
 
@@ -480,18 +487,18 @@ namespace Lasagna
                     else
                         stateTransitionColor = Color.White;
 
-                    if (stateTransitionTimeRemaining <= 0)
+                    if (stateTransitionTimeRemaining <= ZERO)
                         FinishStateTransition();
                 }
 
-                if (blinkTimeRemaining > 0)
+                if (blinkTimeRemaining > ZERO)
                 {
                     blinkTimeRemaining -= (float)gameTime.ElapsedGameTime.TotalSeconds;
                     blinkShow = !blinkShow;
 
                     if (!blinkShow)
                         stateTransitionColor = Color.Transparent;
-                    else if (stateTransitionTimeRemaining <= 0)
+                    else if (stateTransitionTimeRemaining <= ZERO)
                         stateTransitionColor = Color.White;
                 }
 
@@ -507,12 +514,12 @@ namespace Lasagna
                     if ((warpMoveFirst && warpTimeRemaining > marioWarpStillLength - 0.1f) || (!warpMoveFirst && warpTimeRemaining <= marioWarpMoveLength + 0.01f))
                     {
                         if (vertical)
-                            mario.ForceMove(0, move * ((warpDirection == Direction.Up) ? -1 : 1));
+                            mario.ForceMove(ZERO, move * ((warpDirection == Direction.Up) ? -1 : 1));
                         else
-                            mario.ForceMove(move * ((warpDirection == Direction.Left) ? -1 : 1), 0);
+                            mario.ForceMove(move * ((warpDirection == Direction.Left) ? -1 : 1), ZERO);
                     }
 
-                    if (warpTimeRemaining <= 0)
+                    if (warpTimeRemaining <= ZERO)
                     {
                         //If we start with move, this is first phase, move to second
                         if (warpMoveFirst)
@@ -570,7 +577,7 @@ namespace Lasagna
             {
                 DrawStarMario(spriteBatch);
             }
-            else if (stateTransitionTimeRemaining > 0 || blinkTimeRemaining > 0)
+            else if (stateTransitionTimeRemaining > ZERO || blinkTimeRemaining > ZERO)
                 currentSprite.Draw(spriteBatch, stateTransitionColor);
             else
                 currentSprite.Draw(spriteBatch);
@@ -603,9 +610,9 @@ namespace Lasagna
             marioMovement = MarioMovement.IdleRight;
             currentSprite = smallStates[marioMovement];
             SwitchCurrentSprite(marioMovement);
-            stateTransitionTimeRemaining = 0;
-            warpTimeRemaining = 0;
-            blinkTimeRemaining = 0;
+            stateTransitionTimeRemaining = ZERO;
+            warpTimeRemaining = ZERO;
+            blinkTimeRemaining = ZERO;
         }
 
         public void BeginWarpAnimation(Direction moveDir, bool startWithMoving)
@@ -617,7 +624,7 @@ namespace Lasagna
 
         private void HandleFlagPoleSequence()
         {
-            if (flagpoleCount == 0)
+            if (flagpoleCount == ZERO)
             {
                 BGMFactory.Instance.Play_LevelComplete();
                 marioMovement = MarioMovement.Flagpole;
