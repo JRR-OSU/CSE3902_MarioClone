@@ -32,8 +32,22 @@ namespace Lasagna
         }
         public void OnCollisionResponse(IPlayer player, CollisionSide side)
         {
-            if (player != null && side != CollisionSide.None)
-                state.Reset();
+            switch (side)
+            {
+                case CollisionSide.Bottom:
+                    mario.SetPosition(mario.Bounds.X, (player.Bounds.Y - mario.Bounds.Height));
+                    break;
+                case CollisionSide.Top:
+                    mario.SetPosition(mario.Bounds.X, (player.Bounds.Y + player.Bounds.Height));
+                    break;
+                case CollisionSide.Left:
+                    mario.SetPosition(player.Bounds.X + player.Bounds.Width, mario.Bounds.Y);
+                    break;
+                case CollisionSide.Right:
+                    mario.SetPosition(player.Bounds.X - mario.Bounds.Width, mario.Bounds.Y);
+
+                    break;
+            }
         }
 
         public void OnCollisionResponse(IItem item, CollisionSide side)
@@ -64,7 +78,7 @@ namespace Lasagna
                 Score.AddCoinMario();
                 SoundEffectFactory.Instance.PlayCoin();
             }
-            else if(item is LifeMushroomItem)
+            else if (item is LifeMushroomItem)
             {
                 Score.ExtraLifeMario();
                 SoundEffectFactory.Instance.GetOneUp();
@@ -85,7 +99,7 @@ namespace Lasagna
                     // Jump effect if landing on top of an enemy
                     break;
                 case CollisionSide.Top:
-                    if(((KoopaShellProjectile)projectile).IsShellKicked)
+                    if (((KoopaShellProjectile)projectile).IsShellKicked)
                         state.DamageMario();
                     mario.SetPosition(mario.Bounds.X, (mario.Bounds.Y + mario.Bounds.Height));
                     break;
@@ -111,7 +125,7 @@ namespace Lasagna
             }
             else
             {
-                
+
                 switch (side)
                 {
                     case CollisionSide.Bottom:
@@ -126,14 +140,14 @@ namespace Lasagna
                         if (tile is FlagPoleTile)
                         {
                             state.flagpoleSequence = true;
-                            state.flagpoleColPos.X = ((FlagPoleTile)tile).Bounds.X-TWENTY;
+                            state.flagpoleColPos.X = ((FlagPoleTile)tile).Bounds.X - TWENTY;
                             state.flagpoleColPos.Y = mario.position.Y;
                         }
                         else if (tile is WarpPipeTile)
                             mario.disableCrouch = true;
                         else
                             mario.disableCrouch = false;
-                        mario.SetPosition(mario.Bounds.X, ((tile.Bounds.Y - mario.Bounds.Height-TWO)));
+                        mario.SetPosition(mario.Bounds.X, ((tile.Bounds.Y - mario.Bounds.Height - TWO)));
                         mario.isFalling = false;
                         break;
                     case CollisionSide.Top:
@@ -150,17 +164,17 @@ namespace Lasagna
                         }
                         if (tile is QuestionBlockTile)
                         {
-                               if (((QuestionBlockTile)tile).items[ZERO] is CoinItem && !((QuestionBlockTile)tile).IsUsed)
-                               {
-                                   Score.AddCoinMario();
-                               }
+                            if (((QuestionBlockTile)tile).items[ZERO] is CoinItem && !((QuestionBlockTile)tile).IsUsed)
+                            {
+                                Score.AddCoinMario();
+                            }
                         }
-                            
+
                         break;
                     case CollisionSide.Left:
                         mario.velocity.X = ZERO;
                         mario.SetPosition((tile.Bounds.X + tile.Bounds.Width), mario.Bounds.Y);
-                      
+
                         break;
                     case CollisionSide.Right:
                         mario.velocity.X = ZERO;
@@ -183,7 +197,7 @@ namespace Lasagna
         public void OnCollisionResponse(IEnemy enemy, CollisionSide side)
         {
             if (state.isStar() || (enemy is GoombaEnemy && enemy.Bounds.Height <= SIXTEEN) || (enemy is KoopaEnemy && enemy.Bounds.Height <= FORTY))// if star or enemy is dead
-                return;            
+                return;
             else
             {
                 switch (side)
@@ -194,7 +208,7 @@ namespace Lasagna
                             if (((GoombaEnemy)enemy).currentHealth == MovingEnemy.EnemyHealth.Flipped)
                                 return;
                         }
-                        
+
                         // Jump effect if landing on top of an enemy
                         mario.velocity.Y = ZERO;
                         mario.velocity.Y += ONE_HUNDRED_FIFTY;

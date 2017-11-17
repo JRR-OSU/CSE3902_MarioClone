@@ -189,6 +189,9 @@
     <Content Include="Code Reviews_Sprint5\SoundEffectFactory_Readbility_Refactored.txt" />
     <Content Include="Code Reviews_Sprint5\SoundEffectFactory_QualityReview_Refactored.txt" />
     <Content Include="Icon.ico" />
+    <Content Include="Level XML\Mario_2-1.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Level XML\Mario_1-1.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

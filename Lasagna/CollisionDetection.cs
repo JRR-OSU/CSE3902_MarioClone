@@ -12,7 +12,7 @@ namespace Lasagna
         //By the interfaces, we know IPlayer, IEnemy, ITile, and IItem are all IColliders as well.
         public static void Update(ReadOnlyCollection<IPlayer> players, ReadOnlyCollection<IEnemy> enemies, ReadOnlyCollection<ITile> tiles, ReadOnlyCollection<IItem> items, ReadOnlyCollection<IProjectile> projectiles)
         {
-            //Players vs. Tiles, Enemies, Items, projectiles.
+            //Players vs. Players, Tiles, Enemies, Items, projectiles.
             foreach (IPlayer player in players)
             {
                 //If player is dead, exit.
@@ -25,6 +25,7 @@ namespace Lasagna
                 if (player is Mario && ((Mario)player).IsBlinking)
                     continue;
 
+                CheckAllCollisions<IPlayer>(player, player.Bounds, players);
                 CheckAllCollisions<IEnemy>(player, player.Bounds, enemies);
                 CheckAllCollisions<IItem>(player, player.Bounds, items);
                 CheckAllCollisions<IProjectile>(player, player.Bounds, projectiles);

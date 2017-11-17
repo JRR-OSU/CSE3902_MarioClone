@@ -13,6 +13,7 @@ namespace Lasagna
         private const string ContentDirectory = "Content";
         private const string InstanceError = "Error, MarioGame instance not set!! Should be set in Initialize().";
         private const string Level1XMLPath = "\\Level XML\\Mario_1-1.xml";
+        private const string Level2XMLPath = "\\Level XML\\Mario_2-1.xml";
         private const int Two = 2;
         private const int Zero = 0;
 
@@ -104,7 +105,7 @@ namespace Lasagna
             BGMFactory.Instance.LoadAllContent(Content);
             hud = new HUD();
 
-            LevelCreator.Instance.LoadLevelFromXML(Environment.CurrentDirectory + Level1XMLPath, out levelBackground, out players, out enemies, out tiles, out items);
+            LevelCreator.Instance.LoadLevelFromXML(Environment.CurrentDirectory + Level2XMLPath, out levelBackground, out players, out enemies, out tiles, out items);
             font = Content.Load<SpriteFont>("Fonts/HUD");
             IPlayer pl;
             if (players != null && players.Count > Zero && (pl = players.Find(o => o != null)) != null)

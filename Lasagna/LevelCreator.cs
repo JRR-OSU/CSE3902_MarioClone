@@ -48,7 +48,7 @@ namespace Lasagna
         #region Object Type Dictionaries
 
         private readonly Dictionary<LevelType, ISprite> levelBackdrops = new Dictionary<LevelType, ISprite>(CreateLevelTypesDictionary());
-        private readonly Dictionary<PlayerType, Func<int, int, IPlayer>> playerTypes = new Dictionary<PlayerType, Func<int, int, IPlayer>>(CreatePlayerTypesDictionary());
+        private readonly Dictionary<PlayerType, Func<uint, int, int, IPlayer>> playerTypes = new Dictionary<PlayerType, Func<uint, int, int, IPlayer>>(CreatePlayerTypesDictionary());
         private readonly Dictionary<EnemyType, Func<int, int, IEnemy>> enemyTypes = new Dictionary<EnemyType, Func<int, int, IEnemy>>(CreateEnemyTypesDictionary());
         private readonly Dictionary<TileType, Func<Direction, int, int, int, Vector2, string, string, IItem[], ITile>> tileTypes = new Dictionary<TileType, Func<Direction, int, int, int, Vector2, string, string, IItem[], ITile>>(CreateTileTypesDictionary());
         private readonly Dictionary<ItemType, Func<int, int, IItem>> itemTypes = new Dictionary<ItemType, Func<int, int, IItem>>(CreateItemTypesDictionary());
@@ -63,11 +63,11 @@ namespace Lasagna
             return newDictionary;
         }
 
-        private static Dictionary<PlayerType, Func<int, int, IPlayer>> CreatePlayerTypesDictionary()
+        private static Dictionary<PlayerType, Func<uint, int, int, IPlayer>> CreatePlayerTypesDictionary()
         {
-            Dictionary<PlayerType, Func<int, int, IPlayer>> newDictionary = new Dictionary<PlayerType, Func<int, int, IPlayer>>()
+            Dictionary<PlayerType, Func<uint, int, int, IPlayer>> newDictionary = new Dictionary<PlayerType, Func<uint, int, int, IPlayer>>()
             {
-                { PlayerType.Mario, (int posX, int posY) => new Mario(posX, posY) }
+                { PlayerType.Mario, (uint playerNumber, int posX, int posY) => new Mario(playerNumber, posX, posY) }
             };
 
             return newDictionary;
@@ -116,7 +116,7 @@ namespace Lasagna
 
         #endregion
 
-        private delegate bool ObjectFromEnumDelegate<T>(string type, int posX, int posY, out List<T> objects);
+        private delegate bool ObjectFromEnumDelegate<T>(string type, int posX, int posY, int childIndex, out List<T> objects);
 
         private static LevelCreator instance;
 
@@ -168,6 +168,7 @@ namespace Lasagna
                     if (TryGetLevelTypeFromEnum(reader.GetAttribute(LevelTypeAttr), out t) && levelBackdrops.ContainsKey(t))
                         levelBackground = levelBackdrops[t];
                 }
+                //NOTE: The order of players in the XML file is the player number they are (first occurence is player 1, second is player 2, etc.)
                 else if (reader.LocalName == PlayersLocalName)
                     RetrieveAllChildElementsFromReader<IPlayer>(ref reader, PlayerChildElementName, TryCreatePlayerFromEnum, out players);
                 else if (reader.LocalName == EnemiesLocalName)
@@ -228,7 +229,7 @@ namespace Lasagna
             int posX, posY;
             if (int.TryParse(reader.GetAttribute(PosXAttr), out posX)
                 && int.TryParse(reader.GetAttribute(PosYAttr), out posY)
-                && objCreationMethod(reader.GetAttribute(TypeAttr), posX, posY, out objects))
+                && objCreationMethod(reader.GetAttribute(TypeAttr), posX, posY, childElements.Count, out objects))
             {
                 childElements.AddRange(objects);
             }
@@ -238,7 +239,7 @@ namespace Lasagna
             {
                 if (int.TryParse(reader.GetAttribute(PosXAttr), out posX)
                    && int.TryParse(reader.GetAttribute(PosYAttr), out posY)
-                   && objCreationMethod(reader.GetAttribute(TypeAttr), posX, posY, out objects))
+                   && objCreationMethod(reader.GetAttribute(TypeAttr), posX, posY, childElements.Count, out objects))
                 {
                     childElements.AddRange(objects);
                 }
@@ -251,7 +252,7 @@ namespace Lasagna
             return !string.IsNullOrEmpty(lType) && Enum.TryParse(lType, out t);
         }
 
-        private bool TryCreatePlayerFromEnum(string pType, int posX, int posY, out List<IPlayer> players)
+        private bool TryCreatePlayerFromEnum(string pType, int posX, int posY, int childIndex, out List<IPlayer> players)
         {
             players = new List<IPlayer>();
             PlayerType t;
@@ -263,11 +264,11 @@ namespace Lasagna
                 return false;
             }
 
-            players.Add(playerTypes[t].Invoke(posX, posY));
+            players.Add(playerTypes[t].Invoke((uint)childIndex, posX, posY));
             return true;
         }
 
-        private bool TryCreateEnemyFromEnum(string eType, int posX, int posY, out List<IEnemy> enemies)
+        private bool TryCreateEnemyFromEnum(string eType, int posX, int posY, int childIndex, out List<IEnemy> enemies)
         {
             enemies = new List<IEnemy>();
             EnemyType t;
@@ -397,6 +398,7 @@ namespace Lasagna
 
             return true;
         }
+                
 
         private bool TryCreateItemFromEnum(string iType, int posX, int posY, out IItem item)
         {
@@ -416,7 +418,7 @@ namespace Lasagna
             return true;
         }
 
-        private bool TryCreateItemFromEnum(string iType, int posX, int posY, out List<IItem> items)
+        private bool TryCreateItemFromEnum(string iType, int posX, int posY, int childIndex, out List<IItem> items)
         {
             items = new List<IItem>();
             IItem item;

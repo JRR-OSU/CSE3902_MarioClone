@@ -82,11 +82,11 @@ namespace Lasagna
                 pipeBaseHeight = pipeBaseSprites[Zero].Height;
             else
                 pipeBaseHeight = defaultPipeBaseHeight;
-
-            MarioEvents.OnCrouch += OnMarioCrouch;
-            MarioEvents.OnMoveLeft += OnMarioMoveLeft;
-            MarioEvents.OnMoveRight += OnMarioMoveRight;
-            MarioEvents.OnJump += OnMarioJump;
+            
+            MarioEvents.OnP1Crouch += OnMarioCrouch;
+            MarioEvents.OnP1MoveLeft += OnMarioMoveLeft;
+            MarioEvents.OnP1MoveRight += OnMarioMoveRight;
+            MarioEvents.OnP1Jump += OnMarioJump;
         }
 
         //Empty for now

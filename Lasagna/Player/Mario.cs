@@ -65,21 +65,35 @@ namespace Lasagna
         public bool IsBlinking { get { return stateMachine != null && (stateMachine.IsTransitioning || stateMachine.IsBlinking); } }
         public MarioStateMachine.MarioState CurrentState { get { return (stateMachine != null) ? stateMachine.CurrentState : MarioStateMachine.MarioState.Small; } }
 
-        public Mario(int x, int y)
+        public Mario(uint playerNumber, int x, int y)
         {
             stateMachine = new MarioStateMachine(this);
             marioCollisionHandler = new MarioCollisionHandler(this, stateMachine);
 
-            MarioEvents.OnMoveLeft += MoveLeft;
-            MarioEvents.OnMoveRight += MoveRight;
-            MarioEvents.OnJump += Jump;
-            MarioEvents.OnCrouch += Crouch;
-            MarioEvents.OnReset += Reset;
-            MarioEvents.OnShootFire += MarioFireProjectile;
             position.X = x;
             position.Y = -y;
             orignalPos[0] = (int)position.X;
             orignalPos[1] = -(int)position.Y;
+
+            MarioEvents.OnReset += Reset;
+
+            //Subscribe to keyboard events based on player number. Indexed from 0, so 0 = player 1, 1 = player 2, etc.
+            if (playerNumber == 1)
+            {
+                MarioEvents.OnP2MoveLeft += MoveLeft;
+                MarioEvents.OnP2MoveRight += MoveRight;
+                MarioEvents.OnP2Jump += Jump;
+                MarioEvents.OnP2Crouch += Crouch;
+                MarioEvents.OnP2ShootFire += MarioFireProjectile;
+            }
+            else
+            {
+                MarioEvents.OnP1MoveLeft += MoveLeft;
+                MarioEvents.OnP1MoveRight += MoveRight;
+                MarioEvents.OnP1Jump += Jump;
+                MarioEvents.OnP1Crouch += Crouch;
+                MarioEvents.OnP1ShootFire += MarioFireProjectile;
+            }
         }
 
         public void ForceMove(float x, float y)

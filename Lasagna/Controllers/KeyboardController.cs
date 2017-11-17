@@ -14,16 +14,21 @@ namespace Lasagna
                 { new [] { Keys.Q }, Quit },
                 { new [] { Keys.R }, Reset },
                 //{ new [] { Keys.M }, ToggleMouseController },
-                { new [] { Keys.X }, ShootFire },
+                { new [] { Keys.X }, P1_ShootFire },
+                { new [] { Keys.RightControl }, P2_ShootFire },
                 { new [] { Keys.Enter }, Pause }
             };
 
             onKeyHeldEvents = new Dictionary<Keys[], MarioEventHandler>
             {
-                { new [] { Keys.Up, Keys.W }, Jump },
-                { new [] { Keys.Down, Keys.S }, Crouch },
-                { new [] { Keys.Left, Keys.A }, MoveLeft },
-                { new [] { Keys.Right, Keys.D }, MoveRight },
+                { new [] { Keys.W }, P1_Jump },
+                { new [] { Keys.S }, P1_Crouch },
+                { new [] { Keys.A }, P1_MoveLeft },
+                { new [] { Keys.D }, P1_MoveRight },
+                { new [] { Keys.Up }, P2_Jump },
+                { new [] { Keys.Down }, P2_Crouch },
+                { new [] { Keys.Left }, P2_MoveLeft },
+                { new [] { Keys.Right }, P2_MoveRight },
             };
         }
         
@@ -70,24 +75,9 @@ namespace Lasagna
             Score.Lives = 3;
         }
 
-        public  void MoveLeft()
+        public void Pause()
         {
-            MarioEvents.MoveLeft(this, EventArgs.Empty);
-        }
-
-        public  void MoveRight()
-        {
-            MarioEvents.MoveRight(this, EventArgs.Empty);
-        }
-
-        public  void Jump()
-        {
-            MarioEvents.Jump(this, EventArgs.Empty);
-        }
-
-        public  void Crouch()
-        {
-            MarioEvents.Crouch(this, EventArgs.Empty);
+            MarioEvents.Pause(this, EventArgs.Empty);
         }
 
         /*public  void ToggleMouseController()
@@ -95,14 +85,54 @@ namespace Lasagna
             MarioEvents.ToggleMouseController(this, EventArgs.Empty);
         }*/
 
-        public void ShootFire()
+        public void P1_MoveLeft()
         {
-            MarioEvents.ShootFire(this, EventArgs.Empty);
+            MarioEvents.P1_MoveLeft(this, EventArgs.Empty);
         }
 
-        public void Pause()
+        public  void P1_MoveRight()
         {
-            MarioEvents.Pause(this, EventArgs.Empty);
+            MarioEvents.P1_MoveRight(this, EventArgs.Empty);
+        }
+
+        public  void P1_Jump()
+        {
+            MarioEvents.P1_Jump(this, EventArgs.Empty);
+        }
+
+        public  void P1_Crouch()
+        {
+            MarioEvents.P1_Crouch(this, EventArgs.Empty);
+        }
+
+        public void P1_ShootFire()
+        {
+            MarioEvents.P1_ShootFire(this, EventArgs.Empty);
+        }
+
+        public void P2_MoveLeft()
+        {
+            MarioEvents.P2_MoveLeft(this, EventArgs.Empty);
+        }
+
+        public void P2_MoveRight()
+        {
+            MarioEvents.P2_MoveRight(this, EventArgs.Empty);
+        }
+
+        public void P2_Jump()
+        {
+            MarioEvents.P2_Jump(this, EventArgs.Empty);
+        }
+
+        public void P2_Crouch()
+        {
+            MarioEvents.P2_Crouch(this, EventArgs.Empty);
+        }
+
+        public void P2_ShootFire()
+        {
+            MarioEvents.P2_ShootFire(this, EventArgs.Empty);
         }
     }
 }
