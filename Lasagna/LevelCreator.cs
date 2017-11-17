@@ -82,7 +82,8 @@ namespace Lasagna
         {
             Dictionary<PlayerType, Func<uint, int, int, IPlayer>> newDictionary = new Dictionary<PlayerType, Func<uint, int, int, IPlayer>>()
             {
-                { PlayerType.Mario, (uint playerNumber, int posX, int posY) => new Mario(playerNumber, posX, posY) }
+                { PlayerType.Mario, (uint playerNumber, int posX, int posY) => new Mario(playerNumber, posX, posY) },
+                { PlayerType.Luigi, (uint playerNumber, int posX, int posY) => new Mario(playerNumber, posX, posY) }
             };
 
             return newDictionary;
@@ -432,8 +433,7 @@ namespace Lasagna
             }
 
             return true;
-        }
-                
+        }                
 
         private bool TryCreateItemFromEnum(string iType, int posX, int posY, out IItem item)
         {

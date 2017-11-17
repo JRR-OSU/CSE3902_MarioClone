@@ -2,7 +2,7 @@
 <Root leveltype="MarioClear" cameratype="Fixed" cameraxpos="0" cameraypos="0">
   <Players>
     <Player type="Mario" posx="200" posy="380" />
-    <Player type="Mario" posx="300" posy="380" />
+    <Player type="Luigi" posx="300" posy="380" />
   </Players>
   <Enemies>
     <!-- Actual level -->
