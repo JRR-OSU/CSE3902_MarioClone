@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Root leveltype="MarioClear">
+<Root leveltype="MarioClear" cameratype="EdgeControlled" cameraxpos="200" cameraypos="0">
   <Players>
     <Player type="Mario" posx="200" posy="380" />
   </Players>

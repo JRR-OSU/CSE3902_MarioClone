@@ -34,9 +34,16 @@ namespace Lasagna
         MarioClear
     }
 
+    public enum CameraType
+    {
+        EdgeControlled,
+        Fixed
+    }
+
     public enum PlayerType
     {
-        Mario
+        Mario,
+        Luigi
     }
 
     public enum EnemyType

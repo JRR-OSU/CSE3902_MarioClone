@@ -105,15 +105,8 @@ namespace Lasagna
             BGMFactory.Instance.LoadAllContent(Content);
             hud = new HUD();
 
-            LevelCreator.Instance.LoadLevelFromXML(Environment.CurrentDirectory + Level2XMLPath, out levelBackground, out players, out enemies, out tiles, out items);
+            LevelCreator.Instance.LoadLevelFromXML(Environment.CurrentDirectory + Level1XMLPath, out levelBackground, out mainCamera, out players, out enemies, out tiles, out items);
             font = Content.Load<SpriteFont>("Fonts/HUD");
-            IPlayer pl;
-            if (players != null && players.Count > Zero && (pl = players.Find(o => o != null)) != null)
-                mainCamera = new EdgeControlledCamera(pl.Bounds.X, Zero);
-            else
-                mainCamera = new EdgeControlledCamera(Zero, Zero);
-
-
         }
 
         protected override void Update(GameTime gameTime)

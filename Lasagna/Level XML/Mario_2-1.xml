@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Root leveltype="MarioClear">
+<Root leveltype="MarioClear" cameratype="Fixed" cameraxpos="0" cameraypos="0">
   <Players>
     <Player type="Mario" posx="200" posy="380" />
     <Player type="Mario" posx="300" posy="380" />
@@ -96,27 +96,6 @@
     <Tile type="UnbreakableBlock" repeat="1" repeatspace="0" posx="6016" posy="159" />    
     <Tile type="UnbreakableBlock" repeat="0" repeatspace="0" posx="6336" posy="383" />  
     <Tile type="Flag" repeat="0" repeatspace="0" posx="6344" posy="79" />
-  
-    <!--Underground Area-->
-    <Tile type="Pipe" repeat="0" repeatspace="0" posx="4768" posy="479" height="0" facing="Down" warpSource="Underground" warpDest="" />
-    <Tile type="UndergroundBrick" repeat="0" repeatspace="0" posx="4736" posy="543" />
-    <Tile type="UndergroundBrick" repeat="0" repeatspace="0" posx="4736" posy="575" />
-    <Tile type="UndergroundBrick" repeat="0" repeatspace="0" posx="4736" posy="607" />
-    <Tile type="UndergroundBrick" repeat="0" repeatspace="0" posx="4736" posy="639" />
-    <Tile type="UndergroundBrick" repeat="0" repeatspace="0" posx="4736" posy="671" />
-    <Tile type="UndergroundBrick" repeat="0" repeatspace="0" posx="4736" posy="703" />
-    <Tile type="UndergroundBrick" repeat="0" repeatspace="0" posx="4736" posy="735" />
-    <Tile type="UndergroundBrick" repeat="0" repeatspace="0" posx="4736" posy="767" />
-    <Tile type="UndergroundBrick" repeat="0" repeatspace="0" posx="4736" posy="799" />
-    <Tile type="UndergroundBrick" repeat="0" repeatspace="0" posx="4736" posy="831" />
-    <Tile type="UndergroundBrick" repeat="0" repeatspace="0" posx="4736" posy="863" />
-    <Tile type="UndergroundFloor" repeat="16" repeatspace="0" posx="4736" posy="895" />
-    <Tile type="UndergroundFloor" repeat="16" repeatspace="0" posx="4736" posy="927" />   
-    <Tile type="UndergroundBrick" repeat="6" repeatspace="0" posx="4864" posy="543" />
-    <Tile type="UndergroundBrick" repeat="6" repeatspace="0" posx="4864" posy="799" />
-    <Tile type="UndergroundBrick" repeat="6" repeatspace="0" posx="4864" posy="831" />
-    <Tile type="UndergroundBrick" repeat="6" repeatspace="0" posx="4864" posy="863" />
-    <Tile type="Pipe" repeat="0" repeatspace="0" posx="5152" posy="831" cameraX="5120" cameraY="0" height="0" facing="Left" warpSource="" warpDest="Overworld" />
   </Tiles>
   <Items>
       <Item type="Coin" posx="4896" posy="639"/>

@@ -20,6 +20,9 @@ namespace Lasagna
         private const string BadItemTypeError = "Invalid type passed for creating item: ";
         private const string RootLocalName = "Root";
         private const string LevelTypeAttr = "leveltype";
+        private const string CameraTypeAttr = "cameratype";
+        private const string CameraXPosAttr = "cameraxpos";
+        private const string CameraYPosAttr = "cameraypos";
         private const string PlayersLocalName = "Players";
         private const string PlayerChildElementName = "Player";
         private const string EnemiesLocalName = "Enemies";
@@ -48,6 +51,7 @@ namespace Lasagna
         #region Object Type Dictionaries
 
         private readonly Dictionary<LevelType, ISprite> levelBackdrops = new Dictionary<LevelType, ISprite>(CreateLevelTypesDictionary());
+        private readonly Dictionary<CameraType, Func<int, int, ICamera>> cameraTypes = new Dictionary<CameraType, Func<int, int, ICamera>>(CreateCameraTypesDictionary());
         private readonly Dictionary<PlayerType, Func<uint, int, int, IPlayer>> playerTypes = new Dictionary<PlayerType, Func<uint, int, int, IPlayer>>(CreatePlayerTypesDictionary());
         private readonly Dictionary<EnemyType, Func<int, int, IEnemy>> enemyTypes = new Dictionary<EnemyType, Func<int, int, IEnemy>>(CreateEnemyTypesDictionary());
         private readonly Dictionary<TileType, Func<Direction, int, int, int, Vector2, string, string, IItem[], ITile>> tileTypes = new Dictionary<TileType, Func<Direction, int, int, int, Vector2, string, string, IItem[], ITile>>(CreateTileTypesDictionary());
@@ -58,6 +62,17 @@ namespace Lasagna
             Dictionary<LevelType, ISprite> newDictionary = new Dictionary<LevelType, ISprite>()
             {
                 { LevelType.MarioClear, BackgroundSpriteFactory.Instance.CreateBackground_MarioClear() }
+            };
+
+            return newDictionary;
+        }
+
+        private static Dictionary<CameraType, Func<int, int, ICamera>> CreateCameraTypesDictionary()
+        {
+            Dictionary<CameraType, Func<int, int, ICamera>> newDictionary = new Dictionary<CameraType, Func<int, int, ICamera>>()
+            {
+                { CameraType.EdgeControlled, (int posX, int posY) => new EdgeControlledCamera(posX, posY) },
+                { CameraType.Fixed, (int posX, int posY) => new FixedCamera(posX, posY) }
             };
 
             return newDictionary;
@@ -135,14 +150,17 @@ namespace Lasagna
         /// Spawns all objects needed for a level based on an XML file
         /// </summary>
         /// <param name="filepath">Path to the XML file we should read from for this level</param>
+        /// <param name="levelBackground">Sprite for background of level</param>
+        /// <param name="mainCamera">Camera created for this level.</param>
         /// <param name="players">List of players spawned for this level</param>
         /// <param name="enemies">List of enemies spawned for this level</param>
         /// <param name="Tiles">List of tiles spawned for this level</param>
         /// <param name="items">List of items spawned for this level</param>
         /// <returns>True if level loading was successful, false if there was an error.</returns>
-        public bool LoadLevelFromXML(string filepath, out ISprite levelBackground, out List<IPlayer> players, out List<IEnemy> enemies, out List<ITile> tiles, out List<IItem> items)
+        public bool LoadLevelFromXML(string filepath, out ISprite levelBackground, out ICamera mainCamera, out List<IPlayer> players, out List<IEnemy> enemies, out List<ITile> tiles, out List<IItem> items)
         {
             levelBackground = null;
+            mainCamera = null;
             players = new List<IPlayer>();
             enemies = new List<IEnemy>();
             tiles = new List<ITile>();
@@ -165,8 +183,19 @@ namespace Lasagna
                 if (reader.LocalName == RootLocalName)
                 {
                     LevelType t;
+                    //Get level background
                     if (TryGetLevelTypeFromEnum(reader.GetAttribute(LevelTypeAttr), out t) && levelBackdrops.ContainsKey(t))
                         levelBackground = levelBackdrops[t];
+                    //Create camera based on camera type
+                    CameraType cType;
+                    if (TryGetCameraTypeFromEnum(reader.GetAttribute(CameraTypeAttr), out cType) && cameraTypes.ContainsKey(cType))
+                    {
+                        int xPos, yPos;
+                        if (int.TryParse(reader.GetAttribute(CameraXPosAttr), out xPos) && int.TryParse(reader.GetAttribute(CameraYPosAttr), out yPos))
+                            mainCamera = cameraTypes[cType].Invoke(xPos, yPos);
+                        else
+                            mainCamera = cameraTypes[cType].Invoke(Zero, Zero);
+                    }
                 }
                 //NOTE: The order of players in the XML file is the player number they are (first occurence is player 1, second is player 2, etc.)
                 else if (reader.LocalName == PlayersLocalName)
@@ -250,6 +279,12 @@ namespace Lasagna
         {
             t = Zero;
             return !string.IsNullOrEmpty(lType) && Enum.TryParse(lType, out t);
+        }
+
+        private static bool TryGetCameraTypeFromEnum(string cType, out CameraType t)
+        {
+            t = Zero;
+            return !string.IsNullOrEmpty(cType) && Enum.TryParse(cType, out t);
         }
 
         private bool TryCreatePlayerFromEnum(string pType, int posX, int posY, int childIndex, out List<IPlayer> players)
