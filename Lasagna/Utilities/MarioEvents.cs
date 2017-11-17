@@ -10,7 +10,6 @@ namespace Lasagna
         public static event EventHandler<EventArgs> OnQuit;
         public static event EventHandler<EventArgs> OnReset;
         public static event EventHandler<EventArgs> OnPause;
-        //public static event EventHandler<EventArgs> OnToggleMouseController;
         public static event EventHandler<EventArgs> OnP1MoveLeft;
         public static event EventHandler<EventArgs> OnP1MoveRight;
         public static event EventHandler<EventArgs> OnP1Jump;
@@ -39,12 +38,6 @@ namespace Lasagna
             if (OnPause != null)
                 OnPause(sender, e);
         }
-
-        /* public static void ToggleMouseController(object sender, EventArgs e)
-         {
-             if (OnToggleMouseController != null)
-                 OnToggleMouseController(sender, e);
-         }*/
 
         public static void P1_MoveLeft(object sender, EventArgs e)
         {

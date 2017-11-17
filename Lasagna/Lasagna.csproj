@@ -73,7 +73,6 @@
     <Compile Include="Interfaces\ICollider.cs" />
     <Compile Include="Interfaces\IPlayer.cs" />
     <Compile Include="Items\BaseItem.cs" />
-    <Compile Include="Controllers\MouseController.cs" />
     <Compile Include="LevelCreator.cs" />
     <Compile Include="Player\MarioCollisionHandler.cs" />
     <Compile Include="Player\MarioStateMachine.cs" />
@@ -101,7 +100,6 @@
     <Compile Include="Interfaces\IItem.cs" />
     <Compile Include="Player\Mario.cs" />
     <Compile Include="NonAnimatedSprite.cs" />
-    <Compile Include="Controllers\GamepadController.cs" />
     <Compile Include="Interfaces\IController.cs" />
     <Compile Include="Interfaces\ISprite.cs" />
     <Compile Include="Controllers\KeyboardController.cs" />

@@ -81,7 +81,6 @@ namespace Lasagna
             screenHeight = GraphicsDevice.Viewport.Height;
 
             keyControl = new KeyboardController();
-            // mouseControl = new MouseController();
 
             //Subscribe to events
             MarioEvents.OnQuit += OnQuit;
