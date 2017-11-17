@@ -63,11 +63,14 @@
     <Compile Include="CollisionDetection.cs" />
     <Compile Include="Enemies\MovingEnemy.cs" />
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Interfaces\IHUD.cs" />
+    <Compile Include="Menus\ArenaGameHUD.cs" />
+    <Compile Include="Menus\StartMenuHUD.cs" />
     <Compile Include="Tiles\UndergroundFloorBlockTile.cs" />
     <Compile Include="Tiles\UndergroundBrickTile.cs" />
     <Compile Include="Utilities\BGMFactory.cs" />
     <Compile Include="Utilities\Score.cs" />
-    <Compile Include="Utilities\HUD.cs" />
+    <Compile Include="Menus\MainGameHUD.cs" />
     <Compile Include="Utilities\GlobalSuppressions.cs" />
     <Compile Include="Interfaces\ICamera.cs" />
     <Compile Include="Interfaces\ICollider.cs" />

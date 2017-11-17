@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Media;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -12,13 +11,19 @@ namespace Lasagna
     {
         private const string ContentDirectory = "Content";
         private const string InstanceError = "Error, MarioGame instance not set!! Should be set in Initialize().";
+        private const int Two = 2;
+        private const int Zero = 0;
         private readonly string[] LevelXMLPaths = new[]
         {
             "\\Level XML\\Mario_1-1.xml",
             "\\Level XML\\Mario_2-1.xml"
         };
-        private const int Two = 2;
-        private const int Zero = 0;
+        //Types of HUDs for each level
+        private readonly Func<IHUD>[] LevelHUDs = new Func<IHUD>[]
+        {
+            () => new MainGameHUD(),
+            () => new ArenaGameHUD()
+        };
 
         private static MarioGame instance;
 
@@ -54,7 +59,9 @@ namespace Lasagna
         private List<IItem> items = new List<IItem>();
         private List<IProjectile> projectiles = new List<IProjectile>();
         private List<IPlayer> players = new List<IPlayer>();
-        private HUD hud;
+        //HUD for main menu, and HUD for current level
+        private StartMenuHUD MainMenuHUD;
+        private IHUD levelHUD;
         private SpriteFont font;
         private bool paused = false;
         //Fields for warping
@@ -107,7 +114,6 @@ namespace Lasagna
             BackgroundSpriteFactory.Instance.LoadAllContent(Content, GraphicsDevice.Viewport.Height);
             SoundEffectFactory.Instance.LoadAllContent(Content);
             BGMFactory.Instance.LoadAllContent(Content);
-            hud = new HUD();
 
             font = Content.Load<SpriteFont>("Fonts/HUD");
         }
@@ -123,6 +129,8 @@ namespace Lasagna
             if (!gameTypeSelected)
             {
                 LevelCreator.Instance.LoadLevelFromXML(Environment.CurrentDirectory + LevelXMLPaths[levelNum], out levelBackground, out mainCamera, out players, out enemies, out tiles, out items);
+                if (levelNum < LevelHUDs.Length)
+                    levelHUD = LevelHUDs[levelNum].Invoke();
                 gameTypeSelected = true;
             }
         }
@@ -131,11 +139,21 @@ namespace Lasagna
         {
             keyControl.Update();
 
-            //If game is paused, or we're still at the main menu, exit.
-            if (paused || !gameTypeSelected)
+            //Update main menu HUD only if we haven't selected game type
+            if (!gameTypeSelected)
+            {
+                if (MainMenuHUD != null)
+                    MainMenuHUD.Update();
+                return;
+            }
+
+            //If game is paused, exit.
+            if (paused)
                 return;
 
-            hud.Update();
+            if (levelHUD != null)
+                levelHUD.Update();
+
             foreach (IPlayer player in players)
                 if (player != null)
                     player.isCollideGround = false;
@@ -204,7 +222,12 @@ namespace Lasagna
 
             //If we're at main menu, don't draw anything else.
             if (!gameTypeSelected)
+            {
+                if (MainMenuHUD != null)
+                    MainMenuHUD.Draw(spriteBatch, font, deathScreen, gameComplete);
+
                 return;
+            }
 
             if (deathScreen)
             {
@@ -214,8 +237,8 @@ namespace Lasagna
             }
             else if (gameComplete)
             {
-
-                hud.Draw(spriteBatch, font, deathScreen, gameComplete);
+                if (levelHUD != null)
+                    levelHUD.Draw(spriteBatch, font, deathScreen, gameComplete);
                 return;
             }
 
@@ -249,7 +272,8 @@ namespace Lasagna
                     if (player != null)
                         player.Draw(spriteBatch);
             }
-            hud.Draw(spriteBatch, font, deathScreen, gameComplete);
+            if (levelHUD != null)
+                levelHUD.Draw(spriteBatch, font, deathScreen, gameComplete);
             base.Draw(gameTime);
         }
 
@@ -392,7 +416,8 @@ namespace Lasagna
 
         private void DisplayDeathScreen()
         {
-            hud.Draw(spriteBatch, font, deathScreen, false);
+            if (levelHUD != null)
+                levelHUD.Draw(spriteBatch, font, deathScreen, false);
             if (deathScreenTimer < deathScreenCount)
                 deathScreenTimer++;
             else
