@@ -12,8 +12,11 @@ namespace Lasagna
     {
         private const string ContentDirectory = "Content";
         private const string InstanceError = "Error, MarioGame instance not set!! Should be set in Initialize().";
-        private const string Level1XMLPath = "\\Level XML\\Mario_1-1.xml";
-        private const string Level2XMLPath = "\\Level XML\\Mario_2-1.xml";
+        private readonly string[] LevelXMLPaths = new[]
+        {
+            "\\Level XML\\Mario_1-1.xml",
+            "\\Level XML\\Mario_2-1.xml"
+        };
         private const int Two = 2;
         private const int Zero = 0;
 
@@ -66,6 +69,7 @@ namespace Lasagna
         private const int deathScreenCount = 120;
         private int deathScreenTimer = Zero;
         public bool gameComplete = false;
+        private bool gameTypeSelected;
 
 
         public MarioGame()
@@ -86,6 +90,7 @@ namespace Lasagna
             MarioEvents.OnQuit += OnQuit;
             MarioEvents.OnPause += OnPauseGame;
             MarioEvents.OnReset += OnReset;
+            MarioEvents.OnSelectLevel += SelectLevel;
 
             base.Initialize();
         }
@@ -104,26 +109,36 @@ namespace Lasagna
             BGMFactory.Instance.LoadAllContent(Content);
             hud = new HUD();
 
-            LevelCreator.Instance.LoadLevelFromXML(Environment.CurrentDirectory + Level1XMLPath, out levelBackground, out mainCamera, out players, out enemies, out tiles, out items);
             font = Content.Load<SpriteFont>("Fonts/HUD");
+        }
+
+        public void SelectLevel(object sender, EventArgs e, uint levelNum)
+        {
+            if (levelNum >= LevelXMLPaths.Length)
+            {
+                Console.WriteLine("MarioGame: Error! Tried to select level {0} but only {1} level paths are defined!", levelNum, LevelXMLPaths.Length);
+                return;
+            }
+
+            if (!gameTypeSelected)
+            {
+                LevelCreator.Instance.LoadLevelFromXML(Environment.CurrentDirectory + LevelXMLPaths[levelNum], out levelBackground, out mainCamera, out players, out enemies, out tiles, out items);
+                gameTypeSelected = true;
+            }
         }
 
         protected override void Update(GameTime gameTime)
         {
-
             keyControl.Update();
-            if (paused)
+
+            //If game is paused, or we're still at the main menu, exit.
+            if (paused || !gameTypeSelected)
                 return;
+
             hud.Update();
             foreach (IPlayer player in players)
                 if (player != null)
                     player.isCollideGround = false;
-
-
-            //If game is paused, exit.
-
-            //if (players != null && players.Count > Zero)
-            //   mouseControl.Update(players[Zero], enemies.AsReadOnly(), tiles.AsReadOnly());
 
             CollisionDetection.Update(players.AsReadOnly(), enemies.AsReadOnly(), tiles.AsReadOnly(), items.AsReadOnly(), projectiles.AsReadOnly());
 
@@ -186,6 +201,11 @@ namespace Lasagna
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.Black);
+
+            //If we're at main menu, don't draw anything else.
+            if (!gameTypeSelected)
+                return;
+
             if (deathScreen)
             {
                 BGMFactory.Instance.Play_MainTheme();

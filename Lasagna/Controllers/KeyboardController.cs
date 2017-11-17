@@ -15,7 +15,10 @@ namespace Lasagna
                 { new [] { Keys.R }, Reset },
                 { new [] { Keys.X }, P1_ShootFire },
                 { new [] { Keys.RightControl }, P2_ShootFire },
-                { new [] { Keys.Enter }, Pause }
+                { new [] { Keys.Enter }, Pause },
+                ///TODO: TEMP CONTROLS FOR SELECTING LEVEL, REMOVE THESE WHEN MAIN MENU IS IMPLEMENTED
+                { new [] { Keys.F1 }, SelectLevel1 },
+                { new [] { Keys.F2 }, SelectLevel2 }
             };
 
             onKeyHeldEvents = new Dictionary<Keys[], MarioEventHandler>
@@ -30,7 +33,17 @@ namespace Lasagna
                 { new [] { Keys.Right }, P2_MoveRight },
             };
         }
-        
+
+        ///TODO: TEMP CONTROLS FOR SELECTING LEVEL, REMOVE THESE WHEN MAIN MENU IS IMPLEMENTED
+        private void SelectLevel1()
+        {
+            MarioEvents.SelectLevel(this, EventArgs.Empty, 0);
+        }
+        private void SelectLevel2()
+        {
+            MarioEvents.SelectLevel(this, EventArgs.Empty, 1);
+        }
+
         //Keys and what event they trigger
         private readonly Dictionary<Keys[], MarioEventHandler> onKeyDownEvents;
         private readonly Dictionary<Keys[], MarioEventHandler> onKeyHeldEvents;

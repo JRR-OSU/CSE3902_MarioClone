@@ -3,6 +3,7 @@
 namespace Lasagna
 {
     public delegate void MarioEventHandler();
+    public delegate void LevelSelectHandler(object sender, EventArgs e, uint levelNumber);
 
     //Class which contains all events for the project in one easy to locate place.
     public static class MarioEvents
@@ -10,6 +11,7 @@ namespace Lasagna
         public static event EventHandler<EventArgs> OnQuit;
         public static event EventHandler<EventArgs> OnReset;
         public static event EventHandler<EventArgs> OnPause;
+        public static event LevelSelectHandler OnSelectLevel;
         public static event EventHandler<EventArgs> OnP1MoveLeft;
         public static event EventHandler<EventArgs> OnP1MoveRight;
         public static event EventHandler<EventArgs> OnP1Jump;
@@ -37,6 +39,12 @@ namespace Lasagna
         {
             if (OnPause != null)
                 OnPause(sender, e);
+        }
+
+        public static void SelectLevel(object sender, EventArgs e, uint levelNumber)
+        {
+            if (OnSelectLevel != null)
+                OnSelectLevel(sender, e, levelNumber);
         }
 
         public static void P1_MoveLeft(object sender, EventArgs e)
