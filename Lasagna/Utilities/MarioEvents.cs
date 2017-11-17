@@ -94,7 +94,6 @@ namespace Lasagna
                 OnP2Crouch(sender, e);
         }
 
-
         public static void P2_ShootFire(object sender, EventArgs e)
         {
             if (OnP2ShootFire != null)
