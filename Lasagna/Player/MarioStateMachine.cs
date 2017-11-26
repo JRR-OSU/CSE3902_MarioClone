@@ -12,6 +12,7 @@ namespace Lasagna
     public class MarioStateMachine
     {
         private Mario mario;
+        private MarioPhysics marioPhysics;
         public enum MarioState { Small, Big, Fire };
         public enum MarioMovement { CrouchRight, CrouchLeft, IdleLeft, IdleRight, RunLeft, RunRight, TurnLeft, TurnRight, JumpLeft, JumpRight, GrowLeft, GrowRight, ShrinkLeft, ShrinkRight, Flagpole, Die };
         private MarioState marioState = MarioState.Small;
@@ -98,8 +99,9 @@ namespace Lasagna
         private Dictionary<MarioMovement, ISprite> bigStates = new Dictionary<MarioMovement, ISprite>();
         private Dictionary<MarioMovement, ISprite> fireStates = new Dictionary<MarioMovement, ISprite>();
 
-        public MarioStateMachine(Mario player)
+        public MarioStateMachine(Mario player, MarioPhysics physics)
         {
+            marioPhysics = physics;
             isCollideFloor = false;
             isCollideUnder = false;
             smallStates.Add(MarioMovement.IdleLeft, MarioSpriteFactory.Instance.CreateSprite_MarioSmall_IdleLeft());
@@ -238,23 +240,23 @@ namespace Lasagna
         {
             if (marioMovement == MarioMovement.JumpRight && !(marioMovement == MarioMovement.TurnRight))
             {
-                if(mario.isRunning || mario.marioMovingRight)
+                if(marioPhysics.isRunning || marioPhysics.marioMovingRight)
                     marioMovement = MarioMovement.RunRight;
                 else
                     marioMovement = MarioMovement.IdleRight;
             }
             else if (marioMovement == MarioMovement.JumpLeft && !(marioMovement == MarioMovement.TurnLeft))
             {
-                if (mario.isRunning || mario.marioMovingLeft)
+                if (marioPhysics.isRunning || marioPhysics.marioMovingLeft)
                     marioMovement = MarioMovement.RunLeft;
                 else
                     marioMovement = MarioMovement.IdleLeft;
             }
             else if (!(marioMovement == MarioMovement.TurnRight) && !(marioMovement == MarioMovement.TurnLeft))
             {
-                if (marioMovement == MarioMovement.RunRight && mario.marioMovingLeft)
+                if (marioMovement == MarioMovement.RunRight && marioPhysics.marioMovingLeft)
                     marioMovement = MarioMovement.RunLeft;
-               else if (marioMovement == MarioMovement.RunLeft && mario.marioMovingRight)
+               else if (marioMovement == MarioMovement.RunLeft && marioPhysics.marioMovingRight)
                     marioMovement = MarioMovement.RunRight;
             }
             SwitchCurrentSprite(marioMovement);
@@ -310,7 +312,7 @@ namespace Lasagna
             }
         }
 
-        public void HandleCrouch() // Crouching has commented code as we removed this functionality until physics are implemented properly
+        public void HandleCrouch()
         {
             if ((marioMovement == MarioMovement.RunLeft || marioMovement == MarioMovement.IdleLeft) && marioState != MarioState.Small &&!(isJumping))
             {
@@ -431,8 +433,8 @@ namespace Lasagna
                 marioMovement = (marioMovement == MarioMovement.ShrinkRight) ? MarioMovement.IdleRight : MarioMovement.IdleLeft;
                 UpdateSprite();
             }
-            mario.ignoreGravity = false;
-            mario.velocity = mario.transitionVel;
+            marioPhysics.ignoreGravity = false;
+            marioPhysics.velocity = marioPhysics.transitionVel;
         }
 
         private void UpdateSprite()
@@ -535,7 +537,7 @@ namespace Lasagna
                         else
                         {
 
-                            mario.ignoreGravity = false;
+                            marioPhysics.ignoreGravity = false;
                             
                         }
                     }
@@ -664,14 +666,10 @@ namespace Lasagna
                     flagpoleSlide = mario.position;
                     finishSequence = true;
                 }
-            }
-
-            
+            }            
         }
-
         private void SlideDownFlagPoll()
-        {
-            
+        {           
                 flagpoleSlide.Y = flagpoleSlide.Y - 3f;
         }
     }

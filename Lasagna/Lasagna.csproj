@@ -66,6 +66,7 @@
     <Compile Include="Interfaces\IHUD.cs" />
     <Compile Include="Menus\ArenaGameHUD.cs" />
     <Compile Include="Menus\StartMenuHUD.cs" />
+    <Compile Include="Player\MarioPhysics.cs" />
     <Compile Include="Tiles\UndergroundFloorBlockTile.cs" />
     <Compile Include="Tiles\UndergroundBrickTile.cs" />
     <Compile Include="Utilities\BGMFactory.cs" />

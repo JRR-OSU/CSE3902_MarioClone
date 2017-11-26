@@ -9,32 +9,17 @@ namespace Lasagna
 {
     public class Mario : IPlayer, ICollider
     {
-        private MarioStateMachine stateMachine;
+        internal MarioStateMachine stateMachine;
         private MarioCollisionHandler marioCollisionHandler;
+        private MarioPhysics marioPhysics;
 
         private int[] orignalPos = new int[2];
-
         public Vector2 position;
-        public Vector2 velocity;
-        public Vector2 transitionVel;
-
-        private int maxVelX = 150;
-        private int maxVelY = 400;
         public bool isFalling = false;
         public int maxHeight;
 
-        readonly Vector2 gravity = new Vector2(0, -500f);
-        float time;
-
-        public bool ignoreGravity { get; set; }
-        public bool isRunning = false;
-        private bool isJumping = false;
-        private bool jumpDelay = false;
-        private int jumpDelayCount = 0;
-        private bool canJump = true;
-        public bool disableCrouch = false;
-
         public bool isCollideGround { get; set; }
+
 
         private int marioWarpCount = 0;
 
@@ -53,10 +38,9 @@ namespace Lasagna
         private const int NEGATIVE_FOUR_FORTY = -440;
 
 
-        private bool marioIsDead = false;
+        public bool marioIsDead = false;
 
-        public bool marioMovingLeft;
-        public bool marioMovingRight;
+
 
         public bool IsDead { get { return marioIsDead; } }
         public bool StarPowered { get { return stateMachine != null && stateMachine.StarPowered; } }
@@ -67,8 +51,12 @@ namespace Lasagna
 
         public Mario(uint playerNumber, int x, int y)
         {
-            stateMachine = new MarioStateMachine(this);
-            marioCollisionHandler = new MarioCollisionHandler(this, stateMachine);
+
+            marioPhysics = new MarioPhysics(this);
+            stateMachine = new MarioStateMachine(this, marioPhysics);
+            marioCollisionHandler = new MarioCollisionHandler(this, stateMachine, marioPhysics);
+
+            marioPhysics.GetStateMachineInstance();
 
             position.X = x;
             position.Y = -y;
@@ -114,26 +102,18 @@ namespace Lasagna
 
         private void Reset(object sender, EventArgs e)
         {
-
             position.X = orignalPos[ZERO];
             position.Y = NEGATIVE_ONE * orignalPos[ONE];
-            velocity = Vector2.Zero;
+            marioPhysics.velocity = Vector2.Zero;
             marioIsDead = false;
-            marioMovingLeft = false;
-            marioMovingRight = false;
+            marioPhysics.marioMovingLeft = false;
+            marioPhysics.marioMovingRight = false;
             isCollideGround = false;
             BGMFactory.Instance.Play_MainTheme();
             stateMachine.Reset();
         }
 
-        public void SetIdleState()
-        {
-            if (stateMachine != null && stateMachine.IsTransitioning)
-                return;
-
-            velocity.X = velocity.X / 1.2f;
-            stateMachine.SetIdleState();
-        }
+ 
 
         public void MarioFireProjectile(object sender, EventArgs e)
         {
@@ -167,63 +147,22 @@ namespace Lasagna
         {
             if (stateMachine != null && stateMachine.IsTransitioning)
                 return;
-            marioMovingLeft = true;
+            marioPhysics.marioMovingLeft = true;
         }
 
         public void MoveRight(object sender, EventArgs e)
         {
             if (stateMachine != null && stateMachine.IsTransitioning)
                 return;
-            marioMovingRight = true;
+            marioPhysics.marioMovingRight = true;
         }
 
 
-        public void MarioMoveLeft()
-        {
-            if (marioMovingRight)
-                return;
-
-            if (isRunning && !marioIsDead && !(Math.Abs(velocity.X) >= maxVelX + 100))
-            {
-                velocity.X -= TEN;
-                stateMachine.MoveLeft();
-            }
-            else if (!isRunning && !marioIsDead)
-            {   // Slow velocity down if moving but not running
-                if ((Math.Abs(velocity.X) >= maxVelX) && !marioMovingRight)
-                    velocity.X += TWO;
-                else
-                    velocity.X -= TEN;
-
-                stateMachine.MoveLeft();
-            }
-
-        }
-
-        public void MarioMoveRight()
-        {
-            if (marioMovingLeft)
-                return;
-
-            if (isRunning && !marioIsDead && !(Math.Abs(velocity.X) >= maxVelX + ONE_HUNDRED))
-            {
-                velocity.X += TEN;
-                stateMachine.MoveRight();
-            }
-            else if (!isRunning && !marioIsDead)
-            {   // Slow velocity down if moving but not running
-                if ((Math.Abs(velocity.X) >= maxVelX) && !marioMovingLeft)
-                    velocity.X -= TWO;
-                else
-                    velocity.X += TEN;
-
-                stateMachine.MoveRight();
-            }
-        }
+        
 
         public void Crouch(object sender, EventArgs e)
         {
-            if (stateMachine != null && stateMachine.IsTransitioning || disableCrouch)
+            if (stateMachine != null && stateMachine.IsTransitioning || marioPhysics.disableCrouch)
                 return;
 
             if (!marioIsDead)
@@ -232,9 +171,9 @@ namespace Lasagna
 
         public void Jump(object sender, EventArgs e)
         {
-            if (stateMachine != null && stateMachine.IsTransitioning || !canJump)
+            if (stateMachine != null && stateMachine.IsTransitioning || !marioPhysics.canJump)
                 return;
-            if (!isJumping)
+            if (!marioPhysics.isJumping)
             {
                 if (CurrentState.Equals(MarioStateMachine.MarioState.Small))
                 {
@@ -245,16 +184,8 @@ namespace Lasagna
                     SoundEffectFactory.Instance.PlayJumpMarioBig();
                 }
             }
-                isJumping = true;
-            if (!marioIsDead && !(Math.Abs(velocity.Y) >= maxVelY))
-            {
-                stateMachine.Jump();
-               
-                if (velocity.Y < TWO_SEVENTY_FIVE && !isFalling)
-                    velocity.Y += SEVENTY_FIVE;
-                else
-                    isFalling = true;
-            }
+                marioPhysics.isJumping = true;
+            marioPhysics.Jump();
         }
 
         public void CheckFlagpoleHeight()
@@ -262,22 +193,6 @@ namespace Lasagna
             if (position.X > 6000 && position.Y >= -40)
                 ForceMove(0, 1);
                 
-        }
-
-        public void StartJumpDelay()
-        {
-            jumpDelay = true;
-        }
-
-        public void HandleJumpDelay()
-        {
-            if (jumpDelayCount != TWO)
-                jumpDelayCount++;
-            else
-            {
-                jumpDelayCount = ZERO;
-                jumpDelay = false;
-            }
         }
 
         public void Star()
@@ -296,7 +211,7 @@ namespace Lasagna
         public void Die()
         {
             marioIsDead = true;
-            velocity.X = ZERO;
+            marioPhysics.velocity.X = ZERO;
             stateMachine.KillMario();
             Score.LoseLifeMario();
             BGMFactory.Instance.Play_YouAreDead();
@@ -320,67 +235,6 @@ namespace Lasagna
                 marioCollisionHandler.OnCollisionResponse((IProjectile)otherCollider, side);
         }
 
-        private void SetPhysicsBools()
-        {
-            if ((position.X >= 2193 && position.X <= 2256) || (position.X >= 2738 && position.X <= 2835) || (position.X >= 4884 && position.X <= 4952))
-                ignoreGravity = false;
-            if (isCollideGround || velocity.Y == 0)
-            {
-                isJumping = false;
-                if (Keyboard.GetState().GetPressedKeys().Length == 0) // Set idle if no key is pressed
-                    SetIdleState();
-            }
-            else if (isJumping == true)
-                ignoreGravity = false;
-        }
-        private void HandleJumpBools()
-        {
-            if (isJumping && !(Keyboard.GetState().IsKeyDown(Keys.W) || Keyboard.GetState().IsKeyDown(Keys.Up)))
-                canJump = false;
-            else if (!isJumping)
-                canJump = true;
-        }
-
-        private void HandleRunning()
-        {
-            if (Keyboard.GetState().IsKeyDown(Keys.LeftShift) && !marioMovingRight && !marioMovingLeft)
-            {
-                isRunning = false;
-                SetIdleState();
-            }
-            else if (Keyboard.GetState().IsKeyDown(Keys.LeftShift) && (marioMovingRight || marioMovingLeft))
-                isRunning = true;
-            else
-                isRunning = false;
-        }
-        private void HandleMovement()
-        {
-            if (stateMachine.IsTransitioning)
-                return;
-            if (marioMovingLeft)
-                MarioMoveLeft();
-            else if (marioMovingRight)
-                MarioMoveRight();
-        }
-        public void UpdatePhysics(GameTime gameTime)
-        {
-            SetPhysicsBools();
-            if (marioIsDead && (stateMachine == null || stateMachine.IsTransitioning))
-                return;
-
-            time = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            if ((Math.Abs(velocity.Y) >= maxVelY))
-                stateMachine.EndJump();
-            // Slow mario down if he starts moving the opposite direction
-            if ((marioMovingLeft && velocity.X > ZERO) || (marioMovingRight && velocity.X < ZERO))
-                velocity.X = velocity.X / 1.2f;
-
-            if (!ignoreGravity && velocity.Y > NEGATIVE_TWO_HUNDRED)
-                velocity += gravity * time;
-            else if (ignoreGravity)
-                velocity.Y = ZERO;
-            position += velocity * time;
-        }
 
 
         public void Update(GameTime gameTime)
@@ -391,35 +245,23 @@ namespace Lasagna
                 return;
             }
             if(!MarioIsInWarpZone() && !stateMachine.IsTransitioning && position.Y < NEGATIVE_FOUR_FORTY)
-            {
                Die();
-            }
 
             if (stateMachine.IsTransitioning)
             {
-                velocity = Vector2.Zero;
-                ignoreGravity = true;
+                marioPhysics.velocity = Vector2.Zero;
+                marioPhysics.ignoreGravity = true;
             }
-            else if (!stateMachine.IsTransitioning && velocity != Vector2.Zero)
-                transitionVel = velocity;
+            else if (!stateMachine.IsTransitioning && marioPhysics.velocity != Vector2.Zero)
+                marioPhysics.transitionVel = marioPhysics.velocity;
 
+            marioPhysics.Update(gameTime);
 
-            CheckFlagpoleHeight();
-            HandleJumpBools();
-
-            HandleMovement();
-
-            if (jumpDelay)
-                HandleJumpDelay();
-
-            HandleRunning();
-
-            UpdatePhysics(gameTime);
             if (isCollideGround)
                 Score.ResetConsecutiveEnemiesKilled();
+
             stateMachine.Update(gameTime, (int)position.X, -(int)position.Y);
-            marioMovingLeft = false;
-            marioMovingRight = false;
+
             isCollideGround = false;
         }
 

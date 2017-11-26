@@ -12,6 +12,7 @@ namespace Lasagna
     {
         private MarioStateMachine state;
         private Mario mario;
+        private MarioPhysics marioPhysics;
 
         /// <summary>
         /// Constants
@@ -25,10 +26,11 @@ namespace Lasagna
         private const int FORTY = 40;
         private const int ONE_HUNDRED_FIFTY = 150;
 
-        public MarioCollisionHandler(Mario player, MarioStateMachine marioState)
+        public MarioCollisionHandler(Mario player, MarioStateMachine marioState, MarioPhysics physics)
         {
             state = marioState;
             mario = player;
+            marioPhysics = physics;
         }
         public void OnCollisionResponse(IPlayer player, CollisionSide side)
         {
@@ -93,8 +95,8 @@ namespace Lasagna
             switch (side)
             {
                 case CollisionSide.Bottom:
-                    mario.velocity.Y = ZERO;
-                    mario.velocity.Y += ONE_HUNDRED_FIFTY;
+                    marioPhysics.velocity.Y = ZERO;
+                    marioPhysics.velocity.Y += ONE_HUNDRED_FIFTY;
                     state.HandleJump();
                     // Jump effect if landing on top of an enemy
                     break;
@@ -132,10 +134,10 @@ namespace Lasagna
                         state.SetGroundedState();
                         if (!(tile is FloorBlockTile))
                         {
-                            mario.ignoreGravity = false;
+                            marioPhysics.ignoreGravity = false;
                         }
                         else
-                            mario.ignoreGravity = true;
+                            marioPhysics.ignoreGravity = true;
                         mario.isCollideGround = true;
                         if (tile is FlagPoleTile)
                         {
@@ -144,16 +146,16 @@ namespace Lasagna
                             state.flagpoleColPos.Y = mario.position.Y;
                         }
                         else if (tile is WarpPipeTile)
-                            mario.disableCrouch = true;
+                            marioPhysics.disableCrouch = true;
                         else
-                            mario.disableCrouch = false;
+                            marioPhysics.disableCrouch = false;
                         mario.SetPosition(mario.Bounds.X, ((tile.Bounds.Y - mario.Bounds.Height - TWO)));
                         mario.isFalling = false;
                         break;
                     case CollisionSide.Top:
-                        mario.velocity.Y = ZERO;
+                        marioPhysics.velocity.Y = ZERO;
                         mario.SetPosition(mario.Bounds.X, (tile.Bounds.Y + tile.Bounds.Height + FIVE));
-                        mario.ignoreGravity = false;
+                        marioPhysics.ignoreGravity = false;
                         if (tile is BreakableBrickTile)
                         {
                             if (((BreakableBrickTile)tile).items.Length > ZERO && ((BreakableBrickTile)tile).items[ZERO] is CoinItem
@@ -172,12 +174,12 @@ namespace Lasagna
 
                         break;
                     case CollisionSide.Left:
-                        mario.velocity.X = ZERO;
+                        marioPhysics.velocity.X = ZERO;
                         mario.SetPosition((tile.Bounds.X + tile.Bounds.Width), mario.Bounds.Y);
 
                         break;
                     case CollisionSide.Right:
-                        mario.velocity.X = ZERO;
+                        marioPhysics.velocity.X = ZERO;
 
                         if (tile is FlagPoleTile)
                         {
@@ -210,8 +212,8 @@ namespace Lasagna
                         }
 
                         // Jump effect if landing on top of an enemy
-                        mario.velocity.Y = ZERO;
-                        mario.velocity.Y += ONE_HUNDRED_FIFTY;
+                        marioPhysics.velocity.Y = ZERO;
+                        marioPhysics.velocity.Y += ONE_HUNDRED_FIFTY;
                         state.HandleJump();
                         Score.marioEnemyKilledCount++;
                         Score.marioEnemyKill();
