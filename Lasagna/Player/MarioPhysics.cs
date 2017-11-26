@@ -204,15 +204,12 @@ namespace Lasagna
 
         public void Update(GameTime gameTime)
         {
-
             mario.CheckFlagpoleHeight();
             HandleJumpBools();
-
             HandleMovement();
 
             if (jumpDelay)
                 HandleJumpDelay();
-
             HandleRunning();
 
             UpdatePhysics(gameTime);
@@ -220,7 +217,5 @@ namespace Lasagna
             marioMovingLeft = false;
             marioMovingRight = false;
         }
-
-
     }
 }

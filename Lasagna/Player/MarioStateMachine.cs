@@ -666,8 +666,11 @@ namespace Lasagna
                     flagpoleSlide = mario.position;
                     finishSequence = true;
                 }
-            }            
+            }
+
+            
         }
+
         private void SlideDownFlagPoll()
         {           
                 flagpoleSlide.Y = flagpoleSlide.Y - 3f;

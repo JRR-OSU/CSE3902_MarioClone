@@ -127,7 +127,6 @@ namespace Lasagna
             }
             else
             {
-
                 switch (side)
                 {
                     case CollisionSide.Bottom:
@@ -170,13 +169,11 @@ namespace Lasagna
                             {
                                 Score.AddCoinMario();
                             }
-                        }
-
+                        }                 
                         break;
                     case CollisionSide.Left:
                         marioPhysics.velocity.X = ZERO;
                         mario.SetPosition((tile.Bounds.X + tile.Bounds.Width), mario.Bounds.Y);
-
                         break;
                     case CollisionSide.Right:
                         marioPhysics.velocity.X = ZERO;
@@ -193,7 +190,6 @@ namespace Lasagna
                         break;
                 }
             }
-
         }
 
         public void OnCollisionResponse(IEnemy enemy, CollisionSide side)
@@ -217,7 +213,6 @@ namespace Lasagna
                         state.HandleJump();
                         Score.marioEnemyKilledCount++;
                         Score.marioEnemyKill();
-
                         break;
                     case CollisionSide.Top:
                         if ((enemy is GoombaEnemy))

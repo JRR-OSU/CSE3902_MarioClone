@@ -20,9 +20,7 @@ namespace Lasagna
 
         public bool isCollideGround { get; set; }
 
-
         private int marioWarpCount = 0;
-
         /// <summary>
         /// Constants
         /// </summary>
@@ -37,10 +35,7 @@ namespace Lasagna
         private const int TWO_SEVENTY_FIVE = 275;
         private const int NEGATIVE_FOUR_FORTY = -440;
 
-
         public bool marioIsDead = false;
-
-
 
         public bool IsDead { get { return marioIsDead; } }
         public bool StarPowered { get { return stateMachine != null && stateMachine.StarPowered; } }
@@ -51,11 +46,9 @@ namespace Lasagna
 
         public Mario(uint playerNumber, int x, int y)
         {
-
             marioPhysics = new MarioPhysics(this);
             stateMachine = new MarioStateMachine(this, marioPhysics);
             marioCollisionHandler = new MarioCollisionHandler(this, stateMachine, marioPhysics);
-
             marioPhysics.GetStateMachineInstance();
 
             position.X = x;
@@ -156,10 +149,6 @@ namespace Lasagna
                 return;
             marioPhysics.marioMovingRight = true;
         }
-
-
-        
-
         public void Crouch(object sender, EventArgs e)
         {
             if (stateMachine != null && stateMachine.IsTransitioning || marioPhysics.disableCrouch)
@@ -191,8 +180,7 @@ namespace Lasagna
         public void CheckFlagpoleHeight()
         {
             if (position.X > 6000 && position.Y >= -40)
-                ForceMove(0, 1);
-                
+                ForceMove(0, 1);                
         }
 
         public void Star()
@@ -203,7 +191,6 @@ namespace Lasagna
         public void Die(object sender, EventArgs e)
         {
             marioIsDead = true;
-
             stateMachine.KillMario();
         }
 
@@ -222,7 +209,6 @@ namespace Lasagna
         {
             if (stateMachine != null && stateMachine.IsTransitioning)
                 return;
-
             if (otherCollider is IPlayer)
                 marioCollisionHandler.OnCollisionResponse((IPlayer)otherCollider, side);
             else if (otherCollider is IEnemy)
@@ -256,12 +242,11 @@ namespace Lasagna
                 marioPhysics.transitionVel = marioPhysics.velocity;
 
             marioPhysics.Update(gameTime);
-
+     
             if (isCollideGround)
                 Score.ResetConsecutiveEnemiesKilled();
 
             stateMachine.Update(gameTime, (int)position.X, -(int)position.Y);
-
             isCollideGround = false;
         }
 
@@ -272,8 +257,7 @@ namespace Lasagna
 
 
         public void BeginWarpAnimation(Direction moveDir, bool startWithMove)
-        {
-            
+        {           
             stateMachine.BeginWarpAnimation(moveDir, startWithMove);
         }
 
