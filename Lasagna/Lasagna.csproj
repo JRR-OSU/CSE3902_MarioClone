@@ -70,6 +70,7 @@
     <Compile Include="Tiles\UndergroundFloorBlockTile.cs" />
     <Compile Include="Tiles\UndergroundBrickTile.cs" />
     <Compile Include="Utilities\BGMFactory.cs" />
+    <Compile Include="Utilities\LuigiSpriteFactory.cs" />
     <Compile Include="Utilities\Score.cs" />
     <Compile Include="Menus\MainGameHUD.cs" />
     <Compile Include="Utilities\GlobalSuppressions.cs" />
