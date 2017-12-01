@@ -44,6 +44,8 @@ namespace Lasagna
         public bool IsBlinking { get { return stateMachine != null && (stateMachine.IsTransitioning || stateMachine.IsBlinking); } }
         public MarioStateMachine.MarioState CurrentState { get { return (stateMachine != null) ? stateMachine.CurrentState : MarioStateMachine.MarioState.Small; } }
 
+        // If tag == 1, we have player 1, if tag is 2 we have player 2
+        public int Tag { get; set; }
         public Mario(uint playerNumber, int x, int y)
         {
             marioPhysics = new MarioPhysics(this);

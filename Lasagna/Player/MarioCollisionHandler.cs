@@ -14,6 +14,10 @@ namespace Lasagna
         private Mario mario;
         private MarioPhysics marioPhysics;
 
+
+        // I need some sort of reference to player 1 and player 2 to increment the score.
+
+
         /// <summary>
         /// Constants
         /// </summary>
@@ -37,9 +41,17 @@ namespace Lasagna
             switch (side)
             {
                 case CollisionSide.Bottom:
+                    //((Mario)player).stateMachine.DamageMario();
+                    marioPhysics.velocity.Y = ZERO;
+                    marioPhysics.velocity.Y += ONE_HUNDRED_FIFTY;
+                    state.HandleJump();
                     mario.SetPosition(mario.Bounds.X, (player.Bounds.Y - mario.Bounds.Height));
+                    Score.AddItemScore();
                     break;
                 case CollisionSide.Top:
+                    if (state.CurrentMovement.Equals(MarioStateMachine.MarioMovement.Die) || ((Mario)player).stateMachine.CurrentMovement.Equals(MarioStateMachine.MarioMovement.Die))
+                        return;
+                    state.DamageMario();
                     mario.SetPosition(mario.Bounds.X, (player.Bounds.Y + player.Bounds.Height));
                     break;
                 case CollisionSide.Left:
@@ -89,31 +101,36 @@ namespace Lasagna
 
         public void OnCollisionResponse(IProjectile projectile, CollisionSide side)
         {
-            if (!(projectile is KoopaShellProjectile))
-                return;
 
             switch (side)
             {
                 case CollisionSide.Bottom:
-                    marioPhysics.velocity.Y = ZERO;
-                    marioPhysics.velocity.Y += ONE_HUNDRED_FIFTY;
-                    state.HandleJump();
+                    if (projectile is KoopaShellProjectile)
+                    {
+                        marioPhysics.velocity.Y = ZERO;
+                        marioPhysics.velocity.Y += ONE_HUNDRED_FIFTY;
+                        state.HandleJump();
+                    }
+                    state.DamageMario();
                     // Jump effect if landing on top of an enemy
                     break;
                 case CollisionSide.Top:
+                    if(projectile is KoopaShellProjectile)
                     if (((KoopaShellProjectile)projectile).IsShellKicked)
-                        state.DamageMario();
-                    mario.SetPosition(mario.Bounds.X, (mario.Bounds.Y + mario.Bounds.Height));
+                        mario.SetPosition(mario.Bounds.X, (mario.Bounds.Y + mario.Bounds.Height));
+                    state.DamageMario();
                     break;
                 case CollisionSide.Left:
+                    if(projectile is KoopaShellProjectile)
                     if (((KoopaShellProjectile)projectile).IsShellKicked)
-                        state.DamageMario();
-                    mario.SetPosition(((KoopaShellProjectile)projectile).Bounds.X + mario.Bounds.Width, mario.Bounds.Y);
+                        mario.SetPosition(((KoopaShellProjectile)projectile).Bounds.X + mario.Bounds.Width, mario.Bounds.Y);
+                    state.DamageMario();
                     break;
                 case CollisionSide.Right:
+                    if(projectile is KoopaShellProjectile)
                     if (((KoopaShellProjectile)projectile).IsShellKicked)
-                        state.DamageMario();
-                    mario.SetPosition(((KoopaShellProjectile)projectile).Bounds.X - mario.Bounds.Width, mario.Bounds.Y);
+                        mario.SetPosition(((KoopaShellProjectile)projectile).Bounds.X - mario.Bounds.Width, mario.Bounds.Y);
+                    state.DamageMario();
                     break;
             }
 
@@ -177,7 +194,6 @@ namespace Lasagna
                         break;
                     case CollisionSide.Right:
                         marioPhysics.velocity.X = ZERO;
-
                         if (tile is FlagPoleTile)
                         {
                             state.flagpoleSequence = true;
@@ -186,7 +202,6 @@ namespace Lasagna
                         }
                         else
                             mario.SetPosition((tile.Bounds.X - mario.Bounds.Width), mario.Bounds.Y);
-
                         break;
                 }
             }
