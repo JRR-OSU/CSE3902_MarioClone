@@ -48,7 +48,35 @@
     <Tile type="Brick" repeat="0" repeatspace="0" posx="116" posy="160" />
     <Tile type="UnbreakableBlock" repeat="0" repeatspace="0" posx="148" posy="160" />
     <Tile type="QuestionBlock" repeat="0" repeatspace="0" posx="84" posy="50" item="LifeMushroom" coins="" />
-    
+
+    <Tile type="Floor" repeat="0" repeatspace="0" posx="-35" posy="385" />
+    <Tile type="Floor" repeat="0" repeatspace="0" posx="-35" posy="355" />
+    <Tile type="Floor" repeat="0" repeatspace="0" posx="-35" posy="325" />
+    <Tile type="Floor" repeat="0" repeatspace="0" posx="-35" posy="295" />
+    <Tile type="Floor" repeat="0" repeatspace="0" posx="-35" posy="265" />
+    <Tile type="Floor" repeat="0" repeatspace="0" posx="-35" posy="235" />
+    <Tile type="Floor" repeat="0" repeatspace="0" posx="-35" posy="205" />
+    <Tile type="Floor" repeat="0" repeatspace="0" posx="-35" posy="175" />
+    <Tile type="Floor" repeat="0" repeatspace="0" posx="-35" posy="145" />
+    <Tile type="Floor" repeat="0" repeatspace="0" posx="-35" posy="115" />
+    <Tile type="Floor" repeat="0" repeatspace="0" posx="-35" posy="85" />
+    <Tile type="Floor" repeat="0" repeatspace="0" posx="-35" posy="55" />
+    <Tile type="Floor" repeat="0" repeatspace="0" posx="-35" posy="25" />
+
+
+    <Tile type="Floor" repeat="0" repeatspace="0" posx="800" posy="385" />
+    <Tile type="Floor" repeat="0" repeatspace="0" posx="800" posy="355" />
+    <Tile type="Floor" repeat="0" repeatspace="0" posx="800" posy="325" />
+    <Tile type="Floor" repeat="0" repeatspace="0" posx="800" posy="295" />
+    <Tile type="Floor" repeat="0" repeatspace="0" posx="800" posy="265" />
+    <Tile type="Floor" repeat="0" repeatspace="0" posx="800" posy="235" />
+    <Tile type="Floor" repeat="0" repeatspace="0" posx="800" posy="205" />
+    <Tile type="Floor" repeat="0" repeatspace="0" posx="800" posy="175" />
+    <Tile type="Floor" repeat="0" repeatspace="0" posx="800" posy="145" />
+    <Tile type="Floor" repeat="0" repeatspace="0" posx="800" posy="115" />
+    <Tile type="Floor" repeat="0" repeatspace="0" posx="800" posy="85" />
+    <Tile type="Floor" repeat="0" repeatspace="0" posx="800" posy="55" />
+    <Tile type="Floor" repeat="0" repeatspace="0" posx="800" posy="25" />
     
   </Tiles>
   <Items>
