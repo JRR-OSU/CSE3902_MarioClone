@@ -24,7 +24,8 @@ namespace Lasagna
         private const string LUIGI = "LUIGI";
         private const string LIVES = "LIVES";
         private const string COINS = "COINS";
-        private const string GAME_OVER = "Game Over";
+        private const string MARIO_WIN = "MARIO WIN !";
+        private const string LUIGI_WIN = "LUIGI WIN !";
 
 
 
@@ -69,7 +70,7 @@ namespace Lasagna
             {
                 counter = ZERO;
             }
-            if (Score.Lives <= ZERO)
+            if (Score.Lives <= ZERO || Score.Lives2 <= ZERO)
             {
                 MarioGame.Instance.TriggerDeathSequence();
             }
@@ -88,10 +89,18 @@ namespace Lasagna
 
             if (isGameOver && deathScreen)
             {
-                batch.DrawString(font, GAME_OVER, new Vector2((640 / 2) - 30, (480 / 2) - 50), Color.White);
+                if(Score.Lives <= 0)
+                {
+                    batch.DrawString(font, LUIGI_WIN, new Vector2((640 / 2) - 30, (480 / 2) - 50), Color.White);
+                }
+                if (Score.Lives2 <= 0)
+                {
+                    batch.DrawString(font, MARIO_WIN, new Vector2((640 / 2) - 30, (480 / 2) - 50), Color.White);
+                }
                 Score.Lives = THREE;
+                Score.Lives2 = THREE;
                 Score.marioScore = ZERO;
-                Score.Coins = ZERO;
+                Score.luigiScore = ZERO;
             }
 
             batch.End();
