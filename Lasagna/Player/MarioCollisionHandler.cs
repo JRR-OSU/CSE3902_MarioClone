@@ -46,7 +46,7 @@ namespace Lasagna
                     marioPhysics.velocity.Y += ONE_HUNDRED_FIFTY;
                     state.HandleJump();
                     mario.SetPosition(mario.Bounds.X, (player.Bounds.Y - mario.Bounds.Height));
-                    if (this.mario.Tag == 1)
+                    if (this.mario.Tag == 0)
                         Score.marioScore += 1000;
                     else
                         Score.luigiScore += 1000;
@@ -75,19 +75,28 @@ namespace Lasagna
             if (item is FireFlowerItem)
             {
                 state.SetFireState();
-                Score.AddItemScore();
+                if (this.mario.Tag == 0)
+                    Score.marioScore += 1000;
+                else
+                    Score.luigiScore += 1000;
                 SoundEffectFactory.Instance.PlayPowerUp();
             }
             else if (item is GrowMushroomItem)
             {
                 state.Grow();
-                Score.AddItemScore();
+                if (this.mario.Tag == 0)
+                    Score.marioScore += 1000;
+                else
+                    Score.luigiScore += 1000;
                 SoundEffectFactory.Instance.PlayPowerUp();
             }
             else if (item is StarItem)
             {
                 state.Star();
-                Score.AddItemScore();
+                if (this.mario.Tag == 0)
+                    Score.marioScore += 1000;
+                else
+                    Score.luigiScore += 1000;
                 //bgm.Play_StarMan();
             }
             else if (item is CoinItem)
@@ -106,7 +115,7 @@ namespace Lasagna
         {
             if (projectile is FireProjectile)
             {
-                if (this.mario.Tag == 1)
+                if (this.mario.Tag == 0)
                     Score.marioScore += 500;
                 else
                     Score.luigiScore += 500;
