@@ -122,7 +122,8 @@ namespace Lasagna
             bool facingRight = IsMarioMovingRight();
 
             int spawnX = Bounds.X + (facingRight ? Bounds.Width : 0);
-
+            if(!facingRight)
+                spawnX -= 30;
             MarioGame.Instance.RegisterProjectile(new FireProjectile(spawnX, Bounds.Y + Bounds.Height / 2, facingRight));
             SoundEffectFactory.Instance.PlayFireball();
         }

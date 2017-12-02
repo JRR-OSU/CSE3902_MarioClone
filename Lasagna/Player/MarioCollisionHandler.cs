@@ -14,10 +14,6 @@ namespace Lasagna
         private Mario mario;
         private MarioPhysics marioPhysics;
 
-
-        // I need some sort of reference to player 1 and player 2 to increment the score.
-
-
         /// <summary>
         /// Constants
         /// </summary>
@@ -123,7 +119,7 @@ namespace Lasagna
                 return;
             }
 
-               switch (side)
+        switch (side)
             {
                 case CollisionSide.Bottom:
                     if (projectile is KoopaShellProjectile)
@@ -230,7 +226,7 @@ namespace Lasagna
 
         public void OnCollisionResponse(IEnemy enemy, CollisionSide side)
         {
-            if (state.isStar() || (enemy is GoombaEnemy && enemy.Bounds.Height <= SIXTEEN) || (enemy is KoopaEnemy && enemy.Bounds.Height <= FORTY))// if star or enemy is dead
+            if (state.isStar() || (enemy is GoombaEnemy && enemy.Bounds.Height <= SIXTEEN) || (enemy is KoopaEnemy && enemy.Bounds.Height <= FORTY)) // if star or enemy is dead
                 return;
             else
             {
