@@ -81,4 +81,6 @@ namespace Lasagna
         Left,
         Right
     }
+
+    public enum GameMode { OnePlayer, TwoPlayer };
 }

@@ -12,8 +12,8 @@ namespace Lasagna
         public const int fireflowerValue = 1000;
         public const int starValue = 1000;
         public const int oneUpValue = 1000;
-        public const int initialLives = 3;
-        public const int initiaLives2 = 3;
+        public const int marioLives = 3;
+        public const int luigiLives = 3;
         private const int ZERO = 0;
         private const int FOUR_HUNDRED = 400;
         private const int THREE = 3;
@@ -45,7 +45,7 @@ namespace Lasagna
         {
             MarioEvents.OnReset += Reset;
 
-            Score.Lives = initialLives;
+            Score.Lives = marioLives;
             Score.marioScore = ZERO;
             Score.Coins = ZERO;
 
@@ -154,7 +154,7 @@ namespace Lasagna
         {
 
             //Score.Lives = initialLives;
-            Score.marioScore = ZERO;
+
             Score.Coins = ZERO;
             MarioGame.Instance.gameComplete = false;
             Score.enemyKilledPoints = new int[10] { 100, 200, 400, 500, 800, 1000, 2000, 4000, 8000, 10000 };

@@ -79,6 +79,8 @@ namespace Lasagna
         private bool gameTypeSelected;
 
 
+        public GameMode game_Mode;
+
         public MarioGame()
         {
             instance = this;
@@ -120,6 +122,7 @@ namespace Lasagna
 
         public void SelectLevel(object sender, EventArgs e, uint levelNum)
         {
+
             if (levelNum >= LevelXMLPaths.Length)
             {
                 Console.WriteLine("MarioGame: Error! Tried to select level {0} but only {1} level paths are defined!", levelNum, LevelXMLPaths.Length);
@@ -128,7 +131,19 @@ namespace Lasagna
 
             if (!gameTypeSelected)
             {
+                if (levelNum == 0)
+                    game_Mode = GameMode.OnePlayer;
+                else
+                    game_Mode = GameMode.TwoPlayer;
                 LevelCreator.Instance.LoadLevelFromXML(Environment.CurrentDirectory + LevelXMLPaths[levelNum], out levelBackground, out mainCamera, out players, out enemies, out tiles, out items);
+                if (game_Mode.Equals(GameMode.TwoPlayer))
+                {
+                    players[0].Tag = 1;
+                    players[1].Tag = 2;
+                }
+                else
+                    players[0].Tag = 1;
+
                 if (levelNum < LevelHUDs.Length)
                     levelHUD = LevelHUDs[levelNum].Invoke();
                 gameTypeSelected = true;

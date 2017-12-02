@@ -95,53 +95,16 @@ namespace Lasagna
         private bool finishSequence = false;
         private int flagpoleCount = 0;
 
-        private Dictionary<MarioMovement, ISprite> smallStates = new Dictionary<MarioMovement, ISprite>();
-        private Dictionary<MarioMovement, ISprite> bigStates = new Dictionary<MarioMovement, ISprite>();
-        private Dictionary<MarioMovement, ISprite> fireStates = new Dictionary<MarioMovement, ISprite>();
+        internal Dictionary<MarioMovement, ISprite> smallStates = new Dictionary<MarioMovement, ISprite>();
+        internal Dictionary<MarioMovement, ISprite> bigStates = new Dictionary<MarioMovement, ISprite>();
+        internal Dictionary<MarioMovement, ISprite> fireStates = new Dictionary<MarioMovement, ISprite>();
 
         public MarioStateMachine(Mario player, MarioPhysics physics)
         {
+            MarioSpriteHelper helper = new MarioSpriteHelper(this, player.Tag);
             marioPhysics = physics;
             isCollideFloor = false;
             isCollideUnder = false;
-            smallStates.Add(MarioMovement.IdleLeft, MarioSpriteFactory.Instance.CreateSprite_MarioSmall_IdleLeft());
-            smallStates.Add(MarioMovement.IdleRight, MarioSpriteFactory.Instance.CreateSprite_MarioSmall_IdleRight());
-            smallStates.Add(MarioMovement.RunLeft, MarioSpriteFactory.Instance.CreateSprite_MarioSmall_RunLeft());
-            smallStates.Add(MarioMovement.RunRight, MarioSpriteFactory.Instance.CreateSprite_MarioSmall_RunRight());
-            smallStates.Add(MarioMovement.TurnLeft, MarioSpriteFactory.Instance.CreateSprite_MarioSmall_TurnLeft());
-            smallStates.Add(MarioMovement.TurnRight, MarioSpriteFactory.Instance.CreateSprite_MarioSmall_TurnRight());
-            smallStates.Add(MarioMovement.JumpLeft, MarioSpriteFactory.Instance.CreateSprite_MarioSmall_JumpLeft());
-            smallStates.Add(MarioMovement.JumpRight, MarioSpriteFactory.Instance.CreateSprite_MarioSmall_JumpRight());
-            smallStates.Add(MarioMovement.Die, MarioSpriteFactory.Instance.CreateSprite_MarioSmall_Die());
-            smallStates.Add(MarioMovement.ShrinkLeft, MarioSpriteFactory.Instance.CreateSprite_MarioBig_ShrinkLeft());
-            smallStates.Add(MarioMovement.ShrinkRight, MarioSpriteFactory.Instance.CreateSprite_MarioBig_ShrinkRight());
-            smallStates.Add(MarioMovement.Flagpole, MarioSpriteFactory.Instance.CreateSprite_MarioSmall_Flagpole());
-
-            bigStates.Add(MarioMovement.CrouchLeft, MarioSpriteFactory.Instance.CreateSprite_MarioBig_CrouchLeft());
-            bigStates.Add(MarioMovement.CrouchRight, MarioSpriteFactory.Instance.CreateSprite_MarioBig_CrouchRight());
-            bigStates.Add(MarioMovement.IdleLeft, MarioSpriteFactory.Instance.CreateSprite_MarioBig_IdleLeft());
-            bigStates.Add(MarioMovement.IdleRight, MarioSpriteFactory.Instance.CreateSprite_MarioBig_IdleRight());
-            bigStates.Add(MarioMovement.RunLeft, MarioSpriteFactory.Instance.CreateSprite_MarioBig_RunLeft());
-            bigStates.Add(MarioMovement.RunRight, MarioSpriteFactory.Instance.CreateSprite_MarioBig_RunRight());
-            bigStates.Add(MarioMovement.TurnLeft, MarioSpriteFactory.Instance.CreateSprite_MarioBig_TurnLeft());
-            bigStates.Add(MarioMovement.TurnRight, MarioSpriteFactory.Instance.CreateSprite_MarioBig_TurnRight());
-            bigStates.Add(MarioMovement.JumpLeft, MarioSpriteFactory.Instance.CreateSprite_MarioBig_JumpLeft());
-            bigStates.Add(MarioMovement.JumpRight, MarioSpriteFactory.Instance.CreateSprite_MarioBig_JumpRight());
-            bigStates.Add(MarioMovement.GrowLeft, MarioSpriteFactory.Instance.CreateSprite_MarioSmall_GrowLeft());
-            bigStates.Add(MarioMovement.GrowRight, MarioSpriteFactory.Instance.CreateSprite_MarioSmall_GrowRight());
-            bigStates.Add(MarioMovement.Flagpole, MarioSpriteFactory.Instance.CreateSprite_MarioBig_Flagpole());
-
-            fireStates.Add(MarioMovement.CrouchLeft, MarioSpriteFactory.Instance.CreateSprite_MarioFire_CrouchLeft());
-            fireStates.Add(MarioMovement.CrouchRight, MarioSpriteFactory.Instance.CreateSprite_MarioFire_CrouchRight());
-            fireStates.Add(MarioMovement.IdleLeft, MarioSpriteFactory.Instance.CreateSprite_MarioFire_IdleLeft());
-            fireStates.Add(MarioMovement.IdleRight, MarioSpriteFactory.Instance.CreateSprite_MarioFire_IdleRight());
-            fireStates.Add(MarioMovement.RunLeft, MarioSpriteFactory.Instance.CreateSprite_MarioFire_RunLeft());
-            fireStates.Add(MarioMovement.RunRight, MarioSpriteFactory.Instance.CreateSprite_MarioFire_RunRight());
-            fireStates.Add(MarioMovement.TurnLeft, MarioSpriteFactory.Instance.CreateSprite_MarioFire_TurnLeft());
-            fireStates.Add(MarioMovement.TurnRight, MarioSpriteFactory.Instance.CreateSprite_MarioFire_TurnRight());
-            fireStates.Add(MarioMovement.JumpLeft, MarioSpriteFactory.Instance.CreateSprite_MarioFire_JumpLeft());
-            fireStates.Add(MarioMovement.JumpRight, MarioSpriteFactory.Instance.CreateSprite_MarioFire_JumpRight());
-            fireStates.Add(MarioMovement.Flagpole, MarioSpriteFactory.Instance.CreateSprite_MarioFire_Flagpole());
 
             mario = player;
         }
