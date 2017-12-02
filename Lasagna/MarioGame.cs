@@ -136,13 +136,10 @@ namespace Lasagna
                 else
                     game_Mode = GameMode.TwoPlayer;
                 LevelCreator.Instance.LoadLevelFromXML(Environment.CurrentDirectory + LevelXMLPaths[levelNum], out levelBackground, out mainCamera, out players, out enemies, out tiles, out items);
-                if (game_Mode.Equals(GameMode.TwoPlayer))
-                {
+                if (players[0] != null)
                     players[0].Tag = 1;
+                if (game_Mode.Equals(GameMode.TwoPlayer) && players[1] != null)
                     players[1].Tag = 2;
-                }
-                else
-                    players[0].Tag = 1;
 
                 if (levelNum < LevelHUDs.Length)
                     levelHUD = LevelHUDs[levelNum].Invoke();
