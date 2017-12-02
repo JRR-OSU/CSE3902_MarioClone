@@ -42,7 +42,7 @@
     <Tile type="Brick" repeat="0" repeatspace="0" posx="416" posy="130" />
     <Tile type="QuestionBlock" repeat="0" repeatspace="0" posx="384" posy="130" item="Star" coins="" />
 
-    <Tile type="Brick" repeat="0" repeatspace="0" posx="20" posy="160" />
+    <Tile type="UnbreakableBlock" repeat="0" repeatspace="0" posx="20" posy="160" />
     <Tile type="Brick" repeat="0" repeatspace="0" posx="52" posy="160" />
     <Tile type="Brick" repeat="0" repeatspace="0" posx="84" posy="160" />
     <Tile type="Brick" repeat="0" repeatspace="0" posx="116" posy="160" />
