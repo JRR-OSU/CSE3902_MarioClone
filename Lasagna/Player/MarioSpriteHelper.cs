@@ -12,8 +12,8 @@
         /// <param name="tag"></param>
         public MarioSpriteHelper(MarioStateMachine machine, int tag) {
 
-            //if (tag == 1)
-           // {
+            if (tag == 0)
+            {
                 machine.smallStates.Add(MarioStateMachine.MarioMovement.IdleLeft, MarioSpriteFactory.Instance.CreateSprite_MarioSmall_IdleLeft());
                 machine.smallStates.Add(MarioStateMachine.MarioMovement.IdleRight, MarioSpriteFactory.Instance.CreateSprite_MarioSmall_IdleRight());
                 machine.smallStates.Add(MarioStateMachine.MarioMovement.RunLeft, MarioSpriteFactory.Instance.CreateSprite_MarioSmall_RunLeft());
@@ -52,8 +52,8 @@
                 machine.fireStates.Add(MarioStateMachine.MarioMovement.JumpLeft, MarioSpriteFactory.Instance.CreateSprite_MarioFire_JumpLeft());
                 machine.fireStates.Add(MarioStateMachine.MarioMovement.JumpRight, MarioSpriteFactory.Instance.CreateSprite_MarioFire_JumpRight());
                 machine.fireStates.Add(MarioStateMachine.MarioMovement.Flagpole, MarioSpriteFactory.Instance.CreateSprite_MarioFire_Flagpole());
-          //  }
-          /*
+            }
+          
             else
             {
                 machine.smallStates.Add(MarioStateMachine.MarioMovement.IdleLeft, LuigiSpriteFactory.Instance.CreateSprite_LuigiSmall_IdleLeft());
@@ -95,7 +95,7 @@
                 machine.fireStates.Add(MarioStateMachine.MarioMovement.JumpRight, LuigiSpriteFactory.Instance.CreateSprite_LuigiFire_JumpRight());
                 machine.fireStates.Add(MarioStateMachine.MarioMovement.Flagpole, LuigiSpriteFactory.Instance.CreateSprite_LuigiFire_Flagpole());
             }
-            */
+           
         }
     }
 }

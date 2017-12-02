@@ -111,6 +111,7 @@ namespace Lasagna
             EnemySpriteFactory.Instance.LoadAllContent(Content);
             ItemSpriteFactory.Instance.LoadAllContent(Content);
             MarioSpriteFactory.Instance.LoadAllContent(Content);
+            LuigiSpriteFactory.Instance.LoadAllContent(Content);
             ProjectileSpriteFactory.Instance.LoadAllContent(Content);
             TileSpriteFactory.Instance.LoadAllContent(Content);
             BackgroundSpriteFactory.Instance.LoadAllContent(Content, GraphicsDevice.Viewport.Height);
@@ -136,10 +137,6 @@ namespace Lasagna
                 else
                     game_Mode = GameMode.TwoPlayer;
                 LevelCreator.Instance.LoadLevelFromXML(Environment.CurrentDirectory + LevelXMLPaths[levelNum], out levelBackground, out mainCamera, out players, out enemies, out tiles, out items);
-                if (players[0] != null)
-                    players[0].Tag = 1;
-                if (game_Mode.Equals(GameMode.TwoPlayer) && players[1] != null)
-                    players[1].Tag = 2;
 
                 if (levelNum < LevelHUDs.Length)
                     levelHUD = LevelHUDs[levelNum].Invoke();

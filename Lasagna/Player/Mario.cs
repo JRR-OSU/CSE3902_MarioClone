@@ -48,6 +48,7 @@ namespace Lasagna
         public int Tag { get; set; }
         public Mario(uint playerNumber, int x, int y)
         {
+            Tag = (int)playerNumber;
             marioPhysics = new MarioPhysics(this);
             stateMachine = new MarioStateMachine(this, marioPhysics);
             marioCollisionHandler = new MarioCollisionHandler(this, stateMachine, marioPhysics);
