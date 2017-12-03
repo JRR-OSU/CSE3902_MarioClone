@@ -59,6 +59,11 @@ namespace Lasagna
             Lives--;
         }
 
+        public static void LoseLifeLuigi()
+        {
+            Lives2--;
+        }
+
         public static void increaseScoreMario(int score)
         {
             marioScore += score;

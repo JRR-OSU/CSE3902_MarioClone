@@ -204,7 +204,10 @@ namespace Lasagna
             marioIsDead = true;
             marioPhysics.velocity.X = ZERO;
             stateMachine.KillMario();
-            Score.LoseLifeMario();
+            if (Tag == 0)
+                Score.LoseLifeMario();
+            else
+                Score.LoseLifeLuigi();
             BGMFactory.Instance.Play_YouAreDead();
 
         }

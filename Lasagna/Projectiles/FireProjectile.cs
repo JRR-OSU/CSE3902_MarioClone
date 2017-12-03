@@ -78,10 +78,10 @@ namespace Lasagna
 
         protected override void OnCollisionResponse(IPlayer player, CollisionSide side)
         {
-            if (player.Tag == 1)
-                Score.marioScore += 500;
-            else
+            if (player.Tag == 0)
                 Score.luigiScore += 500;
+            else
+                Score.marioScore += 500;
             if (currentState == FireballStates.Idle)
                 this.DestroyShell();
         }

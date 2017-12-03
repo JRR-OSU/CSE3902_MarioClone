@@ -111,10 +111,6 @@ namespace Lasagna
         {
             if (projectile is FireProjectile)
             {
-                if (this.mario.Tag == 0)
-                    Score.marioScore += 500;
-                else
-                    Score.luigiScore += 500;
                 state.DamageMario();
                 return;
             }
