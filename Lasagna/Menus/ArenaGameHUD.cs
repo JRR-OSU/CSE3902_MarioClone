@@ -87,7 +87,7 @@ namespace Lasagna
             batch.DrawString(font, formattedScore(Score.marioScore) + addSpaces(3) + formattedCoins(Score.Lives) + addSpaces(23) + formattedScore(Score.luigiScore) + addSpaces(3) + formattedLives(Score.Lives2), new Vector2(10, 25), Color.White);
 
 
-            if (isGameOver && deathScreen)
+            if (deathScreen)
             {
                 if(Score.Lives <= 0)
                 {
@@ -97,10 +97,10 @@ namespace Lasagna
                 {
                     batch.DrawString(font, MARIO_WIN, new Vector2((640 / 2) - 30, (480 / 2) - 50), Color.White);
                 }
-                Score.Lives = THREE;
-                Score.Lives2 = THREE;
-                Score.marioScore = ZERO;
-                Score.luigiScore = ZERO;
+                //Score.Lives = THREE;
+                //Score.Lives2 = THREE;
+                //Score.marioScore = ZERO;
+                //Score.luigiScore = ZERO;
             }
 
             batch.End();
