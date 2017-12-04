@@ -26,6 +26,7 @@ namespace Lasagna
         private const string COINS = "COINS";
         private const string MARIO_WIN = "MARIO WIN !";
         private const string LUIGI_WIN = "LUIGI WIN !";
+        private const string RESTART = "Press R to restart";
 
 
 
@@ -79,7 +80,6 @@ namespace Lasagna
 
         public void Draw(SpriteBatch batch, SpriteFont font, bool deathScreen, bool gameComplete)
         {
-
             isDeathScreen = deathScreen;
             batch.Begin();
             batch.DrawString(font, MARIO + addSpaces(4) + LIVES + addSpaces(20)+ LUIGI + addSpaces(4) + LIVES, new Vector2(10, 10), Color.White);
@@ -92,15 +92,19 @@ namespace Lasagna
                 if(Score.Lives <= 0)
                 {
                     batch.DrawString(font, LUIGI_WIN, new Vector2((640 / 2) - 30, (480 / 2) - 50), Color.White);
+                    batch.DrawString(font, RESTART, new Vector2((640 / 2) - 30, (480 / 2) - 10), Color.White);
+                    Score.marioScore = ZERO;
+                    Score.luigiScore = ZERO;
+
                 }
                 if (Score.Lives2 <= 0)
                 {
                     batch.DrawString(font, MARIO_WIN, new Vector2((640 / 2) - 30, (480 / 2) - 50), Color.White);
+                    batch.DrawString(font, RESTART, new Vector2((640 / 2) - 30, (480 / 2) - 10), Color.White);
+                    Score.marioScore = ZERO;
+                    Score.luigiScore = ZERO;
                 }
-                //Score.Lives = THREE;
-                //Score.Lives2 = THREE;
-                //Score.marioScore = ZERO;
-                //Score.luigiScore = ZERO;
+                
             }
 
             batch.End();
@@ -163,7 +167,6 @@ namespace Lasagna
         {
 
             //Score.Lives = initialLives;
-
             Score.Coins = ZERO;
             MarioGame.Instance.gameComplete = false;
             Score.enemyKilledPoints = new int[10] { 100, 200, 400, 500, 800, 1000, 2000, 4000, 8000, 10000 };
