@@ -34,6 +34,8 @@ namespace Lasagna
         }
         public void OnCollisionResponse(IPlayer player, CollisionSide side)
         {
+            if (player.IsDead || mario.IsDead)
+                return;
             switch (side)
             {
                 case CollisionSide.Bottom:
