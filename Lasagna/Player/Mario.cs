@@ -37,6 +37,7 @@ namespace Lasagna
         private const int NEGATIVE_FOUR_FORTY = -440;
 
         public bool marioIsDead = false;
+        private bool keyOverlap = false;
 
         public bool IsDead { get { return marioIsDead; } }
         public bool StarPowered { get { return stateMachine != null && stateMachine.StarPowered; } }
@@ -112,11 +113,9 @@ namespace Lasagna
             stateMachine.Reset();
         }
 
- 
-
         public void MarioFireProjectile(object sender, EventArgs e)
         {
-            if (stateMachine != null && stateMachine.IsTransitioning)
+            if (stateMachine != null && stateMachine.IsTransitioning || RestrictMovement)
                 return;
 
             if (marioIsDead || stateMachine.CurrentState != MarioStateMachine.MarioState.Fire)
@@ -252,7 +251,7 @@ namespace Lasagna
             else if (!stateMachine.IsTransitioning && marioPhysics.velocity != Vector2.Zero)
                 marioPhysics.transitionVel = marioPhysics.velocity;
 
-            if(!RestrictMovement)
+            if(!RestrictMovement && !keyOverlap)
             marioPhysics.Update(gameTime);
      
             if (isCollideGround)
@@ -260,6 +259,7 @@ namespace Lasagna
 
             stateMachine.Update(gameTime, (int)position.X, -(int)position.Y);
             isCollideGround = false;
+            keyOverlap = false;
         }
 
         public void Draw(SpriteBatch spriteBatch)

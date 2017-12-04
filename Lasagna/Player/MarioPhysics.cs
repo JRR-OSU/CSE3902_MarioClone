@@ -181,6 +181,11 @@ namespace Lasagna
                 MarioMoveLeft();
             else if (marioMovingRight)
                 MarioMoveRight();
+            else
+            {
+                stateMachine.SetIdleState();
+                velocity.X = velocity.X / 1.2f;
+            }
         }
         public void UpdatePhysics(GameTime gameTime)
         {

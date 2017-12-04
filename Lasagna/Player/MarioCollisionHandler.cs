@@ -48,17 +48,24 @@ namespace Lasagna
                         Score.marioScore += 1000;
                     else
                         Score.luigiScore += 1000;
+                    if (((Mario)player).stateMachine.StarPowered)
+                        state.DamageMario();
                     break;
                 case CollisionSide.Top:
                     if (state.CurrentMovement.Equals(MarioStateMachine.MarioMovement.Die) || ((Mario)player).stateMachine.CurrentMovement.Equals(MarioStateMachine.MarioMovement.Die))
                         return;
-                    state.DamageMario();
+                    if(!((Mario)player).stateMachine.CurrentState.Equals(MarioStateMachine.MarioState.Small) || ((Mario)player).stateMachine.StarPowered)
+                        state.DamageMario();
                     mario.SetPosition(mario.Bounds.X, (player.Bounds.Y + player.Bounds.Height));
                     break;
                 case CollisionSide.Left:
+                    if(((Mario)player).stateMachine.StarPowered)
+                        state.DamageMario();
                     mario.SetPosition(player.Bounds.X + player.Bounds.Width, mario.Bounds.Y);
                     break;
                 case CollisionSide.Right:
+                    if (((Mario)player).stateMachine.StarPowered)
+                        state.DamageMario();
                     mario.SetPosition(player.Bounds.X - mario.Bounds.Width, mario.Bounds.Y);
 
                     break;
