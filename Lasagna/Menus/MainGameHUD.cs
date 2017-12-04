@@ -87,7 +87,10 @@ namespace Lasagna
                 if (Time == ZERO)
                     Score.Lives--;
                 MarioGame.Instance.TriggerDeathSequence();
-                timeUp = true;
+                if (Time <= 0)
+                    timeUp = true;
+                else if (Score.Lives == 0)
+                    isGameOver = true;
             }
             else
                 timeUp = false;
@@ -118,7 +121,14 @@ namespace Lasagna
                 batch.End();
                 mario.Draw(batch);
             }
-
+            else if (isGameOver && deathScreen && !timeUp)
+            {
+                batch.DrawString(font, GAME_OVER, new Vector2((640 / 2) - 30, (480 / 2) - 50), Color.White);
+                Time = 400;
+                Score.Lives = THREE;
+                Score.marioScore = ZERO;
+                Score.Coins = ZERO;
+            }
             else if (timeUp && deathScreen)
             {
                 batch.DrawString(font, TIME_UP, new Vector2((640 / 2) - 30, (480 / 2) - 50), Color.White);
@@ -127,14 +137,7 @@ namespace Lasagna
                 Score.Coins = ZERO;
             }
 
-            else if (isGameOver && deathScreen)
-            {
-                batch.DrawString(font, GAME_OVER, new Vector2((640 / 2) - 30, (480 / 2) - 50), Color.White);
-                Time = 400;
-                Score.Lives = THREE;
-                Score.marioScore = ZERO;
-                Score.Coins = ZERO;
-            }
+
 
             batch.End();
 

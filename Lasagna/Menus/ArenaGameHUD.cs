@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Lasagna
 {
@@ -24,12 +26,18 @@ namespace Lasagna
         private const string LUIGI = "LUIGI";
         private const string LIVES = "LIVES";
         private const string COINS = "COINS";
-        private const string MARIO_WIN = "MARIO WIN !";
-        private const string LUIGI_WIN = "LUIGI WIN !";
+        private const string MARIO_WIN = "MARIO IS THE VICTOR!";
+        private const string LUIGI_WIN = "LUIGI IS THE VICTOR!";
+
+        private const string LUIGI_ROUND_WIN = "LUIGI WINS THE ROUND";
+        private const string MARIO_ROUND_WIN = "MARIO WINS THE ROUND";
         private const string RESTART = "Press R to restart";
 
 
 
+        private bool MARIO_DEAD = false;
+        private bool LUIGI_DEAD = false;
+        public List<IPlayer> players;
 
         private int counter = 0;
 
@@ -41,10 +49,12 @@ namespace Lasagna
         private bool isGameOver = false;
 
         ISprite mario;
-
+        ISprite luigi;
 
         public ArenaGameHUD()
         {
+
+            players = MarioGame.Instance.GetArenaPlayerList();
             MarioEvents.OnReset += Reset;
 
             Score.Lives = marioLives;
@@ -54,8 +64,10 @@ namespace Lasagna
             Score.enemyKilledPoints = new int[10] { 100, 200, 400, 500, 800, 1000, 2000, 4000, 8000, 10000 };
             Score.marioEnemyKilledCount = ZERO;
             mario = MarioSpriteFactory.Instance.CreateSprite_MarioSmall_IdleRight();
-            mario.SetSpriteScreenPosition((640 / 2) + 175, (480 / 2) - 20);
-
+            luigi = LuigiSpriteFactory.Instance.CreateSprite_LuigiSmall_IdleRight();
+            mario.SetSpriteScreenPosition((640 / 2) + 75, (480 / 2) - 20);
+            luigi.SetSpriteScreenPosition((640 / 2) + 75, (480 / 2) - 20);
+            Console.WriteLine(this.GetHashCode().ToString());
         }
 
         public void Update()
@@ -71,10 +83,17 @@ namespace Lasagna
             {
                 counter = ZERO;
             }
-            if (Score.Lives <= ZERO || Score.Lives2 <= ZERO)
+
+
+            if (players[0].IsDead)
             {
-                MarioGame.Instance.TriggerDeathSequence();
+                MARIO_DEAD = true;
             }
+            else if (players[1].IsDead)
+            {
+                LUIGI_DEAD = true;
+            }
+
 
         }
 
@@ -87,27 +106,62 @@ namespace Lasagna
             batch.DrawString(font, formattedScore(Score.marioScore) + addSpaces(3) + formattedCoins(Score.Lives) + addSpaces(23) + formattedScore(Score.luigiScore) + addSpaces(3) + formattedLives(Score.Lives2), new Vector2(10, 25), Color.White);
 
 
-            if (deathScreen)
+
+
+            if (gameComplete)
             {
-                if(Score.Lives <= 0)
+                batch.DrawString(font, "WORLD_1_1", new Vector2((640 / 2) - 30, (480 / 2) - 50), Color.White);
+                batch.DrawString(font, "LEVEL_COMPLETE", new Vector2((640 / 2) - 30, (480 / 2)), Color.White);
+            }
+
+            else if (deathScreen && (Score.Lives == 0 || Score.Lives2 == 0))
+            {
+                MarioGame.Instance.gameComplete = true;
+                batch.End();
+                batch.Begin();
+                if (Score.Lives <= 0)
                 {
                     batch.DrawString(font, LUIGI_WIN, new Vector2((640 / 2) - 30, (480 / 2) - 50), Color.White);
                     batch.DrawString(font, RESTART, new Vector2((640 / 2) - 30, (480 / 2) - 10), Color.White);
+
                     Score.marioScore = ZERO;
                     Score.luigiScore = ZERO;
+
 
                 }
                 if (Score.Lives2 <= 0)
                 {
                     batch.DrawString(font, MARIO_WIN, new Vector2((640 / 2) - 30, (480 / 2) - 50), Color.White);
                     batch.DrawString(font, RESTART, new Vector2((640 / 2) - 30, (480 / 2) - 10), Color.White);
+
                     Score.marioScore = ZERO;
                     Score.luigiScore = ZERO;
+
                 }
-                
+
+            }
+            else if (deathScreen && !isGameOver)
+            {
+                batch.End();
+                batch.Begin();
+                if (MARIO_DEAD)
+                {
+                    batch.DrawString(font, LUIGI_ROUND_WIN, new Vector2((640 / 2) - 75, (480 / 2) - 50), Color.White);
+                    batch.End();
+                    luigi.Draw(batch);
+                }
+                else if (LUIGI_DEAD)
+                {
+                    batch.DrawString(font, MARIO_ROUND_WIN, new Vector2((640 / 2) - 75, (480 / 2) - 50), Color.White);
+                    batch.End();
+                    mario.Draw(batch);
+                }
+
             }
 
             batch.End();
+
+          //  batch.End();
 
         }
 
@@ -167,6 +221,7 @@ namespace Lasagna
         {
 
             //Score.Lives = initialLives;
+
             Score.Coins = ZERO;
             MarioGame.Instance.gameComplete = false;
             Score.enemyKilledPoints = new int[10] { 100, 200, 400, 500, 800, 1000, 2000, 4000, 8000, 10000 };

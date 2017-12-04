@@ -133,11 +133,12 @@ namespace Lasagna
 
             if (!gameTypeSelected)
             {
+                LevelCreator.Instance.LoadLevelFromXML(Environment.CurrentDirectory + LevelXMLPaths[levelNum], out levelBackground, out mainCamera, out players, out enemies, out tiles, out items);
                 if (levelNum == 0)
                     game_Mode = GameMode.OnePlayer;
                 else
                     game_Mode = GameMode.TwoPlayer;
-                LevelCreator.Instance.LoadLevelFromXML(Environment.CurrentDirectory + LevelXMLPaths[levelNum], out levelBackground, out mainCamera, out players, out enemies, out tiles, out items);
+                
 
                 if (levelNum < LevelHUDs.Length)
                     levelHUD = LevelHUDs[levelNum].Invoke();
@@ -316,6 +317,14 @@ namespace Lasagna
         private void OnReset(object sender, EventArgs e)
         {
             warping = false;
+            deathScreen = false;
+            if (gameComplete)
+            {
+                Score.Lives = 3;
+                Score.Lives2 = 3;
+            }
+            gameComplete = false;
+
         }
 
         /// <summary>
@@ -426,7 +435,8 @@ namespace Lasagna
 
         public void TriggerDeathSequence()
         {
-            deathScreen = true;
+            if(!gameComplete)
+                deathScreen = true;
         }
 
         private void DisplayDeathScreen()
@@ -437,10 +447,19 @@ namespace Lasagna
                 deathScreenTimer++;
             else
             {
-                deathScreenTimer = Zero;
-                deathScreen = false;
-                MarioEvents.Reset(null, null);
+                if (!gameComplete)
+                {
+                    deathScreenTimer = Zero;
+                    deathScreen = false;
+                    MarioEvents.Reset(null, null);
+                }
+
             }
+        }
+
+        public List<IPlayer> GetArenaPlayerList()
+        {
+            return players;
         }
     }
 }

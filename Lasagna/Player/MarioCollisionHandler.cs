@@ -61,11 +61,15 @@ namespace Lasagna
                 case CollisionSide.Left:
                     if(((Mario)player).stateMachine.StarPowered)
                         state.DamageMario();
+                    if(mario.Tag == 1)
+                        marioPhysics.velocity.X = marioPhysics.velocity.X / 10.0f;
                     mario.SetPosition(player.Bounds.X + player.Bounds.Width, mario.Bounds.Y);
                     break;
                 case CollisionSide.Right:
                     if (((Mario)player).stateMachine.StarPowered)
                         state.DamageMario();
+                    if (mario.Tag == 1)
+                        marioPhysics.velocity.X = marioPhysics.velocity.X / 10.0f;
                     mario.SetPosition(player.Bounds.X - mario.Bounds.Width, mario.Bounds.Y);
 
                     break;
