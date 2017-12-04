@@ -10,8 +10,8 @@ namespace Lasagna
         void SetPosition(int x, int y);
         void BeginWarpAnimation(Direction moveDir, bool startWithMove);
         int Tag { get; set; }
-
         bool isCollideGround { get; set; }
         bool IsDead { get; }
+        bool RestrictMovement { get; set; }
     }
 }

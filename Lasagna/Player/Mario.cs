@@ -17,6 +17,7 @@ namespace Lasagna
         public Vector2 position;
         public bool isFalling = false;
         public int maxHeight;
+        public bool RestrictMovement { get; set; }
 
         public bool isCollideGround { get; set; }
 
@@ -53,6 +54,7 @@ namespace Lasagna
             stateMachine = new MarioStateMachine(this, marioPhysics);
             marioCollisionHandler = new MarioCollisionHandler(this, stateMachine, marioPhysics);
             marioPhysics.GetStateMachineInstance();
+            RestrictMovement = false;
 
             position.X = x;
             position.Y = -y;
@@ -98,6 +100,7 @@ namespace Lasagna
 
         private void Reset(object sender, EventArgs e)
         {
+            RestrictMovement = false;
             position.X = orignalPos[ZERO];
             position.Y = NEGATIVE_ONE * orignalPos[ONE];
             marioPhysics.velocity = Vector2.Zero;
@@ -201,6 +204,7 @@ namespace Lasagna
         // Overload of die which is used for Mario Collision
         public void Die()
         {
+            RestrictMovement = true;
             marioIsDead = true;
             marioPhysics.velocity.X = ZERO;
             stateMachine.KillMario();
@@ -248,6 +252,7 @@ namespace Lasagna
             else if (!stateMachine.IsTransitioning && marioPhysics.velocity != Vector2.Zero)
                 marioPhysics.transitionVel = marioPhysics.velocity;
 
+            if(!RestrictMovement)
             marioPhysics.Update(gameTime);
      
             if (isCollideGround)

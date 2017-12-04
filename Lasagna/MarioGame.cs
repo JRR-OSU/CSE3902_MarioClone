@@ -215,8 +215,13 @@ namespace Lasagna
                 if (item != null)
                     item.Update(gameTime);
             foreach (IPlayer player in players)
+            {
+                if (player.IsDead)
+                    foreach (IPlayer p in players)
+                        p.RestrictMovement = true;
                 if (player != null)
                     player.Update(gameTime);
+            }
 
             bool anyDead = players != null && players.Find(o => o is Mario && ((Mario)o).IsDead) != null;
 
