@@ -193,6 +193,8 @@
     <Content Include="Code Reviews_Sprint5\SoundEffectFactory_QualityReview.txt" />
     <Content Include="Code Reviews_Sprint5\SoundEffectFactory_Readbility_Refactored.txt" />
     <Content Include="Code Reviews_Sprint5\SoundEffectFactory_QualityReview_Refactored.txt" />
+    <Content Include="Code Reviews_Sprint6\FixedCamera_QualityReview.txt" />
+    <Content Include="Code Reviews_Sprint6\FixedCamera_ReadabilityReview.txt" />
     <Content Include="Code Reviews_Sprint6\Mario_QualityReview.txt" />
     <Content Include="Code Reviews_Sprint6\Mario_ReadabilityReview.txt" />
     <Content Include="Icon.ico" />

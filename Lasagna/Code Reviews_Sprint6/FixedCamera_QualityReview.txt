@@ -1,0 +1,11 @@
+﻿Zeyu Li
+11/8/2017
+Sprint 6
+FixedCamera.cs
+Timothy Williams
+
+The code looks great at this time. The methods are well defined,
+and the method bodies are not long, it is easy to understand how
+the method works. For the CanSeeCollider method, the return statement
+saved lines of codes and I like it. In my perspective, the code is
+nearly perfect and I cannot think of a way to improve it.

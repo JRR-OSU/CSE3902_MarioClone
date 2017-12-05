@@ -1,0 +1,10 @@
+﻿Zeyu Li
+11/8/2017
+Sprint 6
+FixedCamera.cs
+Timothy Williams
+5 minutes
+
+The code looks great. It is tidy and clean, there are not many methods
+in this class so it is easy to understand how the class work. The methods
+are given good names. All the necessary parts are commented.
