@@ -26,25 +26,24 @@ namespace Lasagna
         public Vector2 position;
         protected bool isInBlock = false;
         protected bool isInvisible = false;
-        private float velocity = ONE;
+        protected float velocity = ONE;
         protected const float moveUpVelocity = ONE;
         private float fallingVelocity = (float)ONEPFIVE;
         private float fallingVelocityDecayRate = (float).9;
         protected float yDifference;
         protected int originalX;
         protected int originalY;
-        private int coinAnimateTime = ZERO;
         protected bool movingLeft = false;
         protected int MovingTime = ZERO;
         private ISprite originalSprite;
         private int hideTime = 0;
         private bool waitToDraw = false;
 
-        private int maxMovingTime = 2000;
-        private int increasingYDifference = 15;
-        private int increasingXDifference = 2;
-        private int increasingVelocity = 4;
-        private int coinAnimateedTimeMax = 20;
+        protected int maxMovingTime = 2000;
+        protected int increasingYDifference = 15;
+        protected int increasingXDifference = 2;
+        protected int increasingVelocity = 4;
+        protected int coinAnimateedTimeMax = 20;
 
         protected ISprite ItemSprite
         {
@@ -84,12 +83,6 @@ namespace Lasagna
 
         public virtual void Update(GameTime gameTime)
         {
-            if (currentState.Equals(ItemState.CoinAnimaiotn))
-            {
-                HandleCoinAnimation();
-                Fall(gameTime);
-            }
-            
             if (currentState.Equals(ItemState.Moving) || currentState.Equals(ItemState.Bounce))
             {
                 MovingTime++;
@@ -105,37 +98,20 @@ namespace Lasagna
                     HandleHorizontalMovement();
                     Fall(gameTime);
                 }
-                else if (this is StarItem && currentState.Equals(ItemState.Bounce))
-                {
-                    HandleHorizontalMovement();
-                }
                 if (this.isInBlock)
                 {
-                    if (this is StarItem)
+                    this.isInvisible = false;
+                    yDifference = moveUpVelocity * ((float)gameTime.ElapsedGameTime.Milliseconds / FIFTY);
+                    if (position.Y + this.itemSprite.Height > originalY)
                     {
-                    }
-                    if (this is CoinItem)
-                    {
-                        this.isInvisible = false;
-                        ((CoinItem)this).StartCoinAnimation();
-                        this.isInBlock = false;
+                        position.Y -= yDifference;
                     }
                     else
                     {
-                        this.isInvisible = false;
-                        yDifference = moveUpVelocity * ((float)gameTime.ElapsedGameTime.Milliseconds / FIFTY);
-                        if (position.Y + this.itemSprite.Height > originalY)
-                        {
-                            position.Y -= yDifference;
-                        }
-                        else
-                        {
-                            this.Move();
-                            this.isInBlock = false;
-                        }
+                        this.Move();
+                        this.isInBlock = false;
                     }
                 }
-                
                 itemSprite.Update(gameTime, (int)position.X, (int)position.Y);
             }
         }
@@ -165,13 +141,7 @@ namespace Lasagna
             fallingVelocity = (float)ONEPFIVE;
             velocity = ONE;
             MovingTime = ZERO;
-            coinAnimateTime = ZERO;
             isInBlock = false;
-            /*if (this is StarItem)
-            {
-                ((StarItem)this).verticalMoveSpeed = 0f;
-                ((StarItem)this).hittedGround = false;
-            }*/
         }
 
         public void ChangeToInvisible()
@@ -253,27 +223,15 @@ namespace Lasagna
 
         public virtual void Spawn()
         {
-            if (!(this is CoinItem))
-                this.waitToDraw = true;
-
+            this.waitToDraw = true;
             this.isInBlock = true;
         }
-        public void Move()
+        public virtual void Move()
         {
-            if (this is StarItem)
-            {
-                currentState = ItemState.Bounce;
-            }
-            else if (!(this is FireFlowerItem))
-            {
-                currentState = ItemState.Moving;
-            }
+            currentState = ItemState.Moving;
         }
-        public void StartCoinAnimation()
-        {
-            currentState = ItemState.CoinAnimaiotn;
-        }
-        private void Fall(GameTime gameTime)
+        
+        protected void Fall(GameTime gameTime)
         {
             yDifference = velocity * ((float)gameTime.ElapsedGameTime.Milliseconds / FIFTY);
             position.Y += yDifference;
@@ -281,7 +239,7 @@ namespace Lasagna
             velocity -= fallingVelocityDecayRate;
 
         }
-        private void HandleHorizontalMovement()
+        protected void HandleHorizontalMovement()
         {
             {
                 if (movingLeft == true)
@@ -293,17 +251,6 @@ namespace Lasagna
                     position.X += increasingXDifference;
                 }
             }
-        }
-        private void HandleCoinAnimation()
-        {
-            position.Y -= increasingYDifference;
-            velocity += increasingVelocity;
-            coinAnimateTime++;
-            if (coinAnimateTime >= coinAnimateedTimeMax)
-            {
-                itemSprite = null;
-            }
-               
         }
     }
 }

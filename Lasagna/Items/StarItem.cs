@@ -8,7 +8,6 @@ namespace Lasagna
     {
         private const int ZERO = 0;
         private const float ZEROF = 0f;
-        private ISprite starItemSprite = ItemSpriteFactory.Instance.CreateSprite_Star();
         private float verticalMoveSpeed = ZEROF;
         private const float standardVerticalMoveSpeed = -4.4f;
         private const float acceleration = 0.15f;
@@ -24,6 +23,7 @@ namespace Lasagna
             base.Update(gameTime);
             if (base.currentState == ItemState.Bounce)
             {
+                base.HandleHorizontalMovement();
                 verticalMoveSpeed += acceleration;
                 PosY += verticalMoveSpeed;
             }
@@ -33,6 +33,11 @@ namespace Lasagna
             base.Reset(sender, e);
             verticalMoveSpeed = ZEROF;
             hittedGround = false;
+        }
+
+        public override void Move()
+        {
+            currentState = ItemState.Bounce;
         }
 
         protected override void OnCollisionResponse(ITile tile, CollisionSide side)

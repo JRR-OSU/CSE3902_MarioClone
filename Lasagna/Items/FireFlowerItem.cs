@@ -7,5 +7,10 @@
         {
             ItemSprite = ItemSpriteFactory.Instance.CreateSprite_FireFlower();
         }
+
+        public override void Move()
+        {
+            return;
+        }
     }
 }
