@@ -63,6 +63,9 @@ namespace Lasagna
         private StartMenuHUD MainMenuHUD;
         private IHUD levelHUD;
         private SpriteFont font;
+        private Texture2D MenuBackground;
+        private Rectangle mainFrame;
+
         private bool paused = false;
         //Fields for warping
         private bool warping;
@@ -79,6 +82,7 @@ namespace Lasagna
         private bool gameTypeSelected;
 
 
+
         public GameMode game_Mode;
 
         public MarioGame()
@@ -92,6 +96,8 @@ namespace Lasagna
         {
             screenWidth = GraphicsDevice.Viewport.Width;
             screenHeight = GraphicsDevice.Viewport.Height;
+            mainFrame = new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height);
+
 
             keyControl = new KeyboardController();
             MainMenuHUD = new StartMenuHUD();
@@ -120,6 +126,7 @@ namespace Lasagna
             BGMFactory.Instance.LoadAllContent(Content);
 
             font = Content.Load<SpriteFont>("Fonts/HUD");
+            MenuBackground = Content.Load<Texture2D>("Menus/background");
         }
 
         public void SelectLevel(object sender, EventArgs e, uint levelNum)
@@ -240,7 +247,12 @@ namespace Lasagna
             if (!gameTypeSelected)
             {
                 if (MainMenuHUD != null)
+                {
+                    spriteBatch.Begin();
+                    spriteBatch.Draw(MenuBackground, mainFrame, Color.White);
+                    spriteBatch.End();
                     MainMenuHUD.Draw(spriteBatch, font, deathScreen, gameComplete);
+                }
 
                 return;
             }

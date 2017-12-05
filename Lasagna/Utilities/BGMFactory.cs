@@ -5,6 +5,7 @@ namespace Lasagna
 {
     public class BGMFactory
     {
+        private Song menu;
         private Song song;
         private Song castle;
         private Song castleComplete;
@@ -57,10 +58,19 @@ namespace Lasagna
             hurryStarMan = content.Load<Song>("BGM/17-hurry-starman-");
             gameOverTwo = content.Load<Song>("BGM/10-game-over-2");
             ending = content.Load<Song>("BGM/12-ending");
+            menu = content.Load<Song>("BGM/menu_theme");
+            Play_Menu();
+            MediaPlayer.Volume = 0.9f;
         }
         public void Play_Castle()
         {
             song = castle;
+            PlaySound();
+        }
+
+        public void Play_Menu()
+        {
+            song = menu;
             PlaySound();
         }
 
