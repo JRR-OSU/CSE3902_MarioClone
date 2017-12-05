@@ -37,6 +37,7 @@ namespace Lasagna
         public override void Spawn()
         {
             this.isInBlock = true;
+            SoundEffectFactory.Instance.PlayCoin();
         }
 
         public void StartCoinAnimation()

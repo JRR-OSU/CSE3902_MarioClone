@@ -229,7 +229,6 @@ namespace Lasagna
                     //If the first item is grow mushroom, then the second item must be flower.
                     if (items[ZERO] is GrowMushroomItem)
                     {
-                        SoundEffectFactory.Instance.PlayPowerUpAppearsSound();
                         if (((Mario)Mario).CurrentState == MarioStateMachine.MarioState.Small)
                         {
                             items[ZERO].Spawn();
@@ -245,14 +244,6 @@ namespace Lasagna
                     {
                         if (currentState != BlockState.Used)
                         {
-                            if (items[ZERO] is CoinItem)
-                            {
-                                SoundEffectFactory.Instance.PlayCoin();
-                            }
-                            else
-                            {
-                                SoundEffectFactory.Instance.PlayPowerUpAppearsSound();
-                            }
                             this.currentState = BlockState.Bumped;
                             preBumpPos = PosY;
                         }

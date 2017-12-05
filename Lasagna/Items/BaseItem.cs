@@ -79,7 +79,6 @@ namespace Lasagna
                     return new Rectangle((int)position.X, (int)position.Y, itemSprite.Width, itemSprite.Height);
             }
         }
-              
 
         public virtual void Update(GameTime gameTime)
         {
@@ -121,7 +120,6 @@ namespace Lasagna
             // Don't draw if the block is bumping
             if (this.waitToDraw == true)
                 hideTime++;
-
             if (itemSprite != null && currentState != ItemState.Taken && !this.isInvisible && !this.waitToDraw)
                 itemSprite.Draw(spriteBatch);
             if (hideTime >= SIXTEEN)
@@ -220,11 +218,11 @@ namespace Lasagna
                 position.Y = target.Bounds.Y - this.Bounds.Height;
         }
 
-
         public virtual void Spawn()
         {
             this.waitToDraw = true;
             this.isInBlock = true;
+            SoundEffectFactory.Instance.PlayPowerUpAppearsSound();
         }
         public virtual void Move()
         {

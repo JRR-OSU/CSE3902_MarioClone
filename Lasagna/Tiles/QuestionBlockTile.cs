@@ -72,10 +72,6 @@ namespace Lasagna
                 beingCollided = false;
                 bumpingTime = ZERO;
             }
-            //if (Mario.Bounds.Y > this.CurrentSprite.Height + base.PosY)
-            //{
-              //  this.beingCollided = false;
-            //}
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -113,7 +109,6 @@ namespace Lasagna
                 {
                     if (items[ZERO] is GrowMushroomItem)
                     {
-                        SoundEffectFactory.Instance.PlayPowerUpAppearsSound();
                         if (((Mario)Mario).CurrentState == MarioStateMachine.MarioState.Small)
                         {
                             items[ZERO].Spawn();
@@ -125,14 +120,6 @@ namespace Lasagna
                     }
                     else
                     {
-                        if (items[ZERO] is CoinItem)
-                        {
-                            SoundEffectFactory.Instance.PlayCoin();
-                        }
-                        else
-                        {
-                            SoundEffectFactory.Instance.PlayPowerUpAppearsSound();
-                        }
                         items[ZERO].Spawn();
                     }
                 }
