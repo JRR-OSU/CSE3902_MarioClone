@@ -135,10 +135,9 @@ namespace Lasagna
                     {
                         marioPhysics.velocity.Y = ZERO;
                         marioPhysics.velocity.Y += ONE_HUNDRED_FIFTY;
-                        state.HandleJump();
+                        state.HandleJump();  // Jump effect if landing on top of an enemy
                     }
-                    state.DamageMario();
-                    // Jump effect if landing on top of an enemy
+                   
                     break;
                 case CollisionSide.Top:
                     if(projectile is KoopaShellProjectile)
