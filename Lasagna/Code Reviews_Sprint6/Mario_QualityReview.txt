@@ -1,0 +1,8 @@
+﻿Tim Williams
+12/05/2017
+Sprint6
+Mario.cs
+Jon Reed
+
+Overall the code is good, only recommendations I would make would be to reduce hard-coded values where possible and reduce branching logic, 
+although I'm unsure how that would be accomplished.

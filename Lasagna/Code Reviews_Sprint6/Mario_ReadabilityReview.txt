@@ -1,0 +1,10 @@
+﻿Tim Williams
+12/05/2017
+Sprint6
+Mario.cs
+Jon Reed
+10 minutes
+
+Overall code is much more readable than at the beginning of the project.
+Methods and fields are clearly named, branching logic is reduced, and cohesion is much higher.
+Overall a very readable class.
