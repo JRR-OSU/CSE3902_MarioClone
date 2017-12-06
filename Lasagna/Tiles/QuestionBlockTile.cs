@@ -25,7 +25,7 @@ namespace Lasagna
         private int bumpingTimer = ZERO;
         private int bumpingTime = ZERO;
         private bool beingCollided = false;
-        private bool isUsed = false;
+
         private ISprite unused = TileSpriteFactory.Instance.CreateSprite_QuestionBlock();
         private ISprite used = TileSpriteFactory.Instance.CreateSprite_ItemBlockUsed();
 
@@ -90,7 +90,7 @@ namespace Lasagna
 
                     this.PosY += TWO;
                 }
-                if (PosY == preBumpPos+FOUR)
+                else 
                 {
                     beingCollided = false;
                     bumpingTimer = ZERO;

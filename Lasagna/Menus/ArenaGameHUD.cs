@@ -67,7 +67,6 @@ namespace Lasagna
             luigi = LuigiSpriteFactory.Instance.CreateSprite_LuigiSmall_IdleRight();
             mario.SetSpriteScreenPosition((640 / 2) + 75, (480 / 2) - 20);
             luigi.SetSpriteScreenPosition((640 / 2) + 75, (480 / 2) - 20);
-            Console.WriteLine(this.GetHashCode().ToString());
         }
 
         public void Update()

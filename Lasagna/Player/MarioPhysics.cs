@@ -63,7 +63,7 @@ namespace Lasagna
 
         public void Jump()
         {
-            if (!mario.marioIsDead && !(Math.Abs(velocity.Y) >= maxVelY) && canJump)
+            if (!mario.marioIsDead && !(Math.Abs(velocity.Y) >= maxVelY) && !mario.isFalling)
             {
                 stateMachine.Jump();
 

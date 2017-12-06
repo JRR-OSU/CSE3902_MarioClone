@@ -197,7 +197,7 @@ namespace Lasagna
                         marioPhysics.velocity.Y = ZERO;
                         mario.SetPosition(mario.Bounds.X, (tile.Bounds.Y + tile.Bounds.Height + FIVE));
                         marioPhysics.ignoreGravity = false;
-                        marioPhysics.canJump = false;
+                        mario.isFalling = true;
                         if (tile is BreakableBrickTile)
                         {
                             if (((BreakableBrickTile)tile).items.Length > ZERO && ((BreakableBrickTile)tile).items[ZERO] is CoinItem
