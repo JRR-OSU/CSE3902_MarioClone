@@ -1,0 +1,8 @@
+﻿Jon Reed
+12/5/2017
+Sprint 6
+ArenaGameHUD.cs
+Yiwei Zhang
+
+This source file provides the required two-player Arena HUD functionality for Sprint 6 and works as intended. 
+The code is extremely simple and easy to understand. The code exhibits good cohesion and good coupling. 

@@ -1,0 +1,10 @@
+﻿Jon Reed
+12/5/2017
+Sprint 6
+ArenaGameHUD.cs
+Yiwei Zhang
+5 minutes
+
+The code is readable and easy to understand. My only suggestion would be to replace the logic for the HUD with one singular component that
+handles the logic for each different HUDs, instead of having each HUD interface in some way with the MarioGame class. Tim's implementation
+of the HUD interface helped significantly with this, however more would be needed to increase abstraction. 
