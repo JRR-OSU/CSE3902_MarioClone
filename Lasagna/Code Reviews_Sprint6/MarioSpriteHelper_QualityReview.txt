@@ -1,0 +1,8 @@
+﻿Yiwei Zhang
+12/05/2017
+Sprint6
+MarioSpriteHelper.cs
+Zeyu Li
+10 minutes
+
+The overall structure just look like the MarioSpriteFactory, it has low coupling and high cohesion.

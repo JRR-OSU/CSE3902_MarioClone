@@ -199,6 +199,8 @@
     <Content Include="Code Reviews_Sprint6\Mario_ReadabilityReview.txt" />
     <Content Include="Code Reviews_Sprint6\ArenaGameHUD_QualityReview.txt" />
     <Content Include="Code Reviews_Sprint6\ArenaGameHUD_ReadbilityReview.txt" />
+    <Content Include="Code Reviews_Sprint6\MarioSpriteHelper_ReadbilityReview.txt" />
+    <Content Include="Code Reviews_Sprint6\MarioSpriteHelper_QualityReview.txt" />
     <Content Include="Icon.ico" />
     <Content Include="Level XML\Mario_2-1.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

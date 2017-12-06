@@ -1,0 +1,9 @@
+﻿Yiwei Zhang
+12/05/2017
+Sprint6
+MarioSpriteHelper.cs
+Zeyu Li
+10 minutes
+
+The fields and methods are all appripriately named according to their functionality
+The codes look clean and easy to understand overall. 
