@@ -63,7 +63,7 @@ namespace Lasagna
 
         public void Jump()
         {
-            if (!mario.marioIsDead && !(Math.Abs(velocity.Y) >= maxVelY))
+            if (!mario.marioIsDead && !(Math.Abs(velocity.Y) >= maxVelY) && canJump)
             {
                 stateMachine.Jump();
 
@@ -72,6 +72,7 @@ namespace Lasagna
                 else
                     mario.isFalling = true;
             }
+            isJumping = true;
         }
         public void StartJumpDelay()
         {
@@ -115,7 +116,7 @@ namespace Lasagna
         {
             if (isJumping && !(Keyboard.GetState().IsKeyDown(Keys.W) || Keyboard.GetState().IsKeyDown(Keys.Up)))
                 canJump = false;
-            else if (!isJumping)
+            else if (mario.isCollideGround)
                 canJump = true;
         }
 

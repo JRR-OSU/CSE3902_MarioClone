@@ -20,6 +20,7 @@ namespace Lasagna
         public bool RestrictMovement { get; set; }
 
         public bool isCollideGround { get; set; }
+        private bool isJumping;
 
         private int marioWarpCount = 0;
         /// <summary>
@@ -166,6 +167,7 @@ namespace Lasagna
 
         public void Jump(object sender, EventArgs e)
         {
+     
             if (stateMachine != null && stateMachine.IsTransitioning || !marioPhysics.canJump)
                 return;
             if (!marioPhysics.isJumping)
@@ -179,7 +181,7 @@ namespace Lasagna
                     SoundEffectFactory.Instance.PlayJumpMarioBig();
                 }
             }
-                marioPhysics.isJumping = true;
+
             marioPhysics.Jump();
         }
 
@@ -235,6 +237,9 @@ namespace Lasagna
 
         public void Update(GameTime gameTime)
         {
+            Console.WriteLine(marioPhysics.isJumping);
+            if (isCollideGround)
+                marioPhysics.isJumping = false;
             if (marioIsDead || stateMachine.flagpoleSequence)
             {
                 stateMachine.Update(gameTime, (int)position.X, -(int)position.Y);

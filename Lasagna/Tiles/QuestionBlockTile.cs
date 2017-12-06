@@ -16,6 +16,7 @@ namespace Lasagna
         private const int ZERO = 0;
         private const int ONE = 1;
         private const int TWO = 2;
+        private const int FOUR = 4;
         private const int EIGHT = 8;
         private const int TWENTY = 20;
         private BlockState currentState;
@@ -81,18 +82,19 @@ namespace Lasagna
             {
                 if (bumpingTimer < EIGHT)
                 {
-                    PosY -= TWO;
+                    this.PosY -= TWO;
                     bumpingTimer++;
                 }
                 else if (bumpingTimer >= EIGHT && PosY != preBumpPos)
                 {
 
-                    PosY += TWO;
+                    this.PosY += TWO;
                 }
-                if (PosY == preBumpPos)
+                if (PosY == preBumpPos+FOUR)
                 {
-                    currentState = BlockState.Used;
+                    beingCollided = false;
                     bumpingTimer = ZERO;
+                    currentState = BlockState.Used;
                 }
             }
         }
